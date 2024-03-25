@@ -1,0 +1,32 @@
+'use client'
+import React from 'react'
+import { ScrollArea } from '../ui/scroll-area'
+import { ProjectCard } from '../shared/ProjectCard'
+import { IBLUEPRINT_POPULATED } from '@/types/blueprint';
+
+interface Props {
+  blueprints: IBLUEPRINT_POPULATED[];
+}
+
+export const ProjectInfinityScroll = ({blueprints}: Props) => {
+  return (
+    <ScrollArea className='h-[calc(100vh_-_125px)]'>
+        <div
+          className='mt-4 w-full gap-y-10 pb-10'
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
+            justifyItems: 'center',
+          }}
+        >
+          {
+            blueprints.map((blueprint) => (
+              <a key={blueprint._id}  href='/' target='_blank' className='animate-fade-in'>
+                <ProjectCard blueprint={blueprint} />
+              </a>
+            ))
+          }
+        </div>
+      </ScrollArea>
+  )
+}

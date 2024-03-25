@@ -1,0 +1,51 @@
+.slide-button {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out;
+}
+
+.slide-button:hover {
+  width: 140px;
+}
+
+.slide-button span {
+  position: absolute;
+  font-size: 12px;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.slide-button:hover span {
+  opacity: 1;
+}
+
+@keyframes slide-out-text {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-text {
+  0% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    font-size: 12px;
+    opacity: 1;
+  }
+}
+
+.slide-button:hover span {
+  animation: slide-in-text 0.15s ease-in-out forwards;
+}

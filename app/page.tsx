@@ -1,113 +1,195 @@
 import Image from "next/image";
+import '@/app/styles/animations.css'
+
+const SERVICES = [
+  {
+    title: '¿Necesitas dinero para invertir?',
+    description: 'Crédito Hipotecario, Leasing Habitacional',
+    link: '/',
+    buttonLabel: 'Solicitar',
+  },
+  {
+    title: 'Conoce nuestros proyectos',
+    description: 'Casas, apartamentos, lotes, bodegas',
+    link: '/projects',
+    buttonLabel: 'Explorar',
+  },
+  {
+    title: 'Otros servicios',
+    description: 'Seguros, cuentas de ahorro, envío de divisas',
+    link: '/',
+    buttonLabel: 'Ver más',
+  },
+];
+
+const SOCIAL_NETWORKS = [
+  {
+    name: 'facebook',
+    img: '/main-page/facebook.svg',
+    link: 'https://www.facebook.com/inverclick',
+  },
+  {
+    name: 'tiktok',
+    img: '/main-page/tiktok.svg',
+    link: 'https://www.tiktok.com/@inverclick.com',
+  },
+  {
+    name: 'instagram',
+    img: '/main-page/instagram.svg',
+    link: 'https://www.instagram.com/invertik.co',
+  },
+  {
+    name: 'youtube',
+    img: '/main-page/youtube.svg',
+    link: 'https://www.youtube.com/@Inverclick.oficial',
+  },
+  {
+    name: 'twitter',
+    img: '/main-page/x.svg',
+    link: 'https://twitter.com/?lang=es',
+  },
+  {
+    name: 'linkedin',
+    img: '/main-page/linkedin.svg',
+    link: 'https://www.linkedin.com/company/inverclick/about/',
+  },
+];
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <main className='flex flex-col md:flex-row h-screen bg-'>
+    <section
+      className='md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:pl-10 py-6'
+    >
+      <Image
+        unoptimized
+        className='absolute bottom-5 right-8 object-cover shadow-2xl hidden md:block animate-tada animate-delay-800'
+        src='/main-page/download_app.svg'
+        width='40'
+        height='80'
+        alt='Inverclick descarga la app'
+      />
+      <Image
+        unoptimized
+        className='absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full'
+        src='/main-page/main-background.avif'
+        alt='Inverclick fondo de pantalla'
+        width='1200'
+        height='1200'
+      />
+      <Image
+        unoptimized
+        width='200'
+        height='80'
+        className='w-[160px] md:w-[220px] animate-slide-in-top'
+        src='/main-page/inverclick-logo.avif'
+        alt='Inverclick logo'
+      />
+      <h1
+        className='text-lg md:text-3xl md:pb-32 text-center md:text-left animate-blurred-fade-in'
+      >
+        Invierte en Propiedad Raíz desde EL EXTERIOR
+      </h1>
+      <div className='flex gap-4'>
+        {
+          SOCIAL_NETWORKS.map(({ link, img, name }) => (
+            <a key={link} href={link} aria-label={link} target='_blank'>
+              <Image
+                unoptimized
+                className='aspect-square hover:shadow-2xl hover:scale-105 transition-all ease-in cursor-pointer w-7 h-7 md:w-9 md:h-9'
+                src={img}
+                width='36'
+                height='36'
+                alt={name}
+              />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      className='animate-slide-in-bottom md:animate-slide-in-right flex-1 rounded-t-2xl md:rounded-l-[40px] md:rounded-r-none shadow-xl bg-primary-600 flex flex-col justify-around items-center relative'
+    >
+      <header className='text-center text-white flex flex-col gap-2'>
+        <h2 className='pt-6 md:pt-0 text-2xl md:text-3xl 2xl:text-4xl'>
+          <b>Bienvenidos</b> a inverclick
+        </h2>
+        <h3 className='font-light max-w-sm self-center text-sm md:text-lg'>
+          La mejor opción para invertir en propiedad raíz en COLOMBIA.
+        </h3>
+      </header>
+
+      <div className='flex flex-col gap-10 2xl:gap-14'>
+        {
+          SERVICES.map((service, index) => (
+            <article key={index} className='flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center'>
+              <div className='text-white flex flex-col gap-2 lg:gap-4 text-base md:text-lg 2xl:text-xl w-[300px] 2xl:w-[450px]'>
+                <h2 className='text-center font-medium'>{service.title}</h2>
+                <h3 className='font-thin lg:pl-4 lg:border-l-2 border-white text-center'>
+                  {service.description}
+                </h3>
+              </div>
+              <a
+                href={service.link}
+                className='text-primary-600 text-sm md:text-lg font-semibold px-6 py-2 rounded-3xl bg-white hover:shadow-2xl hover:scale-105 transition-all ease-in'
+              >
+                {service.buttonLabel}
+              </a>
+            </article>
+          ))
+        }
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
+      <footer className='flex flex-col justify-center items-center gap-2 px-4'>
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+          unoptimized
+          src='/main-page/logo_invertik_gray.svg'
+          className='aspect-video w-[80px] md:w-[100px]'
+          width='100'
+          height='74'
+          alt='Inverclick logo gris'
         />
+        <div
+          className='flex gap-4 text-white/70 font-light text-xs md:text-sm text-center'
+        >
+          Políticas de privacidad
+          <div className='border bg-white/30'></div>
+          Términos y condiciones
+        </div>
+        <div className='flex gap-4 text-white/70 font-light text-xs md:text-sm'>
+          All rights reserved © {new Date().getFullYear()}
+        </div>
+      </footer>
+
+      <div
+        className='slide-button z-10 shadow-2xl cursor-pointer absolute bottom-20 right-4 rounded-full'
+      >
+        <Image
+          unoptimized
+          className='object-cover'
+          src='/main-page/user.svg'
+          height='40'
+          width='40'
+          alt='Inverclick - ingresar'
+        />
+        <span>Ingresar</span>
       </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div
+        className='slide-button z-10 shadow-2xl cursor-pointer absolute bottom-6 right-4 rounded-full'
+      >
+        <Image
+          unoptimized
+          className='object-cover'
+          src='/main-page/contact.svg'
+          height='40'
+          width='40'
+          alt='Inverclick - contacto'
+        />
+        <span>Contáctenos</span>
       </div>
-    </main>
+    </section>
+  </main>
   );
 }
