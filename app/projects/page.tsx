@@ -5,8 +5,8 @@ import { getAllProjects } from "@/services/projects";
 
 export default async function Projects (props: any) {
   const {searchParams} = props
-  console.log({searchParams})
-  const { count, data } = await getAllProjects();
+  const parsedSearchParams = new URLSearchParams(searchParams)
+  const { count, data } = await getAllProjects(`?${parsedSearchParams.toString()}`);
   
   return (
     <main className='flex flex-col lg:flex-row'>

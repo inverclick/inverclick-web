@@ -20,10 +20,8 @@ export const ProjectInfinityScroll = ({blueprints}: Props) => {
           }}
         >
           {
-            blueprints.map((blueprint) => (
-              <a key={blueprint._id}  href='/' target='_blank' className='animate-fade-in'>
-                <ProjectCard blueprint={blueprint} />
-              </a>
+            blueprints.map((blueprint) => (   
+              <ProjectCard key={blueprint._id} blueprint={blueprint} />
             ))
           }
         </div>

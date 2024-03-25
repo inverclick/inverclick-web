@@ -4,6 +4,8 @@ import { currencyFormatter } from '@/lib/currencyFormatter'
 import type { IBLUEPRINT_POPULATED } from '@/types/blueprint'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { Skeleton } from '../ui/skeleton'
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '../ui/carousel'
 
 interface Props {
   blueprint: IBLUEPRINT_POPULATED
@@ -14,6 +16,7 @@ export const ProjectCard = ({blueprint}: Props) => {
   const { convert, currency } = useCurrencyContext()
   const { project } = blueprint
   const { company } = project
+  const href = `/projects/${project._id}`
 
   useEffect(() => {
     setIsMounted(true)
@@ -22,13 +25,26 @@ export const ProjectCard = ({blueprint}: Props) => {
   if(!isMounted) return null
 
   return (
-    <section className='flex flex-col w-[280px] shadow-2xl rounded-lg h-full'>
+    <section className='flex flex-col w-[280px] shadow-2xl h-full rounded-b-lg'>
       <div className='relative'>
-        <Image unoptimized loading='lazy' src={project.photos[0]} alt={project.name} width={290} height={200} className='rounded-t-lg h-[170px] w-full object-cover'  />
-        <div className={`absolute top-0 left-0 text-[10px] text-white rounded-tl-lg px-2 py-1 capitalize font-semibold bg-green-600`}>{blueprint.state}</div>
-        <div className={`absolute top-0 right-0 text-[10px] text-white rounded-tr-lg px-2 py-1 capitalize font-semibold bg-sky-600`}>{blueprint.type}</div>
+      <Carousel className="h-[170px] w-full ">
+        <CarouselContent className='!ml-0'>
+          { project.photos.map( photo => 
+            <a key={photo} href={href} target='_blank' className='min-w-[280px] max-h-[170px] animate-fade-in'>
+              <Image unoptimized loading='lazy' src={photo} alt={project.name} width={280} height={170} className='-z-10 rounded-t-lg object-cover'  />
+            </a>
+          )}
+        </CarouselContent>
+        <CarouselPrevious className='translate-x-14 z-10 !h-6 !w-6 bg-primary-100/70 border-primary-400 hover:bg-primary-200/90 text-primary-500 hover:text-primary-600' />
+        <CarouselNext className='-translate-x-14 z-10 !h-6 !w-6 bg-primary-100/70 border-primary-400 hover:bg-primary-200/90 text-primary-500 hover:text-primary-600' />
+      </Carousel>
+        <a href={href} target='_blank' className={`cursor-pointer z-10 absolute top-0 left-0 text-[10px] text-white rounded-tl-lg px-2 py-1 capitalize font-semibold bg-primary-500`}>{blueprint.state}</a>
+        <div className={`absolute top-0 left-0 text-[10px] text-white  capitalize font-semibold bg-white`}>{blueprint.state}</div>
+        
+        <a href={href} target='_blank' className='cursor-pointer z-10 absolute top-0 right-0 text-[10px] text-white rounded-tr-lg px-2 py-1 capitalize font-semibold bg-primary-400'>{blueprint.type}</a>
+        <div className='absolute top-0 right-0 text-[10px] text-white  capitalize font-semibold bg-white'>{blueprint.state}</div>
       </div>
-      <div className='pt-4 flex flex-1 flex-col gap-[6px] justify-between bg-white rounded-b-lg'>
+      <a href={href} target='_blank' className='cursor-pointer pt-4 flex flex-1 flex-col gap-[6px] justify-between bg-white rounded-b-lg'>
         <div className='px-4 flex gap-2 items-center'>
           <Image unoptimized loading='lazy' className='w-auto h-[50px]' src={company.logo_url} alt={project.name} width={60} height={60} />
           <div>
@@ -43,7 +59,7 @@ export const ProjectCard = ({blueprint}: Props) => {
             { currencyFormatter(convert(blueprint.price), currency)} {currency}
           </p>
         </div>
-        <div className='flex justify-between p-4 bg-slate-200 rounded-b-lg'>
+        <div className='flex justify-between p-4 bg-primary-100 rounded-b-lg'>
           <div className='text-xs text-center'>
             <p>{blueprint.area} <span className='text-xs'>m<sup>2</sup></span></p>
             <p className='font-semibold'>Área</p>
@@ -61,7 +77,11 @@ export const ProjectCard = ({blueprint}: Props) => {
             <p className='font-semibold'>Unidades</p>
           </div>
         </div>
-      </div>
+      </a>
     </section>
   )
 }
+
+export const ProjectCardSkeleton = () => (
+  <Skeleton className='w-[280px] h-[400px]' />
+)
