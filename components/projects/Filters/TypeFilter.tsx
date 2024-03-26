@@ -41,7 +41,7 @@ export const TypeFilter = () => {
         <button 
           key={value}
           onClick={() => onChange(value)}
-          className={`flex flex-col gap-1 border border-black rounded-md p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${currentTypes.includes(value) ? 'bg-primary-600 text-white border-primary-600' : ''}`}
+          className={`flex flex-col gap-1 border border-black rounded-lg p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${currentTypes.includes(value) ? 'bg-primary-600 text-white border-primary-600' : ''}`}
         >
           <Icon className="h-7 w-7 " />
           <span className="font-medium">{label}</span>

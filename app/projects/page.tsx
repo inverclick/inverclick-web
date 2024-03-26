@@ -8,6 +8,8 @@ export default async function Projects (props: any) {
   const parsedSearchParams = new URLSearchParams(searchParams)
   const { count, data } = await getAllProjects(`?${parsedSearchParams.toString()}`);
   
+  const department = parsedSearchParams.get('department')
+  
   return (
     <main className='flex flex-col lg:flex-row'>
       <section className='flex-1'>
@@ -15,7 +17,7 @@ export default async function Projects (props: any) {
       </section>
       <section className='z-10 shadow-xl flex-1 relative max-w-[50%]'>
         <NavbarProjects />
-        <ProjectContent total={count} blueprints={data} /> 
+        <ProjectContent total={count} blueprints={data} department={department} /> 
       </section>
     </main>
   )
