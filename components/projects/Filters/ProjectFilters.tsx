@@ -13,6 +13,7 @@ import { SlidersHorizontal, X } from "lucide-react"
 import {  useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { LocationFilter } from "./LocationFilter"
+import { StateFilter } from "./StateFilter"
 
 interface Props {
   count: number
@@ -24,7 +25,7 @@ export const ProjectFilters = ({count, departments, cities }: Props) => {
   const [open, setOpen] = useState(false)
   const searchParams = useSearchParams()
 
-  const hasSearchParams = useMemo(() => searchParams.has('type'), [searchParams])
+  const hasSearchParams = useMemo(() => searchParams.has('type') || searchParams.has('department') || searchParams.has('housing_state'), [searchParams])
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -42,6 +43,7 @@ export const ProjectFilters = ({count, departments, cities }: Props) => {
         </header>
         <main className="px-6 py-2 flex flex-col gap-6">
           <LocationFilter departments={departments} cities={cities} />
+          <StateFilter />
           <TypeFilter />
         </main>
         <AlertDialogFooter className="py-4 px-6 !justify-between border-t border-zinc-300">
