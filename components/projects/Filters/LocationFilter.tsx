@@ -48,7 +48,7 @@ export const LocationFilter = ({departments, cities}: Props) => {
   return (
     <section className="flex flex-col gap-3">
       <h4 className="font-medium text-lg">Ubicación</h4>
-      <div className='flex flex-col md:flex-row gap-4 md:gap-10'>
+      <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
         <CustomSelect 
           label='Departamento' 
           options={departmentsOptions} 

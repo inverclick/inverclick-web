@@ -14,6 +14,7 @@ import {  useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { LocationFilter } from "./LocationFilter"
 import { StateFilter } from "./StateFilter"
+import { PriceFilter } from "./PriceFilter"
 
 interface Props {
   count: number
@@ -41,10 +42,11 @@ export const ProjectFilters = ({count, departments, cities }: Props) => {
           <X onClick={() => setOpen(false)} className="w-5 h-5 cursor-pointer text-primary-600" />
           <h3 className="flex-1 text-lg text-primary-600 text-center font-semibold">Filtros</h3>
         </header>
-        <main className="px-6 py-2 flex flex-col gap-6">
+        <main className="px-12 py-2 flex flex-col gap-6">
           <LocationFilter departments={departments} cities={cities} />
           <StateFilter />
           <TypeFilter />
+          <PriceFilter />
         </main>
         <AlertDialogFooter className="py-4 px-6 !justify-between border-t border-zinc-300">
           <AlertDialogCancel className="hover:bg-primary-50 transition-colors ease-in">Quitar filtros</AlertDialogCancel>
