@@ -12,3 +12,14 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
+
+.gm-style .gm-style-iw-c {
+     background-color: #ffffffc2;
+     overflow: hidden !important;
+ }
+ 
+.gm-style .gm-style-iw-d {
+    padding-right: 12px;
+    padding-bottom: 12px;
+    overflow: hidden !important;
+}

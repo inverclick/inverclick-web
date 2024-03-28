@@ -3,17 +3,22 @@ import { ENV_VARS } from '@/global/env';
 import type { IBLUEPRINT_POPULATED } from '@/types/blueprint';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { useEffect, useState } from 'react'
+import { CustomMarker } from './CustomMarker';
 
 interface Props {
   blueprints: IBLUEPRINT_POPULATED[]
 }
 
 export const MyMap = ({blueprints}: Props) => {
+  const [open, setOpen] = useState('')
   const [map, setMap] = useState<google.maps.Map | null>(null)
   const { isLoaded } = useJsApiLoader({
     id: 'inverclick-google-map-script',
     googleMapsApiKey: ENV_VARS.GOOGLE_MAP_KEY
   })
+  
+  const closeModal = () => setOpen('')
+  const openModal = (id: string) => setOpen(id)
 
   useEffect(() => {
     if(map){
@@ -32,10 +37,15 @@ export const MyMap = ({blueprints}: Props) => {
         onLoad={map => setMap(map)}
         options={mapOptions}
       >
-        {blueprints.map(blueprint => (
-          <Marker key={blueprint._id} position={{ lat: blueprint.project.location.lat, lng: blueprint.project.location.lng }} />
-          
-        ))}
+        {blueprints.map(blueprint => 
+          <CustomMarker 
+            key={blueprint._id} 
+            blueprint={blueprint} 
+            open={open}
+            openModal={openModal}
+            closeModal={closeModal}
+          />
+        )}
       </GoogleMap>
   ) : <></>
 }
