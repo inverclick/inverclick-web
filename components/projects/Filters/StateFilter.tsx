@@ -35,15 +35,15 @@ export const StateFilter = () => {
 
   return (
     <section className="flex flex-col gap-3">
-      <h4 className="font-medium text-lg">Tipo de proyecto</h4>
+      <h4 className="font-medium md:text-lg">Tipo de proyecto</h4>
       <div className="flex items-center justify-center">
       { STATE_FILTER_OPTIONS.map(({ label, value }) => 
         <button 
           key={value}
           onClick={() => onChange(value)}
-          className={`h-14 flex-1 border-x-[0.5px] border-y border-black first:rounded-l-lg first:border-l last:border-r last:rounded-r-lg p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${currentState.includes(value) ? 'bg-primary-600 text-white border-primary-600' : ''}`}
+          className={`h-14 flex-1 flex justify-center items-center border-x-[0.5px] border-y border-black first:rounded-l-lg first:border-l last:border-r last:rounded-r-lg p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${currentState.includes(value) ? 'bg-primary-600 text-white border-primary-600' : ''}`}
         >
-          <span className="font-medium">{label}</span>
+          <span className="text-sm md:text-base font-medium">{label}</span>
         </button>
       )}
       </div>

@@ -47,7 +47,7 @@ export const LocationFilter = ({departments, cities}: Props) => {
 
   return (
     <section className="flex flex-col gap-3">
-      <h4 className="font-medium text-lg">Ubicación</h4>
+      <h4 className="font-medium md:text-lg">Ubicación</h4>
       <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
         <CustomSelect 
           label='Departamento' 
@@ -76,9 +76,9 @@ interface CustomSelectProps {
 const CustomSelect = ({label, options, onChange, value}: CustomSelectProps) => (
   
   <Select value={value} onValueChange={onChange} disabled={!options.length}>
-    <SelectTrigger className="relative h-14 pb-0 pt-4 rounded-lg text-base border-zinc-800">
-      <p className='absolute top-1 left-3 text-xs font-light'>{label}</p>
-      <SelectValue placeholder="Select a fruit" />
+    <SelectTrigger className="relative h-14 pb-0 pt-4 rounded-lg border-zinc-800 text-sm md:text-base">
+      <p className='absolute top-1 left-3 text-[10px] md:text-xs font-light'>{label}</p>
+      <SelectValue />
     </SelectTrigger>
     <SelectContent>
       <SelectGroup>

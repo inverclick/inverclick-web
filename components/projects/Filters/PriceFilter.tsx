@@ -36,7 +36,7 @@ export const PriceFilter = ({ priceGraphicData }: { priceGraphicData: {goal: num
 
   return (
     <section className="flex flex-col gap-3">
-      <h4 className="font-medium text-lg">Rango de precios</h4>
+      <h4 className="font-medium md:text-lg">Rango de precios</h4>
       <div className="flex flex-col gap-6 justify-center items-center">
         <div className="self-center w-3/4">
           <Slider
@@ -63,7 +63,7 @@ export const PriceFilter = ({ priceGraphicData }: { priceGraphicData: {goal: num
 
 const CustomInput = ({ value, onChange, name, label }: { label: string, value: number | undefined, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, name: string }) => (
   <div className="flex-1 relative h-14 rounded-lg text-base border border-zinc-800">
-    <p className="absolute text-xs top-1 left-3">{label}</p>
-    <Input value={value} className="mt-3 text-base  border-0 focus-visible:ring-0 focus-visible:ring-offset-0" type="number" name={name} onChange={onChange} />
+    <p className="absolute text-[10px] md:text-xs top-1 left-3">{label}</p>
+    <Input value={value} className="mt-3 text-sm md:text-base border-0 focus-visible:ring-0 focus-visible:ring-offset-0" type="number" name={name} onChange={onChange} />
   </div>
 )
