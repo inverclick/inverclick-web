@@ -4,7 +4,7 @@ import { useDebounce } from "@/hooks/useDebounce"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
-export const PriceFilter = () => {
+export const PriceFilter = ({ priceGraphicData }: { priceGraphicData: {goal: number}[]}) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -40,6 +40,7 @@ export const PriceFilter = () => {
       <div className="flex flex-col gap-6 justify-center items-center">
         <div className="self-center w-3/4">
           <Slider
+            data={priceGraphicData}
             defaultValue={[0, 999000000]}
             min={0}
             max={999999999}

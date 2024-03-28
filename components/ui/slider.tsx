@@ -1,18 +1,16 @@
-// slider.tsx
-'use client';
-
 import * as React from 'react';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { Bar, BarChart, ResponsiveContainer } from "recharts"
 import { cn } from '@/lib/utils';
 
- 
-const data = [{ goal: 100, },{ goal: 140, },{ goal: 200, },{ goal: 300, },{ goal: 200, },{ goal: 278, },{ goal: 189, },{ goal: 239, },{ goal: 300, },{ goal: 200, },{ goal: 278, },{ goal: 189, },{ goal: 349, }, { goal: 400, },{ goal: 300, },{ goal: 200, },{ goal: 300, },{ goal: 200, },{ goal: 278, },{ goal: 189, },{ goal: 239, },{ goal: 300, },{ goal: 200, },{ goal: 278, },{ goal: 189, },{ goal: 349, }]
+type SliderProps = {
+  data: { goal: number }[]
+} & React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>;
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, ...props }, ref) => (
+  SliderProps
+>(({ className, data, ...props }, ref) => (
   <SliderPrimitive.Root
     ref={ref}
     className={cn('relative flex w-full touch-none select-none items-end', className)}
@@ -32,11 +30,10 @@ const Slider = React.forwardRef<
 
       <SliderPrimitive.Range className="absolute h-full bg-primary-900 mix-blend-color-burn" />  
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="translate-y-2 block h-5 w-5 rounded-full border-2 border-primary-600 bg-primary-50 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
-    <SliderPrimitive.Thumb className="translate-y-2 block h-5 w-5 rounded-full border-2 border-primary-600 bg-primary-50 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+    <SliderPrimitive.Thumb className="translate-y-2 -translate-x-3 block h-5 w-5 rounded-full border-2 border-primary-600 bg-primary-50 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+    <SliderPrimitive.Thumb className="translate-y-2 translate-x-3 block h-5 w-5 rounded-full border-2 border-primary-600 bg-primary-50 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
   </SliderPrimitive.Root>
 ));
 Slider.displayName = SliderPrimitive.Root.displayName;
 
 export { Slider };
-

@@ -20,9 +20,10 @@ interface Props {
   count: number
   departments: {departamento: string}[]
   cities: {municipio: string}[]
+  priceGraphicData: {goal: number}[]
 }
 
-export const ProjectFilters = ({count, departments, cities }: Props) => {
+export const ProjectFilters = ({count, departments, cities , priceGraphicData}: Props) => {
   const [open, setOpen] = useState(false)
   const searchParams = useSearchParams()
 
@@ -46,7 +47,7 @@ export const ProjectFilters = ({count, departments, cities }: Props) => {
           <LocationFilter departments={departments} cities={cities} />
           <StateFilter />
           <TypeFilter />
-          <PriceFilter />
+          <PriceFilter priceGraphicData={priceGraphicData} />
         </main>
         <AlertDialogFooter className="py-4 px-6 !justify-between border-t border-zinc-300">
           <AlertDialogCancel className="hover:bg-primary-50 transition-colors ease-in">Quitar filtros</AlertDialogCancel>
