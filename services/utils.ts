@@ -29,7 +29,7 @@ export const getCities = async (department: string | null): Promise<{ success: b
 
 export const getGraphicPriceRange = async (): Promise<{ success: boolean, message: string, data: {goal: number}[]  }> => {
   try {
-    const response = await fetch(API + '/utils/price-range')
+    const response = await fetch(API + '/utils/price-range', { cache: 'force-cache' })
     return await response.json()
   } catch (error) {
     return {
