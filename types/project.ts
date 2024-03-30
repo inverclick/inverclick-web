@@ -12,6 +12,7 @@ export interface IPROJECT {
   description: string
   nearServices: Array<{ label: string, icon: string }>
   photos: string[]
+  housingState: HOUSING_STATE_TYPE
   location: {
     lat: number
     lng: number
@@ -20,4 +21,18 @@ export interface IPROJECT {
 
 export interface IPROJECT_POPULATED extends IPROJECT {
   company: ICOMPANY
+}
+
+export type HOUSING_STATE_TYPE = 'new' | 'off-plan' | 'used'
+
+export enum HOUSING_STATE_ENUM {
+  NEW = 'new',
+  OFF_PLAN = 'off-plan',
+  USED = 'used'
+}
+
+export enum HOUSING_STATE_LABEL {
+  NEW = 'Nuevo',
+  OFF_PLAN = 'Sobre plano',
+  USED = 'Usado'
 }

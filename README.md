@@ -2,7 +2,14 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Environment variables are stored in a `.env`:
+
+```bash
+NEXT_PUBLIC_GOOGLE_MAPS_KEY=
+NEXT_PUBLIC_API=
+```
+
+Second, run the development server:
 
 ```bash
 npm run dev

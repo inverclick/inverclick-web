@@ -10,20 +10,13 @@ interface Props {
 
 export const ProjectInfinityScroll = ({blueprints}: Props) => {
   return (
-    <ScrollArea className='h-[calc(100vh_-_125px)]'>
+    <ScrollArea className='h-[500px] lg:h-[calc(100vh_-_125px)]'>
         <div
-          className='mt-4 w-full gap-y-10 pb-10'
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
-            justifyItems: 'center',
-          }}
+          className='mt-4 w-full gap-y-10 pb-10 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]'
         >
           {
-            blueprints.map((blueprint) => (
-              <a key={blueprint._id}  href='/' target='_blank' className='animate-fade-in'>
-                <ProjectCard blueprint={blueprint} />
-              </a>
+            blueprints.map((blueprint) => (   
+              <ProjectCard key={blueprint._id} blueprint={blueprint} />
             ))
           }
         </div>

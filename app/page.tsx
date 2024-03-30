@@ -1,5 +1,6 @@
 import Image from "next/image";
-import '@/app/styles/animations.css'
+import { LoginButton } from "@/components/shared/LoginButton";
+import { ContactButton } from "@/components/shared/ContactButton";
 
 const SERVICES = [
   {
@@ -162,33 +163,8 @@ export default function Home() {
         </div>
       </footer>
 
-      <div
-        className='slide-button z-10 shadow-2xl cursor-pointer absolute bottom-20 right-4 rounded-full'
-      >
-        <Image
-          unoptimized
-          className='object-cover'
-          src='/main-page/user.svg'
-          height='40'
-          width='40'
-          alt='Inverclick - ingresar'
-        />
-        <span>Ingresar</span>
-      </div>
-
-      <div
-        className='slide-button z-10 shadow-2xl cursor-pointer absolute bottom-6 right-4 rounded-full'
-      >
-        <Image
-          unoptimized
-          className='object-cover'
-          src='/main-page/contact.svg'
-          height='40'
-          width='40'
-          alt='Inverclick - contacto'
-        />
-        <span>Contáctenos</span>
-      </div>
+      <LoginButton />
+      <ContactButton />
     </section>
   </main>
   );
