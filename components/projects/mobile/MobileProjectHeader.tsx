@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { ProjectFilters } from '../Filters/ProjectFilters'
 import { SelectCurrency } from '../SelectCurrency'
 import { getCities, getDepartments, getGraphicPriceRange } from '@/services/utils'
@@ -23,12 +23,14 @@ export async function MobileProjectHeader ({department, total}: Props) {
   return (
     <div className='absolute z-10 top-0 left-0 right-0 flex items-center justify-between bg-white/40 px-6 py-2 m-3 rounded-3xl backdrop-blur-xl text-primary-600'>
       <div className='flex items-center gap-3'>
-        <ProjectFilters  
-          count={total} 
-          departments={departments} 
-          cities={cities} 
-          priceGraphicData={priceGraphicData}
-        /> 
+        <Suspense>
+          <ProjectFilters  
+            count={total} 
+            departments={departments} 
+            cities={cities} 
+            priceGraphicData={priceGraphicData}
+          /> 
+        </Suspense>
         <SelectCurrency />
       </div>
 

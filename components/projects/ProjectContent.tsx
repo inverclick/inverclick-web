@@ -4,6 +4,7 @@ import { SelectCurrency } from './SelectCurrency';
 import { ProjectInfinityScroll } from './ProjectInfinityScroll';
 import { ProjectFilters } from './Filters/ProjectFilters';
 import { getCities, getDepartments, getGraphicPriceRange } from '@/services/utils';
+import { Suspense } from 'react';
 
 interface Props {
   total: number;
@@ -26,12 +27,14 @@ export default async function ProjectContent ({ total, blueprints, department }:
     <section className='lg:mt-20 mx-6'>
       <div className='flex justify-between text-sm text-primary-600 mb-3'>
         <div className='hidden lg:flex gap-3 items-center'>
-          <ProjectFilters  
-            count={total} 
-            departments={departments} 
-            cities={cities} 
-            priceGraphicData={priceGraphicData}
-          /> 
+          <Suspense>
+            <ProjectFilters  
+              count={total} 
+              departments={departments} 
+              cities={cities} 
+              priceGraphicData={priceGraphicData}
+            /> 
+          </Suspense>
           <SelectCurrency />
         </div>
         <p className='hidden lg:flex gap-1 justify-center items-center'>
