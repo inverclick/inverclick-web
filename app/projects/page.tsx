@@ -7,6 +7,8 @@ import { MobileProjectHeader } from '@/components/projects/mobile/MobileProjectH
 import { LoginButton } from '@/components/shared/LoginButton';
 import { ContactButton } from '@/components/shared/ContactButton';
 
+export const dynamic = 'force-dynamic'
+
 export default async function Projects (props: any) {
   const {searchParams} = props
   const parsedSearchParams = new URLSearchParams(searchParams)

@@ -5,7 +5,7 @@ const API = process.env.NEXT_PUBLIC_API
 
 export const getAllProjects = async (queryParams: string): Promise<{ success: boolean, message: string, data: IBLUEPRINT_POPULATED[], count: number }> => {
   try {
-    const response = await fetch(API + '/project/preview' + queryParams)
+    const response = await fetch(API + '/project/preview' + queryParams, { cache: 'force-cache' })
     return await response.json()
   } catch (error) {
     return {
