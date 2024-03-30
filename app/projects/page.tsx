@@ -8,6 +8,7 @@ import { LoginButton } from '@/components/shared/LoginButton';
 import { ContactButton } from '@/components/shared/ContactButton';
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge' 
 
 export default async function Projects (props: any) {
   const {searchParams} = props
