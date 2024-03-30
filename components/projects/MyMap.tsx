@@ -51,7 +51,7 @@ export const MyMap = ({blueprints}: Props) => {
 }
 
 const containerStyle = {
-  width: '100%x',
+  width: '100%',
   height: '100vh'
 };
 

@@ -23,9 +23,9 @@ export default async function ProjectContent ({ total, blueprints, department }:
   const { data: cities } = await getCities(department)
 
   return (
-    <section className='mt-20 mx-6'>
+    <section className='lg:mt-20 mx-6'>
       <div className='flex justify-between text-sm text-primary-600 mb-3'>
-        <div className='flex gap-3 items-center'>
+        <div className='hidden lg:flex gap-3 items-center'>
           <ProjectFilters  
             count={total} 
             departments={departments} 
@@ -34,7 +34,7 @@ export default async function ProjectContent ({ total, blueprints, department }:
           /> 
           <SelectCurrency />
         </div>
-        <p className='flex gap-1 justify-center items-center'>
+        <p className='hidden lg:flex gap-1 justify-center items-center'>
           <span className='font-medium'>Total:</span>
           {total}
         </p>
