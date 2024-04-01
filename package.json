@@ -12,6 +12,7 @@
     "@midudev/tailwind-animations": "^0.0.7",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-menubar": "^1.0.4",
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
@@ -22,6 +23,7 @@
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
     "embla-carousel-react": "^8.0.0",
+    "formik": "^2.4.5",
     "lucide-react": "^0.363.0",
     "next": "14.1.4",
     "react": "^18",
@@ -30,6 +32,7 @@
     "recharts": "^2.12.3",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "yup": "^1.4.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
