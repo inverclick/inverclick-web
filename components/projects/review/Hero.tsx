@@ -3,6 +3,7 @@ import { Heart, Home, MapPinned, Share } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 import { SelectCurrency } from '../SelectCurrency';
+import { ProjectGallery } from './ProjectGallery';
 
 interface Props {
   name: string;
@@ -13,7 +14,7 @@ interface Props {
   address: string;
 }
 
-export const Hero = ({name, department, city, address, price}: Props) => {
+export const Hero = ({name, department, city, address, price, photos}: Props) => {
   return (
     <section className='flex flex-col gap-4 md:gap-6 xl:gap-8'>
 
@@ -31,8 +32,8 @@ export const Hero = ({name, department, city, address, price}: Props) => {
 
       {/* Título */}
       <div className='flex flex-col-reverse md:flex-row justify-between gap-6 md:items-center'>
-        <h1 className='text-2xl md:text-3xl xl:text-4xl font-semibold'>{name}</h1>
-        <div className='flex flex-col md:flex-row gap-2 md:gap-6 items-center'>
+        <h1 className='text-3xl md:text-4xl xl:text-5xl font-semibold'>{name}</h1>
+        <div className='flex flex-col md:flex-row gap-3 md:gap-6 md:items-center'>
           <span className='flex gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer'>
             <Share className='w-4 h-4 md:w-5 md:h-5' />
             Compartir
@@ -46,19 +47,17 @@ export const Hero = ({name, department, city, address, price}: Props) => {
       </div>
 
       {/* Fotos */}
-      <div>
-        Fotos
-      </div>
+      <ProjectGallery photos={photos} />
 
       {/* Info */}
-      <div className='flex flex-col md:flex-row justify-between gap-4'>
+      <div className='flex flex-col md:flex-row justify-between gap-4 px-6'>
         <span className='flex gap-3 items-center text-sm md:text-base font-extralight max-w-xl'>
           <MapPinned className='text-primary-600 min-w-6 min-h-6 md:w-8 md:h-8' />
           {department}, {city} / {address}
         </span>
-        <span className='flex gap-2 text-base md:text-lg items-center'>
+        <span className='flex gap-4 md:gap-6 text-base md:text-lg items-center'>
           Desde:
-          <DisplayFormattedCurrency className='text-lg md:text-xl xl:text-2xl font-medium' number={price}  />
+          <DisplayFormattedCurrency className='text-2xl md:text-3xl xl:text-4xl font-medium' number={price}  />
         </span>
       </div>
     </section>

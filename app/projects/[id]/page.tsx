@@ -1,4 +1,5 @@
 import { Hero } from "@/components/projects/review/Hero"
+import { ProjectGallery } from "@/components/projects/review/ProjectGallery"
 import { ProjectHeader } from "@/components/projects/review/ProjectHeader"
 import { MyFooter } from "@/components/shared/footer/MyFooter"
 import { getProjectById } from "@/services/projects"
@@ -18,7 +19,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
   return (
     <main>
       <ProjectHeader />
-      <article className="px-6 pt-20 md:pt-24 xl:pt-32">
+      <article className="px-6 pt-20 md:pt-24 xl:pt-32 flex flex-col gap-8">
         <Hero 
           name={project.name} 
           photos={project.photos} 
