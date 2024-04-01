@@ -1,5 +1,4 @@
 import { Hero } from "@/components/projects/review/Hero"
-import { ProjectGallery } from "@/components/projects/review/ProjectGallery"
 import { ProjectHeader } from "@/components/projects/review/ProjectHeader"
 import { MyFooter } from "@/components/shared/footer/MyFooter"
 import { getProjectById } from "@/services/projects"
