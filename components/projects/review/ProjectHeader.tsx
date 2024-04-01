@@ -12,7 +12,7 @@ const MENU_OPTIONS = [
 
 export const ProjectHeader = () => {
   return (
-    <header className='fixed bg-white left-0 right-0 shadow-lg px-6 pb-4 pt-3 flex items-end xl:items-center justify-between'>
+    <header className='fixed bg-white left-0 right-0 shadow-lg px-6 pb-4 pt-3 flex items-end xl:items-center justify-between z-10'>
       <Image 
         unoptimized
         width='170'
