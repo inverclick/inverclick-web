@@ -82,7 +82,7 @@ export default function Home() {
     >
       <header className='text-center text-white flex flex-col gap-2'>
         <h2 className='pt-6 md:pt-0 text-2xl md:text-3xl 2xl:text-4xl'>
-          <b>Bienvenidos</b> a inverclick
+          <b>Bienvenidos</b> <span className="font-light">a inverclick</span>
         </h2>
         <h3 className='font-light max-w-sm self-center text-sm md:text-lg'>
           La mejor opción para invertir en propiedad raíz en COLOMBIA.
@@ -95,7 +95,7 @@ export default function Home() {
             <article key={index} className='flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center'>
               <div className='text-white flex flex-col gap-2 lg:gap-4 text-base md:text-lg 2xl:text-xl w-[300px] 2xl:w-[450px]'>
                 <h2 className='text-center font-medium'>{service.title}</h2>
-                <h3 className='font-thin lg:pl-4 lg:border-l-2 border-white text-center'>
+                <h3 className='font-light lg:pl-4 lg:border-l-2 border-white text-center'>
                   {service.description}
                 </h3>
               </div>
@@ -113,10 +113,10 @@ export default function Home() {
       <footer className='flex flex-col justify-center items-center gap-2 px-4'>
         <Image
           unoptimized
-          src='/main-page/logo_invertik_gray.svg'
-          className='aspect-video w-[80px] md:w-[100px]'
+          src='/main-page/logo_gris_inverclick.svg'
+          className='mb-2 w-[80px] md:w-[130px]'
           width='100'
-          height='74'
+          height='40'
           alt='Inverclick logo gris'
         />
         <div
