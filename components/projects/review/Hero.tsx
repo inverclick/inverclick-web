@@ -57,7 +57,10 @@ export const Hero = ({name, department, city, address, price, photos}: Props) =>
         </span>
         <span className='flex gap-4 md:gap-6 text-base md:text-lg items-center'>
           Desde:
-          <DisplayFormattedCurrency className='text-2xl md:text-3xl xl:text-4xl font-medium' number={price}  />
+          <div className='flex justify-center items-start'>
+            <DisplayFormattedCurrency className='text-2xl md:text-3xl xl:text-4xl font-medium' number={price}  />
+            <span>*</span>
+          </div>
         </span>
       </div>
     </section>

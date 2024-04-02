@@ -1,4 +1,5 @@
 import { Hero } from "@/components/projects/review/Hero"
+import OtherProjects from "@/components/projects/review/OtherProjects"
 import { ProjectContent } from "@/components/projects/review/ProjectContent"
 import { ProjectHeader } from "@/components/projects/review/ProjectHeader"
 import { MyFooter } from "@/components/shared/footer/MyFooter"
@@ -19,7 +20,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
   return (
     <main>
       <ProjectHeader />
-      <article className="px-6 pt-20 md:pt-24 xl:pt-32 flex flex-col gap-8">
+      <article className="px-6 sm:px-10 md:px-8 lg:px-10 xl:px-20 pt-20 md:pt-24 xl:pt-32 flex flex-col gap-8">
         <Hero 
           name={project.name} 
           photos={project.photos} 
@@ -28,7 +29,18 @@ export default async  function Page ({ params }: { params: { id: string } }) {
           city={project.city} 
           address={project.address} 
         /> 
-        <ProjectContent />
+        <ProjectContent 
+          companyLogo={project.company.logo_url}
+          companyName={project.company.name}
+          housingState={project.housingState}
+          description={project.description}
+          location={project.location}
+          name={project.name}
+          address={project.address}
+          city={project.city}
+          department={project.department}
+        />
+        <OtherProjects projectId={id} />
       </article>
       <MyFooter />
     </main>
