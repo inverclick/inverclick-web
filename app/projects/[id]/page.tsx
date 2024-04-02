@@ -1,4 +1,5 @@
 import { Hero } from "@/components/projects/review/Hero"
+import { ProjectContent } from "@/components/projects/review/ProjectContent"
 import { ProjectHeader } from "@/components/projects/review/ProjectHeader"
 import { MyFooter } from "@/components/shared/footer/MyFooter"
 import { getProjectById } from "@/services/projects"
@@ -27,6 +28,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
           city={project.city} 
           address={project.address} 
         /> 
+        <ProjectContent />
       </article>
       <MyFooter />
     </main>

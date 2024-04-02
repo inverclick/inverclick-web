@@ -46,7 +46,6 @@ const DesktopMenu = () => (
         unoptimized
         width='30'
         height='30'
-        className='animate-slide-in-top'
         src='/main-page/user.svg'
         alt='Inverclick logo'
       />
@@ -81,7 +80,6 @@ const MobileMenu = () => (
         unoptimized
         width='25'
         height='25'
-        className='animate-slide-in-top'
         src='/main-page/user.svg'
         alt='Inverclick logo'
       />
