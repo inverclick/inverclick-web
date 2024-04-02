@@ -11,7 +11,7 @@ export default function DisplayTRM () {
   }, [loadTRM])
 
   return (
-    <div className="text-[10px] xl:text-[12px] mb-[1px]">
+    <div className="text-[10px] xl:text-[12px] mb-[1px] font-medium">
       TRM: {currencyFormatter(TRM_USD, 'COP')} <span className="text-[8px] xl:text-[10px]">COP</span>
     </div>
   )
