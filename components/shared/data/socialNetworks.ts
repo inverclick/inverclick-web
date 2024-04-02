@@ -12,7 +12,7 @@ export const SOCIAL_NETWORKS = [
   {
     name: 'instagram',
     img: '/main-page/instagram.svg',
-    link: 'https://www.instagram.com/invertik.co',
+    link: 'https://www.instagram.com/inverclick.co',
   },
   {
     name: 'youtube',
@@ -22,7 +22,7 @@ export const SOCIAL_NETWORKS = [
   {
     name: 'twitter',
     img: '/main-page/x.svg',
-    link: 'https://twitter.com/?lang=es',
+    link: 'https://twitter.com/_inverclick',
   },
   {
     name: 'linkedin',
