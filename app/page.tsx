@@ -57,7 +57,7 @@ export default function Home() {
       <h1
         className='text-lg md:text-3xl md:pb-32 text-center md:text-left animate-blurred-fade-in'
       >
-        Invierte en Propiedad Raíz desde EL EXTERIOR
+        Invierte en Propiedad Raíz desde <span className="font-semibold">EL EXTERIOR</span>
       </h1>
       <div className='flex gap-4'>
         {
