@@ -6,6 +6,9 @@ import { MyFooter } from "@/components/shared/footer/MyFooter"
 import { getProjectById } from "@/services/projects"
 import { redirect } from "next/navigation"
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge' 
+
 export default async  function Page ({ params }: { params: { id: string } }) {
   const id = params.id
 
