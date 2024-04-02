@@ -93,9 +93,9 @@ export default function Home() {
         {
           SERVICES.map((service, index) => (
             <article key={index} className='flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center'>
-              <div className='text-white flex flex-col gap-2 lg:gap-4 text-base md:text-lg 2xl:text-xl w-[300px] 2xl:w-[450px]'>
-                <h2 className='text-center font-medium'>{service.title}</h2>
-                <h3 className='font-light lg:pl-4 lg:border-l-2 border-white text-center'>
+              <div className='text-white flex flex-col gap-2 lg:gap-4  w-[300px] 2xl:w-[450px]'>
+                <h2 className='text-center font-medium text-base md:text-lg 2xl:text-xl'>{service.title}</h2>
+                <h3 className='font-light lg:pl-4 lg:border-l-2 border-white text-center text-base md:text-base 2xl:text-lg'>
                   {service.description}
                 </h3>
               </div>
@@ -120,13 +120,13 @@ export default function Home() {
           alt='Inverclick logo gris'
         />
         <div
-          className='flex gap-4 text-white/70 font-light text-xs md:text-sm text-center'
+          className='flex gap-4 text-white/85 font-light text-xs md:text-sm text-center'
         >
           Políticas de privacidad
           <div className='border bg-white/30'></div>
           Términos y condiciones
         </div>
-        <div className='flex gap-4 text-white/70 font-light text-xs md:text-sm'>
+        <div className='flex gap-4 text-white/85 font-light text-xs md:text-sm'>
           All rights reserved © {new Date().getFullYear()}
         </div>
       </footer>
