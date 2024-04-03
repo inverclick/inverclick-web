@@ -1,7 +1,7 @@
 import { useDebounce } from "@/hooks/useDebounce"
 import { Building, Home, LandPlot, Warehouse } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 const TYPE_FILTER_OPTIONS = [
   { label: 'Casa', value: 'Casa', Icon: Home },
@@ -10,11 +10,15 @@ const TYPE_FILTER_OPTIONS = [
   { label: 'Bodega', value: 'Bodega', Icon: Warehouse },
 ]
 
-export const TypeFilter = () => {
+interface Props {
+  currentTypes: string[]
+  setCurrentTypes: (value: string[]) => void
+}
+
+export const TypeFilter = ({currentTypes, setCurrentTypes}: Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const [currentTypes, setCurrentTypes] = useState<string[]>(searchParams.get('type')?.split('-') || [])
   const debouncedTypes = useDebounce(currentTypes, 300)
 
   useEffect(() => {

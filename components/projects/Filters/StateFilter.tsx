@@ -1,7 +1,7 @@
 import { useDebounce } from "@/hooks/useDebounce"
 import { HOUSING_STATE_ENUM } from "@/types/project"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 const STATE_FILTER_OPTIONS = [
   { label: 'Todos', value: 'all' },
@@ -10,11 +10,15 @@ const STATE_FILTER_OPTIONS = [
   { label: 'Usados', value: HOUSING_STATE_ENUM.USED },
 ]
 
-export const StateFilter = () => {
+interface Props {
+  currentState: string
+  setCurrentState: (value: string) => void
+}
+
+export const StateFilter = ({currentState, setCurrentState}: Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const [currentState, setCurrentState] = useState<string>(searchParams.get('housing_state') ?? 'all')
   const debouncedState = useDebounce(currentState, 300)
 
   useEffect(() => {

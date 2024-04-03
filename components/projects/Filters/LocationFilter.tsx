@@ -1,17 +1,19 @@
 'use client'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 
 interface Props {
   departments: {departamento: string}[], 
   cities: {municipio: string}[]
+  currentDepartment: string
+  setCurrentDepartment: (value: string) => void 
+  currentCity: string
+  setCurrentCity: (value: string) => void
 }  
 
-export const LocationFilter = ({departments, cities}: Props) => {
+export const LocationFilter = ({departments, cities, currentCity, currentDepartment, setCurrentCity, setCurrentDepartment}: Props) => {
   const searchParams = useSearchParams()
-  const [currentDepartment, setCurrentDepartment] = useState( searchParams.get('department') || 'all')
-  const [currentCity, setCurrentCity] = useState(searchParams.get('city') || 'all')
   const pathname = usePathname()
   const router = useRouter()
 

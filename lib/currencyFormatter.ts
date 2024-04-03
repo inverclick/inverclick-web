@@ -6,7 +6,7 @@ export function currencyFormatter(numero: number, moneda: Currency): string {
   }
 
   if(isNaN(numero)){
-    throw new Error('El número no es válido');
+    numero = 0
   }
 
   switch (moneda) {
@@ -18,5 +18,22 @@ export function currencyFormatter(numero: number, moneda: Currency): string {
       return Number(numero).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })
     default:
       return '';
+  }
+}
+
+export function currencyParser(valor: string, moneda: Currency): number {
+  if (moneda !== 'COP' && moneda !== 'USD' && moneda !== 'EUR') {
+    throw new Error('Moneda no válida. Debe ser COP, USD o EUR.');
+  }
+
+  switch (moneda) {
+    case 'COP':
+      return parseFloat(valor.replace(/[$.]/g, '').replace(/,/g, '.'));
+    case 'USD':
+      return parseFloat(valor.replace(/[$,]/g, ''));
+    case 'EUR':
+      return parseFloat(valor.replace(/[$.]/g, '').replace(/,/g, '.'));
+    default:
+      return 0
   }
 }
