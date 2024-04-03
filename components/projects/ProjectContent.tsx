@@ -24,7 +24,7 @@ export default async function ProjectContent ({ total, blueprints, department }:
   const { data: cities } = await getCities(department)
 
   return (
-    <section className='lg:mt-20 mx-6'>
+    <section className='lg:mt-20 mx-4'>
       <div className='flex justify-between text-sm text-primary-600 mb-3'>
         <div className='hidden lg:flex gap-3 items-center'>
           <Suspense>
