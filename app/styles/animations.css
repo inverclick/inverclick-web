@@ -1,3 +1,5 @@
+/* Contact y Login Button */
+
 .slide-button {
   background-color: white;
   width: 40px;
@@ -24,15 +26,6 @@
   opacity: 1;
 }
 
-@keyframes slide-out-text {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
 @keyframes slide-in-text {
   0% {
     opacity: 0;
@@ -48,4 +41,51 @@
 
 .slide-button:hover span {
   animation: slide-in-text 0.15s ease-in-out forwards;
+}
+
+/* Download App button */
+
+.slide-app-button {
+  width: 40px;
+  height: 72px;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out;
+}
+
+.slide-app-button:hover {
+  width: 220px;
+}
+
+.slide-app-button span {
+  background-color: white;
+  padding: 10px;
+  border-radius: 999999px;
+  position: absolute;
+  font-size: 12px;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.slide-app-button:hover span {
+  opacity: 1;
+}
+
+@keyframes slide-app-in-text {
+  0% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    font-size: 12px;
+    opacity: 1;
+  }
+}
+
+.slide-app-button:hover span {
+  animation: slide-app-in-text 0.15s ease-in-out forwards;
 }
