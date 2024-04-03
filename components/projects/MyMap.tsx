@@ -1,7 +1,7 @@
 'use client'
 import { ENV_VARS } from '@/global/env';
 import type { IBLUEPRINT_POPULATED } from '@/types/blueprint';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { useEffect, useState } from 'react'
 import { CustomMarker } from './CustomMarker';
 
@@ -20,19 +20,11 @@ export const MyMap = ({blueprints}: Props) => {
   const closeModal = () => setOpen('')
   const openModal = (id: string) => setOpen(id)
 
-  useEffect(() => {
-    if(map){
-      const draftMap = map
-      draftMap.setTilt(45)
-      setMap(draftMap)
-    }
-  }, [map])
-
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        tilt={20}
+        tilt={45}
         zoom={6}
         onLoad={map => setMap(map)}
         options={mapOptions}
