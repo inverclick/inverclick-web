@@ -9,8 +9,8 @@ export const ContactButton = () => {
         unoptimized
         className='object-cover'
         src='/main-page/contact.svg'
-        height='40'
-        width='40'
+        height='36'
+        width='36'
         alt='Inverclick - contacto'
       />
       <span>Contáctenos</span>

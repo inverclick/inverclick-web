@@ -5,7 +5,7 @@ import { SOCIAL_NETWORKS } from '../data/socialNetworks'
 
 export const MyFooter = () => {
   return (
-    <footer className='bg-gray-200 flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20'>
+    <footer className='bg-gray-50 flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20'>
       <section className='grid grid-cols-1 md:grid-cols-3 justify-items-center gap-4'>
         <div className='w-full'>
           <SignupNewsletter />

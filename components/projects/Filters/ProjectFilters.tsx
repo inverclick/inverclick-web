@@ -33,7 +33,6 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData}: 
   const hasSearchParams = useMemo(() => searchParams.has('type') || searchParams.has('department') || searchParams.has('housing_state'), [searchParams])
 
   const onClearSearchParams = () => {
-    setOpen(false)
     const newSearchParams = new URLSearchParams(searchParams.toString())
     newSearchParams.delete('type')
     newSearchParams.delete('department')
@@ -64,9 +63,9 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData}: 
           <TypeFilter />
           <PriceFilter priceGraphicData={priceGraphicData} />
         </main>
-        <AlertDialogFooter className="py-4 px-6 !justify-between border-t border-zinc-300">
-          <AlertDialogCancel onClick={onClearSearchParams} className="hover:bg-primary-50 transition-colors ease-in">Quitar filtros</AlertDialogCancel>
-          <AlertDialogAction className="bg-primary-600 hover:bg-primary-800 transition-colors ease-in">Mostrar {count} resultados</AlertDialogAction>
+        <AlertDialogFooter className="py-4 px-6 gap-4 !justify-between border-t border-zinc-300">
+          <button onClick={onClearSearchParams} className="text-sm md:text-base font-medium hover:text-primary-600 transition-colors ease-in">Quitar filtros</button>
+          <button onClick={() => setOpen(false)} className="bg-primary-600 hover:bg-primary-800 transition-colors ease-in text-white px-4 py-2 rounded-md text-sm md:text-base font-medium">Mostrar {count} resultados</button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
