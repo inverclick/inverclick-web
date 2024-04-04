@@ -11,7 +11,6 @@ interface Props {
 
 export const MyMap = ({blueprints}: Props) => {
   const [open, setOpen] = useState('')
-  const [map, setMap] = useState<google.maps.Map | null>(null)
   const { isLoaded } = useJsApiLoader({
     id: 'inverclick-google-map-script',
     googleMapsApiKey: ENV_VARS.GOOGLE_MAP_KEY
@@ -26,7 +25,6 @@ export const MyMap = ({blueprints}: Props) => {
         center={center}
         tilt={45}
         zoom={6}
-        onLoad={map => setMap(map)}
         options={mapOptions}
       >
         {blueprints.map(blueprint => 

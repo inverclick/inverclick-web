@@ -20,7 +20,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
 
   const mainBlueprint = blueprints[0]
 
-  return (
+  return ( 
     <main>
       <ProjectHeader />
       <article className="px-6 sm:px-10 md:px-8 lg:px-10 xl:px-20 pt-20 md:pt-24 xl:pt-32 flex flex-col gap-8">
@@ -33,6 +33,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
           address={project.address} 
         /> 
         <ProjectContent 
+          characteristics={project.characteristics}
           companyLogo={project.company.logo_url}
           companyName={project.company.name}
           housingState={project.housingState}
@@ -42,6 +43,11 @@ export default async  function Page ({ params }: { params: { id: string } }) {
           address={project.address}
           city={project.city}
           department={project.department}
+          projectLogo={project.logo}
+          projectId={project.id}
+          stratum={project.stratum}
+          units={blueprints.reduce((acc, b) => acc + b.units, 0)}
+          deadline={project?.deadline}
         />
         <OtherProjects projectId={id} />
       </article>

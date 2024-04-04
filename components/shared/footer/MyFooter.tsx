@@ -33,8 +33,8 @@ export const MyFooter = () => {
         )}
         </div>
       </section>
-      <div className='grid grid-cols-1 md:grid-cols-3 items-center justify-items-center md:justify-items-start gap-5'>  
-        <div className='flex gap-4'>
+      <div className='flex flex-col md:flex-row items-center justify-center md:justify-start gap-5'>  
+        <div className='flex-1 flex gap-4'>
           {
             SOCIAL_NETWORKS.map(({ link, img, name }) => (
               <a key={link} href={link} aria-label={link} target='_blank'>
@@ -55,22 +55,22 @@ export const MyFooter = () => {
             unoptimized
             width='200'
             height='80'
-            className='w-[160px] md:w-[220px] mix-blend-multiply'
+            className='w-[130px] md:w-[160px] lg:w-[180px] mix-blend-multiply'
             src='/main-page/inverclick-logo.avif'
             alt='Inverclick logo'
           />
           <div
-            className='flex gap-4 font-light text-xs md:text-sm text-center'
+            className='flex gap-4 font-light text-xs text-center'
           >
             Políticas de privacidad
             <div className='border-r border-black' />
             Términos y condiciones
           </div>
-          <div className='flex gap-4 font-light text-xs md:text-sm'>
+          <div className='flex gap-4 font-light text-xs'>
             All rights reserved © {new Date().getFullYear()}
           </div>
         </div>
-        <div className='justify-self-end'>
+        <div className='flex-1 flex justify-end items-center'>
           <Image
             unoptimized
             className='bottom-5 right-8 object-cover shadow-2xl hidden md:block self-end hover:scale-105 transition-all ease-in cursor-pointer'

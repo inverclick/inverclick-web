@@ -14,7 +14,7 @@ interface Props {
 export const ProjectLocation = ({lat, lng, address, city, department}: Props) => {
   const [map, setMap] = useState<google.maps.Map | null>(null)
   const { isLoaded } = useJsApiLoader({
-    id: 'inverclick-project-google-map-script',
+    id: 'inverclick-google-map-script',
     googleMapsApiKey: ENV_VARS.GOOGLE_MAP_KEY
   })
 
@@ -27,8 +27,8 @@ export const ProjectLocation = ({lat, lng, address, city, department}: Props) =>
   }, [map])
 
   return isLoaded ? (
-    <div>
-      <p className='font-medium text-2xl mb-4'>Ubicación</p>
+    <div className='my-4'>
+      <p className='font-medium text-2xl mb-5'>Ubicación</p>
       <p className='md:max-w-lg text-base text-pretty font-light mb-4'>Colombia, {department}, {city} / {address}</p>
       <GoogleMap
         mapContainerStyle={containerStyle}

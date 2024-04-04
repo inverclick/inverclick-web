@@ -24,7 +24,7 @@ export default async function OtherProjects ({projectId}: {projectId: string}) {
       >
         <CarouselContent>
           { excludedCurrentProject.map( b =>
-            <CarouselItem key={b._id} className='md:basis-1/2 lg:basis-1/4 !flex justify-center'>
+            <CarouselItem key={b._id} className='md:basis-1/2 lg:basis-1/4 !flex justify-center p-6'>
               <ProjectCard 
                 blueprint={b}
               />

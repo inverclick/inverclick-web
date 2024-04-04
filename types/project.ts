@@ -5,14 +5,17 @@ export interface IPROJECT {
   name: string
   address: string
   videos: string[] | null
-  characteristics: Array<{ label: string, icon: string }>
+  logo: string
+  id: string
+  stratum: number
+  characteristics: string[]
   department: string
   city: string
   company: ICOMPANY | string
   description: string
-  nearServices: Array<{ label: string, icon: string }>
   photos: string[]
   housingState: HOUSING_STATE_TYPE
+  deadline?: string
   location: {
     lat: number
     lng: number
@@ -34,5 +37,9 @@ export enum HOUSING_STATE_ENUM {
 export enum HOUSING_STATE_LABEL {
   NEW = 'Nuevo',
   OFF_PLAN = 'Sobre plano',
-  USED = 'Usado'
+  USED = 'Usado',
+
+  new = 'Nuevo',
+  'off-plan' = 'Sobre plano',
+  used = 'Usado',
 }

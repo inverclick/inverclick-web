@@ -25,7 +25,7 @@ export const ProjectCard = ({blueprint}: Props) => {
   if(!isMounted) return null
 
   return (
-    <section className='flex flex-col w-[280px] lg:w-[220px] 2xl:w-[280px] shadow-lg hover:shadow-2xl transition-shadow ease-in h-full rounded-b-lg'>
+    <section className='flex flex-col w-[280px] lg:w-[220px] 2xl:w-[280px] shadow-md hover:shadow-lg transition-shadow ease-in h-full rounded-b-lg'>
       <div className='relative'>
       <Carousel className="h-[170px] lg:h-[150px] 2xl:h-[170px] w-full ">
         <CarouselContent className='!ml-0'>

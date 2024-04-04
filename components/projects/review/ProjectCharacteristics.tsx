@@ -1,19 +1,58 @@
+import { HOUSING_STATE_LABEL, HOUSING_STATE_TYPE } from '@/types/project'
+import { BadgeCheck, Check } from 'lucide-react'
+import Image from 'next/image'
 import React from 'react'
 
 interface Props {
-  
+  companyLogo: string
+  companyName: string
+  housingState: HOUSING_STATE_TYPE
+  deadline?: string
+  units: number
+  stratum: number
+  characteristics: string[]
 }
 
-export const ProjectCharacteristics = ({}) => {
+export const ProjectCharacteristics = ({companyLogo, companyName, housingState, stratum, units, deadline, characteristics}: Props) => {
+  
   return (
     <section>
       <p className="font-medium text-2xl mb-8">Características del proyecto</p>
-      <div>
-        <div>
+      <div className='flex flex-col-reverse md:flex-row gap-6'>
+        <article className='flex-1'>
+          <p className='font-light'>Constructora: <span className='font-medium'>{companyName}</span></p>
+          <div className='flex gap-6 items-center pl-4 mt-2 mb-6 md:mb-8'>
+            <Image 
+              alt={companyName}
+              src={companyLogo}
+              width={80}
+              height={80}
+              unoptimized
+            />
+            <div>
+              <div className='flex justify-center items-center gap-2 bg-gray-300/30 px-2 py-1 text-xs rounded-xl border border-black'>
+                <BadgeCheck className='text-green-600 h-5 w-5' />
+                Proyecto verificado
+              </div>
+            </div>
 
-        </div>
-        <ul>
+          </div>
+          <p className='font-light'>Estado proyecto: <span className='font-medium'>{HOUSING_STATE_LABEL[housingState]}</span></p>
+          { deadline?.length ? <p className='font-light'>Fecha de entrega: <span className='font-medium'>{ deadline }<sup>*</sup></span></p> : null}
+          <p className='font-light'>Unidades disponibles: <span className='font-medium'>{units}<sup>*</sup> </span></p>
+          <p className='font-light'>Estrato: <span className='font-medium'>{stratum}</span></p>
 
+          <p className='font-medium mt-6 md:mt-8'>Financiación colombianos en el exterior:</p>
+          <p className='text-xs'><sup>*</sup>Consultar con un asesor:</p> 
+          <p className='text-xs'>Los precios, fechas de entrega y disponibilidad pueden cambiar sin previo aviso.</p>
+        </article>
+        <ul className='min-w-64 mr-6'>
+        { characteristics.map( (item, index) => 
+          <li key={index} className='flex gap-2 items-center font-light mb-1'>
+            <Check className='w-5 h-5 text-green-600' />
+            {item}
+          </li>
+        )}
         </ul>
       </div>
     </section>
