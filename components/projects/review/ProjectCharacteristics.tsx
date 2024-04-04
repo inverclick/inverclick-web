@@ -43,6 +43,24 @@ export const ProjectCharacteristics = ({companyLogo, companyName, housingState, 
           <p className='font-light'>Estrato: <span className='font-medium'>{stratum}</span></p>
 
           <p className='font-medium mt-6 md:mt-8'>Financiación colombianos en el exterior:</p>
+          <div className='flex gap-8 mt-2 mb-6'>
+            <Image 
+              unoptimized
+              alt='Banco Unión'
+              src='/main-page/banco_union.jpeg'
+              width={70}
+              height={30}
+              className='object-contain'
+            />
+             <Image 
+              unoptimized
+              alt='Banco Unión'
+              src='/main-page/davivienda-logo.png'
+              width={180}
+              height={40}
+              className='object-contain'
+            />
+          </div>
           <p className='text-xs'><sup>*</sup>Consultar con un asesor:</p> 
           <p className='text-xs'>Los precios, fechas de entrega y disponibilidad pueden cambiar sin previo aviso.</p>
         </article>
