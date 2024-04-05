@@ -78,6 +78,14 @@ export const ProjectContent = ({characteristics, name, description, location, ad
                   city={city} 
                   department={department}
                 />
+                <Image 
+                  alt='/main-page/temporal.jpg'
+                  src='/main-page/temporal.jpg'
+                  width={200}
+                  height={200}
+                  className='w-[100%]'
+                  unoptimized
+                />
                 <hr />
               </div>
             </TabsContent>
