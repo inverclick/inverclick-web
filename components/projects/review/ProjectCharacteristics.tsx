@@ -65,12 +65,12 @@ export const ProjectCharacteristics = ({companyLogo, companyName, housingState, 
           <p className='text-xs'>Los precios, fechas de entrega y disponibilidad pueden cambiar sin previo aviso.</p>
         </article>
         <ul className='min-w-64 mr-6'>
-        { characteristics.map( (item, index) => 
+        {/* { characteristics.map( (item, index) => 
           <li key={index} className='flex gap-2 items-center font-light mb-1'>
             <Check className='w-5 h-5 text-green-600' />
             {item}
           </li>
-        )}
+        )} */}
         </ul>
       </div>
     </section>
