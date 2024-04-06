@@ -66,7 +66,7 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData}: 
           Filtros
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="p-0 md:min-w-[800px] max-h-[760px] md:max-h-[800px] overflow-scroll rounded-lg">
+      <AlertDialogContent className="p-0 md:min-w-[800px] overflow-scroll rounded-lg">
         <header className="flex w-full items-center border-b border-zinc-300 py-3 px-6">
           <X onClick={() => setOpen(false)} className="w-5 h-5 cursor-pointer text-primary-600" />
           <h3 className="flex-1 md:text-lg text-primary-600 text-center font-semibold">Filtros</h3>
