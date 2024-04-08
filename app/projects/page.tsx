@@ -6,6 +6,7 @@ import { getAllProjects } from "@/services/projects";
 import { MobileProjectHeader } from '@/components/projects/mobile/MobileProjectHeader';
 import { LoginButton } from '@/components/shared/LoginButton';
 import { ContactButton } from '@/components/shared/ContactButton';
+import { DefaultResizableHandle, DefaultResizablePanel, DefaultResizablePanelGroup } from '@/components/ui/resizable-default';
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'edge' 
@@ -19,18 +20,20 @@ export default async function Projects (props: any) {
   
   return (
     <main>
-      <LoginButton />
       <ContactButton />
   
-      <div className='hidden lg:flex flex-col lg:flex-row '>
-        <section className='flex-1'>
-          <MyMap blueprints={data} />
-        </section>
-        <section className='z-10 shadow-xl flex-1 relative max-w-[50%]'>
-          <NavbarProjects />
-          <ProjectContent total={count} blueprints={data} department={department} /> 
-        </section>
-      </div>
+      <section className='hidden lg:block'>
+        <DefaultResizablePanelGroup direction="horizontal" >
+          <DefaultResizablePanel defaultSize={50}>
+            <MyMap blueprints={data} />
+          </DefaultResizablePanel>
+          <DefaultResizableHandle withHandle />
+          <DefaultResizablePanel defaultSize={50} minSize={25} className='z-10 relative'>
+            <NavbarProjects />
+            <ProjectContent total={count} blueprints={data} department={department} /> 
+          </DefaultResizablePanel>
+        </DefaultResizablePanelGroup>
+      </section>
       <section className='lg:hidden'>
         <MobileProjectHeader total={count} department={department} /> 
         <div className='h-screen'>
