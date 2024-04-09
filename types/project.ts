@@ -15,6 +15,7 @@ export interface IPROJECT {
   description: string
   photos: string[]
   housingState: HOUSING_STATE_TYPE
+  housingType: IHOUSING_TYPE | string
   deadline?: string
   location: {
     lat: number
@@ -24,6 +25,7 @@ export interface IPROJECT {
 
 export interface IPROJECT_POPULATED extends IPROJECT {
   company: ICOMPANY
+  housingType: IHOUSING_TYPE
 }
 
 export type HOUSING_STATE_TYPE = 'new' | 'off-plan' | 'used'
@@ -42,4 +44,9 @@ export enum HOUSING_STATE_LABEL {
   new = 'Nuevo',
   'off-plan' = 'Sobre plano',
   used = 'Usado',
+}
+
+export interface IHOUSING_TYPE {
+  _id: string
+  label: string
 }

@@ -13,15 +13,17 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { LocationFilter } from "./LocationFilter"
 import { StateFilter } from "./StateFilter"
 import { PriceFilter } from "./PriceFilter"
+import { IHOUSING_TYPE } from "@/types/project"
 
 interface Props {
   count: number
   departments: {departamento: string}[]
   cities: {municipio: string}[]
   priceGraphicData: {goal: number}[]
+  housingTypes: IHOUSING_TYPE[]
 }
 
-export const ProjectFilters = ({count, departments, cities , priceGraphicData}: Props) => {
+export const ProjectFilters = ({count, departments, cities , priceGraphicData, housingTypes}: Props) => {
   const [open, setOpen] = useState(false)
   const searchParams = useSearchParams()
   const [currentDepartment, setCurrentDepartment] = useState( searchParams.get('department') || 'all')
@@ -81,7 +83,7 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData}: 
             currentCity={currentCity}
           />
           <StateFilter currentState={currentState} setCurrentState={setCurrentState} />
-          <TypeFilter currentTypes={currentTypes} setCurrentTypes={setCurrentTypes} />
+          <TypeFilter housingTypes={housingTypes} currentTypes={currentTypes} setCurrentTypes={setCurrentTypes} />
           <PriceFilter 
             priceGraphicData={priceGraphicData} 
             minPrice={Number(minPrice)} 

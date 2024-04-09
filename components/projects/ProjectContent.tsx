@@ -3,7 +3,7 @@ import type { IBLUEPRINT_POPULATED } from '@/types/blueprint';
 import { SelectCurrency } from './SelectCurrency';
 import { ProjectInfinityScroll } from './ProjectInfinityScroll';
 import { ProjectFilters } from './Filters/ProjectFilters';
-import { getCities, getDepartments, getGraphicPriceRange } from '@/services/utils';
+import { getCities, getDepartments, getGraphicPriceRange, getHousingTypes } from '@/services/utils';
 import { Suspense } from 'react';
 
 interface Props {
@@ -13,12 +13,14 @@ interface Props {
 }
 
 export default async function ProjectContent ({ total, blueprints, department }: Props) {
-  const [departmentsResponse, priceGraphicDataResponse] = await Promise.all([
+  const [departmentsResponse, priceGraphicDataResponse, housingTypesResponse] = await Promise.all([
     getDepartments(),
-    getGraphicPriceRange()
+    getGraphicPriceRange(),
+    getHousingTypes()
   ])
 
   const { data: priceGraphicData} = priceGraphicDataResponse
+  const { data: housingTypes } = housingTypesResponse
 
   const { data: departments } = departmentsResponse
   const { data: cities } = await getCities(department)
@@ -33,6 +35,7 @@ export default async function ProjectContent ({ total, blueprints, department }:
               departments={departments} 
               cities={cities} 
               priceGraphicData={priceGraphicData}
+              housingTypes={housingTypes}
             /> 
           </Suspense>
           <SelectCurrency />

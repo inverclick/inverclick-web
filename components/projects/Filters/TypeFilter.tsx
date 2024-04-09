@@ -1,21 +1,23 @@
 import { useDebounce } from "@/hooks/useDebounce"
+import { IHOUSING_TYPE } from "@/types/project"
 import { Building, Home, LandPlot, Warehouse } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
-const TYPE_FILTER_OPTIONS = [
-  { label: 'Casa', value: 'Casa', Icon: Home },
-  { label: 'Apartamento', value: 'Apartamento', Icon: Building},
-  { label: 'Lote', value: 'Lote',  Icon: LandPlot },
-  { label: 'Bodega', value: 'Bodega', Icon: Warehouse },
+const OPTIONS_ICON = [
+  Home,
+  Building,
+  LandPlot,
+  Warehouse
 ]
 
 interface Props {
   currentTypes: string[]
   setCurrentTypes: (value: string[]) => void
+  housingTypes: IHOUSING_TYPE[]
 }
 
-export const TypeFilter = ({currentTypes, setCurrentTypes}: Props) => {
+export const TypeFilter = ({currentTypes, setCurrentTypes, housingTypes}: Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -41,15 +43,19 @@ export const TypeFilter = ({currentTypes, setCurrentTypes}: Props) => {
     <section className="flex flex-col gap-3">
       <h4 className="font-medium md:text-lg">Tipo de propiedad</h4>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      { TYPE_FILTER_OPTIONS.map(({ label, value, Icon }) => 
-        <button 
-          key={value}
-          onClick={() => onChange(value)}
-          className={`flex flex-col gap-1 border border-black rounded-lg p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${currentTypes.includes(value) ? 'bg-primary-600 text-white border-primary-600' : ''}`}
-        >
-          <Icon className="h-5 w-5 md:h-7 md:w-7 " />
-          <span className="text-sm md:text-base font-medium">{label}</span>
-        </button>
+      { housingTypes.map(({ label, _id }, index) => {
+        const Icon = OPTIONS_ICON[index]
+        return (
+          <button 
+            key={_id}
+            onClick={() => onChange(_id)}
+            className={`flex flex-col gap-1 border border-black rounded-lg p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${currentTypes.includes(_id) ? 'bg-primary-600 text-white border-primary-600' : ''}`}
+          >
+            <Icon className="h-5 w-5 md:h-7 md:w-7 " />
+            <span className="text-sm md:text-base font-medium">{label}</span>
+          </button>
+        )
+      }
       )}
       </div>
     </section>

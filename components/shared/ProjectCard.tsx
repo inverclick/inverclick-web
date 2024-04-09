@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Skeleton } from '../ui/skeleton'
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '../ui/carousel'
+import { HOUSING_STATE_LABEL } from '@/types/project'
 
 interface Props {
   blueprint: IBLUEPRINT_POPULATED
@@ -38,8 +39,8 @@ export const ProjectCard = ({blueprint}: Props) => {
         <CarouselPrevious className='translate-x-14 z-10 !h-6 !w-6 bg-primary-100/70 border-primary-400 hover:bg-primary-200/90 text-primary-500 hover:text-primary-600' />
         <CarouselNext className='-translate-x-14 z-10 !h-6 !w-6 bg-primary-100/70 border-primary-400 hover:bg-primary-200/90 text-primary-500 hover:text-primary-600' />
       </Carousel>
-        <a href={href} target='_blank' className='cursor-pointer z-10 absolute top-0 left-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tl-lg px-2 py-1 capitalize font-semibold bg-primary-500'>{blueprint.state}</a>
-        <div className='absolute top-0 left-0 text-[10px] text-white  capitalize font-semibold bg-white'>{blueprint.state}</div>
+        <a href={href} target='_blank' className='cursor-pointer z-10 absolute top-0 left-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tl-lg px-2 py-1 capitalize font-semibold bg-primary-500'>{ HOUSING_STATE_LABEL[project.housingState]}</a>
+        <div className='absolute top-0 left-0 text-[10px] text-white  capitalize font-semibold bg-white'>{HOUSING_STATE_LABEL[project.housingState]}</div>
         
         <a href={href} target='_blank' className='cursor-pointer z-10 absolute top-0 right-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tr-lg px-2 py-1 capitalize font-semibold bg-primary-400'>{blueprint.type}</a>
         <div className='absolute top-0 right-0 text-[10px] text-white  capitalize font-semibold bg-white'>{blueprint.state}</div>
