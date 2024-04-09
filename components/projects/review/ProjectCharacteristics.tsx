@@ -1,6 +1,8 @@
+import { getProjectCharacteristics } from '@/services/utils'
 import { HOUSING_STATE_LABEL, HOUSING_STATE_TYPE } from '@/types/project'
 import { BadgeCheck, Check } from 'lucide-react'
 import Image from 'next/image'
+import dayjs from 'dayjs'
 import React from 'react'
 
 interface Props {
@@ -10,11 +12,11 @@ interface Props {
   deadline?: string
   units: number
   stratum: number
-  characteristics: string[]
+  characteristics: {label: string, _id: string}[]
 }
 
-export const ProjectCharacteristics = ({companyLogo, companyName, housingState, stratum, units, deadline, characteristics}: Props) => {
-  
+export const ProjectCharacteristics = async ({companyLogo, companyName, housingState, stratum, units, deadline, characteristics}: Props) => {
+  const {data} = await getProjectCharacteristics()
   return (
     <section>
       <p className="font-medium text-2xl mb-8">Características del proyecto</p>
@@ -35,10 +37,9 @@ export const ProjectCharacteristics = ({companyLogo, companyName, housingState, 
                 Proyecto verificado
               </div>
             </div>
-
           </div>
           <p className='font-light'>Estado proyecto: <span className='font-medium'>{HOUSING_STATE_LABEL[housingState]}</span></p>
-          { deadline?.length ? <p className='font-light'>Fecha de entrega: <span className='font-medium'>{ deadline }<sup>*</sup></span></p> : null}
+          { deadline?.length ? <p className='font-light'>Fecha de entrega: <span className='font-medium'>{ dayjs(deadline).format('DD/MM/YYYY') } <sup>*</sup></span></p> : null}
           <p className='font-light'>Unidades disponibles: <span className='font-medium'>{units}<sup>*</sup> </span></p>
           <p className='font-light'>Estrato: <span className='font-medium'>{stratum}</span></p>
 
@@ -65,12 +66,29 @@ export const ProjectCharacteristics = ({companyLogo, companyName, housingState, 
           <p className='text-xs'>Los precios, fechas de entrega y disponibilidad pueden cambiar sin previo aviso.</p>
         </article>
         <ul className='min-w-64 mr-6'>
-        {/* { characteristics.map( (item, index) => 
-          <li key={index} className='flex gap-2 items-center font-light mb-1'>
+        
+        { data.map( ({label, _id}) => {
+          if(!characteristics.find(c => c._id === _id)) {
+            return (
+              <li key={_id} className='flex gap-2 items-center font-light mb-1 line-through decoration-primary-600'>
+                <div className='w-5 h-5' />
+                {label}
+              </li>
+            )
+          }
+          return (
+            <li key={_id} className='flex gap-2 items-center font-light mb-1'>
+              <Check className='w-5 h-5 text-green-600' />
+              {label}
+            </li>
+          )}
+        )}
+        { characteristics.filter(c => !data.find(d => d._id === c._id)).map(({label, _id}) => (
+          <li key={_id} className='flex gap-2 items-center font-light mb-1'>
             <Check className='w-5 h-5 text-green-600' />
-            {item}
+            {label}
           </li>
-        )} */}
+        ))}
         </ul>
       </div>
     </section>

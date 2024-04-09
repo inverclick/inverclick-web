@@ -4,7 +4,6 @@ import NavbarProjects from "@/components/projects/NavbarProjects";
 import ProjectContent from "@/components/projects/ProjectContent";
 import { getAllProjects } from "@/services/projects";
 import { MobileProjectHeader } from '@/components/projects/mobile/MobileProjectHeader';
-import { LoginButton } from '@/components/shared/LoginButton';
 import { ContactButton } from '@/components/shared/ContactButton';
 import { DefaultResizableHandle, DefaultResizablePanel, DefaultResizablePanelGroup } from '@/components/ui/resizable-default';
 

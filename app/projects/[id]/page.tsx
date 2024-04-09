@@ -19,7 +19,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
   if(!project || !blueprints.length) redirect('/projects')
 
   const mainBlueprint = blueprints[0]
-
+  
   return ( 
     <main>
       <ProjectHeader />

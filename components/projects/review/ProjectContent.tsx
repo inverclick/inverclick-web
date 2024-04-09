@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { StickyContact } from './StickyContact'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ProjectLocation } from './ProjectLocation'
-import OtherProjects from './OtherProjects'
 import Image from 'next/image'
 import { ProjectCharacteristics } from './ProjectCharacteristics'
 import { HOUSING_STATE_TYPE } from '@/types/project'
@@ -19,7 +18,7 @@ interface DescriptionProps {
   address: string
   projectId: string
   stratum: number
-  characteristics: string[]
+  characteristics: {label: string, _id: string}[]
   units: number
   deadline?: string
   location: {
@@ -62,15 +61,17 @@ export const ProjectContent = ({characteristics, name, description, location, ad
                   </div>
                 </div>
                 <hr />
-                <ProjectCharacteristics 
-                  characteristics={characteristics}
-                  companyLogo={companyLogo}
-                  companyName={companyName}
-                  housingState={housingState}
-                  stratum={stratum}
-                  units={units}
-                  deadline={deadline}
-                />
+                <Suspense>
+                  <ProjectCharacteristics 
+                    characteristics={characteristics}
+                    companyLogo={companyLogo}
+                    companyName={companyName}
+                    housingState={housingState}
+                    stratum={stratum}
+                    units={units}
+                    deadline={deadline}
+                  />
+                </Suspense>
                 <ProjectLocation 
                   lat={location.lat} 
                   lng={location.lng} 

@@ -54,3 +54,16 @@ export const getHousingTypes = async (): Promise<{ success: boolean, message: st
     }
   }
 }
+
+export const getProjectCharacteristics = async (): Promise<{ success: boolean, message: string, data: {label: string, _id: string}[]  }> => {
+  try {
+    const response = await fetch(API + '/utils/project-characteristics', { cache: 'no-cache' })
+    return await response.json()
+  } catch (error) {
+    return {
+      success: false,
+      message: 'Error fetching data',
+      data: [],
+    }
+  }
+}

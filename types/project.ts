@@ -8,7 +8,7 @@ export interface IPROJECT {
   logo: string
   id: string
   stratum: number
-  characteristics: string[]
+  characteristics: {label: string, _id: string}[]
   department: string
   city: string
   company: ICOMPANY | string
