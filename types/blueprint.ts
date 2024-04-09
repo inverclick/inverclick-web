@@ -15,6 +15,7 @@ export interface IBLUEPRINT {
   units: number
   price: number
   rooms: number
+  parking: number
 }
 
 export type BLUEPRINT_TYPE = 'Casa' | 'Apartamento' | 'Apartaestudios' | 'Local' | 'Oficina' | 'Bodega' | 'Apartasuites'

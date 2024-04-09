@@ -5,6 +5,8 @@ import { ProjectLocation } from './ProjectLocation'
 import Image from 'next/image'
 import { ProjectCharacteristics } from './ProjectCharacteristics'
 import { HOUSING_STATE_TYPE } from '@/types/project'
+import { IBLUEPRINT } from '@/types/blueprint'
+import { Typologies } from './Typologies'
 
 interface DescriptionProps {
   name: string
@@ -21,13 +23,14 @@ interface DescriptionProps {
   characteristics: {label: string, _id: string}[]
   units: number
   deadline?: string
+  typologies: IBLUEPRINT[]
   location: {
     lat: number
     lng: number
   }
 }
 
-export const ProjectContent = ({characteristics, name, description, location, address, city, department, projectLogo, projectId, companyLogo, companyName, housingState, stratum, units, deadline}: DescriptionProps) => {
+export const ProjectContent = ({typologies, characteristics, name, description, location, address, city, department, projectLogo, projectId, companyLogo, companyName, housingState, stratum, units, deadline}: DescriptionProps) => {
   return (
     <article className='flex gap-4'>
       <Tabs defaultValue="description" className="flex-1">
@@ -90,7 +93,9 @@ export const ProjectContent = ({characteristics, name, description, location, ad
                 <hr />
               </div>
             </TabsContent>
-            <TabsContent value="types">Tipologías</TabsContent>
+            <TabsContent value="types">
+              <Typologies typologies={typologies} />
+            </TabsContent>
             <TabsContent value="urban">Urbanismo</TabsContent>
           </div>
           <StickyContact />

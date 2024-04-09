@@ -48,6 +48,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
           stratum={project.stratum}
           units={blueprints.reduce((acc, b) => acc + b.units, 0)}
           deadline={project?.deadline}
+          typologies={blueprints}
         />
         <OtherProjects projectId={id} />
       </article>
