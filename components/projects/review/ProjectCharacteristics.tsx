@@ -34,7 +34,7 @@ export const ProjectCharacteristics = async ({companyLogo, companyName, housingS
             <div>
               <div className='flex justify-center items-center gap-2 bg-gray-300/30 px-2 py-1 text-xs rounded-xl border border-black'>
                 <BadgeCheck className='text-green-600 h-5 w-5' />
-                Proyecto verificado
+                Constructora verificada
               </div>
             </div>
           </div>

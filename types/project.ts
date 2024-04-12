@@ -17,6 +17,7 @@ export interface IPROJECT {
   housingState: HOUSING_STATE_TYPE
   housingType: IHOUSING_TYPE | string
   deadline?: string
+  urbanism: string[]
   location: {
     lat: number
     lng: number
