@@ -9,7 +9,7 @@ export const getDepartments = async (): Promise<{ success: boolean, message: str
   } catch (error) {
     return {
       success: false,
-      message: 'Error fetching departments',
+      message: String(error),
       data: [],
     }
   }

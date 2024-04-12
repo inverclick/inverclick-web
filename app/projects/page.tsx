@@ -15,8 +15,6 @@ export default async function Projects (props: any) {
   const parsedSearchParams = new URLSearchParams(searchParams)
   const { count, data } = await getAllProjects(`?${parsedSearchParams.toString()}`);
   
-  const department = parsedSearchParams.get('department')
-  
   return (
     <main>
       <ContactButton />
@@ -29,12 +27,12 @@ export default async function Projects (props: any) {
           <DefaultResizableHandle withHandle />
           <DefaultResizablePanel defaultSize={50} minSize={25} className='z-10 relative'>
             <NavbarProjects />
-            <ProjectContent total={count} blueprints={data} department={department} /> 
+            <ProjectContent total={count} blueprints={data} /> 
           </DefaultResizablePanel>
         </DefaultResizablePanelGroup>
       </section>
       <section className='lg:hidden'>
-        <MobileProjectHeader total={count} department={department} /> 
+        <MobileProjectHeader total={count}  /> 
         <div className='h-screen'>
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={80}>
@@ -42,7 +40,7 @@ export default async function Projects (props: any) {
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={20} maxSize={60}>
-              <ProjectContent total={count} blueprints={data} department={department} /> 
+              <ProjectContent total={count} blueprints={data}  /> 
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>

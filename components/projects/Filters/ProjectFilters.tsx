@@ -8,22 +8,23 @@ import {
 import { Button } from "@/components/ui/button"
 import { TypeFilter } from "@/components/projects/Filters/TypeFilter"
 import { SlidersHorizontal, X } from "lucide-react"
-import {  useMemo, useState } from "react"
+import {  useEffect, useMemo, useRef, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { LocationFilter } from "./LocationFilter"
+import { IHOUSING_TYPE } from "@/types/project"
 import { StateFilter } from "./StateFilter"
 import { PriceFilter } from "./PriceFilter"
-import { IHOUSING_TYPE } from "@/types/project"
+import { useDebounce } from "@/hooks/useDebounce"
+import { getProjectsCount } from "@/services/projects"
 
 interface Props {
-  count: number
   departments: {departamento: string}[]
-  cities: {municipio: string}[]
   priceGraphicData: {goal: number}[]
   housingTypes: IHOUSING_TYPE[]
+  count: number
 }
 
-export const ProjectFilters = ({count, departments, cities , priceGraphicData, housingTypes}: Props) => {
+export const ProjectFilters = ({departments, priceGraphicData, housingTypes, count}: Props) => {
   const [open, setOpen] = useState(false)
   const searchParams = useSearchParams()
   const [currentDepartment, setCurrentDepartment] = useState( searchParams.get('department') || 'all')
@@ -32,8 +33,12 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData, h
   const [currentTypes, setCurrentTypes] = useState<string[]>(searchParams.get('type')?.split('-') || [])
   const [minPrice, setMinPrice] = useState<number | undefined>(Number(searchParams.get('min_price') ?? 0))
   const [maxPrice, setMaxPrice] = useState<number | undefined>(Number(searchParams.get('max_price') ?? 999999999))
+  const debouncedMinPrice = useDebounce(minPrice, 500)
+  const debouncedMaxPrice = useDebounce(maxPrice, 500)
+  const [currentCount, setCount] = useState(count)
   const pathname = usePathname()
   const router = useRouter()
+  const isCounting = useRef(false)
 
   const hasSearchParams = useMemo(() => searchParams.has('type') || searchParams.has('department') || searchParams.has('housing_state'), [searchParams])
 
@@ -59,6 +64,48 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData, h
     router.replace(`${pathname}?${newSearchParams.toString()}`)
   }
 
+  const onApplyFilters = () => {
+    const newSearchParams = new URLSearchParams(searchParams.toString())
+    
+    if(currentDepartment !== 'all') newSearchParams.set('department', currentDepartment)
+    else newSearchParams.delete('department')
+
+    if(currentCity !== 'all') newSearchParams.set('city', currentCity)
+    else newSearchParams.delete('city')
+    
+  
+    if(currentTypes.length) newSearchParams.set('type', currentTypes.join('-'))
+    else newSearchParams.delete('type')
+
+    if(currentState !== 'all') newSearchParams.set('housing_state', currentState)
+    else newSearchParams.delete('housing_state')
+
+    newSearchParams.set('min_price', String(minPrice))
+    newSearchParams.set('max_price', String(maxPrice))
+    
+    router.replace(`${pathname}?${newSearchParams.toString()}`)
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    const fetchCount = async () => {
+      isCounting.current = true
+      let query = '?'
+    
+      if(currentDepartment !== 'all') query += 'department=' + currentDepartment
+      if(currentCity !== 'all') query += '&city=' + currentCity
+      if(currentTypes.length) query += query.length > 1 ? '&type=' + currentTypes.join('-') : 'type=' + currentTypes.join('-')
+      if(currentState !== 'all') query += query.length > 1 ? '&housing_state=' + currentState : 'housing_state=' + currentState
+      query += `&min_price=${debouncedMinPrice}&max_price=${debouncedMaxPrice}`
+      
+      const { success, count } = await getProjectsCount(query)
+      if(success) setCount(count)
+      isCounting.current = false
+    }
+
+    !isCounting.current &&  fetchCount()
+  }, [currentDepartment, currentCity, currentTypes, currentState, debouncedMinPrice, debouncedMaxPrice])
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
@@ -76,7 +123,6 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData, h
         <main className="px-12 py-2 flex flex-col gap-6 overflow-x-auto">
           <LocationFilter   
             departments={departments} 
-            cities={cities} 
             currentDepartment={currentDepartment}
             setCurrentDepartment={setCurrentDepartment}
             setCurrentCity={setCurrentCity}
@@ -84,7 +130,7 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData, h
           />
           <StateFilter currentState={currentState} setCurrentState={setCurrentState} />
           <TypeFilter housingTypes={housingTypes} currentTypes={currentTypes} setCurrentTypes={setCurrentTypes} />
-          <PriceFilter 
+          <PriceFilter
             priceGraphicData={priceGraphicData} 
             minPrice={Number(minPrice)} 
             maxPrice={Number(maxPrice)}
@@ -94,10 +140,9 @@ export const ProjectFilters = ({count, departments, cities , priceGraphicData, h
         </main>
         <AlertDialogFooter className="py-4 px-6 gap-4 !justify-between border-t border-zinc-300">
           <button onClick={onClearSearchParams} className="text-sm md:text-base font-medium hover:text-primary-600 transition-colors ease-in">Quitar filtros</button>
-          <button onClick={() => setOpen(false)} className="bg-primary-600 hover:bg-primary-800 transition-colors ease-in text-white px-4 py-2 rounded-md text-sm md:text-base font-medium">Mostrar {count} resultados</button>
+          <button onClick={onApplyFilters} className="bg-primary-600 hover:bg-primary-800 transition-colors ease-in text-white px-4 py-2 rounded-md text-sm md:text-base font-medium">Mostrar {currentCount} resultados</button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
-

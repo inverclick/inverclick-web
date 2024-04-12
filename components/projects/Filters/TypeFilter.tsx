@@ -1,8 +1,5 @@
-import { useDebounce } from "@/hooks/useDebounce"
 import { IHOUSING_TYPE } from "@/types/project"
 import { Building, Home, LandPlot, Warehouse } from "lucide-react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect } from "react"
 
 const OPTIONS_ICON = [
   Home,
@@ -18,22 +15,6 @@ interface Props {
 }
 
 export const TypeFilter = ({currentTypes, setCurrentTypes, housingTypes}: Props) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const debouncedTypes = useDebounce(currentTypes, 300)
-
-  useEffect(() => {
-    if(debouncedTypes) {
-      const newSearchParams = new URLSearchParams(searchParams.toString())
-      newSearchParams.set('type', debouncedTypes.join('-'))
-  
-      if(debouncedTypes.length === 0) newSearchParams.delete('type')
-      router.push(`${pathname}?${newSearchParams.toString()}`)
-    }
-    
-  }, [debouncedTypes, pathname, router, searchParams])
-
   const onChange = (type: string) => {    
     const newTypes = (currentTypes.includes(type) ? currentTypes.filter(t => t !== type) : [...currentTypes, type]).filter(t => t.length)
     setCurrentTypes(newTypes)

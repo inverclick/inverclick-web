@@ -1,8 +1,5 @@
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
-import { useDebounce } from "@/hooks/useDebounce"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
 import { SelectCurrency } from "../SelectCurrency"
 import { currencyFormatter, currencyParser } from "@/lib/currencyFormatter"
 import { useCurrencyContext } from "@/contexts/CurrencyContext"
@@ -16,27 +13,6 @@ interface Props {
 }
 
 export const PriceFilter = ({ priceGraphicData, maxPrice, minPrice, setMaxPrice, setMinPrice }: Props) => {
-  const {replace} = useRouter()
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const [refreshParamsControl, setRefreshParamsControl ] = useState(Math.random())
-  const debouncedRefreshParamsControl = useDebounce(refreshParamsControl, 500);
-
-
-  useEffect(() => {
-    const handleChange = () => {
-      if(!minPrice || !maxPrice ) return
-      const newSearchParams = new URLSearchParams(searchParams.toString())
-      newSearchParams.set('min_price', minPrice.toString())
-      newSearchParams.set('max_price', maxPrice.toString())
-  
-      replace(`${pathname}?${newSearchParams.toString()}`)
-    }
-  
-    handleChange()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, replace, searchParams, debouncedRefreshParamsControl])
-
   const onChange = (name: string, value: string) => {
     const newValue = value.length ? Number(value) : undefined
     console.log(newValue)
@@ -45,7 +21,6 @@ export const PriceFilter = ({ priceGraphicData, maxPrice, minPrice, setMaxPrice,
     } else {
       setMaxPrice(Math.min(minPrice, Number(newValue)))
     }
-    setRefreshParamsControl(Math.random())
   }
 
   return (
@@ -65,7 +40,6 @@ export const PriceFilter = ({ priceGraphicData, maxPrice, minPrice, setMaxPrice,
             onValueChange={(values) => {
               setMinPrice(values[0])
               setMaxPrice(values[1])
-              setRefreshParamsControl(Math.random())
             }}
           />
         </div>

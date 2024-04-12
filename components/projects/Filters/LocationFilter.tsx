@@ -1,51 +1,48 @@
 'use client'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useMemo } from 'react'
+import { getCities } from '@/services/utils'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 interface Props {
   departments: {departamento: string}[], 
-  cities: {municipio: string}[]
   currentDepartment: string
   setCurrentDepartment: (value: string) => void 
   currentCity: string
   setCurrentCity: (value: string) => void
 }  
 
-export const LocationFilter = ({departments, cities, currentCity, currentDepartment, setCurrentCity, setCurrentDepartment}: Props) => {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const router = useRouter()
-
+export const LocationFilter = ({departments, currentCity, currentDepartment, setCurrentCity, setCurrentDepartment}: Props) => {
+  const [cities, setCities] = useState<{municipio: string}[]>([])
   const departmentsOptions = useMemo(() => departments.map(({departamento}) => ({label: departamento, value: departamento})), [departments])
   const citiesOptions = useMemo(() => cities.map(({municipio}) => ({label: municipio, value: municipio})), [cities])
+  const isFetching = useRef(false)
 
   const onChangeDepartment = (value: string) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString())
-    newSearchParams.set('department', value)
     if(value === 'all'){ 
-      newSearchParams.delete('department')
-      newSearchParams.delete('city')
       setCurrentDepartment('all')
       setCurrentCity('all')
+      setCities([])
     } else {
       setCurrentDepartment(value)
     }
-    router.push(`${pathname}?${newSearchParams.toString()}`)
   }
 
   const onChangeCity = (value: string) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString())
-    newSearchParams.set('city', value)
-    if(value === 'all') {
-      newSearchParams.delete('city')
-      setCurrentCity('all')
-    } else {
-      setCurrentCity(value)
-    }
-    router.push(`${pathname}?${newSearchParams.toString()}`)
+    if(value === 'all') setCurrentCity('all')
+    else setCurrentCity(value)
   }
 
+  useEffect(() => {
+    const fetchCities = async () => {
+      isFetching.current = true
+      const { data } = await getCities(currentDepartment)
+      setCities(data)
+      isFetching.current = false
+    }
+
+    if(currentDepartment !== 'all' && !isFetching.current) fetchCities()
+    if (currentDepartment === 'all') setCities([])
+  }, [currentDepartment])
 
   return (
     <section className="flex flex-col gap-3">

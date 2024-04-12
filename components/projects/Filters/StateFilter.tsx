@@ -1,7 +1,4 @@
-import { useDebounce } from "@/hooks/useDebounce"
 import { HOUSING_STATE_ENUM } from "@/types/project"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect } from "react"
 
 const STATE_FILTER_OPTIONS = [
   { label: 'Todos', value: 'all' },
@@ -16,22 +13,6 @@ interface Props {
 }
 
 export const StateFilter = ({currentState, setCurrentState}: Props) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const debouncedState = useDebounce(currentState, 300)
-
-  useEffect(() => {
-    if(debouncedState) {
-      const newSearchParams = new URLSearchParams(searchParams.toString())
-      newSearchParams.set('housing_state', debouncedState)
-  
-      if(debouncedState === 'all') newSearchParams.delete('housing_state')
-      router.push(`${pathname}?${newSearchParams.toString()}`)
-    }
-    
-  }, [debouncedState, pathname, router, searchParams])
-
   const onChange = (type: string) => {    
     if(type === 'all') return setCurrentState('all')
     setCurrentState(type)

@@ -1,15 +1,14 @@
 import React, { Suspense } from 'react'
 import { ProjectFilters } from '../Filters/ProjectFilters'
 import { SelectCurrency } from '../SelectCurrency'
-import { getCities, getDepartments, getGraphicPriceRange, getHousingTypes } from '@/services/utils'
+import { getDepartments, getGraphicPriceRange, getHousingTypes } from '@/services/utils'
 
 interface Props {
   total: number;
-  department: string | null;
 }
 
 
-export async function MobileProjectHeader ({department, total}: Props) {
+export async function MobileProjectHeader ({ total}: Props) {
   const [departmentsResponse, priceGraphicDataResponse, housingTypeResponse] = await Promise.all([
     getDepartments(),
     getGraphicPriceRange(),
@@ -20,7 +19,6 @@ export async function MobileProjectHeader ({department, total}: Props) {
   const {data: housingTypes} = housingTypeResponse
 
   const { data: departments } = departmentsResponse
-  const { data: cities } = await getCities(department)
 
   return (
     <div className='absolute z-10 top-0 left-0 right-0 flex items-center justify-between bg-white/40 px-6 py-2 m-3 rounded-3xl backdrop-blur-xl text-primary-600'>
@@ -28,10 +26,9 @@ export async function MobileProjectHeader ({department, total}: Props) {
         <Suspense>
           <ProjectFilters  
             housingTypes={housingTypes}
-            count={total} 
             departments={departments} 
-            cities={cities} 
             priceGraphicData={priceGraphicData}
+            count={total}
           /> 
         </Suspense>
         <SelectCurrency />
