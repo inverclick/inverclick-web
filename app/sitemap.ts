@@ -2,6 +2,9 @@ import { ENV_VARS } from "@/global/env";
 import { getProjects } from "@/services/projects";
 import { MetadataRoute } from "next";
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge' 
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const {data: projects} = await getProjects()
   const projectsEntries = projects.map(({_id, updatedAt}) => ({
