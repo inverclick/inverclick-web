@@ -12,6 +12,9 @@ export const ShareProject = () => {
     toast.success('¡Enlace copiado!')
   };
 
+  const shareWhatsApp = () => {
+    window.open(`https://wa.me/?text=${window?.location.href}`)
+  }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -37,14 +40,13 @@ export const ShareProject = () => {
             <Copy className='w-4 h-4 md:w-5 md:h-5' />
             Copiar link
           </button>
-          <a 
-            href={`https://wa.me/?text=${window?.location.href}`}
-            target='_blank'
-            className='cursor-pointer flex gap-2 justify-center items-center border border-black p-2 rounded-md hover:bg-primary-50 hover:border-primary-600 transition-colors ease-in hover:text-primary-700'
+          <button
+            onClick={shareWhatsApp}
+            className='flex gap-2 justify-center items-center border border-black p-2 rounded-md hover:bg-primary-50 hover:border-primary-600 transition-colors ease-in hover:text-primary-700'
           >
             <MessageCircle className='w-4 h-4 md:w-5 md:h-5' />
             WhatsApp
-          </a>
+          </button>
         </div>
       </AlertDialogContent>
     </AlertDialog>
