@@ -1,6 +1,6 @@
 
 import type { IBLUEPRINT, IBLUEPRINT_POPULATED } from "@/types/blueprint"
-import { IPROJECT_POPULATED } from "@/types/project"
+import { IPROJECT, IPROJECT_POPULATED } from "@/types/project"
 
 const API = process.env.NEXT_PUBLIC_API 
 
@@ -41,6 +41,19 @@ export const getProjectsCount = async (query: string): Promise<{ success: boolea
       success: false,
       message: 'Error counting projects',
       count: 0
+    }
+  }
+}
+
+export const getProjects = async (): Promise<{ success: boolean, message: string, data: IPROJECT[] }> => {
+  try {
+    const response = await fetch(API + '/project/', { cache: 'no-cache' })
+    return await response.json()
+  } catch (error) {
+    return {
+      success: false,
+      message: 'Error counting projects',
+      data: []
     }
   }
 }

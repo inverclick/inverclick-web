@@ -21,7 +21,9 @@ export interface IPROJECT {
   location: {
     lat: number
     lng: number
-  }
+  },
+  updatedAt: string
+  createdAt: string
 }
 
 export interface IPROJECT_POPULATED extends IPROJECT {

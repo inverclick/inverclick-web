@@ -4,10 +4,22 @@ import { ProjectContent } from "@/components/projects/review/ProjectContent"
 import { ProjectHeader } from "@/components/projects/review/ProjectHeader"
 import { MyFooter } from "@/components/shared/footer/MyFooter"
 import { getProjectById } from "@/services/projects"
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'edge' 
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const id = params.id
+  const { project } = await getProjectById(id)
+
+  return {
+    title: project?.name,
+    description: project?.description,
+  }
+  
+}
 
 export default async  function Page ({ params }: { params: { id: string } }) {
   const id = params.id

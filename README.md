@@ -7,6 +7,7 @@ Environment variables are stored in a `.env`:
 ```bash
 NEXT_PUBLIC_GOOGLE_MAPS_KEY=
 NEXT_PUBLIC_API=
+NEXT_PUBLIC_BASE_URL=
 ```
 
 Second, run the development server:

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react'
 import { SelectCurrency } from '../SelectCurrency';
 import { ProjectGallery } from './ProjectGallery';
+import { ShareProject } from './ShareProject';
 
 interface Props {
   name: string;
@@ -34,10 +35,7 @@ export const Hero = ({name, department, city, address, price, photos}: Props) =>
       <div className='flex flex-col-reverse md:flex-row justify-between gap-6 md:items-center'>
         <h1 className='text-3xl md:text-4xl xl:text-5xl font-semibold'>{name}</h1>
         <div className='flex flex-col md:flex-row gap-3 md:gap-6 md:items-center'>
-          <span className='flex gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer'>
-            <Share className='w-4 h-4 md:w-5 md:h-5' />
-            Compartir
-          </span>
+          <ShareProject />
           <span className='flex gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer'>
             <Heart className='w-4 h-4 md:w-5 md:h-5' />
             Guardar

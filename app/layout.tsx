@@ -1,17 +1,21 @@
-import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
+import { Toaster } from "@/components/ui/sonner";
+import { Metadata } from "next";
 
 const poppins = Poppins({weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin']});
 
-// export const metadata: Metadata = {
-//   title: "Inverclick",
-//   description: "Inverclick - Invierte en Propiedad Raíz desde el EXTERIOR",
-//   icons: {
-//     icon: "/favicon.ico",
-//   }
-// };
+export const metadata: Metadata = {
+  title: {
+    default: "Inverclick",
+    template: "%s - Inverclick",
+  },
+  description: "Inverclick - Invierte en Propiedad Raíz desde el EXTERIOR",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  keywords: ["inverclick", "propiedad raíz", "inversión", "crédito hipotecario", "inversión desde el exterior", "invertir en Colombia"],
+};
 
 export default function RootLayout({
   children,
@@ -20,16 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta
-          name='description'
-          content='Inverclick - Invierte en Propiedad Raíz desde el EXTERIOR'
-        />
-        <meta name='viewport' content='width=device-width' />
-        <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-        <title>Inverclick</title>
-      </head>
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

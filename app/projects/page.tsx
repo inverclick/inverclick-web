@@ -6,9 +6,14 @@ import { getAllProjects } from "@/services/projects";
 import { MobileProjectHeader } from '@/components/projects/mobile/MobileProjectHeader';
 import { ContactButton } from '@/components/shared/ContactButton';
 import { DefaultResizableHandle, DefaultResizablePanel, DefaultResizablePanelGroup } from '@/components/ui/resizable-default';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'edge' 
+
+export const metadata: Metadata = {
+  title: 'Proyectos'
+}
 
 export default async function Projects (props: any) {
   const {searchParams} = props
