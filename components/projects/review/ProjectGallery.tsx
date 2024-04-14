@@ -2,6 +2,7 @@
 import React from 'react'
 import Image from 'next/image';
 import { BadgeCheck, Grip } from 'lucide-react';
+import { MasonryView } from './MasonryView';
 
 
 interface Props {
@@ -35,9 +36,8 @@ export const ProjectGallery = ({photos}: Props) => {
         Proyecto verificado
       </span>
 
-      <span className='absolute flex justify-center items-center gap-2 bottom-1 right-1 md:bottom-3 md:right-4 bg-gray-300/80 px-2 py-1 md:px-3 md:py-2 text-xs rounded-xl border border-black'>
-        <Grip className='text-gray-600 h-5 w-5' />
-        Mostrar más fotos
+      <span className='cursor-pointer absolute flex justify-center items-center gap-2 bottom-1 right-1 md:bottom-3 md:right-4 bg-gray-300/80 px-2 py-1 md:px-3 md:py-2 text-xs rounded-xl border border-black'>
+        <MasonryView photos={[...restPhotos, ...restPhotos]} />
       </span>
   </div>
   )
