@@ -2,10 +2,10 @@ import { IHOUSING_TYPE } from "@/types/project"
 import { Building, Home, LandPlot, Warehouse } from "lucide-react"
 
 const OPTIONS_ICON = [
-  Home,
   Building,
-  LandPlot,
-  Warehouse
+  Home,
+  Warehouse,
+  LandPlot
 ]
 
 interface Props {
