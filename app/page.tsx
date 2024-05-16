@@ -2,6 +2,7 @@ import Image from "next/image";
 import { LoginButton } from "@/components/shared/LoginButton";
 import { ContactButton } from "@/components/shared/ContactButton";
 import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
+import { DynamicPhrases } from "@/components/web/DynamicPhrases";
 
 const SERVICES = [
   {
@@ -57,11 +58,14 @@ export default function Home() {
         src='/main-page/inverclick-logo.avif'
         alt='Inverclick logo'
       />
-      <h1
-        className='text-lg md:text-3xl md:pb-32 text-center md:text-left animate-blurred-fade-in'
-      >
-        Invierte en Propiedad Raíz desde <span className="font-semibold">EL EXTERIOR</span>
-      </h1>
+      <div className="pb-4 md:pb-32 flex flex-col gap-4 md:gap-9 animate-blurred-fade-in">
+        <h1
+          className='text-lg md:text-3xl text-center md:text-left'
+        >
+          Invierte en Propiedad Raíz desde <span className="font-semibold">EL EXTERIOR</span>
+        </h1>
+        <DynamicPhrases />
+      </div>
       <div className='flex gap-4'>
         {
           SOCIAL_NETWORKS.map(({ link, img, name }) => (
