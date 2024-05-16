@@ -58,7 +58,7 @@ export default function Home() {
         src='/main-page/inverclick-logo.avif'
         alt='Inverclick logo'
       />
-      <div className="pb-4 md:pb-32 flex flex-col gap-4 md:gap-9 animate-blurred-fade-in">
+      <div className="pb-4 md:pb-32 flex flex-col gap-6 animate-blurred-fade-in">
         <h1
           className='text-lg md:text-3xl text-center md:text-left'
         >

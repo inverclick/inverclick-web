@@ -1,32 +1,29 @@
 'use client'
-
-import { useEffect, useState } from "react"
+import Typewriter from 'typewriter-effect';
 
 export const DynamicPhrases = () => {
-  const [index, setIndex] = useState(0)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % PHRASES.length)
-    }, 3800)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
-
-  if (!PHRASES[index]) return null
-  if (PHRASES[index]) {
-    return (
-      <div className='text-white animate-fade-in-up' key={index}>
-        <h1 className='text-base md:text-xl text-center md:text-left font-light text-black animate-delay-[3400ms] animate-fade-out-up '>{PHRASES[index].title}</h1>
-      </div>
-    )
-  }
+  return (
+    <div className='text-center md:text-left text-base md:text-lg'>
+      <Typewriter
+        onInit={(typewriter) => {
+          typewriter.typeString('Asegura tu futuro invirtiendo en propiedad raíz ')
+            .pauseFor(2500)
+            .deleteAll()
+            .typeString('Invierte inteligentemente: tu patrimonio creciendo en Colombia')
+            .pauseFor(2500)
+            .deleteAll()
+            .typeString('Maximiza tu capital vía valorización')
+            .pauseFor(2500)
+            .deleteAll()
+            .start()
+        }}
+        options={{
+          loop: true,
+          delay: 25,
+          deleteSpeed: 5
+        }}
+      />
+    </div>
+  )
 }
-
-const PHRASES = [
-  { title: 'Asegura tu futuro invirtiendo en propiedad raíz' },
-  { title: 'Invierte inteligentemente: tu patrimonio creciendo en Colombia' },
-  { title: 'Maximiza tu capital vía valorización' }
-]
