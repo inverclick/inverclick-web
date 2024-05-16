@@ -8,13 +8,13 @@ export const DynamicPhrases = () => {
       <Typewriter
         onInit={(typewriter) => {
           typewriter.typeString('Asegura tu futuro invirtiendo en propiedad raíz ')
-            .pauseFor(2500)
+            .pauseFor(5000)
             .deleteAll()
             .typeString('Invierte inteligentemente: tu patrimonio creciendo en Colombia')
-            .pauseFor(2500)
+            .pauseFor(5000)
             .deleteAll()
             .typeString('Maximiza tu capital vía valorización')
-            .pauseFor(2500)
+            .pauseFor(5000)
             .deleteAll()
             .start()
         }}
