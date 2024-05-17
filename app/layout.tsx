@@ -9,10 +9,10 @@ const poppins = Poppins({weight: ['100', '200', '300', '400', '500', '600', '700
 
 export const metadata: Metadata = {
   title: {
-    default: "Inverclick",
+    default: "Inverclick - Invierte en Propiedad Raíz desde EL EXTERIOR",
     template: "%s - Inverclick",
   },
-  description: "Inverclick - Invierte en Propiedad Raíz desde el EXTERIOR",
+  description: "Descubre cómo invertir en propiedad raíz desde el exterior. Descubre propiedades verificadas y seguras en Colombia. Inverclick te ofrece un acceso exclusivo a las mejores opciones.",
   icons: {
     icon: "/favicon.ico",
   },

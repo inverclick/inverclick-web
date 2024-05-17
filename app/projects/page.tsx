@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     url: ENV_VARS.BASE_URL + '/projects',
     title: 'Proyectos',
-    description: 'Conoce todos los proyectos de Inverclick'
+    description: 'Accede a un mapa dinámico de opciones inmobiliarias en toda Colombia, explora las mejores alternativas de inversión.'
   }
 }
 
