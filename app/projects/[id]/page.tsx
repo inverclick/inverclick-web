@@ -3,6 +3,7 @@ import OtherProjects from "@/components/projects/review/OtherProjects"
 import { ProjectContent } from "@/components/projects/review/ProjectContent"
 import { ProjectHeader } from "@/components/projects/review/ProjectHeader"
 import { MyFooter } from "@/components/shared/footer/MyFooter"
+import { ENV_VARS } from "@/global/env"
 import { getProjectById } from "@/services/projects"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
@@ -17,6 +18,14 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   return {
     title: project?.name,
     description: project?.description,
+    alternates: {
+      canonical: ENV_VARS.BASE_URL + '/projects/' + id
+    },
+    openGraph: {
+      url: ENV_VARS.BASE_URL + '/projects/' + id,
+      title: project?.name,
+      description: project?.description
+    }
   }
   
 }

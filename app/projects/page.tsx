@@ -7,12 +7,19 @@ import { MobileProjectHeader } from '@/components/projects/mobile/MobileProjectH
 import { ContactButton } from '@/components/shared/ContactButton';
 import { DefaultResizableHandle, DefaultResizablePanel, DefaultResizablePanelGroup } from '@/components/ui/resizable-default';
 import { Metadata } from 'next';
+import { ENV_VARS } from '@/global/env';
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'edge' 
 
 export const metadata: Metadata = {
-  title: 'Proyectos'
+  title: 'Proyectos',
+  description: 'Conoce todos los proyectos de Inverclick',
+  openGraph: {
+    url: ENV_VARS.BASE_URL + '/projects',
+    title: 'Proyectos',
+    description: 'Conoce todos los proyectos de Inverclick'
+  }
 }
 
 export default async function Projects (props: any) {
