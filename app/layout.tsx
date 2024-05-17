@@ -2,6 +2,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Metadata } from "next";
+import { ENV_VARS } from "@/global/env";
+
 
 const poppins = Poppins({weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin']});
 
@@ -15,6 +17,24 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   keywords: ["inverclick", "propiedad raíz", "inversión", "crédito hipotecario", "inversión desde el exterior", "invertir en Colombia"],
+  robots: "index, follow",
+  alternates: {
+    canonical: ENV_VARS.BASE_URL
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    url: ENV_VARS.BASE_URL,
+    siteName: "Inverclick",
+  },
+  twitter: {
+    card: "summary",
+  },
+  appleWebApp: {
+    statusBarStyle: "black",
+    capable: true,
+    title: "Inverclick",
+  }
 };
 
 export default function RootLayout({
@@ -23,7 +43,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
+      <head>
+        <link rel='preconnect' href='https://public-bucket.inverclick.com' />
+        <link rel='sitemap' href='/sitemap.xml' />
+      </head>
       <body className={poppins.className}>
         {children}
         <Toaster />
