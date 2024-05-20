@@ -3,6 +3,7 @@ import { LoginButton } from "@/components/shared/LoginButton";
 import { ContactButton } from "@/components/shared/ContactButton";
 import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
 import { DynamicPhrases } from "@/components/web/DynamicPhrases";
+import Link from "next/link";
 
 const SERVICES = [
   {
@@ -31,7 +32,7 @@ export default function Home() {
     <section
       className='md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:pl-10 py-6'
     >
-      <div className='hidden md:block absolute bottom-5 right-8 z-30 slide-app-button cursor-pointer drop-shadow-2xl animate-tada animate-delay-800'>
+      <Link href="/app" className='hidden md:block absolute bottom-5 right-8 z-30 slide-app-button cursor-pointer drop-shadow-2xl animate-tada animate-delay-800'>
         <Image
           unoptimized
           className=' object-cover shadow-2xl '
@@ -41,7 +42,7 @@ export default function Home() {
           alt='Inverclick descarga la app'
         />
         <span>Descarga&nbsp;nuestra&nbsp;app</span>
-      </div>
+      </Link>
       <Image
         unoptimized
         className='absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full'
