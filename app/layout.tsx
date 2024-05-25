@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Metadata } from "next";
 import { ENV_VARS } from "@/global/env";
+import { DownloadAppPopUp } from "@/components/shared/DownloadAppPopUp";
 
 
 const poppins = Poppins({weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin']});
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body className={poppins.className}>
         {children}
         <Toaster />
+        <DownloadAppPopUp />
       </body>
     </html>
   );

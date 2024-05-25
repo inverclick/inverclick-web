@@ -3,6 +3,7 @@ import { LoginButton } from "@/components/shared/LoginButton";
 import { ContactButton } from "@/components/shared/ContactButton";
 import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
 import { DynamicPhrases } from "@/components/web/DynamicPhrases";
+import Link from "next/link";
 
 const SERVICES = [
   {
@@ -106,12 +107,12 @@ export default function Home() {
                   {service.description}
                 </h3>
               </div>
-              <a
+              <Link
                 href={service.link}
                 className='text-primary-600 text-sm md:text-lg font-semibold px-6 py-2 rounded-3xl bg-white hover:shadow-2xl hover:scale-105 transition-all ease-in'
               >
                 {service.buttonLabel}
-              </a>
+              </Link>
             </article>
           ))
         }
