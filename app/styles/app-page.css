@@ -43,9 +43,11 @@
 
 #card_1 {
 	--index: 1;
+  padding-top: 7rem;
 }
 
 #card_2 {
+  padding-top: 9rem;
 	--index: 2;
 }
 
@@ -60,7 +62,7 @@
 .card {
 	position: sticky;
 	top: 0;
-	padding-top: calc(var(--index) * var(--card-top-offset) );
+	padding-top: calc(var(--index) * var(--card-top-offset)/1.5 );
 }
 
 .card__content {
@@ -96,39 +98,9 @@
 }
 
 .card__content {
-	box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1), 0 1em 2em rgba(0, 0, 0, 0.1);
-	background: rgb(255, 255, 255);
+	/* box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1), 0 1em 2em rgba(0, 0, 0, 0.1); */
+	/* background: rgb(255, 255, 255); */
 	color: rgb(10, 5, 7);
 	border-radius: 1em;
 	overflow: hidden;
-
-	display: grid;
-	grid-template-areas: "text img";
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: auto;
-
-	align-items: stretch;
-	outline: var(--outline-width) solid blue;
-}
-
-.card__content > div {
-	grid-area: text;
-	width: 80%;
-	place-self: center;
-	text-align: left;
-
-	display: grid;
-	gap: 1em;
-	place-items: start;
-}
-
-.card__content > figure {
-	grid-area: img;
-	overflow: hidden;
-}
-
-.card__content > figure > img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
 }
