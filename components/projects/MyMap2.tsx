@@ -1,0 +1,26 @@
+"use client";
+
+import { Markers } from "@/components/projects/Markers";
+import { ENV_VARS } from "@/global/env";
+import { Point } from "@/types/map";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
+
+type MyMap2Props = Readonly<{
+  points: Point[];
+}>;
+
+export function MyMap2({ points }: MyMap2Props) {
+  return (
+    <APIProvider apiKey={ENV_VARS.GOOGLE_MAP_KEY}>
+      <Map
+        mapId={ENV_VARS.GOOGLE_MAP_ID}
+        defaultTilt={45}
+        defaultZoom={6}
+        defaultCenter={{ lat: 4.5709, lng: -74.2973 }}
+        gestureHandling={"greedy"}
+        disableDefaultUI={true}
+      />
+      <Markers points={points} />
+    </APIProvider>
+  );
+}

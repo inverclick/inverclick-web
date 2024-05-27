@@ -1,13 +1,14 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
-import { MyMap } from "@/components/projects/MyMap";
 import NavbarProjects from "@/components/projects/NavbarProjects";
 import ProjectContent from "@/components/projects/ProjectContent";
-import { getAllProjects } from "@/services/projects";
+import { getAllProjects, getProjectsLocations } from "@/services/projects";
 import { MobileProjectHeader } from '@/components/projects/mobile/MobileProjectHeader';
 import { ContactButton } from '@/components/shared/ContactButton';
 import { DefaultResizableHandle, DefaultResizablePanel, DefaultResizablePanelGroup } from '@/components/ui/resizable-default';
 import { Metadata } from 'next';
 import { ENV_VARS } from '@/global/env';
+import { Point } from '@/types/map';
+import { MyMap2 } from '@/components/projects/MyMap2';
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'edge' 
@@ -27,6 +28,20 @@ export default async function Projects (props: any) {
   const parsedSearchParams = new URLSearchParams(searchParams)
   const { count, data } = await getAllProjects(`?${parsedSearchParams.toString()}`);
   
+  const { data: locations } = await getProjectsLocations(
+    `?${parsedSearchParams.toString()}`
+  );
+
+  const points = locations.map((location) => {
+    const point: Point = {
+      lat: location.location.lat,
+      lng: location.location.lng,
+      key: location._id,
+    };
+
+    return point;
+  });
+
   return (
     <main>
       <ContactButton />
@@ -34,7 +49,7 @@ export default async function Projects (props: any) {
       <section className='hidden lg:block'>
         <DefaultResizablePanelGroup direction="horizontal" >
           <DefaultResizablePanel defaultSize={50}>
-            <MyMap blueprints={data} />
+            <MyMap2 points={points} />
           </DefaultResizablePanel>
           <DefaultResizableHandle withHandle />
           <DefaultResizablePanel defaultSize={50} minSize={25} className='z-10 relative'>
@@ -48,7 +63,7 @@ export default async function Projects (props: any) {
         <div className='h-screen'>
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={80}>
-              <MyMap blueprints={data} />
+              <MyMap2 points={points} />
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={20} maxSize={60}>

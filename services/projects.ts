@@ -1,6 +1,6 @@
 
 import type { IBLUEPRINT, IBLUEPRINT_POPULATED } from "@/types/blueprint"
-import { IPROJECT, IPROJECT_POPULATED } from "@/types/project"
+import { IPROJECT, IPROJECT_LOCATION, IPROJECT_POPULATED } from "@/types/project"
 
 const API = process.env.NEXT_PUBLIC_API 
 
@@ -57,3 +57,24 @@ export const getProjects = async (): Promise<{ success: boolean, message: string
     }
   }
 }
+
+export const getProjectsLocations = async (
+  queryParams: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data: IPROJECT_LOCATION[];
+}> => {
+  try {
+    const response = await fetch(API + "/project/locations" + queryParams, {
+      cache: "no-cache",
+    });
+    return await response.json();
+  } catch (error) {
+    return {
+      success: false,
+      message: "Error fetching projects locations",
+      data: [],
+    };
+  }
+};
