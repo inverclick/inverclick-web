@@ -53,3 +53,11 @@ export interface IHOUSING_TYPE {
   _id: string
   label: string
 }
+
+export type IPROJECT_LOCATION = {
+  _id: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
+};
