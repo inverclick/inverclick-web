@@ -70,7 +70,7 @@ export default function Home() {
       <div className='flex gap-4'>
         {
           SOCIAL_NETWORKS.map(({ link, img, name }) => (
-            <a key={link} href={link} aria-label={link} target='_blank'>
+            <Link key={link} href={link} aria-label={link} target='_blank'>
               <Image
                 unoptimized
                 className='aspect-square hover:shadow-2xl hover:scale-105 transition-all ease-in cursor-pointer w-7 h-7 md:w-9 md:h-9'
@@ -79,7 +79,7 @@ export default function Home() {
                 height='36'
                 alt={name}
               />
-            </a>
+            </Link>
           ))
         }
       </div>
