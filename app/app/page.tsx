@@ -1,9 +1,9 @@
-import { MyHeader } from "@/components/shared/header/MyHeader";
 import '@/app/styles/app-page.css'
 import { Metadata } from "next";
 import { ENV_VARS } from "@/global/env";
 import Image from "next/image";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { MyHeaderAllServices } from "@/components/shared/header/MyHeaderAllServices";
 
 export const metadata: Metadata = {
   title: 'App móvil',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function App() {
   return (
     <main>
-      <MyHeader />
+      <MyHeaderAllServices />
       <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-20 md:pt-24 xl:pt- 28 flex flex-col mb-20">
         <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[84vh] -translate-y-4">
           <div className="flex flex-col gap-6 items-center">
