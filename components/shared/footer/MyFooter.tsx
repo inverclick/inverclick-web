@@ -3,11 +3,15 @@ import { SignupNewsletter } from './SignupNewsletter'
 import Image from 'next/image'
 import { SOCIAL_NETWORKS } from '../data/socialNetworks'
 import { ContactButton } from '../ContactButton'
+import { AppButton } from '../AppButton'
 
 export const MyFooter = () => {
   return (
     <footer className='relative bg-gray-50 flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20'>
-      <div className='absolute right-2 bottom-0'>
+      <div className='absolute -right-2 bottom-0'>
+        <AppButton />
+      </div>
+      <div className='absolute right-2 bottom-20'>
         <ContactButton />
       </div>
       <section className='grid grid-cols-1 md:grid-cols-3 justify-items-center gap-4'>
@@ -74,16 +78,7 @@ export const MyFooter = () => {
             All rights reserved © {new Date().getFullYear()}
           </div>
         </div>
-        <div className='flex-1 flex justify-end items-center'>
-          <Image
-            unoptimized
-            className='bottom-5 right-8 object-cover shadow-2xl hidden md:block self-end hover:scale-105 transition-all ease-in cursor-pointer'
-            src='/main-page/download_app.svg'
-            width='40'
-            height='80'
-            alt='Inverclick descarga la app'
-          />
-        </div>
+        <div className='flex-1' />
       </div>
     </footer>
   )
