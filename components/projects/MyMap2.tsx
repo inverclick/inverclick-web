@@ -3,7 +3,6 @@
 import { Markers } from "@/components/projects/Markers";
 import { ENV_VARS } from "@/global/env";
 import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
-import { Point } from "@/types/map";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
 type MyMap2Props = Readonly<{

@@ -2,7 +2,7 @@
 import { ENV_VARS } from '@/global/env';
 import type { IBLUEPRINT_POPULATED } from '@/types/blueprint';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CustomMarker } from './CustomMarker';
 
 interface Props {
