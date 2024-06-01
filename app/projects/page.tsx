@@ -1,77 +1,77 @@
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import NavbarProjects from "@/components/projects/NavbarProjects";
 import ProjectContent from "@/components/projects/ProjectContent";
-import { getAllProjects, getProjectsLocations } from "@/services/projects";
-import { MobileProjectHeader } from '@/components/projects/mobile/MobileProjectHeader';
-import { ContactButton } from '@/components/shared/ContactButton';
-import { DefaultResizableHandle, DefaultResizablePanel, DefaultResizablePanelGroup } from '@/components/ui/resizable-default';
-import { Metadata } from 'next';
-import { ENV_VARS } from '@/global/env';
-import { Point } from '@/types/map';
-import { MyMap2 } from '@/components/projects/MyMap2';
+import { getAllProjects } from "@/services/projects";
+import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
+import { ContactButton } from "@/components/shared/ContactButton";
+import {
+  DefaultResizableHandle,
+  DefaultResizablePanel,
+  DefaultResizablePanelGroup,
+} from "@/components/ui/resizable-default";
+import { Metadata } from "next";
+import { ENV_VARS } from "@/global/env";
+import { MyMap2 } from "@/components/projects/MyMap2";
 
-export const dynamic = 'force-dynamic'
-export const runtime = 'edge' 
+export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export const metadata: Metadata = {
-  title: 'Proyectos',
-  description: 'Conoce todos los proyectos de Inverclick',
+  title: "Proyectos",
+  description: "Conoce todos los proyectos de Inverclick",
   openGraph: {
-    url: ENV_VARS.BASE_URL + '/projects',
-    title: 'Proyectos',
-    description: 'Accede a un mapa dinámico de opciones inmobiliarias en toda Colombia, explora las mejores alternativas de inversión.'
-  }
-}
+    url: ENV_VARS.BASE_URL + "/projects",
+    title: "Proyectos",
+    description:
+      "Accede a un mapa dinámico de opciones inmobiliarias en toda Colombia, explora las mejores alternativas de inversión.",
+  },
+};
 
-export default async function Projects (props: any) {
-  const {searchParams} = props
-  const parsedSearchParams = new URLSearchParams(searchParams)
-  const { count, data } = await getAllProjects(`?${parsedSearchParams.toString()}`);
-  
-  const { data: locations } = await getProjectsLocations(
+export default async function Projects(props: any) {
+  const { searchParams } = props;
+  const parsedSearchParams = new URLSearchParams(searchParams);
+  const { count, data } = await getAllProjects(
     `?${parsedSearchParams.toString()}`
   );
-
-  const points = locations.map((location) => {
-    const point: Point = {
-      lat: location.location.lat,
-      lng: location.location.lng,
-      key: location._id,
-    };
-
-    return point;
-  });
 
   return (
     <main>
       <ContactButton />
-  
-      <section className='hidden lg:block'>
-        <DefaultResizablePanelGroup direction="horizontal" >
+
+      <section className="hidden lg:block">
+        <DefaultResizablePanelGroup direction="horizontal">
           <DefaultResizablePanel defaultSize={50}>
-            <MyMap2 points={points} />
+            <MyMap2 blueprints={data} />
           </DefaultResizablePanel>
           <DefaultResizableHandle withHandle />
-          <DefaultResizablePanel defaultSize={50} minSize={25} className='z-10 relative'>
+          <DefaultResizablePanel
+            defaultSize={50}
+            minSize={25}
+            className="z-10 relative"
+          >
             <NavbarProjects />
-            <ProjectContent total={count} blueprints={data} /> 
+            <ProjectContent total={count} blueprints={data} />
           </DefaultResizablePanel>
         </DefaultResizablePanelGroup>
       </section>
-      <section className='lg:hidden'>
-        <MobileProjectHeader total={count}  /> 
-        <div className='h-screen'>
+      <section className="lg:hidden">
+        <MobileProjectHeader total={count} />
+        <div className="h-screen">
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={80}>
-              <MyMap2 points={points} />
+              <MyMap2 blueprints={data} />
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={20} maxSize={60}>
-              <ProjectContent total={count} blueprints={data}  /> 
+              <ProjectContent total={count} blueprints={data} />
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>
       </section>
     </main>
-  )
-} 
+  );
+}

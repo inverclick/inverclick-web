@@ -2,14 +2,15 @@
 
 import { Markers } from "@/components/projects/Markers";
 import { ENV_VARS } from "@/global/env";
+import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
 import { Point } from "@/types/map";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
 type MyMap2Props = Readonly<{
-  points: Point[];
+  blueprints: IBLUEPRINT_POPULATED[];
 }>;
 
-export function MyMap2({ points }: MyMap2Props) {
+export function MyMap2({ blueprints }: MyMap2Props) {
   return (
     <APIProvider apiKey={ENV_VARS.GOOGLE_MAP_KEY}>
       <Map
@@ -20,7 +21,7 @@ export function MyMap2({ points }: MyMap2Props) {
         gestureHandling={"greedy"}
         disableDefaultUI={true}
       />
-      <Markers points={points} />
+      <Markers blueprints={blueprints} />
     </APIProvider>
   );
 }
