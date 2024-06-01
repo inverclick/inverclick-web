@@ -21,7 +21,7 @@ export default function App() {
     <main>
       <MyHeaderAllServices />
       <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-20 md:pt-24 xl:pt- 28 flex flex-col mb-20">
-        <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[75vh] translate-y-5">
+        <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[77vh] translate-y-5">
           <div className="flex flex-col gap-6 items-center">
             <div className="rounded-3xl shadow-lg shadow-gray-400 px-8 py-6 w-fit">
               <Image 

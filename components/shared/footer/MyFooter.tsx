@@ -2,10 +2,14 @@ import Link from 'next/link'
 import { SignupNewsletter } from './SignupNewsletter'
 import Image from 'next/image'
 import { SOCIAL_NETWORKS } from '../data/socialNetworks'
+import { ContactButton } from '../ContactButton'
 
 export const MyFooter = () => {
   return (
-    <footer className='bg-gray-50 flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20'>
+    <footer className='relative bg-gray-50 flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20'>
+      <div className='absolute right-2 bottom-0'>
+        <ContactButton />
+      </div>
       <section className='grid grid-cols-1 md:grid-cols-3 justify-items-center gap-4'>
         <div className='w-full'>
           <SignupNewsletter />
@@ -87,6 +91,7 @@ export const MyFooter = () => {
 
 const FIRST_LINKS = [
   { label: 'Nosotros', href: '/' },
+  { label: 'Proyectos', href: '/projects' },
   { label: 'Financiación', href: '/' },
   { label: 'Otros servicios', href: '/' },
 ]
@@ -94,5 +99,6 @@ const FIRST_LINKS = [
 const SECOND_LINKS = [
   { label: 'Simulador de crédito', href: '/' },
   { label: 'Trabaja con nosotros', href: '/' },
+  { label: 'Blog', href: '/' },
   { label: 'Contacto', href: '/' },
 ]
