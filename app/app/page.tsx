@@ -4,6 +4,7 @@ import { ENV_VARS } from "@/global/env";
 import Image from "next/image";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { MyHeaderAllServices } from "@/components/shared/header/MyHeaderAllServices";
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'App móvil',
@@ -20,7 +21,7 @@ export default function App() {
     <main>
       <MyHeaderAllServices />
       <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-20 md:pt-24 xl:pt- 28 flex flex-col mb-20">
-        <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[84vh] -translate-y-4">
+        <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[75vh] translate-y-5">
           <div className="flex flex-col gap-6 items-center">
             <div className="rounded-3xl shadow-lg shadow-gray-400 px-8 py-6 w-fit">
               <Image 
@@ -35,7 +36,7 @@ export default function App() {
           </div>
           <div className="flex flex-col gap-1 md:gap-4 text-3xl sm:text-4xl md:text-5xl text-center font-semibold">
             <h2>Invierte en propiedad raíz</h2>
-            <h2>desde el <span className="text-primary-600">EXTERIOR</span></h2>
+            <h2>desde <span className="text-primary-600">EL EXTERIOR</span></h2>
           </div>
         </section>
         <ul id="cards" className="max-w-[1200px] self-center">
@@ -80,14 +81,18 @@ export default function App() {
           </li>
           <li className="card" id="card_4">
             <div className="card__content">
-              <div className="bg-slate-100 grid grid-cols-2 justify-items-center rounded-lg mb-14">
+              <div className="bg-slate-200/80 backdrop-blur-lg grid grid-cols-2 justify-items-center rounded-lg mb-14">
                 <Image unoptimized src='/app/app-1.png' width={230} height={200} alt="App móvil" className="translate-y-14 w-36 sm:w-40 md:w-44 lg:w-48 xl:w-60"/>
                 <div className="flex flex-col justify-evenly items-center">
                   <h2 className="text-center font-semibold text-xl md:text-2xl lg:text-3xl">Descarga nuestra<br />aplicación móvil</h2>
                   <Image unoptimized src='/app/qr-app.png' width={230} height={230} alt="App QR" className="rounded-lg shadow-lg w-40 sm:w-44 md:w-48 lg:w-52 xl:w-56"/>
                   <div className="flex gap-4">
-                    <Image unoptimized src='/app/google-play.png' width={150} height={50} alt="Google Play" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
-                    <Image unoptimized src='/app/app-store.png' width={150} height={50} alt="App Store" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
+                    <Link href='https://play.google.com/store' target='_blank'>
+                      <Image unoptimized src='/app/google-play.png' width={150} height={50} alt="Google Play" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
+                    </Link>
+                    <Link href='https://www.apple.com/co/app-store/' target='_blank'>
+                      <Image unoptimized src='/app/app-store.png' width={150} height={50} alt="App Store" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
+                    </Link>
                   </div>
                 </div>
               </div>
