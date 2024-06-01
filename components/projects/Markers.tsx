@@ -2,7 +2,11 @@ import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import { limitPrice } from "@/services/utils";
 import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
-import { Marker, MarkerClusterer } from "@googlemaps/markerclusterer";
+import {
+  GridAlgorithm,
+  Marker,
+  MarkerClusterer,
+} from "@googlemaps/markerclusterer";
 import { AdvancedMarker, useMap } from "@vis.gl/react-google-maps";
 import { useEffect, useRef, useState } from "react";
 
@@ -25,6 +29,7 @@ export function Markers({ blueprints }: MarkerProps) {
     if (!clusterer.current) {
       clusterer.current = new MarkerClusterer({
         map,
+        algorithm: new GridAlgorithm({}),
         renderer: {
           render(cluster, stats, map) {
             return new google.maps.Marker({
@@ -37,7 +42,6 @@ export function Markers({ blueprints }: MarkerProps) {
                 text: String(cluster.count),
                 color: "#ffffff",
                 fontSize: "14px",
-                fontFamily: "Poppins",
                 fontWeight: "bold",
               },
             });
@@ -80,11 +84,12 @@ export function Markers({ blueprints }: MarkerProps) {
             }}
             ref={(marker) => setMarkerRef(marker, blueprint.project._id)}
           >
-            <div className="bg-primary-700/90 p-2 rounded-full border-4 border-primary-100 border-opacity-50">
-              <span className="text-white font-medium">
+            <div className="bg-white py-1 px-2 rounded-full border-[1px] border-neutral-400 shadow-md">
+              <span className="text-black font-medium">
                 {currency === "COP"
                   ? limitPrice(blueprint.price, currency)
-                  : currencyFormatter(convert(blueprint.price), currency)}
+                  : currencyFormatter(convert(blueprint.price), currency)}{" "}
+                {currency}
               </span>
             </div>
           </AdvancedMarker>
