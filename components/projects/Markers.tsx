@@ -90,7 +90,7 @@ export function Markers({ blueprints }: MarkerProps) {
             ref={(marker) => setMarkerRef(marker, blueprint.project._id)}
             onClick={() => {
               setCurrentOpen(blueprint.project._id)
-              setVisitedMarkers((prev) => ({ ...prev, [blueprint.project._id]: true }));
+              !visitedMarkers[blueprint.project._id] && setVisitedMarkers((prev) => ({ ...prev, [blueprint.project._id]: true }));
             }}
           >
             <div className={`${isCurrentOpen ? 'bg-primary-700' : isVisited ? 'bg-primary-100' : 'bg-white'} py-1 px-2 rounded-full border-[1px] border-neutral-400 shadow-md ${isCurrentOpen ? 'text-white' : 'text-black' } `}>
