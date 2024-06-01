@@ -41,20 +41,31 @@ export default function App() {
         <ul id="cards" className="max-w-[1200px] self-center">
           <li className="card" id="card_1">
             <div className="card__content">
-              <div className="bg-slate-100 grid grid-cols-2 justify-items-center rounded-lg mb-14">
-                <Image unoptimized src='/app/app-1.png' width={230} height={200} alt="App móvil" className="translate-y-14 w-36 sm:w-40 md:w-44 lg:w-48 xl:w-60"/>
-                <div className="flex flex-col justify-evenly items-center">
-                  <h2 className="text-center font-semibold text-xl md:text-2xl lg:text-3xl">Descarga nuestra<br />aplicación móvil</h2>
-                  <Image unoptimized src='/app/qr-app.png' width={230} height={230} alt="App QR" className="rounded-lg shadow-lg w-40 sm:w-44 md:w-48 lg:w-52 xl:w-56"/>
-                  <div className="flex gap-4">
-                    <Image unoptimized src='/app/google-play.png' width={150} height={50} alt="Google Play" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
-                    <Image unoptimized src='/app/app-store.png' width={150} height={50} alt="App Store" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
-                  </div>
+              <div className="bg-slate-200/80 backdrop-blur-lg grid grid-cols-2 justify-items-center shadow-2xl rounded-lg mb-14">
+                <div className=" w-full flex justify-center items-center">
+                  <Image unoptimized src='/app/app-3.png' width={230} height={200} alt="App móvil" className="sm:translate-y-14 w-36 sm:w-40 md:w-44 lg:w-64"/>
+                </div>
+                <div className="flex flex-col justify-center items-center font-semibold gap-4 md:gap-6 lg:gap-10 p-10">
+                  <h3 className="md:text-xl lg:text-2xl text-center">Descubre propiedades verificadas y seguras en Colombia. Inverclick te ofrece un acceso exclusivo a las mejores opciones.</h3>
+                  <h2 className="text-lg md:text-2xl lg:text-3xl text-center text-primary-600">¡Descarga nuestra app y comienza tu búsqueda!</h2>
                 </div>
               </div>
             </div>
           </li>
           <li className="card" id="card_2">
+            <div className="card__content shadow-2xl bg-white/80 backdrop-blur-lg">
+              <div className="grid grid-cols-2 justify-items-center rounded-lg p-1">
+                <div className="flex flex-col justify-center items-center font-semibold gap-4 md:gap-6 lg:gap-10 py-10">
+                  <h3 className=" md:text-xl lg:text-2xl text-center">Personaliza tu búsqueda usando filtros dinámicos. Nuestra tecnología facilita que tomes la mejor decisión.</h3>
+                  <h2 className="text-lg md:text-2xl lg:text-3xl text-center text-primary-600">¡Tu mejor inversión a un click de distancia!</h2>
+                </div>
+                <div className=" w-full flex justify-center items-center sm:p-20">
+                  <Image unoptimized src='/app/app-4.png' width={230} height={612} alt="App móvil" className="sm:rotate-[30deg] w-[180px] h-[250px] sm:w-auto sm:h-[440px] md:h-[460px] lg:h-[480px] xl:h-[512px]"/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li className="card" id="card_3">
             <div className="card__content shadow-2xl bg-white/70 backdrop-blur-lg">
               <div className="grid grid-cols-2 justify-items-center rounded-lg">
                 <div className="flex flex-col justify-center items-center font-semibold gap-4 md:gap-6 lg:gap-10 py-10">
@@ -67,28 +78,17 @@ export default function App() {
               </div>
             </div>
           </li>
-          <li className="card" id="card_3">
-            <div className="card__content">
-              <div className="bg-slate-200/80 backdrop-blur-lg grid grid-cols-2 justify-items-center shadow-2xl rounded-lg mb-14">
-                <div className=" w-full flex justify-center items-center">
-                  <Image unoptimized src='/app/app-3.png' width={230} height={200} alt="App móvil" className="sm:translate-y-14 w-36 sm:w-40 md:w-44 lg:w-64"/>
-                </div>
-                <div className="flex flex-col justify-center items-center font-semibold gap-4 md:gap-6 lg:gap-10 p-10">
-                  <h3 className="md:text-xl lg:text-2xl text-center">Descubre propiedades verificadas y seguras en Colombia. Inverclick te ofrece un acceso exclusivo a las mejores opciones.</h3>
-                  <h2 className="text-lg md:text-2xl lg:text-3xl text-center text-primary-600">¡Descarga nuestra app y comienza tu búsqueda!</h2>
-                </div>
-              </div>
-            </div>
-          </li>
           <li className="card" id="card_4">
-            <div className="card__content shadow-2xl bg-white/80 backdrop-blur-lg">
-              <div className="grid grid-cols-2 justify-items-center rounded-lg p-1">
-                <div className="flex flex-col justify-center items-center font-semibold gap-4 md:gap-6 lg:gap-10 py-10">
-                  <h3 className=" md:text-xl lg:text-2xl text-center">Personaliza tu búsqueda usando filtros dinámicos. Nuestra tecnología facilita que tomes la mejor decisión.</h3>
-                  <h2 className="text-lg md:text-2xl lg:text-3xl text-center text-primary-600">¡Tu mejor inversión a un click de distancia!</h2>
-                </div>
-                <div className=" w-full flex justify-center items-center sm:p-20">
-                  <Image unoptimized src='/app/app-4.png' width={230} height={612} alt="App móvil" className="sm:rotate-[30deg] w-[180px] h-[250px] sm:w-auto sm:h-[440px] md:h-[460px] lg:h-[480px] xl:h-[512px]"/>
+            <div className="card__content">
+              <div className="bg-slate-100 grid grid-cols-2 justify-items-center rounded-lg mb-14">
+                <Image unoptimized src='/app/app-1.png' width={230} height={200} alt="App móvil" className="translate-y-14 w-36 sm:w-40 md:w-44 lg:w-48 xl:w-60"/>
+                <div className="flex flex-col justify-evenly items-center">
+                  <h2 className="text-center font-semibold text-xl md:text-2xl lg:text-3xl">Descarga nuestra<br />aplicación móvil</h2>
+                  <Image unoptimized src='/app/qr-app.png' width={230} height={230} alt="App QR" className="rounded-lg shadow-lg w-40 sm:w-44 md:w-48 lg:w-52 xl:w-56"/>
+                  <div className="flex gap-4">
+                    <Image unoptimized src='/app/google-play.png' width={150} height={50} alt="Google Play" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
+                    <Image unoptimized src='/app/app-store.png' width={150} height={50} alt="App Store" className="w-24 md:w-28 lg:w-32 xl:w-36"/>
+                  </div>
                 </div>
               </div>
             </div>
