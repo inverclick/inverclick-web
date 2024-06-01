@@ -26,8 +26,8 @@ export const MyHeaderAllServices = () => {
 }
 
 const DesktopMenu = () => (
-  <div className='hidden md:flex sm:gap-6 xl:gap-8 justify-center items-center w-full'>
-    <div className='flex-1 flex sm:gap-6 md:gap-8 lg:gap-10 xl:gap-14 2xl:gap-24 items-center justify-start'>
+  <div className='hidden md:grid grid-cols-3 sm:gap-6 xl:gap-8 justify-center items-center w-full lg:mx-10 xl:mx-12 2xl:mx-14'>
+    <div className='grid grid-cols-3 justify-items-center place-items-center'>
       {
         MENU_OPTIONS_LEFT.map(({ name, url }) => (
           <a
@@ -40,17 +40,17 @@ const DesktopMenu = () => (
         ))
       }
     </div>
-    <a href="/" className='cursor-pointer'>
+    <a href="/" className='flex justify-center cursor-pointer'>
       <Image 
         unoptimized
         width='170'
         height='60'
-        className='animate-slide-in-top w-[120px] md:w-[140px] xl:w-[155px] 2xl:w-[170px]'
+        className='animate-slide-in-top w-[120px] md:w-[140px] xl:w-[155px] 2xl:w-[170px] self-center'
         src='/main-page/inverclick-logo.avif'
         alt='Inverclick logo'
       />
     </a>
-    <div className='flex-1 flex sm:gap-6 md:gap-8 lg:gap-10 xl:gap-14 2xl:gap-24 items-center justify-end'>
+    <div className='grid grid-cols-3 justify-items-center place-items-center'>
       {
         MENU_OPTIONS_RIGHT.map(({ name, url }) => (
           <a
@@ -62,16 +62,19 @@ const DesktopMenu = () => (
           </a>
         ))
       }
-      <DisplayTRM />
-      <a className='border-2 border-primary-600 rounded-full cursor-pointer hover:scale-105 transition-all ease-in' href='/'>
-        <Image 
-          unoptimized
-          width='30'
-          height='30'
-          src='/main-page/user.svg'
-          alt='Login de usuarios'
-        />
-      </a>
+      <div className='flex items-center gap-4'>
+        <DisplayTRM />
+        <a className='border-2 border-primary-600 rounded-full cursor-pointer hover:scale-105 transition-all ease-in' href='/'>
+          <Image 
+            unoptimized
+            width='28'
+            height='28'
+            className='min-h-7 min-w-7'
+            src='/main-page/user.svg'
+            alt='Login de usuarios'
+          />
+        </a>
+      </div>
     </div>
   </div>
 )

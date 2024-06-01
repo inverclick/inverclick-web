@@ -12,7 +12,7 @@ export default function DisplayTRM () {
 
   return (
     <div className="text-[10px] xl:text-[12px] mb-[1px] font-medium">
-      TRM HOY: {currencyFormatter(TRM_USD, 'COP')} <span className="text-[8px] xl:text-[10px]">COP</span>
+      TRM&nbsp;HOY:&nbsp;{currencyFormatter(TRM_USD, 'COP')}&nbsp;<span className="text-[8px] xl:text-[10px]">COP</span>
     </div>
   )
 }
