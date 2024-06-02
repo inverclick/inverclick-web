@@ -50,6 +50,9 @@ dependencies:
   '@vis.gl/react-google-maps':
     specifier: ^1.0.0
     version: 1.0.1(react-dom@18.2.0)(react@18.2.0)
+  atropos:
+    specifier: ^2.0.2
+    version: 2.0.2
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -1620,6 +1623,11 @@ packages:
   /ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
     dev: true
+
+  /atropos@2.0.2:
+    resolution: {integrity: sha512-8f0u0hEOlBTWTSvzY17TcHuQjxUIpkTBq70/I4+UF5B43ORtOoRjm8TPBYEgLM8Ba9AWf6PDtkagbYoybdjaKg==}
+    engines: {node: '>= 12.0.0'}
+    dev: false
 
   /autoprefixer@10.4.19(postcss@8.4.38):
     resolution: {integrity: sha512-BaENR2+zBZ8xXhM4pUaKUxlVdxZ0EZhjvbopwnXmxRUfqDmwSpC2lAi/QXvx7NRdPCo1WKEcEF6mV64si1z4Ew==}

@@ -56,9 +56,11 @@ export function Markers({ blueprints }: MarkerProps) {
 
   // Update markers
   useEffect(() => {
-    clusterer.current?.clearMarkers();
-    clusterer.current?.addMarkers(Object.values(markers));
-  }, [markers]);
+    if(clusterer.current?.clearMarkers) { 
+      clusterer.current?.clearMarkers();
+      clusterer.current?.addMarkers(Object.values(markers));
+    }
+  }, [markers, clusterer]);
 
   const setMarkerRef = (marker: Marker | null, key: string) => {
     if (marker && markers[key]) return;

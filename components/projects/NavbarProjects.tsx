@@ -108,6 +108,6 @@ export default function NavbarProjects () {
 
 const MENU_OPTIONS = [
   { name: 'Nosotros', url: '/' },
-  { name: 'Financiación', url: '/' },
+  { name: 'Financiación', url: '/financing' },
   { name: 'Otros servicios', url: '/' },
 ];

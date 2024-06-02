@@ -6,7 +6,7 @@ import DisplayTRM from '@/components/projects/DisplayTRM';
 
 const MENU_OPTIONS = [
   { name: 'Nosotros', url: '/' },
-  { name: 'Financiación', url: '/' },
+  { name: 'Financiación', url: '/financing' },
   { name: 'Otros servicios', url: '/' },
 ];
 

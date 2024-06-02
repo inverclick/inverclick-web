@@ -7,7 +7,7 @@ import DisplayTRM from '@/components/projects/DisplayTRM';
 const MENU_OPTIONS_LEFT = [
   { name: 'Nosotros', url: '/' },
   { name: 'Proyectos', url: '/projects' },
-  { name: 'Financiación', url: '/' },
+  { name: 'Financiación', url: '/financing' },
 ];
 
 const MENU_OPTIONS_RIGHT = [

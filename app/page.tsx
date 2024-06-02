@@ -10,7 +10,7 @@ const SERVICES = [
   {
     title: '¿Necesitas dinero para invertir?',
     description: 'Crédito Hipotecario, Leasing Habitacional',
-    link: '/',
+    link: '/financing',
     buttonLabel: 'Solicitar',
   },
   {

@@ -87,7 +87,7 @@ export const MyFooter = () => {
 const FIRST_LINKS = [
   { label: 'Nosotros', href: '/' },
   { label: 'Proyectos', href: '/projects' },
-  { label: 'Financiación', href: '/' },
+  { label: 'Financiación', href: '/financing' },
   { label: 'Otros servicios', href: '/' },
 ]
 
