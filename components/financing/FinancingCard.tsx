@@ -36,7 +36,7 @@ export const FinancingCard = ({color, text, title}: Props) => {
       <Atropos onClick={handleCardClick} className={`${isFlipped ? 'z-30' : ''} flip-card ${isFlipped ? 'flipped' : ''} flex-1 my-atropos p-2 drop-shadow-2xl cursor-pointer`}>
         <div className="flip-card-inner">
           <div className="flip-card-front bg-white">
-            <p className='ml-8 lg:mx-10 xl:m-20 text-5xl xl:text-6xl text-left font-semibold' style={{color}}>
+            <p className='ml-8 lg:mx-10 xl:m-20 text-4xl lg:text-5xl xl:text-6xl text-left font-semibold' style={{color}}>
               {title[0]}
               <br />
               {title[1]}

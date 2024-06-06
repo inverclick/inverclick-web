@@ -30,7 +30,7 @@ export default function FinancingPage() {
           <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Solicitar Preaprobado</button>
         </div>
       </article>
-      <article className="h-screen md:h-[calc(100vh-200px)] w-full flex flex-col md:flex-row gap-14 px-20 mb-20">
+      <article className="h-screen md:h-[calc(100vh-200px)] w-full flex flex-col md:flex-row gap-14 px-10 md:px-14 lg:px-20 mb-20">
         <FinancingCard  
           color="#7330f7"
           text="Texto"
