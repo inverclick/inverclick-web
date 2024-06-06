@@ -32,7 +32,7 @@ export default function FinancingPage() {
       </article>
       <article className="h-screen md:h-[calc(100vh-200px)] w-full flex flex-col md:flex-row gap-14 px-20 mb-20">
         <FinancingCard  
-          color="primary-600"
+          color="#7330f7"
           text="Texto"
           title={["Crédito", "Hipotecario"]}
         />
