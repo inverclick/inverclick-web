@@ -3,9 +3,9 @@ import { currencyFormatter } from "@/lib/currencyFormatter";
 import { limitPrice } from "@/services/utils";
 import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
 import {
-  GridAlgorithm,
   Marker,
   MarkerClusterer,
+  SuperClusterAlgorithm,
 } from "@googlemaps/markerclusterer";
 import { AdvancedMarker, InfoWindow, useMap } from "@vis.gl/react-google-maps";
 import { useEffect, useRef, useState } from "react";
@@ -34,7 +34,9 @@ export function Markers({ blueprints }: MarkerProps) {
     if (!clusterer.current) {
       clusterer.current = new MarkerClusterer({
         map,
-        algorithm: new GridAlgorithm({}),
+        algorithm: new SuperClusterAlgorithm({
+          radius: 120,
+        }),
         renderer: {
           render(cluster, stats, map) {
             return new google.maps.Marker({
