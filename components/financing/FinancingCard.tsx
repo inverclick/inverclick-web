@@ -1,15 +1,16 @@
 'use client'
 import { Plus } from 'lucide-react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import '@/app/styles/flip-card.css'
 
 interface Props {
-  title: string[]
+  frontContent: ReactNode
   color: string
-  text: string
+  direction: 'horizontal' | 'vertical'
+  content: ReactNode  
 }
 
-export const FinancingCard = ({color, text, title}: Props) => {
+export const FinancingCard = ({color, content, frontContent, direction}: Props) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -32,22 +33,16 @@ export const FinancingCard = ({color, text, title}: Props) => {
 
   return (
     <>
-      <div onClick={handleCardClick} className={`${isFlipped ? 'z-30' : ''} flip-card ${isFlipped ? 'flipped' : ''} flex-1 my-atropos p-2 drop-shadow-2xl cursor-pointer`}>
-        <div className="flip-card-inner">
+      <div onClick={handleCardClick} className={`${isFlipped ? 'z-30' : ''} flip-card ${isFlipped ? 'flipped' : ''} flex-1 my-atropos m-2 drop-shadow-2xl cursor-pointer`}>
+        <div className={'flip-card-inner-' + direction}>
           <div className="flip-card-front bg-white">
-            <p className='ml-8 lg:mx-10 xl:m-20 text-4xl lg:text-5xl xl:text-6xl text-left font-semibold' style={{color}}>
-              {title[0]}
-              <br />
-              {title[1]}
-            </p>
+            {frontContent}
             <div className='absolute bottom-8 right-8 rounded-full p-2' style={{ background: color}}>
               <Plus className="h-8 w-8 text-white" />
             </div>
           </div>
-          <div ref={cardRef} className="flip-card-back">
-            <p className='text-6xl font-semibold' style={{color}}>
-              {text}
-            </p>
+          <div ref={cardRef} className={"flip-card-back-" + direction}>
+            {content}
           </div>
         </div>      
       </div>
