@@ -18,8 +18,10 @@ type MarkerProps = Readonly<{
 }>;
 
 export function Markers({ blueprints }: MarkerProps) {
-  const [currentOpen, setCurrentOpen] = useState<string>('');
-  const [visitedMarkers, setVisitedMarkers] = useState<{ [key: string]: boolean }>({});
+  const [currentOpen, setCurrentOpen] = useState<string>("");
+  const [visitedMarkers, setVisitedMarkers] = useState<{
+    [key: string]: boolean;
+  }>({});
   const { convert, currency } = useCurrencyContext();
 
   const map = useMap();
@@ -56,11 +58,9 @@ export function Markers({ blueprints }: MarkerProps) {
 
   // Update markers
   useEffect(() => {
-    if(clusterer.current?.clearMarkers) { 
-      clusterer.current?.clearMarkers();
-      clusterer.current?.addMarkers(Object.values(markers));
-    }
-  }, [markers, clusterer]);
+    clusterer.current?.clearMarkers();
+    clusterer.current?.addMarkers(Object.values(markers));
+  }, [markers]);
 
   const setMarkerRef = (marker: Marker | null, key: string) => {
     if (marker && markers[key]) return;
@@ -91,11 +91,25 @@ export function Markers({ blueprints }: MarkerProps) {
             }}
             ref={(marker) => setMarkerRef(marker, blueprint.project._id)}
             onClick={() => {
-              setCurrentOpen(blueprint.project._id)
-              !visitedMarkers[blueprint.project._id] && setVisitedMarkers((prev) => ({ ...prev, [blueprint.project._id]: true }));
+              setCurrentOpen(blueprint.project._id);
+              !visitedMarkers[blueprint.project._id] &&
+                setVisitedMarkers((prev) => ({
+                  ...prev,
+                  [blueprint.project._id]: true,
+                }));
             }}
           >
-            <div className={`${isCurrentOpen ? 'bg-primary-700' : isVisited ? 'bg-primary-100' : 'bg-white'} py-1 px-2 rounded-full border-[1px] border-neutral-400 shadow-md ${isCurrentOpen ? 'text-white' : 'text-black' } `}>
+            <div
+              className={`${
+                isCurrentOpen
+                  ? "bg-primary-700"
+                  : isVisited
+                  ? "bg-primary-100"
+                  : "bg-white"
+              } py-1 px-2 rounded-full border-[1px] border-neutral-400 shadow-md ${
+                isCurrentOpen ? "text-white" : "text-black"
+              } `}
+            >
               <span className=" font-medium">
                 {currency === "COP"
                   ? limitPrice(blueprint.price, currency)
@@ -103,11 +117,14 @@ export function Markers({ blueprints }: MarkerProps) {
                 {currency}
               </span>
             </div>
-            { currentOpen === blueprint.project._id ?
-               <InfoWindow onClose={() => setCurrentOpen('')} anchor={markers[blueprint.project._id]}>
+            {currentOpen === blueprint.project._id ? (
+              <InfoWindow
+                onClose={() => setCurrentOpen("")}
+                anchor={markers[blueprint.project._id]}
+              >
                 <ProjectCard blueprint={blueprint} />
-             </InfoWindow> : null
-            }
+              </InfoWindow>
+            ) : null}
           </AdvancedMarker>
         );
       })}
