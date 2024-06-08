@@ -1,6 +1,5 @@
 'use client'
 import { Plus } from 'lucide-react'
-import Atropos from 'atropos/react';
 import React, { useEffect, useRef, useState } from 'react'
 import '@/app/styles/flip-card.css'
 
@@ -33,7 +32,7 @@ export const FinancingCard = ({color, text, title}: Props) => {
 
   return (
     <>
-      <Atropos onClick={handleCardClick} className={`${isFlipped ? 'z-30' : ''} flip-card ${isFlipped ? 'flipped' : ''} flex-1 my-atropos p-2 drop-shadow-2xl cursor-pointer`}>
+      <div onClick={handleCardClick} className={`${isFlipped ? 'z-30' : ''} flip-card ${isFlipped ? 'flipped' : ''} flex-1 my-atropos p-2 drop-shadow-2xl cursor-pointer`}>
         <div className="flip-card-inner">
           <div className="flip-card-front bg-white">
             <p className='ml-8 lg:mx-10 xl:m-20 text-4xl lg:text-5xl xl:text-6xl text-left font-semibold' style={{color}}>
@@ -51,7 +50,7 @@ export const FinancingCard = ({color, text, title}: Props) => {
             </p>
           </div>
         </div>      
-      </Atropos>
+      </div>
       {isFlipped ? <>
         <div onClick={console.log} className='fixed bottom-0 top-0 left-0 right-0 bg-black/70 z-10 animate-fade-in' /> 
       </>: null}
