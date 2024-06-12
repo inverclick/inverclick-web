@@ -1,3 +1,4 @@
+import { CreditSimulador } from "@/components/financing/CreditSimulador";
 import { FinancingCard } from "@/components/financing/FinancingCard";
 import { MyHeaderAllServices } from "@/components/shared/header/MyHeaderAllServices";
 import { ENV_VARS } from "@/global/env";
@@ -189,13 +190,22 @@ export default function FinancingPage() {
       <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 mb-20">
         <h2 className="text-pretty md:w-1/2 text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">¿Quieres saber cuál es la mejor opción para ti?</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 justify-items-center relative md:px-10 xl:px-40">
-          <div className="absolute bottom-0 left-0 right-0 h-4 bg-primary-600 " />
+          <div className="absolute bottom-0 left-0 right-0 h-4 bg-primary-600 -z-10" />
           <div  className="hidden md:block"/>
-          <Image className="2xl:min-h-[600px] w-auto z-10" src='/financing/financing-2.png' alt="¿Quieres saber cuál es la mejor opción de financiamiento para ti?" width={300} height={300}  />
+          <Image className="2xl:min-h-[600px] w-auto" src='/financing/financing-2.png' alt="¿Quieres saber cuál es la mejor opción de financiamiento para ti?" width={300} height={300}  />
           <div className="flex flex-col gap-6 md:gap-10 items-center">
             <h3 className="text-center  text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight">Nosotros te ayudamos</h3>
             <button className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Solicitar Contacto</button>
           </div>
+        </div>
+      </article>
+      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 pt-20">
+        <div className="md:w-1/2">
+        <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">Simulador de<br />CRÉDITO</h2>
+        <p className="text-xs mt-4">*Los resultados de este simulador son aproximaciones con fines informativos, los valores reales se establecerán con la entidad financiera en el momento del desembolso.</p>
+        </div>
+        <div className="w-full mt-10 md:mt-16">
+          <CreditSimulador />
         </div>
       </article>
     </main>
