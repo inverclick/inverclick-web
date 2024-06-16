@@ -200,7 +200,7 @@ export default function FinancingPage() {
           </div>
         </div>
       </article>
-      {/* <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 pt-20">
+      <article className="w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 py-20">
         <div className="md:w-1/2">
         <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">Simulador de<br />CRÉDITO</h2>
         <p className="text-xs mt-4">*Los resultados de este simulador son aproximaciones con fines informativos, los valores reales se establecerán con la entidad financiera en el momento del desembolso.</p>
@@ -208,8 +208,8 @@ export default function FinancingPage() {
         <div className="w-full mt-10 md:mt-16">
           <CreditSimulador />
         </div>
-      </article> */}
-      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 pt-20">
+      </article> 
+      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20">
         <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold">Preguntas FRECUENTES</h2>
         <FrequentlyQuestions />
       </article>

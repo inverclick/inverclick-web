@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import { SelectCurrency } from '../projects/SelectCurrency'
-import { Input } from '../ui/input'
+import { SelectSimulatorType } from './SelectSimulatorType'
+import { FeeSimulator } from './FeeSimulator'
 
 export const CreditSimulador = () => {
   const [simulatorType, setSimulatorType] = useState<'VALOR' | 'CUOTA'>('VALOR')
@@ -9,22 +9,13 @@ export const CreditSimulador = () => {
 
   return (
     <section className='flex flex-col gap-8'>
-      <div className='border border-primary-600 w-fit rounded-full '>
-        <button 
-          onClick={() => setSimulatorType('VALOR')}
-          className={`${simulatorType === 'VALOR' ? 'bg-primary-600 text-white' : ''} px-6 py-2 rounded-full `}
-        >Valor de la vivienda</button>
-        <button 
-          onClick={() => setSimulatorType('CUOTA')}
-          className={`${simulatorType === 'CUOTA' ? 'bg-primary-600 text-white' : ''} px-6 py-2 rounded-full `}
-        >Cuota que quiero pagar</button>
-      </div>
-      <div className='flex gap-4 items-center'>
-        <p className='text-lg font-medium'>¿Cuál es el valor comercial de la vivienda?</p>
-        <SelectCurrency />
-      </div>
-      <div className='w-fit'>
-        <Input value={1213} className='text-4xl h-16'  />
+      <SelectSimulatorType setSimulatorType={setSimulatorType} simulatorType={simulatorType} />
+      <div className='flex'>
+        { simulatorType === 'VALOR' ? <div>Valor</div> : null}
+        { simulatorType === 'CUOTA' ? <FeeSimulator /> : null}
+        <article className='flex-1'>
+          
+        </article>
       </div>
     </section>
   )
