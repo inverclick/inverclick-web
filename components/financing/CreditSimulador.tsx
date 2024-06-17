@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { SelectSimulatorType } from './SelectSimulatorType'
 import { FeeSimulator } from './FeeSimulator'
 import { ValueSimulator } from './ValueSimulator'
+import { SimulatorResult } from './SimulatorResult'
 
 export const CreditSimulador = () => {
   const [simulatorType, setSimulatorType] = useState<'VALOR' | 'CUOTA'>('VALOR')
@@ -15,7 +16,7 @@ export const CreditSimulador = () => {
         { simulatorType === 'VALOR' ? <ValueSimulator /> : null}
         { simulatorType === 'CUOTA' ? <FeeSimulator /> : null}
         <article className='flex-1'>
-          
+          <SimulatorResult />
         </article>
       </div>
     </section>
