@@ -8,7 +8,7 @@ export const CreditSimulador = () => {
   const [inputValue, setInputValue] = useState<string>('')
 
   return (
-    <section className='flex flex-col gap-8'>
+    <section className='flex flex-col gap-6'>
       <SelectSimulatorType setSimulatorType={setSimulatorType} simulatorType={simulatorType} />
       <div className='flex'>
         { simulatorType === 'VALOR' ? <div>Valor</div> : null}
