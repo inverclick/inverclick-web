@@ -10,7 +10,12 @@ import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
 import { currencyFormatter } from '@/lib/currencyFormatter';
 
-export const ValueSimulator = () => {
+interface Props {
+  onSimulate: () => void
+}
+
+
+export const ValueSimulator = ({onSimulate}: Props) => {
   const [inputValue, setInputValue] = useState<string>('1000000')
   const [years, setYears] = useState(15)
   const [percentage, setPercentage] = useState(70)
@@ -100,7 +105,7 @@ export const ValueSimulator = () => {
         </div>
       </div>
       <div className='mt-4 self-center'>
-        <button className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Simular</button>
+        <button onClick={onSimulate} className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Simular</button>
       </div>
     </article>
   )

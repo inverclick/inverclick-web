@@ -9,7 +9,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
 
-export const FeeSimulator = () => {
+interface Props {
+  onSimulate: () => void
+}
+
+export const FeeSimulator = ({onSimulate}: Props) => {
   const [inputValue, setInputValue] = useState<string>('1000000')
   const [years, setYears] = useState(15)
   const { currency } = useCurrencyContext()
@@ -78,7 +82,7 @@ export const FeeSimulator = () => {
         </div>
       </div>
       <div className='mt-4 self-center'>
-        <button className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Simular</button>
+        <button onClick={onSimulate} className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Simular</button>
       </div>
     </article>
   )
