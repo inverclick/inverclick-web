@@ -1,5 +1,6 @@
 import { CreditSimulador } from "@/components/financing/CreditSimulador";
 import { FinancingCard } from "@/components/financing/FinancingCard";
+import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { FrequentlyQuestions } from "@/components/shared/FrequentlyQuestions";
 import { MyHeaderAllServices } from "@/components/shared/header/MyHeaderAllServices";
 import { ENV_VARS } from "@/global/env";
@@ -213,6 +214,7 @@ export default function FinancingPage() {
         <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold">Preguntas FRECUENTES</h2>
         <FrequentlyQuestions />
       </article>
+      <MyFooter />
     </main>
   );
 }
