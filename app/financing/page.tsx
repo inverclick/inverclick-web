@@ -25,13 +25,13 @@ export default function FinancingPage() {
       <MyHeaderAllServices />
       <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-20 md:pt-24 xl:pt- 28 flex flex-col mb-20">
        <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[65vh] translate-y-5">
-          <div className="flex gap-3 flex-col">
+          <div className="flex gap-3 flex-col animate-blurred-fade-in">
             <h1 className="font-semibold text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl">Crédito de vivienda</h1>
             <h2 className="text-2xl lg:text-3xl xl:text-4xl font-semibold">Colombianos en <span className="text-primary-600">EL EXTERIOR</span></h2>
           </div>
         </section>
         <div className="my-10 self-center">
-          <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Solicitar Preaprobado</button>
+          <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700 animate-fade-in-up">Solicitar Preaprobado</button>
         </div>
       </article>
       <article className="h-[calc(1.3*100vh)] md:h-[calc(100vh-100px)] w-full flex flex-col md:flex-row gap-10 md:gap-10 lg:gap-14 px-10 md:px-14 lg:px-20 mb-14">
