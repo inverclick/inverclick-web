@@ -2,6 +2,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { useCurrencyContext } from '@/contexts/CurrencyContext'
 import { currencyFormatter } from '@/lib/currencyFormatter'
+import { getAssetUrl } from '@/services/utils'
 import { IBLUEPRINT } from '@/types/blueprint'
 import { Bath, BedDouble, Grid2X2, LucideIcon, ParkingSquare } from 'lucide-react'
 import Image from 'next/image'
@@ -30,7 +31,7 @@ export const Typologies = ({typologies}: {typologies: IBLUEPRINT[]}) => {
                 width={100}
                 height={100}
                 className='w-full h-full object-cover'
-                src={blueprint}
+                src={getAssetUrl(blueprint)}
                 alt={name}
               />
             </AccordionContent>

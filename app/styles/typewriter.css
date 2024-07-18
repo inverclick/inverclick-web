@@ -1,0 +1,43 @@
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.typewriter-container {
+  display: inline; /* Ensures it wraps around the text */
+  position: relative;
+}
+
+.typewriter-text {
+  display: inline;
+  position: relative; /* Needed for the cursor placement */
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.8em; /* Diameter of the circular cursor */
+  height: 0.8em; /* Diameter of the circular cursor */
+  border-radius: 50%; /* Makes the cursor circular */
+  background-color: black;
+  transform: translateY(15%);
+  /* animation: blink 0.75s step-end infinite; */
+  margin-left: 0.1em; /* Adjust the margin to position cursor correctly */
+}
+
+@keyframes blink {
+  from,
+  to {
+    background-color: transparent;
+  }
+  50% {
+    background-color: black;
+  }
+}

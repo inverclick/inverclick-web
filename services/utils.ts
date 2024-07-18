@@ -2,6 +2,7 @@ import { Currency } from "@/contexts/CurrencyContext";
 import { IHOUSING_TYPE } from "@/types/project";
 
 const API = process.env.NEXT_PUBLIC_API;
+const BUCKET_URL = process.env.NEXT_PUBLIC_BUCKET_URL;
 
 export const getDepartments = async (): Promise<{
   success: boolean;
@@ -123,3 +124,12 @@ export const limitPrice = (price: number, currency: Currency) => {
 
   return price;
 };
+
+/**
+ * Returns the asset URL for the given image ID.
+ * @param imageId - The ID of the image.
+ * @returns The asset URL.
+ */
+export function getAssetUrl(imageId: string): string {
+  return `${BUCKET_URL}${imageId}`;
+} 
