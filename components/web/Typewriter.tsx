@@ -65,7 +65,7 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
       {/* Static Title */}
       <h1 className="font-semibold text-3xl pb-2">{texts[currentIndex].title}</h1>
       <div className="typewriter-container">
-        <h2 className="typewriter-text text-xl">
+        <h2 className="typewriter-text text-2xl">
           {subtitleText}
           <span className="cursor"></span> {/* Circular Cursor */}
         </h2>
