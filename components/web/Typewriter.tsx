@@ -33,7 +33,7 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
         index += 1;
         if (index > text.length) {
           clearInterval(typingInterval);
-          setIsTyping(false);
+          setTimeout(() => setIsTyping(false), 300)
           if (callback) callback();
         }
       }, typingSpeed);
