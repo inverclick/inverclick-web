@@ -23,8 +23,8 @@
 
 .cursor {
   display: inline-block;
-  width: 0.8em; /* Diameter of the circular cursor */
-  height: 0.8em; /* Diameter of the circular cursor */
+  width: 1em; /* Diameter of the circular cursor */
+  height: 1em; /* Diameter of the circular cursor */
   border-radius: 50%; /* Makes the cursor circular */
   background-color: black;
   transform: translateY(15%);

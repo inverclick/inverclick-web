@@ -5,6 +5,10 @@ type TypewriterProps = {
   texts: { title: string; subtitle: string }[];
 };
 
+const typingSpeed = 50; // Speed of typing effect in milliseconds
+const pauseDuration = 2000; // Pause duration before switching texts
+const fadeInDuration = 1000; // Fade-in duration in milliseconds
+
 export const Typewriter = ({ texts }: TypewriterProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [subtitleText, setSubtitleText] = useState("");
@@ -12,9 +16,6 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
 
   useEffect(() => {
     const { subtitle } = texts[currentIndex];
-    const typingSpeed = 50; // Speed of typing effect in milliseconds
-    const pauseDuration = 2000; // Pause duration before switching texts
-    const fadeInDuration = 1000; // Fade-in duration in milliseconds
 
     let typingInterval: NodeJS.Timeout;
     let typingTimeout: NodeJS.Timeout;
@@ -67,7 +68,7 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
       <div className="typewriter-container">
         <h2 className="typewriter-text text-2xl">
           {subtitleText}
-          <span className="cursor"></span> {/* Circular Cursor */}
+          { _isTyping ? <span className="cursor"></span> : null } {/* Circular Cursor */}
         </h2>
       </div>
     </div>
