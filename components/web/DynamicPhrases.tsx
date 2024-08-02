@@ -13,7 +13,7 @@ const texts = [
   },
   {
     title: "Invierte inteligentemente",
-    subtitle: "IMaximiza tu capital vía valorización",
+    subtitle: "Maximiza tu capital vía valorización",
   },
   {
     title: "Asegura tu futuro",

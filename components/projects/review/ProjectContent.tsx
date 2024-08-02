@@ -9,6 +9,7 @@ import { IBLUEPRINT } from "@/types/blueprint";
 import { Typologies } from "./Typologies";
 import { Urbanism } from "./Urbanism";
 import { getAssetUrl } from "@/services/utils";
+import { CreditSimulador } from "@/components/financing/CreditSimulador";
 
 interface DescriptionProps {
   name: string;
@@ -117,14 +118,10 @@ export const ProjectContent = ({
                   city={city}
                   department={department}
                 />
-                <Image
-                  alt="/main-page/temporal.jpg"
-                  src="/main-page/temporal.jpg"
-                  width={200}
-                  height={200}
-                  className="w-[100%]"
-                  unoptimized
-                />
+                <section className="mt-10">
+                  <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
+                  <CreditSimulador />
+                </section>
                 <hr />
               </div>
             </TabsContent>

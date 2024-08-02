@@ -23,7 +23,7 @@ export const SelectSimulatorType = ({
   }, [simulatorType, activeTabRef]);
 
   return (
-    <div className="relative border border-primary-600 w-fit rounded-full mb-12 isolate">
+    <div className="relative border border-primary-600 w-fit rounded-full isolate">
       <button
         ref={(ref) => {
           if (simulatorType === "VALOR") {
