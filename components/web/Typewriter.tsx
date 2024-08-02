@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import "@/app/styles/typewriter.css";
+import { useEffect, useState } from "react";
 
 type TypewriterProps = {
   texts: { title: string; subtitle: string }[];
@@ -12,7 +12,7 @@ const fadeInDuration = 1000; // Fade-in duration in milliseconds
 export const Typewriter = ({ texts }: TypewriterProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [subtitleText, setSubtitleText] = useState("");
-  const [_isTyping, setIsTyping] = useState(true); // To manage typing state
+  const [isTyping, setIsTyping] = useState(true); // To manage typing state
 
   useEffect(() => {
     const { subtitle } = texts[currentIndex];
@@ -33,7 +33,7 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
         index += 1;
         if (index > text.length) {
           clearInterval(typingInterval);
-          setTimeout(() => setIsTyping(false), 300)
+          setTimeout(() => setIsTyping(false), 300);
           if (callback) callback();
         }
       }, typingSpeed);
@@ -62,13 +62,19 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
   }, [currentIndex, texts]);
 
   return (
-    <div key={currentIndex} className="fade-in-up mr-6 text-center md:text-left">
+    <div
+      key={currentIndex}
+      className="fade-in-up mr-6 text-center md:text-left"
+    >
       {/* Static Title */}
-      <h1 className="font-semibold text-3xl pb-2">{texts[currentIndex].title}</h1>
-      <div className="typewriter-container">
+      <h1 className="font-semibold text-3xl pb-2">
+        {texts[currentIndex].title}
+      </h1>
+      <div className="typewriter-container min-h-6 min-w-full">
         <h2 className="typewriter-text text-2xl">
           {subtitleText}
-          { _isTyping ? <span className="cursor"></span> : null } {/* Circular Cursor */}
+          {isTyping ? <span className="cursor"></span> : null}{" "}
+          {/* Circular Cursor */}
         </h2>
       </div>
     </div>

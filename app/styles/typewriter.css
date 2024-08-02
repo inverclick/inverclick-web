@@ -12,7 +12,7 @@
 }
 
 .typewriter-container {
-  display: inline; /* Ensures it wraps around the text */
+  display: inline-block; /* Ensures it wraps around the text */
   position: relative;
 }
 
