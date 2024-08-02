@@ -1,21 +1,22 @@
+import { ProjectsPageContext } from "@/app/projects/_context";
+import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
+import { MyMap2 } from "@/components/projects/MyMap2";
+import NavbarProjects from "@/components/projects/NavbarProjects";
+import ProjectContent from "@/components/projects/ProjectContent";
+import { ContactButton } from "@/components/shared/ContactButton";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import NavbarProjects from "@/components/projects/NavbarProjects";
-import ProjectContent from "@/components/projects/ProjectContent";
-import { getAllProjects } from "@/services/projects";
-import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
-import { ContactButton } from "@/components/shared/ContactButton";
 import {
   DefaultResizableHandle,
   DefaultResizablePanel,
   DefaultResizablePanelGroup,
 } from "@/components/ui/resizable-default";
-import { Metadata } from "next";
 import { ENV_VARS } from "@/global/env";
-import { MyMap2 } from "@/components/projects/MyMap2";
+import { getAllProjects } from "@/services/projects";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -33,45 +34,48 @@ export const metadata: Metadata = {
 
 export default async function Projects(props: any) {
   const { searchParams } = props;
+
   const parsedSearchParams = new URLSearchParams(searchParams);
+
   const { count, data } = await getAllProjects(
     `?${parsedSearchParams.toString()}`
   );
 
   return (
-    <main>
-      <ContactButton />
-
-      <section className="hidden lg:block">
-        <DefaultResizablePanelGroup direction="horizontal">
-          <DefaultResizablePanel defaultSize={50}>
-            <MyMap2 blueprints={data} />
-          </DefaultResizablePanel>
-          <DefaultResizableHandle withHandle />
-          <DefaultResizablePanel
-            defaultSize={50}
-            minSize={25}
-            className="z-10 relative"
-          >
-            <NavbarProjects />
-            <ProjectContent total={count} blueprints={data} />
-          </DefaultResizablePanel>
-        </DefaultResizablePanelGroup>
-      </section>
-      <section className="lg:hidden">
-        <MobileProjectHeader total={count} />
-        <div className="h-screen">
-          <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={80}>
+    <ProjectsPageContext initialBlueprints={data}>
+      <main>
+        <ContactButton />
+        <section className="hidden lg:block">
+          <DefaultResizablePanelGroup direction="horizontal">
+            <DefaultResizablePanel defaultSize={50}>
               <MyMap2 blueprints={data} />
-            </ResizablePanel>
-            <ResizableHandle />
-            <ResizablePanel defaultSize={20} maxSize={60}>
+            </DefaultResizablePanel>
+            <DefaultResizableHandle withHandle />
+            <DefaultResizablePanel
+              defaultSize={50}
+              minSize={25}
+              className="z-10 relative"
+            >
+              <NavbarProjects />
               <ProjectContent total={count} blueprints={data} />
-            </ResizablePanel>
-          </ResizablePanelGroup>
-        </div>
-      </section>
-    </main>
+            </DefaultResizablePanel>
+          </DefaultResizablePanelGroup>
+        </section>
+        <section className="lg:hidden">
+          <MobileProjectHeader total={count} />
+          <div className="h-screen">
+            <ResizablePanelGroup direction="vertical">
+              <ResizablePanel defaultSize={80}>
+                <MyMap2 blueprints={data} />
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel defaultSize={20} maxSize={60}>
+                <ProjectContent total={count} blueprints={data} />
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </div>
+        </section>
+      </main>
+    </ProjectsPageContext>
   );
 }
