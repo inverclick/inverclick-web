@@ -5,19 +5,19 @@ import { Typewriter } from "@/components/web/Typewriter";
 const texts = [
   {
     title: "Invierte en Propiedad Raíz desde EL EXTERIOR",
-    subtitle: "Maximiza tu capital vía valorización",
+    subtitle: "Tu patrimonio creciendo en Colombia",
   },
   {
-    title: "Innovate and Inspire",
-    subtitle: "Asegura tu futuro invirtiendo en propiedad raíz",
+    title: "Te ayudamos a financiar tu inversión",
+    subtitle: "Tenemos los mejores convenios con los bancos más importantes del país",
   },
   {
-    title: "Journey Through Time",
-    subtitle: "Invierte inteligentemente: tu patrimonio creciendo en Colombia",
+    title: "Invierte inteligentemente",
+    subtitle: "IMaximiza tu capital vía valorización",
   },
   {
-    title: "Innovate and Inspire",
-    subtitle: "Maximiza tu capital vía valorización",
+    title: "Asegura tu futuro",
+    subtitle: "Invierte en Propiedad Raíz",
   },
 ];
 

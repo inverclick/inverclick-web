@@ -5,6 +5,10 @@ type TypewriterProps = {
   texts: { title: string; subtitle: string }[];
 };
 
+const typingSpeed = 50; // Speed of typing effect in milliseconds
+const pauseDuration = 2000; // Pause duration before switching texts
+const fadeInDuration = 1000; // Fade-in duration in milliseconds
+
 export const Typewriter = ({ texts }: TypewriterProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [subtitleText, setSubtitleText] = useState("");
@@ -12,9 +16,6 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
 
   useEffect(() => {
     const { subtitle } = texts[currentIndex];
-    const typingSpeed = 50; // Speed of typing effect in milliseconds
-    const pauseDuration = 2000; // Pause duration before switching texts
-    const fadeInDuration = 1000; // Fade-in duration in milliseconds
 
     let typingInterval: NodeJS.Timeout;
     let typingTimeout: NodeJS.Timeout;
@@ -32,7 +33,7 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
         index += 1;
         if (index > text.length) {
           clearInterval(typingInterval);
-          setIsTyping(false);
+          setTimeout(() => setIsTyping(false), 300)
           if (callback) callback();
         }
       }, typingSpeed);
@@ -61,13 +62,13 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
   }, [currentIndex, texts]);
 
   return (
-    <div key={currentIndex} className="fade-in-up text-left mr-6">
+    <div key={currentIndex} className="fade-in-up mr-6 text-center md:text-left">
       {/* Static Title */}
-      <h1 className="font-bold text-3xl">{texts[currentIndex].title}</h1>
+      <h1 className="font-semibold text-3xl pb-2">{texts[currentIndex].title}</h1>
       <div className="typewriter-container">
-        <h2 className="typewriter-text text-3xl">
+        <h2 className="typewriter-text text-2xl">
           {subtitleText}
-          <span className="cursor"></span> {/* Circular Cursor */}
+          { _isTyping ? <span className="cursor"></span> : null } {/* Circular Cursor */}
         </h2>
       </div>
     </div>

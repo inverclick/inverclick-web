@@ -90,9 +90,6 @@ export default function Home() {
           <h2 className="pt-6 md:pt-0 text-2xl md:text-3xl 2xl:text-4xl">
             <b>Bienvenidos</b> <span className="font-light">a inverclick</span>
           </h2>
-          {/* <h3 className='font-light max-w-sm self-center text-sm md:text-lg'>
-          La mejor opción para invertir en propiedad raíz en COLOMBIA.
-        </h3> */}
         </header>
 
         <div className="flex flex-col gap-10 2xl:gap-14">
@@ -105,7 +102,7 @@ export default function Home() {
                 <h2 className="text-center font-medium text-base md:text-lg 2xl:text-xl">
                   {service.title}
                 </h2>
-                <h3 className="font-light lg:pl-4 lg:border-l-2 border-white text-center text-base md:text-base 2xl:text-lg">
+                <h3 className="font-light text-center text-base md:text-base 2xl:text-lg">
                   {service.description}
                 </h3>
               </div>
