@@ -34,7 +34,7 @@ export const getProjectById = async (id: string): Promise<{ success: boolean, me
 
 export const getProjectsCount = async (query: string): Promise<{ success: boolean, message: string, count: number }> => {
   try {
-    const response = await fetch(API + '/project/count' + query, { cache: 'no-cache' })
+    const response = await fetch(API + '/project/resume/count' + query, { cache: 'no-cache' })
     return await response.json()
   } catch (error) {
     return {
@@ -66,7 +66,7 @@ export const getProjectsLocations = async (
   data: IPROJECT_LOCATION[];
 }> => {
   try {
-    const response = await fetch(API + "/project/locations" + queryParams, {
+    const response = await fetch(API + "/project/resume/locations" + queryParams, {
       cache: "no-cache",
     });
     return await response.json();

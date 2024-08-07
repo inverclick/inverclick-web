@@ -31,12 +31,12 @@ interface DescriptionProps {
     lat: number;
     lng: number;
   };
-  urbanismPhotos: string[];
+  urbanismFiles: string[];
 }
 
 export const ProjectContent = ({
   typologies,
-  urbanismPhotos,
+  urbanismFiles,
   characteristics,
   name,
   description,
@@ -60,9 +60,10 @@ export const ProjectContent = ({
           <TabsTrigger value="description">Descripción</TabsTrigger>
           <TabsTrigger value="types">Tipologías</TabsTrigger>
           <TabsTrigger value="urban">Urbanismo</TabsTrigger>
-          <button className="mx-6 px-2 py-1 border border-primary-600 rounded-lg text-base md:text-lg lg:text-xl hover:bg-primary-100 transition-colors ease-in">
-            Simulador de crédito
-          </button>
+          <TabsTrigger 
+            value="credit" 
+            className="mx-6 px-2 py-1 border border-primary-600 rounded-lg text-base md:text-lg lg:text-xl hover:bg-primary-100 transition-colors ease-in !no-underline"
+          >Simulador de crédito</TabsTrigger>
         </TabsList>
         <div className="flex gap-6 ">
           <div className="flex-1 flex flex-col gap-6 mb-6">
@@ -118,10 +119,6 @@ export const ProjectContent = ({
                   city={city}
                   department={department}
                 />
-                <section className="mt-10">
-                  <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
-                  <CreditSimulador />
-                </section>
                 <hr />
               </div>
             </TabsContent>
@@ -129,7 +126,13 @@ export const ProjectContent = ({
               <Typologies typologies={typologies} />
             </TabsContent>
             <TabsContent value="urban">
-              <Urbanism urbanismPhotos={urbanismPhotos} />
+              <Urbanism urbanismFiles={urbanismFiles} />
+            </TabsContent>
+            <TabsContent value="credit">
+              <section className="mt-10">
+                <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
+                <CreditSimulador />
+              </section>
             </TabsContent>
           </div>
           <StickyContact />

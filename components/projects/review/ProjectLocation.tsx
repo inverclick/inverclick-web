@@ -34,7 +34,7 @@ export const ProjectLocation = ({lat, lng, address, city, department}: Props) =>
         mapContainerStyle={containerStyle}
         center={{lat, lng}}
         tilt={20}
-        zoom={8}
+        zoom={12}
         onLoad={map => setMap(map)}
         options={mapOptions}
       >

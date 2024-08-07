@@ -10,32 +10,24 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export const Urbanism = ({ urbanismPhotos }: { urbanismPhotos: string[] }) => {
+export const Urbanism = ({ urbanismFiles }: { urbanismFiles: string[] }) => {
+
   return (
-    <Carousel
-      opts={{
-        align: "center",
-      }}
-      className="w-full my-6 lg:px-20 "
-    >
-      <CarouselContent>
-        {urbanismPhotos.map((p, index) => (
-          <CarouselItem key={index}>
-            <Link
-              href={getAssetUrl(p)}
-              target="_blank"
-              // alt={'Urbanismo #' + index}
-              // width={600}
-              // height={400}
-              className="w-full h-auto object-cover"
-            >
-              {"Urbanismo #" + index}
-            </Link>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious className="!left-2 md:!left-6" />
-      <CarouselNext className="!right-2 md:!right-6" />
-    </Carousel>
+    <ul className="space-y-2 mt-2 flex justify-center">
+      {urbanismFiles.map((p, index) => (
+        <li key={index}>
+          <a
+            href={getAssetUrl(p)}
+            target="_blank"
+            // alt={'Urbanismo #' + index}
+            // width={600}
+            // height={400}
+            className="w-fit bg-primary-600 text-white px-4 py-2 rounded-3xl"
+          >
+            {"Archivo de Urbanismo #" + index + 1}
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 };
