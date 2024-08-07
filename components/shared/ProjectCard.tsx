@@ -90,7 +90,7 @@ export const ProjectCard = ({ blueprint }: Props) => {
             unoptimized
             loading="lazy"
             className="w-auto h-[45px] 2xl:h-[50px]"
-            src={company.logo_url}
+            src={getAssetUrl(company.logo_url)}
             alt={project.name}
             width={50}
             height={50}
