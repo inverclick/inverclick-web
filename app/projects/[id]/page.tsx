@@ -33,11 +33,24 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 export default async  function Page ({ params }: { params: { id: string } }) {
   const id = params.id
 
-  if(!id.length) redirect('/projects')
+  if(!id.length) return (
+    <div>
+      Id: { id }
+    </div>
+  )
+
 
   const { project, blueprints } = await getProjectById(id)
 
-  if(!project || !blueprints.length) redirect('/projects')
+  if(!project || !blueprints.length) return (
+    <div>
+      Project: { JSON.stringify(project) }
+      <br />
+      <br />
+      <br />
+      Blueprints: { JSON.stringify(blueprints) }
+    </div>
+  )
 
   const mainBlueprint = blueprints[0]
   
