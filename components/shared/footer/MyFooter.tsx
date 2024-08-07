@@ -70,9 +70,9 @@ export const MyFooter = () => {
           <div
             className='flex gap-4 font-light text-xs text-center'
           >
-            Políticas de privacidad
+            <Link href='/policy'>Políticas de privacidad</Link>
             <div className='border-r border-black' />
-            Términos y condiciones
+            <Link href='/terms-conditions'>Términos y condiciones</Link>
           </div>
           <div className='flex gap-4 font-light text-xs'>
             All rights reserved © {new Date().getFullYear()}

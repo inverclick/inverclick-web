@@ -126,9 +126,9 @@ export default function Home() {
             alt="Inverclick logo gris"
           />
           <div className="flex gap-2 text-white/85 font-light text-xs text-center">
-            Políticas de privacidad
+            <Link href='/policy'>Políticas de privacidad</Link>
             <div className="border bg-white/30"></div>
-            Términos y condiciones
+            <Link href='/terms-conditions'>Términos y condiciones</Link>
           </div>
           <div className="flex gap-4 text-white/85 font-light text-xs">
             All rights reserved © {new Date().getFullYear()}
