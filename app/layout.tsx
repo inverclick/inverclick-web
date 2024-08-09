@@ -1,26 +1,38 @@
-import { Poppins } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-import { Metadata } from "next";
-import { ENV_VARS } from "@/global/env";
 import { DownloadAppPopUp } from "@/components/shared/DownloadAppPopUp";
-import 'atropos/css'
+import { Toaster } from "@/components/ui/sonner";
+import { ENV_VARS } from "@/global/env";
+import "atropos/css";
+import { Metadata } from "next";
+import { Poppins } from "next/font/google";
+import Script from "next/script";
+import "./globals.css";
 
-const poppins = Poppins({weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin']});
+const poppins = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: {
     default: "Inverclick - Invierte en Propiedad Raíz desde EL EXTERIOR",
     template: "%s - Inverclick",
   },
-  description: "Descubre cómo invertir en propiedad raíz desde el exterior. Descubre propiedades verificadas y seguras en Colombia. Inverclick te ofrece un acceso exclusivo a las mejores opciones.",
+  description:
+    "Descubre cómo invertir en propiedad raíz desde el exterior. Descubre propiedades verificadas y seguras en Colombia. Inverclick te ofrece un acceso exclusivo a las mejores opciones.",
   icons: {
     icon: "/favicon.ico",
   },
-  keywords: ["inverclick", "propiedad raíz", "inversión", "crédito hipotecario", "inversión desde el exterior", "invertir en Colombia"],
+  keywords: [
+    "inverclick",
+    "propiedad raíz",
+    "inversión",
+    "crédito hipotecario",
+    "inversión desde el exterior",
+    "invertir en Colombia",
+  ],
   robots: "index, follow",
   alternates: {
-    canonical: ENV_VARS.BASE_URL
+    canonical: ENV_VARS.BASE_URL,
   },
   openGraph: {
     type: "website",
@@ -35,7 +47,7 @@ export const metadata: Metadata = {
     statusBarStyle: "black",
     capable: true,
     title: "Inverclick",
-  }
+  },
 };
 
 export default function RootLayout({
@@ -46,14 +58,19 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <link rel='preconnect' href='https://public-bucket.inverclick.com' />
-        <link rel='sitemap' href='/sitemap.xml' />
+        <link rel="preconnect" href="https://public-bucket.inverclick.com" />
+        <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
         {children}
         <Toaster />
         <DownloadAppPopUp />
       </body>
+      <Script
+        async
+        defer
+        src="https://scripts.simpleanalyticscdn.com/latest.js"
+      />
     </html>
   );
 }
