@@ -6,7 +6,7 @@ import { ComponentProps } from "react";
 const SERVICES = [
   {
     title: "Financiación",
-    description: "Crédito Hipotecario, Leasing Habitacional",
+    description: "Crédito Hipotecario - Leasing Habitacional",
     link: "/financing",
   },
   {
