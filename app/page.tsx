@@ -1,49 +1,21 @@
-import Image from "next/image";
-import { LoginButton } from "@/components/shared/LoginButton";
+import { AppButton } from "@/components/shared/AppButton";
 import { ContactButton } from "@/components/shared/ContactButton";
 import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
+import { LoginButton } from "@/components/shared/LoginButton";
 import { DynamicPhrases } from "@/components/web/DynamicPhrases";
+import { Searcher } from "@/components/web/Searcher";
+import { Services } from "@/components/web/Services";
+import { getDepartments } from "@/services/utils";
+import Image from "next/image";
 import Link from "next/link";
-import { AppButton } from "@/components/shared/AppButton";
 
-const SERVICES = [
-  {
-    title: "¿Necesitas dinero para invertir?",
-    description: "Crédito Hipotecario, Leasing Habitacional",
-    link: "/financing",
-    buttonLabel: "Solicitar",
-  },
-  {
-    title: "Conoce nuestros proyectos",
-    description: "Casas, apartamentos, lotes, bodegas",
-    link: "/projects",
-    buttonLabel: "Explorar",
-  },
-  {
-    title: "Otros servicios",
-    description: "Seguros, cuentas de ahorro, envío de divisas",
-    link: "/",
-    buttonLabel: "Ver más",
-  },
-];
+export default async function Home() {
+  const { data: departments } = await getDepartments();
 
-export default function Home() {
   return (
-    //   <section className="h-screen w-screen flex flex-col justify-center items-center gap-2">
-    //   <h2 className="text-5xl text-primary-700">Inverclick</h2>
-    //   <p className="text-2xl mb-4">¡Próximamente!</p>
-    //   <p className="text-xl mb-4">Invierte en Propiedad Raíz desde <span className="font-semibold">EL EXTERIOR</span></p>
-    //   <Image
-    //     unoptimized
-    //     className='absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full'
-    //     src='/main-page/main-background.avif'
-    //     alt='Inverclick fondo de pantalla'
-    //     width='1200'
-    //     height='1200'
-    //   />
-    // </section>
-    <main className="flex flex-col md:flex-row h-screen bg-">
-      <section className="md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:pl-10 py-6">
+    <main className="flex flex-col lg:flex-row h-screen">
+      {/* LEFT SECTION */}
+      <section className="md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:px-10 py-6">
         <AppButton />
         <Image
           unoptimized
@@ -57,17 +29,17 @@ export default function Home() {
           unoptimized
           width="200"
           height="80"
-          className="w-[160px] md:w-[220px] animate-slide-in-top"
+          className="w-[160px] md:w-[220px] animate-slide-in-top mb-8 mx-auto lg:mx-0"
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
         />
-        <div className="pb-4 md:pb-32 flex flex-col gap-6 animate-blurred-fade-in">
-          {/* <h1
-          className='text-lg md:text-3xl text-center md:text-left'
-        >
-          Invierte en Propiedad Raíz desde <span className="font-semibold">EL EXTERIOR</span>
-        </h1> */}
-          <DynamicPhrases />
+        <div className="flex-grow flex flex-col w-full md:mb-4 lg:mb-0">
+          {/* Componente para compensar espacio para centrar */}
+          <Services className="hidden lg:flex invisible !mb-0" />
+          <div className="flex-grow pb-4 flex flex-col justify-center gap-6 animate-blurred-fade-in w-full">
+            <DynamicPhrases />
+          </div>
+          <Services />
         </div>
         <div className="flex gap-4">
           {SOCIAL_NETWORKS.map(({ link, img, name }) => (
@@ -85,38 +57,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="animate-slide-in-bottom md:animate-slide-in-right flex-1 rounded-t-2xl md:rounded-l-[40px] md:rounded-r-none shadow-xl bg-primary-600 flex flex-col justify-around items-center relative">
-        <header className="text-center text-white flex flex-col gap-2">
-          <h2 className="pt-6 md:pt-0 text-2xl md:text-3xl 2xl:text-4xl">
-            <b>Bienvenidos</b> <span className="font-light">a inverclick</span>
-          </h2>
-        </header>
-
-        <div className="flex flex-col gap-10 2xl:gap-14">
-          {SERVICES.map((service, index) => (
-            <article
-              key={index}
-              className="flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center"
-            >
-              <div className="text-white flex flex-col gap-2 lg:gap-4  w-[300px] 2xl:w-[450px]">
-                <h2 className="text-center font-medium text-base md:text-lg 2xl:text-xl">
-                  {service.title}
-                </h2>
-                <h3 className="font-light text-center text-base md:text-base 2xl:text-lg">
-                  {service.description}
-                </h3>
-              </div>
-              <Link
-                href={service.link}
-                className="text-primary-600 text-sm md:text-lg font-semibold px-6 py-2 rounded-3xl bg-white hover:shadow-2xl hover:scale-105 transition-all ease-in"
-              >
-                {service.buttonLabel}
-              </Link>
-            </article>
-          ))}
-        </div>
-
-        <footer className="flex flex-col justify-center items-center gap-1 px-4">
+      {/* RIGHT SECTION */}
+      <section className="animate-slide-in-bottom md:animate-slide-in-right flex-1 rounded-t-2xl lg:rounded-l-[40px] lg:rounded-r-none shadow-xl bg-primary-600 flex flex-col justify-between items-center relative">
+        {/* Elemento para compensar espacio para centrar */}
+        <footer className="hidden lg:flex invisible flex-col justify-center items-center gap-1 px-4 mt-8">
           <Image
             unoptimized
             src="/main-page/logo_gris_inverclick.svg"
@@ -126,9 +70,49 @@ export default function Home() {
             alt="Inverclick logo gris"
           />
           <div className="flex gap-2 text-white/85 font-light text-xs text-center">
-            <Link href='/policy'>Políticas de privacidad</Link>
+            <Link href="/policy">Políticas de privacidad</Link>
             <div className="border bg-white/30"></div>
-            <Link href='/terms-conditions'>Términos y condiciones</Link>
+            <Link href="/terms-conditions">Términos y condiciones</Link>
+          </div>
+          <div className="flex gap-4 text-white/85 font-light text-xs">
+            All rights reserved © {new Date().getFullYear()}
+          </div>
+        </footer>
+
+        <div>
+          <header className="px-5 md:px-16 mb-8 mt-8 md:mt-16 lg:mt-0 lg:mb-16">
+            <h1 className="text-left text-2xl md:text-3xl 2xl:text-5xl font-semibold text-white">
+              <p>Inverclick, el mejor sitio</p>
+              <p>
+                para invertir en{" "}
+                <span className="text-3xl md:text-4xl 2xl:text-6xl">
+                  Colombia
+                </span>
+              </p>
+            </h1>
+          </header>
+
+          <section className="w-full mb-8 lg:mb-0">
+            <Searcher departments={departments} />
+            <h3 className="text-center mt-4 text-white text-sm md:text-base">
+              Casas - Apartamentos - Lotes - Fracciones
+            </h3>
+          </section>
+        </div>
+
+        <footer className="flex flex-col justify-center items-center gap-1 px-4 mb-8">
+          <Image
+            unoptimized
+            src="/main-page/logo_gris_inverclick.svg"
+            className="mb-2 w-[60px] md:w-[90px]"
+            width="100"
+            height="40"
+            alt="Inverclick logo gris"
+          />
+          <div className="flex gap-2 text-white/85 font-light text-xs text-center">
+            <Link href="/policy">Políticas de privacidad</Link>
+            <div className="border bg-white/30"></div>
+            <Link href="/terms-conditions">Términos y condiciones</Link>
           </div>
           <div className="flex gap-4 text-white/85 font-light text-xs">
             All rights reserved © {new Date().getFullYear()}

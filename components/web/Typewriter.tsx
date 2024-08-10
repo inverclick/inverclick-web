@@ -64,13 +64,11 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
   return (
     <div
       key={currentIndex}
-      className="fade-in-up mr-6 text-center md:text-left"
+      className="fade-in-up mx-6 md:ml-0 text-center lg:text-left min-h-28"
     >
       {/* Static Title */}
-      <h1 className="font-semibold text-3xl pb-2">
-        {texts[currentIndex].title}
-      </h1>
-      <div className="typewriter-container min-h-6 min-w-full">
+      <h1 className="font-semibold text-4xl mb-2">{texts[currentIndex].title}</h1>
+      <div className="typewriter-container min-w-full">
         <h2 className="typewriter-text text-2xl">
           {subtitleText}
           {isTyping ? <span className="cursor"></span> : null}{" "}
