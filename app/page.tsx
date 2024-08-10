@@ -70,9 +70,9 @@ export default async function Home() {
             alt="Inverclick logo gris"
           />
           <div className="flex gap-2 text-white/85 font-light text-xs text-center">
-            <Link href="/policy">Políticas de privacidad</Link>
+            <Link href="/policy" target="_blank">Políticas de privacidad</Link>
             <div className="border bg-white/30"></div>
-            <Link href="/terms-conditions">Términos y condiciones</Link>
+            <Link href="/terms-conditions" target="_blank">Términos y condiciones</Link>
           </div>
           <div className="flex gap-4 text-white/85 font-light text-xs">
             All rights reserved © {new Date().getFullYear()}

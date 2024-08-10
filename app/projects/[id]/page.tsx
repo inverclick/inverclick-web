@@ -6,7 +6,6 @@ import { MyFooter } from "@/components/shared/footer/MyFooter"
 import { ENV_VARS } from "@/global/env"
 import { getProjectById } from "@/services/projects"
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'edge' 
