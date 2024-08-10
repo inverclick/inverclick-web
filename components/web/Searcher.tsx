@@ -1,0 +1,142 @@
+"use client";
+
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { trimObject } from "@/lib/trimObject";
+import { getCities } from "@/services/utils";
+import { Search } from "lucide-react";
+import Link from "next/link";
+import { ComponentProps, useEffect, useState } from "react";
+
+export type SearcherProps = Readonly<{
+  departments: { departamento: string }[];
+}>;
+
+export function Searcher({ departments }: SearcherProps) {
+  const [department, setDepartment] = useState("");
+  const [city, setCity] = useState("");
+
+  const [cities, setCities] = useState<{ municipio: string }[]>([]);
+
+  const isCitySelectDisabled = !department || cities.length === 0;
+
+  useEffect(() => {
+    if (!department) return;
+
+    fetchCities();
+
+    async function fetchCities() {
+      const { data: cities } = await getCities(department);
+
+      setCities(cities);
+    }
+  }, [department]);
+
+  return (
+    <div className="w-full px-4 md:px-16">
+      <div className="flex gap-4 bg-white rounded-full items-center">
+        <div className="flex-grow grid grid-cols-[1fr_2px_1fr] gap-4 p-2 md:p-4">
+          <DepartmentsSelect
+            departments={departments}
+            value={department}
+            onValueChange={setDepartment}
+          />
+          <Separator orientation="vertical" className="h-auto w-[2px]" />
+          <CitySelect
+            cities={cities}
+            disabled={isCitySelectDisabled}
+            value={city}
+            onValueChange={setCity}
+          />
+        </div>
+        <Link
+          href={{
+            pathname: "/projects",
+            query: new URLSearchParams(
+              trimObject({ department, city })
+            ).toString(),
+          }}
+          className="mx-2 p-2 md:p-4 rounded-full bg-primary-600 hover:bg-primary-700 transition-colors"
+        >
+          <Search color="white" />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+type DepartmentsSelectProps = Readonly<{
+  departments: { departamento: string }[];
+}> &
+  ComponentProps<typeof Select>;
+
+function DepartmentsSelect({ departments, ...props }: DepartmentsSelectProps) {
+  return (
+    <Select {...props}>
+      <CustomSelectTrigger>
+        <SelectValue placeholder="Departamento" />
+      </CustomSelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Departamentos</SelectLabel>
+          {departments.map(({ departamento }) => {
+            return (
+              <SelectItem key={departamento} value={departamento}>
+                {departamento}
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+}
+
+type CitySelectProps = Readonly<{
+  cities: { municipio: string }[];
+}> &
+  ComponentProps<typeof Select>;
+
+function CitySelect({ cities, ...props }: CitySelectProps) {
+  return (
+    <Select {...props}>
+      <CustomSelectTrigger>
+        <SelectValue placeholder="Ciudad" />
+      </CustomSelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Ciudades</SelectLabel>
+          {cities.map(({ municipio }) => {
+            return (
+              <SelectItem key={municipio} value={municipio}>
+                {municipio}
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+}
+
+type CustomSelectTriggerProps = ComponentProps<typeof SelectTrigger>;
+
+function CustomSelectTrigger({ children, ...props }: CustomSelectTriggerProps) {
+  return (
+    <SelectTrigger
+      className="border-none justify-center text-sm md:text-xl"
+      showChevron={false}
+      {...props}
+    >
+      {children}
+    </SelectTrigger>
+  );
+}
