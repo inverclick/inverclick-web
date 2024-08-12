@@ -3,19 +3,36 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Grip, X } from "lucide-react";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useState } from "react";
-import Image from "next/image";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { DialogHeader } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
+import { ChevronLeft, Grip, X } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import Masonry from "react-responsive-masonry";
+import { useMediaQuery } from "usehooks-ts";
 
-interface Props {
+type MasonryViewProps = {
+  photoScrollTo: string;
   photos: string[];
-}
+  open: boolean;
+  setOpen: (open: boolean) => void;
+};
 
-export const MasonryView = ({ photos }: Props) => {
-  const [open, setOpen] = useState(false);
-
+export const MasonryView = ({
+  photoScrollTo,
+  photos,
+  open,
+  setOpen,
+}: MasonryViewProps) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
@@ -24,35 +41,147 @@ export const MasonryView = ({ photos }: Props) => {
           Mostrar más fotos
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-4xl">
-        <header className="flex w-full items-center">
-          <X
+      <AlertDialogContent className="fixed left-1/2 max-w-full !max-h-full h-full !rounded-none p-0 overflow-y-auto">
+        <DialogHeader className="sticky top-0 z-10 flex flex-row items-center p-6 bg-white">
+          <ChevronLeft
             onClick={() => setOpen(false)}
-            className="w-5 h-5 cursor-pointer text-black hover:text-primary-800 transition-colors ease-in"
+            className="cursor-pointer text-black"
           />
-          <h3 className="flex-1 md:text-lg text-primary-600 text-center font-medium">
-            Galería de fotos
-          </h3>
-        </header>
-        <ResponsiveMasonry
-          columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-          className="overflow-y-auto"
-        >
-          <Masonry gutter="12px">
-            {photos.map((photo, index) => (
-              <Image
-                unoptimized
-                src={getAssetUrl(photo)}
-                alt={photo}
-                width="600"
-                height="400"
-                key={index}
-                className="object-cover !h-full w-auto"
-              />
-            ))}
-          </Masonry>
-        </ResponsiveMasonry>
+        </DialogHeader>
+        <div className="p-6">
+          <PhotosGrid photoScrollTo={photoScrollTo} photos={photos} />
+        </div>
       </AlertDialogContent>
     </AlertDialog>
   );
 };
+
+type PhotosGridProps = Readonly<{
+  photoScrollTo: string;
+  photos: string[];
+}>;
+
+function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
+  const [photosSliderOpen, setPhotosSliderOpen] = useState(false);
+  const [initialPhotoIndex, setInitialPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    const photo = document.getElementById(photoScrollTo);
+
+    if (!photo) return;
+
+    photo.scrollIntoView({ behavior: "smooth" });
+  }, [photoScrollTo]);
+
+  return (
+    <>
+      <Masonry columnsCount={2} gutter="12px" className="max-w-3xl mx-auto">
+        {photos.map((photo, index) => (
+          <Image
+            key={photo}
+            id={photo}
+            src={getAssetUrl(photo)}
+            alt={photo}
+            width="600"
+            height="400"
+            className="cursor-pointer object-cover !h-full w-auto hover:brightness-[0.8]"
+            onClick={() => {
+              setPhotosSliderOpen(true);
+              setInitialPhotoIndex(index);
+            }}
+            unoptimized
+          />
+        ))}
+      </Masonry>
+      <PhotosSlider
+        initialPhotoIndex={initialPhotoIndex}
+        photos={photos}
+        isOpen={photosSliderOpen}
+        setIsOpen={setPhotosSliderOpen}
+      />
+    </>
+  );
+}
+
+type PhotosSliderProps = Readonly<{
+  initialPhotoIndex: number;
+  photos: string[];
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}>;
+
+function PhotosSlider({
+  initialPhotoIndex,
+  photos,
+  isOpen,
+  setIsOpen,
+}: PhotosSliderProps) {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  const matchesDesktop = useMediaQuery("(min-width: 1024px)");
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api, photos]);
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogContent className="fixed left-1/2 max-w-full !max-h-full h-full !border-none !rounded-none p-0 bg-black">
+        <DialogHeader className="sticky top-0 grid grid-cols-3 items-center p-6 bg-black">
+          <X
+            onClick={() => setIsOpen(false)}
+            className="cursor-pointer text-white"
+          />
+          <p className="!mt-0 text-center text-white">
+            {current}/{count}
+          </p>
+        </DialogHeader>
+        <div
+          className={cn("flex justify-center items-center h-full", {
+            "px-0": !matchesDesktop,
+            "px-24": matchesDesktop,
+          })}
+        >
+          <Carousel
+            setApi={setApi}
+            opts={{
+              startIndex: initialPhotoIndex,
+            }}
+          >
+            <CarouselContent>
+              {photos.map((photo) => {
+                return (
+                  <CarouselItem key={photo}>
+                    <Image
+                      unoptimized
+                      src={getAssetUrl(photo)}
+                      alt={photo}
+                      width="800"
+                      height="600"
+                      className="object-cover mx-auto"
+                    />
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            {matchesDesktop && (
+              <>
+                <CarouselPrevious className="bg-transparent text-white" />
+                <CarouselNext className="bg-transparent text-white" />
+              </>
+            )}
+          </Carousel>
+        </div>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
