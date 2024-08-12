@@ -21,8 +21,9 @@ export const MyPhoneInput = ({ name, label = '', placeholder = '', ...props }: P
             containerClass='!border-black'
             buttonClass='!border-black'
             searchClass='!border-black'
+            country={'us'}
             value={field.value}
-            preferredCountries={['co', 'us', 'es']}
+            preferredCountries={['es', 'us',  'co']}
             onChange={phone => form.setFieldValue(name, phone)}
           />
           { getIn(form.errors, name) && getIn(form.touched, name)
