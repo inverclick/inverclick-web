@@ -1,16 +1,32 @@
+'use client'
 import React from 'react'
 import './financing.css'
+import { useCurrencyContext } from '@/contexts/CurrencyContext'
+import { currencyFormatter } from '@/lib/currencyFormatter'
+import { CountUp } from '../shared/CountUp'
 
-
-export const SimulatorResult = () => {
-  return (
+interface Props {
+  value: number
+}
+//3124434000
+export const SimulatorResult = ({ value }: Props) => {
+  const { currency, convert } = useCurrencyContext()
+  
+return (
     <section className='circular-progress-container'>
       <svg width="400" height="400" viewBox="0 0 400 400" className="circular-progress">
         <circle className="bg"></circle>
         <circle className="fg"></circle>
       </svg>
-      <div className='flex flex-col absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10'>
-        <p className='text-3xl font-medium mb-2'>$3.124.434.000&nbsp;*</p>
+      <div className='flex flex-col absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 min-w-64'>
+        <p className='text-3xl font-medium mb-2 text-center'>
+          <CountUp 
+            initial={0} 
+            final={value} 
+            decimals={2} 
+            formatter={(newValue) => currencyFormatter(convert(Number(newValue)), currency)}
+          />&nbsp;*
+        </p>
         <div className='flex gap-8 justify-between mx-10'>
           <p className='text-sm'>Tasa e.a.</p>
           <p className='text-sm'>13,98%*</p>
