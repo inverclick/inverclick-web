@@ -128,12 +128,11 @@ export const ProjectContent = ({
             <TabsContent value="urban">
               <Urbanism urbanismFiles={urbanismFiles} />
             </TabsContent>
-            <TabsContent value="credit">
-              <section className="mt-10">
-                <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
-                <CreditSimulador />
-              </section>
-            </TabsContent>
+            <TabsContent value="credit" />
+            <section>
+              <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
+              <CreditSimulador />
+            </section>
           </div>
           <StickyContact />
         </div>
