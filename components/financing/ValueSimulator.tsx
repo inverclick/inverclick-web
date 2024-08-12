@@ -25,7 +25,7 @@ export const ValueSimulator = ({onSimulate}: Props) => {
   const locale = currency === 'COP' ? 'es-CO' : currency === 'EUR' ? 'de-DE' : 'en-US'
   
   return (
-    <article className='flex-1 flex flex-col gap-6'>
+    <article className='flex-1 flex flex-col gap-6 animate-blurred-fade-in'>
       <div className='flex gap-4 items-center'>
         <p className='text-lg font-medium'>¿Cuál es el valor comercial de la vivienda?</p>
         <SelectCurrency />

@@ -34,7 +34,7 @@ export const CreditSimulador = () => {
             /> 
           : null
         }
-        <article className='flex-1 flex justify-center items-center'>
+        <article key={simulatorType} className='flex-1 flex justify-center items-center animate-blurred-fade-in'>
           <SimulatorResult 
             value={simulatorType === 'VALOR' ? valueCredit : quotaCredit} 
           />
