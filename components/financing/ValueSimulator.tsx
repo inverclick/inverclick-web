@@ -1,25 +1,25 @@
 'use client'
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 import { SelectCurrency } from '../projects/SelectCurrency'
 import CurrencyInput from 'react-currency-input-field';
 import { useCurrencyContext } from '@/contexts/CurrencyContext';
 import { Checkbox } from '../ui/checkbox';
 import { NativeSlider } from '../ui/slider-native';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
 import { currencyFormatter } from '@/lib/currencyFormatter';
 
 interface Props {
   onSimulate: () => void
+  onRest: () => void
 }
 
 
-export const ValueSimulator = ({onSimulate}: Props) => {
+export const ValueSimulator = ({onSimulate, onRest}: Props) => {
   const [inputValue, setInputValue] = useState<string>('1000000')
   const [years, setYears] = useState(15)
   const [percentage, setPercentage] = useState(70)
-  const { currency, convert } = useCurrencyContext()
+  const { currency } = useCurrencyContext()
   const [date, setDate] = useState<Date>();
   
   const locale = currency === 'COP' ? 'es-CO' : currency === 'EUR' ? 'de-DE' : 'en-US'
@@ -104,8 +104,9 @@ export const ValueSimulator = ({onSimulate}: Props) => {
           </Popover>
         </div>
       </div>
-      <div className='mt-4 self-center'>
+      <div className='mt-4 self-center flex gap-3'>
         <button onClick={onSimulate} className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">Simular</button>
+        <button onClick={onRest} className="text-sm md:text-base px-6 py-2 rounded-full bg-slate-300 text-slate-600 hover:bg-slate-200 transition-colors ease-in">Reiniciar</button>
       </div>
     </article>
   )
