@@ -17,6 +17,7 @@ export const CreditSimulador = () => {
         { 
           simulatorType === 'VALOR' ? 
             <ValueSimulator 
+              onRest={() => setValueCredit(0)}
               onSimulate={() => {
                 setValueCredit(3124434000)
                 setSimulatorType('VALOR')
@@ -27,6 +28,7 @@ export const CreditSimulador = () => {
         { 
           simulatorType === 'CUOTA' ? 
             <FeeSimulator 
+              onRest={() => setQuotaCredit(0)}
               onSimulate={() => {
                 setQuotaCredit(3124434000)
                 setSimulatorType('CUOTA')
