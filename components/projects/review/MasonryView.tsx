@@ -19,6 +19,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Masonry from "react-responsive-masonry";
 import { useMediaQuery } from "usehooks-ts";
+import { ShareProject } from "./ShareProject";
 
 type MasonryViewProps = {
   photoScrollTo: string;
@@ -42,11 +43,12 @@ export const MasonryView = ({
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent className="fixed left-1/2 max-w-full !max-h-full h-full !rounded-none p-0 overflow-y-auto">
-        <DialogHeader className="sticky top-0 z-10 flex flex-row items-center p-6 bg-white">
+        <DialogHeader className="sticky top-0 z-10 flex flex-row items-center justify-between p-6 bg-white">
           <ChevronLeft
             onClick={() => setOpen(false)}
             className="cursor-pointer text-black"
           />
+          <ShareProject />
         </DialogHeader>
         <div className="p-6">
           <PhotosGrid photoScrollTo={photoScrollTo} photos={photos} />
@@ -167,7 +169,7 @@ function PhotosSlider({
                       alt={photo}
                       width="800"
                       height="600"
-                      className="object-cover mx-auto"
+                      className="object-contain mx-auto my-auto h-full w-auto"
                     />
                   </CarouselItem>
                 );
