@@ -11,7 +11,7 @@ export const CreditSimulador = () => {
   const [quotaCredit, setQuotaCredit] = useState(0)
 
   return (
-    <section className='flex flex-col gap-6'>
+    <section className='flex flex-col gap-6 h-[700px]'>
       <SelectSimulatorType setSimulatorType={setSimulatorType} simulatorType={simulatorType} />
       <div className='flex flex-col md:flex-row'>
         { 

@@ -32,7 +32,7 @@ export const SelectSimulatorType = ({
         }}
         onClick={() => setSimulatorType("VALOR")}
         className={clsx(
-          "px-6 py-2 rounded-full",
+          "px-6 py-2 rounded-full !w-[241px]",
           simulatorType === "VALOR" && activeTabRef.current && "text-white"
         )}
       >
@@ -54,7 +54,7 @@ export const SelectSimulatorType = ({
       </button>
       {activeTabRef.current && (
         <div
-          className="absolute inset-0 h-full bg-primary-600 rounded-full transition-all -z-10"
+          className="absolute inset-0 h-full bg-primary-600 rounded-full transition-all -z-10 !w-[242px]"
           style={{
             width,
             transform: `translateX(${offset}px)`,
