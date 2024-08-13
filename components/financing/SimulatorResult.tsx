@@ -14,7 +14,7 @@ export const SimulatorResult = ({ value }: Props) => {
   
 return (
     <section className='circular-progress-container'>
-      <svg width="400" height="400" viewBox="0 0 400 400" className="circular-progress">
+      <svg width="400" height="400" viewBox="0 0 400 400" className={`circular-progress ${value !== 0 ? 'circular-progress-animation' : ''}`}>
         <circle className="bg"></circle>
         <circle className="fg"></circle>
       </svg>
