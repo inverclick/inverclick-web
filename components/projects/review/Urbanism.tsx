@@ -15,10 +15,11 @@ export const Urbanism = ({ urbanismFiles }: { urbanismFiles: string[] }) => {
   return (
     <ul className="space-y-2 mt-2 flex justify-center flex-col items-center gap-2">
       <Image 
-        src='/urbanismo.png'
+        src='/urbanismo.jpeg'
         alt="Urbanismo" 
         width={600} 
-        height={400} 
+        height={400}
+        className="!w-full" 
       />
       {urbanismFiles.map((p, index) => (
         <li key={index}>
