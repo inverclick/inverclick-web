@@ -119,6 +119,10 @@ export const ProjectContent = ({
                   city={city}
                   department={department}
                 />
+                <section>
+                  <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
+                  <CreditSimulador />
+                </section>
                 <hr />
               </div>
             </TabsContent>
@@ -128,11 +132,10 @@ export const ProjectContent = ({
             <TabsContent value="urban">
               <Urbanism urbanismFiles={urbanismFiles} />
             </TabsContent>
-            <TabsContent value="credit" />
-            <section>
+            <TabsContent value="credit">
               <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
               <CreditSimulador />
-            </section>
+            </TabsContent>
           </div>
           <StickyContact />
         </div>
