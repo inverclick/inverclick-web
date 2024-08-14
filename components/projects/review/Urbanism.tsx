@@ -13,7 +13,13 @@ import React from "react";
 export const Urbanism = ({ urbanismFiles }: { urbanismFiles: string[] }) => {
 
   return (
-    <ul className="space-y-2 mt-2 flex justify-center">
+    <ul className="space-y-2 mt-2 flex justify-center flex-col items-center gap-2">
+      <Image 
+        src='/urbanismo.png'
+        alt="Urbanismo" 
+        width={600} 
+        height={400} 
+      />
       {urbanismFiles.map((p, index) => (
         <li key={index}>
           <a
