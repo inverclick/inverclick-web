@@ -16,7 +16,7 @@ export default async function Home() {
     <main className="flex flex-col lg:flex-row h-screen">
       {/* LEFT SECTION */}
       <section className="md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:px-10 py-6">
-        <AppButton />
+        <AppButton className="absolute bottom-5 right-8" />
         <Image
           unoptimized
           className="absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full"
