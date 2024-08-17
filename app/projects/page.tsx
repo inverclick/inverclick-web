@@ -44,7 +44,7 @@ export default async function Projects(props: any) {
   return (
     <ProjectsPageContext initialBlueprints={data}>
       <main>
-        <ContactButton />
+        <ContactButton className="absolute right-4 bottom-4" />
         <section className="hidden lg:block">
           <DefaultResizablePanelGroup direction="horizontal">
             <DefaultResizablePanel defaultSize={50}>

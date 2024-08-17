@@ -56,7 +56,7 @@ export default async  function Page ({ params }: { params: { id: string } }) {
   return ( 
     <main>
       <ProjectHeader />
-      <article className="px-6 sm:px-10 md:px-8 lg:px-10 xl:px-20 pt-20 md:pt-24 xl:pt-32 flex flex-col gap-8">
+      <article className="px-6 sm:px-10 md:px-8 lg:px-10 xl:px-20 pt-20 md:pt-24 xl:pt-32 flex flex-col gap-8 max-w-screen-2xl mx-auto">
         <Hero 
           name={project.name} 
           photos={project.photos} 
