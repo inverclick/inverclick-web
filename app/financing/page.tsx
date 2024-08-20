@@ -24,7 +24,7 @@ export default function FinancingPage() {
   return (
     <main>
       <MyHeaderAllServices />
-      <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-20 md:pt-24 xl:pt- 28 flex flex-col mb-20">
+      <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-20 md:pt-24 xl:pt- 28 flex flex-col mb-20 max-w-screen-2xl mx-auto">
        <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[65vh] translate-y-5">
           <div className="flex gap-3 flex-col animate-blurred-fade-in">
             <h1 className="font-semibold text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl">Crédito de vivienda</h1>
@@ -35,7 +35,7 @@ export default function FinancingPage() {
           <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700 animate-fade-in-up">Solicitar Preaprobado</button>
         </div>
       </article>
-      <article className="h-[calc(1.3*100vh)] md:h-[calc(100vh-100px)] w-full flex flex-col md:flex-row gap-10 md:gap-10 lg:gap-14 px-10 md:px-14 lg:px-20 mb-14">
+      <article className="h-[calc(1.3*100vh)] md:h-[calc(100vh-100px)] w-full flex flex-col md:flex-row gap-10 md:gap-10 lg:gap-14 px-10 md:px-14 lg:px-20 mb-14 max-w-screen-2xl mx-auto">
         <FinancingCard  
           color="#7330f7"
           direction="horizontal"
@@ -121,7 +121,7 @@ export default function FinancingPage() {
           } 
         />
       </article>
-      <article className="h-screen md:h-[calc(100vh-200px)] w-full flex flex-col md:flex-row gap-14 px-10 md:px-14 lg:px-20 mb-20">
+      <article className="h-screen md:h-[calc(100vh-200px)] w-full flex flex-col md:flex-row gap-14 px-10 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
          <FinancingCard  
           color="black"
           direction="vertical"
@@ -189,7 +189,7 @@ export default function FinancingPage() {
           }
         />
       </article>
-      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 mb-20">
+      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
         <h2 className="text-pretty md:w-1/2 text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">¿Quieres saber cuál es la mejor opción para ti?</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 justify-items-center relative md:px-10 xl:px-40">
           <div className="absolute bottom-0 left-0 right-0 h-4 bg-primary-600 -z-10" />
@@ -201,7 +201,7 @@ export default function FinancingPage() {
           </div>
         </div>
       </article>
-      <article className="w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 py-20">
+      <article className="w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 py-20 max-w-screen-2xl mx-auto">
         <div className="md:w-1/2">
         <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">Simulador de<br />CRÉDITO</h2>
         <p className="text-xs mt-4">*Los resultados de este simulador son aproximaciones con fines informativos, los valores reales se establecerán con la entidad financiera en momento de la negociación del crédito o del desembolso.</p>
@@ -210,7 +210,7 @@ export default function FinancingPage() {
           <CreditSimulador />
         </div>
       </article> 
-      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20">
+      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 max-w-screen-2xl mx-auto">
         <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold">Preguntas FRECUENTES</h2>
         <FrequentlyQuestions />
       </article>

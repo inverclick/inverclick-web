@@ -1,19 +1,28 @@
-import '@/app/styles/animations.css'
-import Image from 'next/image'
-import React from 'react'
+import "@/app/styles/animations.css";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import React, { ComponentProps } from "react";
 
-export const ContactButton = () => {
+type ContactButtonProps = Readonly<ComponentProps<"div">>;
+
+export const ContactButton = ({ className, ...props }: ContactButtonProps) => {
   return (
-    <div className='z-30 border-2 border-primary-600 slide-button shadow-2xl cursor-pointer absolute bottom-6 right-4 rounded-full'>
+    <div
+      className={cn(
+        "z-30 border-2 border-primary-600 slide-button shadow-2xl cursor-pointer rounded-full",
+        className
+      )}
+      {...props}
+    >
       <Image
         unoptimized
-        className='object-cover'
-        src='/main-page/contact.svg'
-        height='36'
-        width='36'
-        alt='Inverclick - contacto'
+        className="object-cover"
+        src="/main-page/contact.svg"
+        height="36"
+        width="36"
+        alt="Inverclick - contacto"
       />
       <span>Contáctenos</span>
     </div>
-  )
-}
+  );
+};

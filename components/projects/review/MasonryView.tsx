@@ -14,7 +14,7 @@ import {
 import { DialogHeader } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
-import { ChevronLeft, Grip, X } from "lucide-react";
+import { ChevronLeft, Grip, Heart, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Masonry from "react-responsive-masonry";
@@ -48,7 +48,13 @@ export const MasonryView = ({
             onClick={() => setOpen(false)}
             className="cursor-pointer text-black"
           />
-          <ShareProject />
+          <div className="flex gap-3">
+            <ShareProject />
+            <span className="flex items-center gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer">
+              <Heart className="w-4 h-4 md:w-5 md:h-5" />
+              Guardar
+            </span>
+          </div>
         </DialogHeader>
         <div className="p-6">
           <PhotosGrid photoScrollTo={photoScrollTo} photos={photos} />
@@ -146,6 +152,13 @@ function PhotosSlider({
           <p className="!mt-0 text-center text-white">
             {current}/{count}
           </p>
+          <div className="flex gap-3 text-white justify-end">
+            <ShareProject />
+            <span className="flex items-center gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer">
+              <Heart className="w-4 h-4 md:w-5 md:h-5" />
+              Guardar
+            </span>
+          </div>
         </DialogHeader>
         <div
           className={cn("flex justify-center items-center h-full", {
