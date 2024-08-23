@@ -23,7 +23,7 @@ const MENU_OPTIONS_RIGHT = [
 
 export const MyHeaderAllServices = () => {
   return (
-    <header className="fixed bg-white top-0 left-0 right-0 shadow-lg px-6 pb-4 pt-3 flex items-end xl:items-center justify-between z-10">
+    <header className="fixed bg-white top-0 left-0 right-0 shadow-lg px-6 pb-4 pt-3 flex items-end xl:items-center justify-center z-10">
       <DesktopMenu />
       <MobileMenu />
     </header>
@@ -31,7 +31,7 @@ export const MyHeaderAllServices = () => {
 };
 
 const DesktopMenu = () => (
-  <div className="hidden md:grid grid-cols-3 sm:gap-6 xl:gap-8 justify-center items-center w-full lg:mx-10 xl:mx-12 2xl:mx-14">
+  <div className="hidden md:grid grid-cols-3 sm:gap-6 xl:gap-8 justify-center items-center w-full lg:mx-10 xl:mx-12 2xl:mx-14 max-w-screen-2xl mx-auto">
     <div className="grid grid-cols-3 justify-items-center place-items-center">
       {MENU_OPTIONS_LEFT.map(({ name, url }) => (
         <a
