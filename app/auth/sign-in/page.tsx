@@ -45,8 +45,9 @@ function LeftSection() {
       </h2>
       <CardService
         title="Soy constructora"
-        link="/"
+        link="https://company.inverclick.com"
         className="absolute bottom-4 left-4"
+        target="_blank"
       />
     </div>
   );
@@ -56,7 +57,7 @@ function RightSection() {
   return (
     <div className="flex flex-col justify-center items-center w-full p-32">
       <h2 className="text-xl text-center font-bold mb-8">
-        <p>Introduce el correo electrónico</p>
+        <p>Digita el correo electrónico</p>
         <p>asociado a tu cuenta de Inverclick</p>
       </h2>
       <form className="flex flex-col gap-4 items-center w-full">
