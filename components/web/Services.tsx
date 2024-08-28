@@ -1,3 +1,4 @@
+import { CardService } from "@/components/shared/card-service";
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import Link from "next/link";
@@ -29,18 +30,7 @@ export function Services({ className, ...props }: ServicesProps) {
     >
       {SERVICES.map((service) => (
         <li key={service.title}>
-          <Link
-            href={service.link}
-            className="flex flex-col p-4 rounded-xl shadow-2xl bg-white hover:scale-105 transition-transform"
-          >
-            <h2 className="font-bold text-lg">{service.title}</h2>
-            <div className="border-l-4 border-black my-2 pl-2 flex items-center h-8">
-              <h3 className=" text-xs">{service.description}</h3>
-            </div>
-            <button className="self-end bg-black p-1 rounded-full">
-              <Plus color="white" size={16} />
-            </button>
-          </Link>
+          <CardService {...service} />
         </li>
       ))}
     </ul>

@@ -4,26 +4,32 @@
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
 }
 
 .gm-style .gm-style-iw-c {
-     background-color: #ffffffc2;
-     overflow: hidden !important;
- }
- 
-.gm-style .gm-style-iw-d {
-    padding-right: 12px;
-    padding-bottom: 12px;
-    overflow: hidden !important;
+  background-color: #ffffffc2;
+  overflow: hidden !important;
 }
 
-.gm-style iframe + div { 
-    border:none!important; 
+.gm-style .gm-style-iw-d {
+  padding-right: 12px;
+  padding-bottom: 12px;
+  overflow: hidden !important;
+}
+
+.gm-style iframe + div {
+  border: none !important;
+}
+
+@layer utilities {
+  .m-screen-with-header {
+    @apply mt-16;
+  }
 }
