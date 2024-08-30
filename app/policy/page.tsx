@@ -1,9 +1,8 @@
 import { MyFooter } from "@/components/shared/footer/MyFooter";
-import { MyHeaderAllServices } from "@/components/shared/header/MyHeaderAllServices";
+import { Header } from "@/components/shared/header/header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTriggerWithArrowFirst } from "@/components/ui/accordion";
 import { ENV_VARS } from "@/global/env";
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Política de privacidad y tratamiento de datos personales",
@@ -19,8 +18,8 @@ export const metadata: Metadata = {
 export default function Index () {
   return (
     <main>
-      <MyHeaderAllServices />
-      <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-24 md:pt-28 xl:pt-36 flex flex-col mb-20">
+      <Header />
+      <article className="p-content flex flex-col mb-20">
         <h1 className="text-3xl font-medium">POLÍTICA DE PRIVACIDAD Y DE TRATAMIENTO DE DATOS PERSONALES</h1>
         <span>V.1 - 2024</span>
         <p className="mt-2"><b>Inverclick S.A.S</b>, reconociendo la relevancia de los datos personales y la responsabilidad asumida con respecto a los titulares de dicha información (los &quot;Titulares&quot; o el &quot;Titular&quot;), presenta a los interesados la Política de Tratamiento de Datos Personales (la &quot;Política de Tratamiento de Datos&quot; o la &quot;Política&quot;). Esto se realiza en cumplimiento de lo establecido por la Ley 1581 de 2012, el Decreto 1074 de 2015 y otras normas que las modifiquen, adicionen o complementen.</p>

@@ -1,71 +1,70 @@
-import { Hero } from "@/components/projects/review/Hero"
-import OtherProjects from "@/components/projects/review/OtherProjects"
-import { ProjectContent } from "@/components/projects/review/ProjectContent"
-import { ProjectHeader } from "@/components/projects/review/ProjectHeader"
-import { MyFooter } from "@/components/shared/footer/MyFooter"
-import { ENV_VARS } from "@/global/env"
-import { getProjectById } from "@/services/projects"
-import { Metadata } from "next"
+import { Hero } from "@/components/projects/review/Hero";
+import OtherProjects from "@/components/projects/review/OtherProjects";
+import { ProjectContent } from "@/components/projects/review/ProjectContent";
+import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { Header } from "@/components/shared/header/header";
+import { ENV_VARS } from "@/global/env";
+import { getProjectById } from "@/services/projects";
+import { Metadata } from "next";
 
-export const dynamic = 'force-dynamic'
-export const runtime = 'edge' 
+export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const id = params.id
-  const { project } = await getProjectById(id)
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const id = params.id;
+  const { project } = await getProjectById(id);
 
   return {
     title: project?.name,
     description: project?.description,
     alternates: {
-      canonical: ENV_VARS.BASE_URL + '/projects/' + id
+      canonical: ENV_VARS.BASE_URL + "/projects/" + id,
     },
     openGraph: {
-      url: ENV_VARS.BASE_URL + '/projects/' + id,
+      url: ENV_VARS.BASE_URL + "/projects/" + id,
       title: project?.name,
-      description: project?.description
-    }
-  }
-  
+      description: project?.description,
+    },
+  };
 }
 
-export default async  function Page ({ params }: { params: { id: string } }) {
-  const id = params.id
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
 
-  if(!id.length) return (
-    <div>
-      Id: { id }
-    </div>
-  )
+  if (!id.length) return <div>Id: {id}</div>;
 
+  const { project, blueprints } = await getProjectById(id);
 
-  const { project, blueprints } = await getProjectById(id)
+  if (!project || !blueprints.length)
+    return (
+      <div>
+        Project: {JSON.stringify(project)}
+        <br />
+        <br />
+        <br />
+        Blueprints: {JSON.stringify(blueprints)}
+      </div>
+    );
 
-  if(!project || !blueprints.length) return (
-    <div>
-      Project: { JSON.stringify(project) }
-      <br />
-      <br />
-      <br />
-      Blueprints: { JSON.stringify(blueprints) }
-    </div>
-  )
+  const mainBlueprint = blueprints[0];
 
-  const mainBlueprint = blueprints[0]
-  
-  return ( 
+  return (
     <main>
-      <ProjectHeader />
-      <article className="px-6 sm:px-10 md:px-8 lg:px-10 xl:px-20 pt-20 md:pt-24 xl:pt-32 flex flex-col gap-8 max-w-screen-2xl mx-auto">
-        <Hero 
-          name={project.name} 
-          photos={project.photos} 
-          price={mainBlueprint.price} 
-          department={project.department} 
-          city={project.city} 
-          address={project.address} 
-        /> 
-        <ProjectContent 
+      <Header />
+      <article className="p-content flex flex-col gap-8 max-w-screen-2xl mx-auto">
+        <Hero
+          name={project.name}
+          photos={project.photos}
+          price={mainBlueprint.price}
+          department={project.department}
+          city={project.city}
+          address={project.address}
+        />
+        <ProjectContent
           characteristics={project.characteristics}
           companyLogo={project.company.logo_url}
           companyName={project.company.name}
@@ -88,5 +87,5 @@ export default async  function Page ({ params }: { params: { id: string } }) {
       </article>
       <MyFooter />
     </main>
-  )
+  );
 }

@@ -2,7 +2,7 @@ import { CreditSimulador } from "@/components/financing/CreditSimulador";
 import { FinancingCard } from "@/components/financing/FinancingCard";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { FrequentlyQuestions } from "@/components/shared/FrequentlyQuestions";
-import { MyHeaderAllServices } from "@/components/shared/header/MyHeaderAllServices";
+import { Header } from "@/components/shared/header/header";
 import { ENV_VARS } from "@/global/env";
 import { Check } from "lucide-react";
 import { Metadata } from "next";
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
 export default function FinancingPage() {
   return (
     <main>
-      <MyHeaderAllServices />
-      <article className="px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-20 md:pt-24 xl:pt-28 flex flex-col mb-20 max-w-screen-2xl mx-auto">
+      <Header />
+      <article className="p-content flex flex-col mb-20 max-w-screen-2xl mx-auto">
         <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[65vh] translate-y-5">
           <div className="flex gap-3 flex-col animate-blurred-fade-in">
             <h1 className="font-semibold text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl">

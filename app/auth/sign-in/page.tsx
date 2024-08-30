@@ -1,6 +1,6 @@
 import { CardService } from "@/components/shared/card-service";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
-import { MyHeaderAllServices } from "@/components/shared/header/MyHeaderAllServices";
+import { Header } from "@/components/shared/header/header";
 import { DownloadAppModal } from "@/components/sign-in/download-app-modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,8 +10,8 @@ import Link from "next/link";
 export default function Page() {
   return (
     <main>
-      <MyHeaderAllServices />
-      <article className="relative flex w-full h-screen-with-header m-screen-with-header">
+      <Header />
+      <article className="relative flex w-full h-screen">
         <Background />
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="grid grid-cols-2 max-w-screen-2xl h-full mx-auto">
