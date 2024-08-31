@@ -10,34 +10,24 @@ import Link from "next/link";
 export default function Page() {
   return (
     <main>
-      <Header />
-      <article className="relative flex w-full h-screen">
-        <Background />
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="grid grid-cols-2 max-w-screen-2xl h-full mx-auto">
+      <div className="flex flex-col lg:h-screen">
+        <Header />
+        <div className="flex-grow lg:gradient-background">
+          <article className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-2xl h-full mx-auto">
             <LeftSection />
             <RightSection />
-          </div>
+          </article>
         </div>
-      </article>
+      </div>
       <MyFooter />
     </main>
   );
 }
 
-function Background() {
-  return (
-    <div className="grid grid-cols-2 w-full h-full">
-      <div className="bg-primary-200"></div>
-      <div className="bg-white"></div>
-    </div>
-  );
-}
-
 function LeftSection() {
   return (
-    <div className="flex justify-center items-center h-full p-32">
-      <h2 className="text-5xl font-bold">
+    <div className="relative flex justify-center items-center p-content lg:p-content-full">
+      <h2 className="text-center lg:text-left text-3xl lg:text-5xl font-bold">
         <p>¡Nos alegramos</p>
         <p>
           de volver a <span className="text-primary-500">VERTE!</span>
@@ -46,7 +36,7 @@ function LeftSection() {
       <CardService
         title="Soy constructora"
         link="/"
-        className="absolute bottom-4 left-4"
+        className="hidden lg:block absolute bottom-4 left-4"
       />
     </div>
   );
@@ -54,7 +44,7 @@ function LeftSection() {
 
 function RightSection() {
   return (
-    <div className="flex flex-col justify-center items-center w-full p-32">
+    <div className="flex flex-col justify-center items-center w-full p-content-full">
       <h2 className="text-xl text-center font-bold mb-8">
         <p>Introduce el correo electrónico</p>
         <p>asociado a tu cuenta de Inverclick</p>
@@ -83,6 +73,9 @@ function RightSection() {
           Crear una cuenta
         </Link>
         <DownloadAppModal />
+        <Link href="/" className="lg:hidden text-primary">
+          Soy constructora
+        </Link>
       </form>
     </div>
   );

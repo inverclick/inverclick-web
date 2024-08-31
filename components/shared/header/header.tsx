@@ -32,7 +32,7 @@ export function Header() {
 
 function MobileHeader() {
   return (
-    <div className="flex lg:hidden justify-between items-center px-6 py-4">
+    <div className="flex lg:hidden justify-between items-center h-full px-6 py-4">
       <a href="/">
         <Image
           unoptimized
@@ -76,7 +76,7 @@ function MobileHeader() {
 
 function DesktopHeader() {
   return (
-    <div className="hidden lg:grid grid-cols-3 items-center gap-4 px-6 py-4 max-w-screen-2xl mx-auto">
+    <div className="hidden lg:grid grid-cols-3 gap-4 items-center h-full px-6 py-4 max-w-screen-2xl mx-auto">
       <ul className="flex gap-4 xl:gap-8 items-center">
         {LEFT_MENU_OPTIONS.map(({ name, url }) => (
           <li key={name}>
