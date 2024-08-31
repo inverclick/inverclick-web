@@ -83,7 +83,7 @@ export const ProjectCard = ({ blueprint }: Props) => {
       <a
         href={href}
         target="_blank"
-        className="cursor-pointer pt-3 2xl:pt-4 flex flex-1 flex-col gap-[6px] lg:gap-1 2xl:gap-[6px] justify-between bg-white rounded-b-lg"
+        className="cursor-pointer pt-3 2xl:pt-4 flex flex-1 flex-col justify-between bg-white rounded-b-lg"
       >
         <div className="px-4 lg:px-2 2xl:px-4 flex gap-2 items-center">
           <Image
@@ -104,7 +104,7 @@ export const ProjectCard = ({ blueprint }: Props) => {
             </p>
           </div>
         </div>
-        <p className="px-4 lg:px-2 2xl:px-4 text-xs lg:text-[11px] 2xl:text-xs mt-1 2xl:mt-2">
+        <p className="px-4 lg:px-2 2xl:px-4 text-xs lg:text-[11px] 2xl:text-xs mt-2">
           {project.address}
         </p>
         <div className="py-2 2xl:py-3 px-4 lg:px-2 2xl:px-4 gap-2 flex items-center">
