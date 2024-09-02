@@ -23,7 +23,7 @@ const RIGHT_MENU_OPTIONS = MENU_OPTIONS.slice(3);
 
 export function Header() {
   return (
-    <header className="sticky top-0 bg-white shadow-lg z-30">
+    <header className="sticky top-0 bg-white shadow-lg z-50">
       <MobileHeader />
       <DesktopHeader />
     </header>
