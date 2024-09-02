@@ -1,13 +1,13 @@
 "use client";
 
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { trimObject } from "@/lib/trimObject";
@@ -41,7 +41,7 @@ export function Searcher({ departments }: SearcherProps) {
   }, [department]);
 
   return (
-    <div className="w-full px-4 md:px-16">
+    <div className="w-full">
       <div className="flex gap-4 bg-white rounded-full items-center">
         <div className="flex-grow grid grid-cols-[1fr_2px_1fr] gap-4 p-2 md:p-4">
           <DepartmentsSelect
