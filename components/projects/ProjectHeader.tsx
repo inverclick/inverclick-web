@@ -1,3 +1,4 @@
+import DisplayTRM from "@/components/projects/DisplayTRM";
 import {
   Menubar,
   MenubarContent,
@@ -8,7 +9,6 @@ import {
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import DisplayTRM from "../DisplayTRM";
 
 const MENU_OPTIONS = [
   { name: "Nosotros", url: "/" },
