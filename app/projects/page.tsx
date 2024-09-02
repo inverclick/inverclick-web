@@ -47,12 +47,12 @@ export default async function Projects(props: any) {
         <ContactButton className="absolute right-4 bottom-4" />
         <section className="hidden lg:block">
           <DefaultResizablePanelGroup direction="horizontal">
-            <DefaultResizablePanel defaultSize={50}>
+            <DefaultResizablePanel defaultSize={30}>
               <MyMap2 blueprints={data} />
             </DefaultResizablePanel>
             <DefaultResizableHandle withHandle />
             <DefaultResizablePanel
-              defaultSize={50}
+              defaultSize={70}
               minSize={25}
               className="z-10 relative"
             >
@@ -65,11 +65,11 @@ export default async function Projects(props: any) {
           <MobileProjectHeader total={count} />
           <div className="h-screen">
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel defaultSize={80}>
+              <ResizablePanel defaultSize={50}>
                 <MyMap2 blueprints={data} />
               </ResizablePanel>
               <ResizableHandle />
-              <ResizablePanel defaultSize={20} maxSize={60}>
+              <ResizablePanel defaultSize={50} maxSize={60}>
                 <ProjectContent total={count} blueprints={data} />
               </ResizablePanel>
             </ResizablePanelGroup>

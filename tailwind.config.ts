@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       height: {
-        "screen-with-header": "calc(100vh - 4rem)",
+        "screen-with-header": "calc(100vh - 5rem)",
       },
       colors: {
         primary: {

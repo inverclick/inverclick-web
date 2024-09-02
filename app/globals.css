@@ -29,7 +29,15 @@ input[type="number"] {
 }
 
 @layer utilities {
-  .m-screen-with-header {
-    @apply mt-16;
+  .gradient-background {
+    background: linear-gradient(to right, #dbd4ff 50%, white 50%);
+  }
+
+  .p-content {
+    @apply px-6 pt-10 sm:px-10 md:px-8 md:pt-12 lg:px-10 xl:px-20 xl:pt-16;
+  }
+
+  .p-content-full {
+    @apply px-6 py-10 sm:px-10 md:px-8 md:py-12 lg:px-10 xl:px-20 xl:py-16;
   }
 }

@@ -17,7 +17,7 @@ export function DownloadAppModal() {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <p className="text-primary cursor-pointer">
+        <p className="text-center text-primary cursor-pointer">
           Inténtalo desde nuestra Aplicación Móvil
         </p>
       </AlertDialogTrigger>
