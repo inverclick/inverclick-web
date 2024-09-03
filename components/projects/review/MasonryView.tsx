@@ -12,7 +12,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { DialogHeader } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import { ChevronLeft, Grip, Heart, X } from "lucide-react";
 import Image from "next/image";
@@ -42,8 +41,8 @@ export const MasonryView = ({
           Mostrar más fotos
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent className="fixed left-1/2 max-w-full !max-h-full h-full !rounded-none p-0 overflow-y-auto">
-        <DialogHeader className="sticky top-0 z-10 flex flex-row items-center justify-between p-6 bg-white">
+      <AlertDialogContent className=" max-w-screen h-screen min-h-screen max-h-screen p-0 border-none !rounded-none overflow-y-auto">
+        <DialogHeader className="sticky top-0 z-10 flex flex-row items-center justify-between space-y-0 p-6 bg-white">
           <ChevronLeft
             onClick={() => setOpen(false)}
             className="cursor-pointer text-black"
@@ -143,13 +142,13 @@ function PhotosSlider({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogContent className="fixed left-1/2 max-w-full !max-h-full h-full !border-none !rounded-none p-0 bg-black">
-        <DialogHeader className="sticky top-0 grid grid-cols-3 items-center p-6 bg-black">
+      <AlertDialogContent className="grid grid-rows-[auto,minmax(0,1fr)] max-w-screen h-screen min-h-screen max-h-screen p-0 border-none !rounded-none bg-black">
+        <DialogHeader className="sticky top-0 grid grid-cols-3 items-center space-y-0 p-6 bg-black">
           <X
             onClick={() => setIsOpen(false)}
             className="cursor-pointer text-white"
           />
-          <p className="!mt-0 text-center text-white">
+          <p className="text-start md:text-center text-white">
             {current}/{count}
           </p>
           <div className="flex gap-3 text-white justify-end">
@@ -160,19 +159,15 @@ function PhotosSlider({
             </span>
           </div>
         </DialogHeader>
-        <div
-          className={cn("flex justify-center items-center h-full", {
-            "px-0": !matchesDesktop,
-            "px-24": matchesDesktop,
-          })}
-        >
+        <div>
           <Carousel
             setApi={setApi}
             opts={{
               startIndex: initialPhotoIndex,
             }}
+            className="h-full [&>div.overflow-hidden]:h-full"
           >
-            <CarouselContent>
+            <CarouselContent className="h-full">
               {photos.map((photo) => {
                 return (
                   <CarouselItem key={photo}>
@@ -182,7 +177,7 @@ function PhotosSlider({
                       alt={photo}
                       width="800"
                       height="600"
-                      className="object-contain mx-auto my-auto h-full w-auto"
+                      className="object-contain w-4/5 h-full mx-auto"
                     />
                   </CarouselItem>
                 );
@@ -190,8 +185,8 @@ function PhotosSlider({
             </CarouselContent>
             {matchesDesktop && (
               <>
-                <CarouselPrevious className="bg-transparent text-white" />
-                <CarouselNext className="bg-transparent text-white" />
+                <CarouselPrevious className="bg-transparent text-white translate-x-24" />
+                <CarouselNext className="bg-transparent text-white -translate-x-24" />
               </>
             )}
           </Carousel>

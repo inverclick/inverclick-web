@@ -1,15 +1,15 @@
-import React, { Suspense } from "react";
-import { StickyContact } from "./StickyContact";
+import { CreditSimulador } from "@/components/financing/CreditSimulador";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ProjectLocation } from "./ProjectLocation";
-import Image from "next/image";
-import { ProjectCharacteristics } from "./ProjectCharacteristics";
-import { HOUSING_STATE_TYPE } from "@/types/project";
+import { getAssetUrl } from "@/services/utils";
 import { IBLUEPRINT } from "@/types/blueprint";
+import { HOUSING_STATE_TYPE } from "@/types/project";
+import Image from "next/image";
+import React, { Suspense } from "react";
+import { ProjectCharacteristics } from "./ProjectCharacteristics";
+import { ProjectLocation } from "./ProjectLocation";
+import { StickyContact } from "./StickyContact";
 import { Typologies } from "./Typologies";
 import { Urbanism } from "./Urbanism";
-import { getAssetUrl } from "@/services/utils";
-import { CreditSimulador } from "@/components/financing/CreditSimulador";
 
 interface DescriptionProps {
   name: string;
@@ -60,10 +60,12 @@ export const ProjectContent = ({
           <TabsTrigger value="description">Descripción</TabsTrigger>
           <TabsTrigger value="types">Tipologías</TabsTrigger>
           <TabsTrigger value="urban">Urbanismo</TabsTrigger>
-          <TabsTrigger 
-            value="credit" 
+          <TabsTrigger
+            value="credit"
             className="mx-6 px-2 py-1 border border-primary-600 rounded-lg text-base md:text-lg lg:text-xl hover:bg-primary-100 transition-colors ease-in !no-underline"
-          >Simulador de crédito</TabsTrigger>
+          >
+            Simulador de crédito
+          </TabsTrigger>
         </TabsList>
         <div className="flex gap-6 ">
           <div className="flex-1 flex flex-col gap-6 mb-6">
@@ -120,7 +122,9 @@ export const ProjectContent = ({
                   department={department}
                 />
                 <section>
-                  <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
+                  <h3 className="font-medium text-2xl mb-10">
+                    Simulador de crédito
+                  </h3>
                   <CreditSimulador />
                 </section>
                 <hr />
@@ -133,7 +137,9 @@ export const ProjectContent = ({
               <Urbanism urbanismFiles={urbanismFiles} />
             </TabsContent>
             <TabsContent value="credit">
-              <h3 className="font-medium text-2xl mb-10">Simulador de crédito</h3>
+              <h3 className="font-medium text-2xl mb-10">
+                Simulador de crédito
+              </h3>
               <CreditSimulador />
             </TabsContent>
           </div>
