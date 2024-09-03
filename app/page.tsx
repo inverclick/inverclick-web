@@ -83,7 +83,7 @@ export default async function Home() {
           </div>
         </footer>
 
-        <div>
+        <div className="w-full">
           <header className="px-5 md:px-16 mb-8 mt-8 md:mt-16 lg:mt-0 lg:mb-16">
             <h1 className="text-left text-2xl md:text-3xl 2xl:text-5xl font-semibold text-white">
               <p>Inverclick, el mejor sitio</p>
@@ -96,7 +96,7 @@ export default async function Home() {
             </h1>
           </header>
 
-          <section className="w-full mb-8 lg:mb-0">
+          <section className="w-full mb-8 px-4 md:px-16 lg:mb-0">
             <Searcher departments={departments} />
             <h3 className="text-center mt-4 text-white text-sm md:text-base">
               Casas - Apartamentos - Lotes - Fracciones
@@ -127,7 +127,7 @@ export default async function Home() {
           </div>
         </footer>
 
-        <LoginButton className="absolute bottom-16 right-4"/>
+        <LoginButton className="absolute bottom-16 right-4" />
         <ContactButton className="absolute bottom-4 right-4" />
       </section>
     </main>

@@ -90,7 +90,7 @@ const FIRST_LINKS = [
 ];
 
 const SECOND_LINKS = [
-  { label: "Simulador de crédito", href: "/" },
+  { label: "Simulador de crédito", href: "/financing" },
   { label: "Trabaja con nosotros", href: "/" },
   { label: "Blog", href: "/" },
   { label: "Contacto", href: "/" },

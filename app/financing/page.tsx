@@ -22,31 +22,33 @@ export const metadata: Metadata = {
 export default function FinancingPage() {
   return (
     <main>
-      <Header />
-      <article className="p-content flex flex-col mb-20 max-w-screen-2xl mx-auto">
-        <section className="flex flex-col gap-16 md:gap-24 justify-center items-center h-[65vh] translate-y-5">
-          <div className="flex gap-3 flex-col animate-blurred-fade-in">
-            <h1 className="font-semibold text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl">
-              Crédito de vivienda
-            </h1>
-            <h2 className="text-2xl lg:text-3xl xl:text-4xl font-semibold">
-              Colombianos en{" "}
-              <span className="text-primary-600">EL EXTERIOR</span>
-            </h2>
+      <div className="flex flex-col h-dvh">
+        <Header />
+        <article className="flex-grow p-content-full flex flex-col justify-between max-w-screen-2xl mx-auto">
+          <section className="flex flex-grow flex-col gap-16 md:gap-24 justify-center items-center translate-y-5">
+            <div className="flex gap-3 flex-col animate-blurred-fade-in">
+              <h1 className="font-semibold text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl">
+                Crédito de vivienda
+              </h1>
+              <h2 className="text-2xl lg:text-3xl xl:text-4xl font-semibold">
+                Colombianos en{" "}
+                <span className="text-primary-600">EL EXTERIOR</span>
+              </h2>
+            </div>
+          </section>
+          <div className="my-10 self-center">
+            <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700 animate-fade-in-up">
+              Solicitar Preaprobado
+            </button>
           </div>
-        </section>
-        <div className="my-10 self-center">
-          <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700 animate-fade-in-up">
-            Solicitar Preaprobado
-          </button>
-        </div>
-      </article>
-      <article className="h-[calc(1.3*100vh)] md:h-[calc(100vh-100px)] w-full flex flex-col md:flex-row gap-10 md:gap-10 lg:gap-14 px-10 md:px-14 lg:px-20 mb-14 max-w-screen-2xl mx-auto">
+        </article>
+      </div>
+      <article className="flex flex-col md:flex-row gap-10 px-6 md:px-14 lg:px-20 mb-14 max-w-screen-2xl mx-auto">
         <FinancingCard
           color="#7330f7"
           direction="horizontal"
           frontContent={
-            <p className="ml-8 lg:mx-10 xl:m-20 text-4xl lg:text-5xl xl:text-6xl text-left font-semibold text-[#7330f7]">
+            <p className="ml-8 lg:mx-10 xl:m-20 text-3xl lg:text-5xl xl:text-6xl text-left font-semibold text-[#7330f7]">
               Crédito
               <br />
               Hipotecario
@@ -171,7 +173,7 @@ export default function FinancingPage() {
           }
           direction="horizontal"
           frontContent={
-            <p className="ml-8 lg:mx-10 xl:m-20 text-4xl lg:text-5xl xl:text-6xl text-left font-semibold text-black">
+            <p className="ml-8 lg:mx-10 xl:m-20 text-3xl lg:text-5xl xl:text-6xl text-left font-semibold text-black">
               Leasing
               <br />
               Habitacional
@@ -179,7 +181,7 @@ export default function FinancingPage() {
           }
         />
       </article>
-      <article className="h-screen md:h-[calc(100vh-200px)] w-full flex flex-col md:flex-row gap-14 px-10 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
+      <article className="flex flex-col md:flex-row gap-14 px-6 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
         <FinancingCard
           color="black"
           direction="vertical"
@@ -193,7 +195,7 @@ export default function FinancingPage() {
                 height={200}
                 className="max-h-[500px] w-auto"
               />
-              <p className="ml-8 lg:mx-10 xl:m-20 text-4xl lg:text-5xl xl:text-6xl text-center md:text-left font-semibold text-black">
+              <p className="lg:mx-10 xl:m-20 text-3xl lg:text-5xl xl:text-6xl text-center md:text-left font-semibold text-black">
                 Requisitos
                 <br />
                 para mi crédito
@@ -201,7 +203,7 @@ export default function FinancingPage() {
             </div>
           }
           content={
-            <div className="flex flex-col md:flex-row gap-10 text-black rotate-180 px-4 md:px-10 lg:px-14 xl:px-20 text-left">
+            <div className="flex flex-col md:flex-row gap-10 text-black rotate-180 p-4 md:p-10 lg:p-14 xl:p-20 text-left">
               <div className="flex flex-1 flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14">
                 <h4 className="text-2xl xl:text-4xl font-semibold">
                   Requisitos
@@ -255,11 +257,11 @@ export default function FinancingPage() {
           }
         />
       </article>
-      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
+      <article className="flex flex-col gap-10 px-6 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
         <h2 className="text-pretty md:w-1/2 text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">
           ¿Quieres saber cuál es la mejor opción para ti?
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 justify-items-center relative md:px-10 xl:px-40">
+        <div className="grid grid-cols-2 md:grid-cols-3 justify-items-center relative md:px-6 xl:px-40">
           <div className="absolute bottom-0 left-0 right-0 h-4 bg-primary-600 -z-10" />
           <div className="hidden md:block" />
           <Image
@@ -279,7 +281,7 @@ export default function FinancingPage() {
           </div>
         </div>
       </article>
-      <article className="w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 py-20 max-w-screen-2xl mx-auto">
+      <article className="w-full flex flex-col gap-10 px-6 md:px-14 lg:px-20 py-20 max-w-screen-2xl mx-auto">
         <div className="md:w-1/2">
           <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">
             Simulador de
@@ -297,7 +299,7 @@ export default function FinancingPage() {
           <CreditSimulador />
         </div>
       </article>
-      <article className="h-screen md:h-[calc(100vh-180px)] w-full flex flex-col gap-10 px-10 md:px-14 lg:px-20 max-w-screen-2xl mx-auto">
+      <article className="w-full flex flex-col gap-10 px-6 md:px-14 lg:px-20 mb-16 max-w-screen-2xl mx-auto">
         <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold">
           Preguntas FRECUENTES
         </h2>
