@@ -1,4 +1,3 @@
-import { ProjectsPageContext } from "@/app/projects/_context";
 import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
 import { MyMap2 } from "@/components/projects/MyMap2";
 import NavbarProjects from "@/components/projects/NavbarProjects";
@@ -42,40 +41,38 @@ export default async function Projects(props: any) {
   );
 
   return (
-    <ProjectsPageContext initialBlueprints={data}>
-      <main>
-        <ContactButton className="absolute right-4 bottom-4" />
-        <section className="hidden lg:block">
-          <DefaultResizablePanelGroup direction="horizontal">
-            <DefaultResizablePanel defaultSize={30}>
+    <main>
+      <ContactButton className="absolute right-4 bottom-4" />
+      <section className="hidden lg:block">
+        <DefaultResizablePanelGroup direction="horizontal">
+          <DefaultResizablePanel defaultSize={30}>
+            <MyMap2 blueprints={data} />
+          </DefaultResizablePanel>
+          <DefaultResizableHandle withHandle />
+          <DefaultResizablePanel
+            defaultSize={70}
+            minSize={25}
+            className="z-10 relative"
+          >
+            <NavbarProjects />
+            <ProjectContent total={count} blueprints={data} />
+          </DefaultResizablePanel>
+        </DefaultResizablePanelGroup>
+      </section>
+      <section className="lg:hidden">
+        <MobileProjectHeader total={count} />
+        <div className="h-screen">
+          <ResizablePanelGroup direction="vertical">
+            <ResizablePanel defaultSize={50}>
               <MyMap2 blueprints={data} />
-            </DefaultResizablePanel>
-            <DefaultResizableHandle withHandle />
-            <DefaultResizablePanel
-              defaultSize={70}
-              minSize={25}
-              className="z-10 relative"
-            >
-              <NavbarProjects />
+            </ResizablePanel>
+            <ResizableHandle />
+            <ResizablePanel defaultSize={50} maxSize={60}>
               <ProjectContent total={count} blueprints={data} />
-            </DefaultResizablePanel>
-          </DefaultResizablePanelGroup>
-        </section>
-        <section className="lg:hidden">
-          <MobileProjectHeader total={count} />
-          <div className="h-screen">
-            <ResizablePanelGroup direction="vertical">
-              <ResizablePanel defaultSize={50}>
-                <MyMap2 blueprints={data} />
-              </ResizablePanel>
-              <ResizableHandle />
-              <ResizablePanel defaultSize={50} maxSize={60}>
-                <ProjectContent total={count} blueprints={data} />
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          </div>
-        </section>
-      </main>
-    </ProjectsPageContext>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
+      </section>
+    </main>
   );
 }
