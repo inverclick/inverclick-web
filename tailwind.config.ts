@@ -19,9 +19,6 @@ const config = {
       },
     },
     extend: {
-      height: {
-        "screen-with-header": "calc(100vh - 5rem)",
-      },
       colors: {
         primary: {
           DEFAULT: "#8253ff",
