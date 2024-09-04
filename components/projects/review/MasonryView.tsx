@@ -170,14 +170,14 @@ function PhotosSlider({
             <CarouselContent className="h-full">
               {photos.map((photo) => {
                 return (
-                  <CarouselItem key={photo}>
+                  <CarouselItem key={photo} className="h-full">
                     <Image
                       unoptimized
                       src={getAssetUrl(photo)}
                       alt={photo}
                       width="800"
                       height="600"
-                      className="object-contain w-4/5 h-full mx-auto"
+                      className="object-contain w-full h-full py-8 mx-auto"
                     />
                   </CarouselItem>
                 );
