@@ -1,6 +1,6 @@
 "use client";
 
-import { usePageContext } from "@/app/projects/_context";
+import { useProjectsPageStore } from "@/app/projects/_store";
 import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
 import React from "react";
 import { ProjectCard } from "../shared/ProjectCard";
@@ -11,12 +11,12 @@ interface Props {
 }
 
 export const ProjectInfinityScroll = ({ blueprints }: Props) => {
-  const { blueprints: contextBlueprints } = usePageContext();
+  const _blueprints = useProjectsPageStore((state) => state.blueprints);
 
   return (
     <ScrollArea className="h-[500px] lg:h-[calc(100vh_-_125px)]">
       <div className="mt-4 w-full gap-y-10 pb-10 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
-        {contextBlueprints.map((blueprint) => (
+        {_blueprints.map((blueprint) => (
           <ProjectCard key={blueprint._id} blueprint={blueprint} />
         ))}
       </div>

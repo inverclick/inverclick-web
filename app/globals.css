@@ -29,7 +29,7 @@ input[type="number"] {
 }
 
 @layer utilities {
-  .gradient-background {
+  .divided-background {
     background: linear-gradient(to right, #dbd4ff 50%, white 50%);
   }
 

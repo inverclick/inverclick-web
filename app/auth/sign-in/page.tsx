@@ -12,7 +12,7 @@ export default function Page() {
     <main>
       <div className="flex flex-col lg:h-screen">
         <Header />
-        <div className="flex-grow lg:gradient-background">
+        <div className="flex-grow lg:divided-background">
           <article className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-2xl h-full mx-auto">
             <LeftSection />
             <RightSection />

@@ -10,7 +10,7 @@ import { MyPhoneInput } from '@/components/form/MyPhoneInput'
 export const StickyContact = () => {
   return (
     <section className='hidden md:block h-auto my-6'>
-      <div className='sticky top-24 md:max-w-xs lg:max-w-sm'>
+      <div className='sticky top-44 md:max-w-xs lg:max-w-sm'>
         <ContactForm />
       </div>
     </section>

@@ -23,7 +23,7 @@ export default async function ProjectContent ({ total, blueprints }: Props) {
   const { data: departments } = departmentsResponse
   
   return (
-    <section className='lg:mt-20 mx-4'>
+    <section className='lg:mt-16 mx-4'>
       <div className='flex justify-between text-sm text-primary-600 mb-3'>
         <div className='hidden lg:flex gap-3 items-center'>
           <Suspense>

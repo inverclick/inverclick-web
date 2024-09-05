@@ -1,6 +1,6 @@
 "use client";
 
-import { usePageContext } from "@/app/projects/_context";
+import { useProjectsPageStore } from "@/app/projects/_store";
 import { Markers } from "@/components/projects/Markers";
 import { ENV_VARS } from "@/global/env";
 import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
@@ -24,7 +24,7 @@ type MyMap2ContentProps = Readonly<{
 }>;
 
 function MyMap2Content({ blueprints }: MyMap2ContentProps) {
-  const { setBlueprints: setContextBlueprints } = usePageContext();
+  const setBlueprints = useProjectsPageStore((state) => state.setBlueprints);
 
   const map = useMap();
 
@@ -57,7 +57,7 @@ function MyMap2Content({ blueprints }: MyMap2ContentProps) {
       })
       .map(({ blueprint }) => blueprint);
 
-    setContextBlueprints(sortedBlueprints);
+    setBlueprints(sortedBlueprints);
   }, 500);
 
   return (
