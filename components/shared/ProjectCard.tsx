@@ -1,18 +1,19 @@
 "use client";
 import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
+import { getAssetUrl } from "@/services/utils";
 import type { IBLUEPRINT_POPULATED } from "@/types/blueprint";
+import { HOUSING_STATE_LABEL } from "@/types/project";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Skeleton } from "../ui/skeleton";
 import {
   Carousel,
   CarouselContent,
+  CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { HOUSING_STATE_LABEL } from "@/types/project";
-import { getAssetUrl } from "@/services/utils";
+import { Skeleton } from "../ui/skeleton";
 
 interface Props {
   blueprint: IBLUEPRINT_POPULATED;
@@ -32,27 +33,28 @@ export const ProjectCard = ({ blueprint }: Props) => {
   if (!isMounted) return null;
 
   return (
-    <section className="flex flex-col w-[280px] lg:w-[220px] 2xl:w-[280px] shadow-md hover:shadow-lg transition-shadow ease-in h-full rounded-b-lg">
+    <section className="flex flex-col w-[280px] lg:w-auto shadow-md hover:shadow-lg transition-shadow ease-in h-full rounded-b-lg">
       <div className="relative">
-        <Carousel className="h-[170px] lg:h-[150px] 2xl:h-[170px] w-full ">
-          <CarouselContent className="!ml-0">
+        <Carousel className="h-[170px] lg:h-[150px] 2xl:h-[170px] [&>div.overflow-hidden]:h-full">
+          <CarouselContent className="h-full">
             {project.photos.map((photo) => (
-              <a
-                key={photo}
-                href={href}
-                target="_blank"
-                className="min-w-[280px] lg:min-w-[220px] 2xl:min-w-[280px] max-h-[170px] animate-fade-in"
-              >
-                <Image
-                  unoptimized
-                  loading="lazy"
-                  src={getAssetUrl(photo)}
-                  alt={project.name}
-                  width={280}
-                  height={170}
-                  className="h-[170px] w-[280px] lg:h-[150px] lg:w-[220px] 2xl:h-[170px] 2xl:w-[280px] -z-10 rounded-t-lg object-cover"
-                />
-              </a>
+              <CarouselItem key={photo} className="h-full">
+                <a
+                  href={href}
+                  target="_blank"
+                  className="h-full animate-fade-in"
+                >
+                  <Image
+                    unoptimized
+                    loading="lazy"
+                    src={getAssetUrl(photo)}
+                    alt={project.name}
+                    width={280}
+                    height={170}
+                    className="w-full h-full -z-10 rounded-t-lg object-cover"
+                  />
+                </a>
+              </CarouselItem>
             ))}
           </CarouselContent>
           <CarouselPrevious className="translate-x-14 z-10 !h-6 !w-6 bg-primary-100/70 border-primary-400 hover:bg-primary-200/90 text-primary-500 hover:text-primary-600" />
