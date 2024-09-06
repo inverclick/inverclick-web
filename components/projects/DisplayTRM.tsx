@@ -5,7 +5,8 @@ import { currencyFormatter } from "@/lib/currencyFormatter";
 import { useEffect, useState } from "react";
 
 export default function DisplayTRM() {
-  const INTERVAL = 45000;
+  // 40s
+  const INTERVAL = 40000;
   const RATES = 2;
 
   const { TRM_USD, TRM_EUR, loadTRM } = useCurrencyContext();
