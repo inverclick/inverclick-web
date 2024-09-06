@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const MENU_OPTIONS = [
   { name: "Nosotros", url: "/" },
@@ -57,18 +58,7 @@ function MobileHeader() {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <a
-          className="border-2 border-primary rounded-full cursor-pointer"
-          href="/"
-        >
-          <Image
-            unoptimized
-            width="25"
-            height="25"
-            src="/main-page/user.svg"
-            alt="Inverclick logo"
-          />
-        </a>
+        <UserLink />
       </div>
     </div>
   );
@@ -102,20 +92,26 @@ function DesktopHeader() {
         ))}
         <li className="flex items-center gap-4">
           <DisplayTRM />
-          <a
-            className="border-2 border-primary rounded-full cursor-pointer"
-            href="/"
-          >
-            <Image
-              unoptimized
-              width="25"
-              height="25"
-              src="/main-page/user.svg"
-              alt="Inverclick logo"
-            />
-          </a>
+          <UserLink />
         </li>
       </ul>
     </div>
+  );
+}
+
+function UserLink() {
+  return (
+    <Link
+      href="/auth/sign-in"
+      className="border-2 border-primary rounded-full cursor-pointer"
+    >
+      <Image
+        unoptimized
+        width="25"
+        height="25"
+        src="/main-page/user.svg"
+        alt="User link"
+      />
+    </Link>
   );
 }
