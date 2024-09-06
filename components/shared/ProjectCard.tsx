@@ -63,18 +63,17 @@ export const ProjectCard = ({ blueprint }: Props) => {
         <a
           href={href}
           target="_blank"
-          className="cursor-pointer z-10 absolute top-0 left-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tl-lg px-2 py-1 capitalize font-semibold bg-primary-500"
+          className="cursor-pointer absolute top-0 left-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tl-lg px-2 py-1 capitalize font-semibold bg-primary-500"
         >
           {HOUSING_STATE_LABEL[project.housingState]}
         </a>
-        <div className="absolute top-0 left-0 text-[10px] text-white  capitalize font-semibold bg-white">
+        {/* <div className="absolute top-0 left-0 text-[10px] text-white  capitalize font-semibold bg-white">
           {HOUSING_STATE_LABEL[project.housingState]}
-        </div>
-
+        </div> */}
         <a
           href={href}
           target="_blank"
-          className="cursor-pointer z-10 absolute top-0 right-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tr-lg px-2 py-1 capitalize font-semibold bg-primary-400"
+          className="cursor-pointer absolute top-0 right-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tr-lg px-2 py-1 capitalize font-semibold bg-primary-400"
         >
           {project.housingType.label}
         </a>
