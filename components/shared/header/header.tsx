@@ -1,4 +1,5 @@
 import DisplayTRM from "@/components/projects/DisplayTRM";
+import { HeaderLink } from "@/components/shared/header/header-link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,7 +8,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 const MENU_OPTIONS = [
   { name: "Nosotros", url: "/" },
@@ -117,21 +117,5 @@ function DesktopHeader() {
         </li>
       </ul>
     </div>
-  );
-}
-
-type HeaderLinkProps = {
-  name: string;
-  url: string;
-};
-
-function HeaderLink({ name, url }: HeaderLinkProps) {
-  return (
-    <Link
-      href={url}
-      className="text-primary hover:text-primary-700 font-medium"
-    >
-      {name}
-    </Link>
   );
 }
