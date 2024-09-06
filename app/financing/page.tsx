@@ -265,7 +265,7 @@ export default function FinancingPage() {
           <div className="absolute bottom-0 left-0 right-0 h-4 bg-primary-600 -z-10" />
           <div className="hidden md:block" />
           <Image
-            className="2xl:min-h-[600px] w-auto"
+            className="w-auto object-contain"
             src="/financing/financing-2.png"
             alt="¿Quieres saber cuál es la mejor opción de financiamiento para ti?"
             width={300}
