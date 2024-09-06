@@ -1,8 +1,8 @@
 import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
 import { MyMap2 } from "@/components/projects/MyMap2";
-import NavbarProjects from "@/components/projects/NavbarProjects";
 import ProjectContent from "@/components/projects/ProjectContent";
 import { ContactButton } from "@/components/shared/ContactButton";
+import { Header } from "@/components/shared/header/header";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -54,7 +54,7 @@ export default async function Projects(props: any) {
             minSize={25}
             className="z-10 relative"
           >
-            <NavbarProjects />
+            <Header size="small" />
             <ProjectContent total={count} blueprints={data} />
           </DefaultResizablePanel>
         </DefaultResizablePanelGroup>

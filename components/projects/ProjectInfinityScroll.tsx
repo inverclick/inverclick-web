@@ -15,7 +15,7 @@ export const ProjectInfinityScroll = ({ blueprints }: Props) => {
 
   return (
     <ScrollArea className="h-[500px] lg:h-[calc(100vh_-_125px)]">
-      <div className="mt-4 w-full gap-y-10 pb-10 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
+      <div className="mt-4 w-full gap-y-4 pb-10 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
         {_blueprints.map((blueprint) => (
           <ProjectCard key={blueprint._id} blueprint={blueprint} />
         ))}

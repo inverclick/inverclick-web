@@ -7,9 +7,10 @@ import { usePathname } from "next/navigation";
 export type HeaderLinkProps = Readonly<{
   name: string;
   url: string;
+  size?: "small" | "large";
 }>;
 
-export function HeaderLink({ name, url }: HeaderLinkProps) {
+export function HeaderLink({ name, url, size = "large" }: HeaderLinkProps) {
   const pathname = usePathname();
 
   const isActive = pathname === url;
@@ -17,7 +18,8 @@ export function HeaderLink({ name, url }: HeaderLinkProps) {
   return (
     <Link
       href={url}
-      className={cn("hover:text-primary font-medium", {
+      className={cn("whitespace-nowrap font-medium hover:text-primary", {
+        "text-xs 2xl:text-sm": size === "small",
         "text-primary": isActive,
       })}
     >

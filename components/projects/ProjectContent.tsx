@@ -1,50 +1,51 @@
+import {
+  getDepartments,
+  getGraphicPriceRange,
+  getHousingTypes,
+} from "@/services/utils";
+import type { IBLUEPRINT_POPULATED } from "@/types/blueprint";
+import { Suspense } from "react";
+import { ProjectFilters } from "./Filters/ProjectFilters";
+import { ProjectInfinityScroll } from "./ProjectInfinityScroll";
+import { SelectCurrency } from "./SelectCurrency";
 
-import type { IBLUEPRINT_POPULATED } from '@/types/blueprint';
-import { SelectCurrency } from './SelectCurrency';
-import { ProjectInfinityScroll } from './ProjectInfinityScroll';
-import { ProjectFilters } from './Filters/ProjectFilters';
-import { getDepartments, getGraphicPriceRange, getHousingTypes } from '@/services/utils';
-import { Suspense } from 'react';
-
-interface Props {
+type Props = Readonly<{
   total: number;
   blueprints: IBLUEPRINT_POPULATED[];
-}
+}>;
 
-export default async function ProjectContent ({ total, blueprints }: Props) {
-  const [departmentsResponse, priceGraphicDataResponse, housingTypesResponse] = await Promise.all([
-    getDepartments(),
-    getGraphicPriceRange(),
-    getHousingTypes()
-  ])
+export default async function ProjectContent({ total, blueprints }: Props) {
+  const [departmentsResponse, priceGraphicDataResponse, housingTypesResponse] =
+    await Promise.all([
+      getDepartments(),
+      getGraphicPriceRange(),
+      getHousingTypes(),
+    ]);
 
-  const { data: priceGraphicData} = priceGraphicDataResponse
-  const { data: housingTypes } = housingTypesResponse
-  const { data: departments } = departmentsResponse
-  
+  const { data: priceGraphicData } = priceGraphicDataResponse;
+  const { data: housingTypes } = housingTypesResponse;
+  const { data: departments } = departmentsResponse;
+
   return (
-    <section className='lg:mt-16 mx-4'>
-      <div className='flex justify-between text-sm text-primary-600 mb-3'>
-        <div className='hidden lg:flex gap-3 items-center'>
+    <section className="m-4">
+      <div className="flex justify-between text-sm text-primary-600 mb-3">
+        <div className="hidden lg:flex gap-3 items-center">
           <Suspense>
-            <ProjectFilters  
-              departments={departments} 
+            <ProjectFilters
+              departments={departments}
               priceGraphicData={priceGraphicData}
               housingTypes={housingTypes}
               count={total}
-            /> 
+            />
           </Suspense>
           <SelectCurrency />
         </div>
-        <p className='hidden lg:flex gap-1 justify-center items-center'>
-          <span className='font-medium'>Total:</span>
+        <p className="hidden lg:flex gap-1 justify-center items-center">
+          <span className="font-medium">Total:</span>
           {total}
         </p>
       </div>
       <ProjectInfinityScroll blueprints={blueprints} />
     </section>
-  )
+  );
 }
-
-
-

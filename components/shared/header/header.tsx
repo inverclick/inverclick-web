@@ -6,9 +6,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { PropsWithChildren } from "react";
 
 const MENU_OPTIONS = [
   { name: "Nosotros", url: "/" },
@@ -22,16 +24,22 @@ const LEFT_MENU_OPTIONS = MENU_OPTIONS.slice(0, 3);
 
 const RIGHT_MENU_OPTIONS = MENU_OPTIONS.slice(3);
 
-export function Header() {
+type HeaderProps = Readonly<{
+  size?: "small" | "large";
+}>;
+
+export function Header({ size = "large" }: HeaderProps) {
   return (
-    <header className="sticky top-0 bg-white shadow-lg z-50">
-      <MobileHeader />
-      <DesktopHeader />
+    <header className="sticky top-0 bg-white shadow-md z-50">
+      <MobileHeader size={size} />
+      <DesktopHeader size={size} />
     </header>
   );
 }
 
-function MobileHeader() {
+type MobileHeaderProps = HeaderProps;
+
+function MobileHeader({ size }: MobileHeaderProps) {
   return (
     <div className="flex lg:hidden justify-between items-center h-full px-6 py-4">
       <a href="/">
@@ -64,38 +72,73 @@ function MobileHeader() {
   );
 }
 
-function DesktopHeader() {
+type DesktopHeaderProps = HeaderProps;
+
+function DesktopHeader({ size }: DesktopHeaderProps) {
   return (
-    <div className="hidden lg:grid grid-cols-3 gap-4 items-center h-full px-6 py-4 max-w-screen-2xl mx-auto">
-      <ul className="flex gap-4 xl:gap-8 items-center">
-        {LEFT_MENU_OPTIONS.map(({ name, url }) => (
-          <li key={name}>
-            <HeaderLink name={name} url={url} />
-          </li>
-        ))}
-      </ul>
+    <div
+      className={cn(
+        "hidden lg:grid grid-cols-3 gap-4 items-center h-full px-6 py-4 max-w-screen-2xl mx-auto",
+        {
+          "px-3 py-2": size === "small",
+        }
+      )}
+    >
+      <MenuOptions options={LEFT_MENU_OPTIONS} size={size} />
       <a href="/" className="place-self-center cursor-pointer">
         <Image
           unoptimized
           width="170"
           height="60"
-          className="animate-slide-in-top w-[120px] md:w-[140px] xl:w-[155px] 2xl:w-[170px]"
+          className={cn(
+            "animate-slide-in-top w-[120px] md:w-[140px] xl:w-[155px] 2xl:w-[170px]",
+            {
+              "w-[120px] md:w-[90px] xl:w-[107px] 2xl:w-[120px]":
+                size === "small",
+            }
+          )}
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
         />
       </a>
-      <ul className="flex gap-4 xl:gap-8 justify-self-end items-center">
-        {RIGHT_MENU_OPTIONS.map(({ name, url }) => (
-          <li key={name}>
-            <HeaderLink name={name} url={url} />
-          </li>
-        ))}
+      <MenuOptions options={RIGHT_MENU_OPTIONS} size={size} align="right">
         <li className="flex items-center gap-4">
           <DisplayTRM />
           <UserLink />
         </li>
-      </ul>
+      </MenuOptions>
     </div>
+  );
+}
+
+type MenuOptionsProps = Readonly<{
+  options: { name: string; url: string }[];
+  size?: "small" | "large";
+  align?: "left" | "right";
+}> &
+  PropsWithChildren;
+
+function MenuOptions({
+  options,
+  size,
+  align = "left",
+  children,
+}: MenuOptionsProps) {
+  return (
+    <ul
+      className={cn("flex gap-4 xl:gap-8 items-center", {
+        "!gap-3": size === "small",
+        "justify-self-start": align === "left",
+        "justify-self-end": align === "right",
+      })}
+    >
+      {options.map(({ name, url }) => (
+        <li key={name} className="flex">
+          <HeaderLink name={name} url={url} size={size} />
+        </li>
+      ))}
+      {children}
+    </ul>
   );
 }
 
