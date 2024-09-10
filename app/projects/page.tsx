@@ -16,6 +16,7 @@ import {
 import { ENV_VARS } from "@/global/env";
 import { getAllProjects } from "@/services/projects";
 import { Metadata } from "next";
+import NavbarProjects from "../../components/projects/NavbarProjects";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -54,7 +55,7 @@ export default async function Projects(props: any) {
             minSize={25}
             className="z-10 relative"
           >
-            <Header size="small" />
+            <NavbarProjects />
             <ProjectContent total={count} blueprints={data} />
           </DefaultResizablePanel>
         </DefaultResizablePanelGroup>
