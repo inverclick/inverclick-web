@@ -5,7 +5,8 @@ import { currencyFormatter } from "@/lib/currencyFormatter";
 import { useEffect, useState } from "react";
 
 export default function DisplayTRM() {
-  const INTERVAL = 45000;
+  // 40s
+  const INTERVAL = 40000;
   const RATES = 2;
 
   const { TRM_USD, TRM_EUR, loadTRM } = useCurrencyContext();
@@ -34,13 +35,13 @@ export default function DisplayTRM() {
           transform: `translateY(calc(-16px * ${translationIndex}))`,
         }}
       >
-        <p className="text-[10px] xl:text-[12px] font-medium">
+        <p className="text-xs font-medium">
           Dolar hoy: {currencyFormatter(TRM_USD, "COP")}&nbsp;
-          <span className="text-[8px] xl:text-[10px]">COP</span>
+          <span className="text-[10px]">COP</span>
         </p>
-        <p className="text-[10px] xl:text-[12px] font-medium">
+        <p className="text-xs font-medium">
           Euro hoy: {currencyFormatter(TRM_EUR, "COP")}&nbsp;
-          <span className="text-[8px] xl:text-[10px]">COP</span>
+          <span className="text-[10px]">COP</span>
         </p>
       </div>
     </div>

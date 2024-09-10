@@ -1,8 +1,8 @@
 import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
 import { MyMap2 } from "@/components/projects/MyMap2";
-import NavbarProjects from "@/components/projects/NavbarProjects";
 import ProjectContent from "@/components/projects/ProjectContent";
 import { ContactButton } from "@/components/shared/ContactButton";
+import { Header } from "@/components/shared/header/header";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -45,16 +45,16 @@ export default async function Projects(props: any) {
       <ContactButton className="absolute right-4 bottom-4" />
       <section className="hidden lg:block">
         <DefaultResizablePanelGroup direction="horizontal">
-          <DefaultResizablePanel defaultSize={30}>
+          <DefaultResizablePanel defaultSize={35}>
             <MyMap2 blueprints={data} />
           </DefaultResizablePanel>
           <DefaultResizableHandle withHandle />
           <DefaultResizablePanel
-            defaultSize={70}
+            defaultSize={65}
             minSize={25}
             className="z-10 relative"
           >
-            <NavbarProjects />
+            <Header size="small" />
             <ProjectContent total={count} blueprints={data} />
           </DefaultResizablePanel>
         </DefaultResizablePanelGroup>

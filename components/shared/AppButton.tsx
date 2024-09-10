@@ -11,6 +11,9 @@ export const AppButton = ({
   className,
   ...props
 }: Omit<AppButtonProps, "href">) => {
+  // 20s
+  const INTERVAL = 20000;
+
   const appButtonRef = useRef<HTMLAnchorElement>(null);
 
   // Run animate-tada each minute
@@ -21,7 +24,7 @@ export const AppButton = ({
         void appButtonRef.current.offsetWidth;
         appButtonRef.current.classList.add("animate-tada");
       }
-    }, 60000);
+    }, INTERVAL);
 
     return () => clearInterval(interval);
   }, []);

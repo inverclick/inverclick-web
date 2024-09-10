@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/accordion";
 import { ENV_VARS } from "@/global/env";
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Términos y condiciones",
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
     url: ENV_VARS.BASE_URL + "/terms-conditions",
     title: "Términos y condiciones",
     description:
-      "Inverclick S.A.S (en adelante Inverclick) es la sociedad titular de la marca Inverclick y de los activos digitales, incluyendo el portal público www.inverclick.com ,  las plataformas de Usuario, Constructora (en adelante Plataforma) y la aplicación móvil (en adelante APP).",
+      "Inverclick S.A.S (en adelante Inverclick) es la sociedad titular de la marca Inverclick y de los activos digitales, incluyendo el portal público www.inverclick.com,  las plataformas de Usuario, Constructora (en adelante Plataforma) y la aplicación móvil (en adelante APP).",
   },
 };
 
@@ -33,9 +32,9 @@ export default function Index() {
         <p className="mt-2">
           <b>Inverclick S.A.S</b> (en adelante <b>Inverclick</b>) es la sociedad
           titular de la marca Inverclick y de los activos digitales, incluyendo
-          el portal público www.inverclick.com , las plataformas de Usuario,
-          Constructora (en adelante Plataforma) y la aplicación móvil (en
-          adelante APP).{" "}
+          el portal público <a href="www.inverclick.com">www.inverclick.com</a>,
+          las plataformas de Usuario, Constructora (en adelante Plataforma) y la
+          aplicación móvil (en adelante APP).{" "}
         </p>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="1">
@@ -56,9 +55,10 @@ export default function Index() {
               </p>
               <p>
                 <b>Plataforma:</b> Elementos de software y hardware utilizados
-                por Inverclick incluyendo el portal público www.inverclick.com,
-                las plataformas de Usuario, Constructora u otros mecanismos para
-                la prestación de bienes y servicios.
+                por Inverclick incluyendo el portal público{" "}
+                <a href="www.inverclick.com">www.inverclick.com</a>, las
+                plataformas de Usuario, Constructora u otros mecanismos para la
+                prestación de bienes y servicios.
               </p>
               <p>
                 <b>Aplicación Móvil:</b> APP utilizada por Inverclick para la
@@ -434,14 +434,12 @@ export default function Index() {
             </AccordionTriggerWithArrowFirst>
             <AccordionContent className="ml-14 text-lg space-y-2">
               <p>
-                A través de este enlace encontrarás la{" "}
-                <Link href="/privacy">
-                  Política de Tratamiento de Datos Personales
-                </Link>{" "}
-                que regirá el Tratamiento de tus Datos Personales, la cual
-                aceptas previa y expresamente como Usuario o Cliente de la
-                Plataforma y/o del APP de <b>Inverclick</b>, para los fines que
-                allí se informan de manera previa, expresa e informada.
+                A través de este enlace encontrarás la Política de Tratamiento
+                de Datos Personales que regirá el Tratamiento de tus Datos
+                Personales, la cual aceptas previa y expresamente como Usuario o
+                Cliente de la Plataforma y/o del APP de <b>Inverclick</b>, para
+                los fines que allí se informan de manera previa, expresa e
+                informada.
               </p>
               <p>
                 Toda la información suministrada por los Usuarios/Clientes que
@@ -486,8 +484,11 @@ export default function Index() {
                 también el rol de RESPONSABLE), bajo las finalidades autorizadas
                 por el titular que se contemplan en la política de tratamiento
                 de datos de Inverclick (la cual se encuentra en el siguiente
-                link <Link href="/privacy">www.inverclick.com/privacy</Link>) y
-                de acuerdo con la autorización otorgada por el titular.
+                link{" "}
+                <a href="www.inverclick.com/privacy">
+                  www.inverclick.com/privacy
+                </a>
+                ) y de acuerdo con la autorización otorgada por el titular.
               </p>
               <b>OBLIGACIONES DEL CLIENTE:</b>
               <ul className="list-disc ml-10">
@@ -619,7 +620,7 @@ export default function Index() {
           </AccordionItem>
           <AccordionItem value="10">
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
-              X. OBLIGACIONES DE LOS CLIENTES:
+              X. OBLIGACIONES DE LOS CLIENTES
             </AccordionTriggerWithArrowFirst>
             <AccordionContent className="ml-14 text-lg space-y-2">
               <p>El Cliente deberá:</p>
@@ -682,11 +683,13 @@ export default function Index() {
                 unilateral el contrato u orden de compra suscrito con{" "}
                 <b>Inverclick</b>, podrá hacerlo siempre que medie un preaviso
                 por escrito que debe ser enviado al correo:
-                contactenos@Inverclick.com . El preaviso debe ser de 60 días
-                calendario, los cuales empezarán a contar a partir de la
-                siguiente fecha de corte de la respectiva orden de compra o
-                contrato. Durante el término de preaviso, el contrato u orden de
-                compra continuará vigente.
+                <a href="mailto:contactenos@inverclick.com">
+                  contactenos@inverclick.com
+                </a>
+                .El preaviso debe ser de 60 días calendario, los cuales
+                empezarán a contar a partir de la siguiente fecha de corte de la
+                respectiva orden de compra o contrato. Durante el término de
+                preaviso, el contrato u orden de compra continuará vigente.
               </p>
             </AccordionContent>
           </AccordionItem>
@@ -1238,8 +1241,12 @@ export default function Index() {
                 </li>
                 <li>
                   Para ejercer este derecho debes remitir un correo electrónico
-                  a contactenos@<b>Inverclick</b>.com indicando el número de la
-                  orden y el número de cédula del Usuario o Cliente.
+                  a{" "}
+                  <a href="mailto:contactenos@inverclick.com">
+                    contactenos@inverclick.com
+                  </a>{" "}
+                  indicando el número de la orden y el número de cédula del
+                  Usuario o Cliente.
                 </li>
                 <li>
                   <b>Inverclick</b> tendrá 30 días calendario para realizar la
@@ -1338,7 +1345,9 @@ export default function Index() {
                 fines comerciales, de publicidad y de cobranza a través del
                 formulario que ha dispuesto <b>Inverclick</b> en cumplimiento de
                 ley 2300/23, el cual podrás encontrar en el siguiente link:
-                www.Inverclick.com/contactenos{" "}
+                <a href="www.inverclick.com/contact">
+                  www.inverclick.com/contact
+                </a>{" "}
               </p>
               <p>
                 En caso de no seleccionar tus canales, entenderemos que nos
@@ -1351,11 +1360,16 @@ export default function Index() {
               <p>
                 Para cancelar el recibimiento de mensajes publicitarios podrás
                 diligenciar el siguiente formulario:
-                https://emailInverclick.com/pub/sf/FormLink.
+                <a href="https://emailInverclick.com/pub/sf/FormLink">
+                  https://emailInverclick.com/pub/sf/FormLink
+                </a>
+                .
               </p>
               <p>
                 O podrás enviar tu solicitud al correo
-                contactenos@Inverclick.com
+                <a href="mailto:contactenos@inverclick.com">
+                  contactenos@inverclick.com
+                </a>
               </p>
             </AccordionContent>
           </AccordionItem>
@@ -1412,8 +1426,11 @@ export default function Index() {
               </ul>
               <b>Canales de atención</b>
               <b>Inverclick</b> tiene dispuesto para la atención de PQR el
-              correo electrónico: contactenos@inverclick.com y sus canales de
-              WhatsApp, chat y call center.
+              correo electrónico:{" "}
+              <a href="mailto:contactenos@inverclick.com">
+                contactenos@inverclick.com
+              </a>{" "}
+              y sus canales de WhatsApp, chat y call center.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="22">
