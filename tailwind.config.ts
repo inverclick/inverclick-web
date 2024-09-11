@@ -35,6 +35,14 @@ const config = {
           "950": "#2a0b6a",
         },
       },
+      maxWidth: {
+        "screen-3xl": "1792px",
+        "screen-4xl": "2048px",
+        "screen-5xl": "2304px",
+        "screen-6xl": "2560px",
+        "screen-7xl": "2816px",
+        "screen-8xl": "3072px",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
