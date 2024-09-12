@@ -1,5 +1,12 @@
 "use client";
 
+import {
+  LEFT_MENU_OPTIONS,
+  MENU_OPTIONS,
+  RIGHT_MENU_OPTIONS,
+  UserLink,
+} from "@/components/shared/header/header";
+import { HeaderLink } from "@/components/shared/header/header-link";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
@@ -13,8 +20,11 @@ import {
 } from "../ui/menubar";
 import DisplayTRM from "./DisplayTRM";
 
+const MEDIA_QUERY = 1024;
+
 export default function NavbarProjects() {
   const scrollableDivRef = useRef(null);
+
   const [headerPosition, setHeaderPosition] = useState<"normal" | "responsive">(
     "normal"
   );
@@ -25,9 +35,9 @@ export default function NavbarProjects() {
         for (let entry of entries) {
           if (entry.target === scrollableDivRef.current) {
             const { width } = entry.contentRect;
-            if (width <= 630 && headerPosition === "normal") {
+            if (width <= MEDIA_QUERY && headerPosition === "normal") {
               setHeaderPosition("responsive");
-            } else if (width > 630 && headerPosition === "responsive") {
+            } else if (width > MEDIA_QUERY && headerPosition === "responsive") {
               setHeaderPosition("normal");
             }
           }
@@ -46,19 +56,13 @@ export default function NavbarProjects() {
     <header
       id="navbar-projects"
       ref={scrollableDivRef}
-      className="absolute hidden bg-white shadow-md md:flex px-4 py-2 right-0 left-0"
+      className="hidden bg-white shadow-md md:flex px-4 py-2 right-0 left-0"
     >
       <nav className="flex gap-3 w-full justify-between">
         {headerPosition === "normal" ? (
           <div className="flex-1 flex items-center gap-3">
-            {MENU_OPTIONS.map(({ name, url }) => (
-              <a
-                key={name}
-                href={url}
-                className="text-xs 2xl:text-sm text-primary-600 hover:text-primary-800 font-semibold cursor-pointer transition-colors ease-in"
-              >
-                {name}
-              </a>
+            {LEFT_MENU_OPTIONS.map(({ name, url }) => (
+              <HeaderLink key={name} name={name} url={url} size="small" />
             ))}
           </div>
         ) : null}
@@ -97,28 +101,16 @@ export default function NavbarProjects() {
               </MenubarMenu>
             </Menubar>
           ) : (
-            <DisplayTRM />
+            <>
+              {RIGHT_MENU_OPTIONS.map(({ name, url }) => (
+                <HeaderLink key={name} name={name} url={url} size="small" />
+              ))}
+              <DisplayTRM />
+            </>
           )}
-          <a
-            className="border-2 border-primary-600 rounded-full cursor-pointer hover:scale-105 transition-all ease-in"
-            href="/"
-          >
-            <Image
-              unoptimized
-              width="25"
-              height="25"
-              src="/main-page/user.svg"
-              alt="Inverclick logo"
-            />
-          </a>
+          <UserLink />
         </div>
       </nav>
     </header>
   );
 }
-
-const MENU_OPTIONS = [
-  { name: "Nosotros", url: "/" },
-  { name: "Financiación", url: "/financing" },
-  { name: "Otros servicios", url: "/" },
-];

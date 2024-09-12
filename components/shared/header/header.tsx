@@ -12,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 
-const MENU_OPTIONS = [
+export const MENU_OPTIONS = [
   { name: "Nosotros", url: "/" },
   { name: "Proyectos", url: "/projects" },
   { name: "Financiación", url: "/financing" },
@@ -20,9 +20,9 @@ const MENU_OPTIONS = [
   { name: "Blog", url: "/blog" },
 ];
 
-const LEFT_MENU_OPTIONS = MENU_OPTIONS.slice(0, 3);
+export const LEFT_MENU_OPTIONS = MENU_OPTIONS.slice(0, 3);
 
-const RIGHT_MENU_OPTIONS = MENU_OPTIONS.slice(3);
+export const RIGHT_MENU_OPTIONS = MENU_OPTIONS.slice(3);
 
 type HeaderProps = Readonly<{
   size?: "small" | "large";
@@ -142,7 +142,7 @@ function MenuOptions({
   );
 }
 
-function UserLink() {
+export function UserLink() {
   return (
     <Link
       href="/auth/sign-in"
