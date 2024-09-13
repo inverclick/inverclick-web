@@ -31,12 +31,14 @@ interface DescriptionProps {
     lat: number;
     lng: number;
   };
+  urbanismPhotos: string[];
   urbanismFiles: string[];
 }
 
 export const ProjectContent = ({
   typologies,
-  urbanismFiles,
+  urbanismPhotos = [],
+  urbanismFiles = [],
   characteristics,
   name,
   description,
@@ -134,7 +136,10 @@ export const ProjectContent = ({
               <Typologies typologies={typologies} />
             </TabsContent>
             <TabsContent value="urban">
-              <Urbanism urbanismFiles={urbanismFiles} />
+              <Urbanism
+                urbanismPhotos={urbanismPhotos}
+                urbanismFiles={urbanismFiles}
+              />
             </TabsContent>
             <TabsContent value="credit">
               <h3 className="font-medium text-2xl mb-10">

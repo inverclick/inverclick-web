@@ -81,6 +81,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           units={blueprints.reduce((acc, b) => acc + b.units, 0)}
           deadline={project?.deadline}
           typologies={blueprints}
+          urbanismPhotos={project.urbanismPhotos}
           urbanismFiles={project.urbanism}
         />
         <OtherProjects projectId={id} />
