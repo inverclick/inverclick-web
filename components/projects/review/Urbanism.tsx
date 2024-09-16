@@ -7,34 +7,50 @@ import {
 } from "@/components/ui/carousel";
 import { getAssetUrl } from "@/services/utils";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
-export const Urbanism = ({ urbanismFiles }: { urbanismFiles: string[] }) => {
-
+export const Urbanism = ({
+  urbanismPhotos,
+  urbanismFiles,
+}: {
+  urbanismPhotos: string[];
+  urbanismFiles: string[];
+}) => {
   return (
-    <ul className="space-y-2 mt-2 flex justify-center flex-col items-center gap-2">
-      <Image 
-        src='/urbanismo.jpeg'
-        alt="Urbanismo" 
-        width={600} 
-        height={400}
-        className="!w-full" 
-      />
-      {urbanismFiles.map((p, index) => (
-        <li key={index}>
-          <a
-            href={getAssetUrl(p)}
-            target="_blank"
-            // alt={'Urbanismo #' + index}
-            // width={600}
-            // height={400}
-            className="w-fit bg-primary-600 text-white px-4 py-2 rounded-3xl"
-          >
-            {"Archivo de Urbanismo #" + index + 1}
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div className="flex flex-col gap-8 mt-4">
+      {urbanismPhotos.length > 0 && (
+        <Carousel className="w-ful">
+          <CarouselContent>
+            {urbanismPhotos.map((src, index) => (
+              <CarouselItem key={src} className="flex items-center">
+                <Image
+                  unoptimized
+                  src={getAssetUrl(src)}
+                  alt="Urbanismo"
+                  width={600}
+                  height={400}
+                  className="object-contain w-full"
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="translate-x-14 z-10" />
+          <CarouselNext className="-translate-x-14 z-10" />
+        </Carousel>
+      )}
+      <ul className="flex justify-center flex-col items-center gap-2">
+        {urbanismFiles.map((src, index) => (
+          <li key={src}>
+            <a
+              href={getAssetUrl(src)}
+              target="_blank"
+              className="w-fit bg-primary-600 text-white px-4 py-2 rounded-3xl"
+            >
+              {"Archivo de Urbanismo #" + index + 1}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
