@@ -8,7 +8,7 @@ import {
   SuperClusterAlgorithm,
 } from "@googlemaps/markerclusterer";
 import { AdvancedMarker, InfoWindow, useMap } from "@vis.gl/react-google-maps";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ProjectCard } from "../shared/ProjectCard";
 
 const DATA_URI = `data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjUxZWUzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiPgo8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIG9wYWNpdHk9Ii45IiByPSI3MCIgLz4KPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTIwIiBvcGFjaXR5PSIuMyIgcj0iOTAiIC8+Cjwvc3ZnPg==`;
@@ -18,71 +18,95 @@ type MarkerProps = Readonly<{
 }>;
 
 export function Markers({ blueprints }: MarkerProps) {
-  const [currentOpen, setCurrentOpen] = useState<string>("");
+  const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
+
+  const [selectedBlueprintKey, setSelectedBlueprintKey] = useState<
+    string | null
+  >(null);
+
   const [visitedMarkers, setVisitedMarkers] = useState<{
     [key: string]: boolean;
   }>({});
+
   const { convert, currency } = useCurrencyContext();
 
-  const map = useMap();
-  const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
-  const clusterer = useRef<MarkerClusterer | null>(null);
+  const selectedBlueprint = useMemo(
+    () =>
+      blueprints && selectedBlueprintKey
+        ? blueprints.find(
+            (blueprint) => blueprint.project._id === selectedBlueprintKey
+          )!
+        : null,
+    [blueprints, selectedBlueprintKey]
+  );
 
-  // Initialize MarkerClusterer
-  useEffect(() => {
-    if (!map) return;
-    if (!clusterer.current) {
-      clusterer.current = new MarkerClusterer({
-        map,
-        algorithm: new SuperClusterAlgorithm({
-          radius: 120,
-        }),
-        renderer: {
-          render(cluster, stats, map) {
-            return new google.maps.Marker({
-              position: cluster.position,
-              icon: {
-                url: DATA_URI,
-                scaledSize: new google.maps.Size(50, 50),
-              },
-              label: {
-                text: String(cluster.count),
-                color: "#ffffff",
-                fontSize: "14px",
-                fontWeight: "bold",
-              },
-            });
-          },
+  const map = useMap();
+
+  const clusterer = useMemo(() => {
+    if (!map) return null;
+
+    return new MarkerClusterer({
+      map,
+      algorithm: new SuperClusterAlgorithm({
+        radius: 120,
+      }),
+      renderer: {
+        render(cluster, stats, map) {
+          return new google.maps.Marker({
+            position: cluster.position,
+            icon: {
+              url: DATA_URI,
+              scaledSize: new google.maps.Size(50, 50),
+            },
+            label: {
+              text: String(cluster.count),
+              color: "#ffffff",
+              fontSize: "14px",
+              fontWeight: "bold",
+            },
+          });
         },
-      });
-    }
+      },
+    });
   }, [map]);
 
-  // Update markers
   useEffect(() => {
-    clusterer.current?.clearMarkers();
-    clusterer.current?.addMarkers(Object.values(markers));
-  }, [markers]);
+    if (!clusterer) return;
 
-  const setMarkerRef = (marker: Marker | null, key: string) => {
+    clusterer.clearMarkers();
+    clusterer.addMarkers(Object.values(markers));
+  }, [clusterer, markers]);
+
+  const setMarkerRef = useCallback((marker: Marker | null, key: string) => {
     if (marker && markers[key]) return;
     if (!marker && !markers[key]) return;
 
-    setMarkers((prev) => {
+    setMarkers((markers) => {
+      if ((marker && markers[key]) || (!marker && !markers[key]))
+        return markers;
+
       if (marker) {
-        return { ...prev, [key]: marker };
+        return { ...markers, [key]: marker };
       } else {
-        const newMarkers = { ...prev };
-        delete newMarkers[key];
+        const { [key]: _, ...newMarkers } = markers;
+
         return newMarkers;
       }
     });
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!map) return;
+
+    map.addListener("click", () => {
+      setSelectedBlueprintKey(null);
+    });
+  }, [map]);
 
   return (
     <>
       {blueprints.map((blueprint) => {
-        const isCurrentOpen = currentOpen === blueprint.project._id;
+        const isCurrentOpen = selectedBlueprintKey === blueprint.project._id;
         const isVisited = visitedMarkers[blueprint.project._id];
         return (
           <AdvancedMarker
@@ -93,12 +117,14 @@ export function Markers({ blueprints }: MarkerProps) {
             }}
             ref={(marker) => setMarkerRef(marker, blueprint.project._id)}
             onClick={() => {
-              setCurrentOpen(blueprint.project._id);
-              !visitedMarkers[blueprint.project._id] &&
+              setSelectedBlueprintKey(blueprint.project._id);
+
+              if (!visitedMarkers[blueprint.project._id]) {
                 setVisitedMarkers((prev) => ({
                   ...prev,
                   [blueprint.project._id]: true,
                 }));
+              }
             }}
           >
             <div
@@ -119,17 +145,20 @@ export function Markers({ blueprints }: MarkerProps) {
                 {currency}
               </span>
             </div>
-            {currentOpen === blueprint.project._id ? (
-              <InfoWindow
-                onClose={() => setCurrentOpen("")}
-                anchor={markers[blueprint.project._id]}
-              >
-                <ProjectCard blueprint={blueprint} />
-              </InfoWindow>
-            ) : null}
           </AdvancedMarker>
         );
       })}
+
+      {selectedBlueprint && selectedBlueprintKey && (
+        <InfoWindow
+          anchor={markers[selectedBlueprintKey]}
+          onCloseClick={() => {
+            setSelectedBlueprintKey(null);
+          }}
+        >
+          <ProjectCard blueprint={selectedBlueprint} />
+        </InfoWindow>
+      )}
     </>
   );
 }

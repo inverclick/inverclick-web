@@ -28,6 +28,10 @@ input[type="number"] {
   border: none !important;
 }
 
+.gm-style-iw-chr > button {
+  display: none !important;
+}
+
 @layer utilities {
   .divided-background {
     background: linear-gradient(to right, #dbd4ff 50%, white 50%);
