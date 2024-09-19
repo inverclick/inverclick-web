@@ -7,8 +7,10 @@ import {
   UserLink,
 } from "@/components/shared/header/header";
 import { HeaderLink } from "@/components/shared/header/header-link";
+import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Menubar,
@@ -105,7 +107,11 @@ export default function NavbarProjects() {
               {RIGHT_MENU_OPTIONS.map(({ name, url }) => (
                 <HeaderLink key={name} name={name} url={url} size="small" />
               ))}
-              <DisplayTRM />
+              <Button size="xs" variant="outline-primary" asChild>
+                <a href="https://company.inverclick.com/" target="_blank">
+                  Publicar
+                </a>
+              </Button>
             </>
           )}
           <UserLink />
