@@ -1,3 +1,7 @@
+import DisplayTRM from "@/components/projects/DisplayTRM";
+import { ProjectFilters } from "@/components/projects/Filters/ProjectFilters";
+import { ProjectInfinityScroll } from "@/components/projects/ProjectInfinityScroll";
+import { SelectCurrency } from "@/components/projects/SelectCurrency";
 import {
   getDepartments,
   getGraphicPriceRange,
@@ -5,9 +9,6 @@ import {
 } from "@/services/utils";
 import type { IBLUEPRINT_POPULATED } from "@/types/blueprint";
 import { Suspense } from "react";
-import { ProjectFilters } from "./Filters/ProjectFilters";
-import { ProjectInfinityScroll } from "./ProjectInfinityScroll";
-import { SelectCurrency } from "./SelectCurrency";
 
 type Props = Readonly<{
   total: number;
@@ -40,10 +41,13 @@ export default async function ProjectContent({ total, blueprints }: Props) {
           </Suspense>
           <SelectCurrency />
         </div>
-        <p className="hidden lg:flex gap-1 justify-center items-center">
-          <span className="font-medium">Total:</span>
-          {total}
-        </p>
+        <div className="flex gap-4 items-center">
+          <DisplayTRM className="hidden lg:block" />
+          <p className="hidden lg:flex gap-1 justify-center items-center">
+            <span className="font-medium">Total:</span>
+            {total}
+          </p>
+        </div>
       </div>
       <ProjectInfinityScroll blueprints={blueprints} />
     </section>

@@ -2,9 +2,12 @@
 
 import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
-import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import { ComponentProps, useEffect, useState } from "react";
 
-export default function DisplayTRM() {
+export type DisplayTRMProps = ComponentProps<"div">;
+
+export default function DisplayTRM({ className, ...props }: DisplayTRMProps) {
   // 10s
   const INTERVAL = 10000;
   const RATES = 2;
@@ -28,7 +31,7 @@ export default function DisplayTRM() {
   }, [loadTRM]);
 
   return (
-    <div className="h-4 overflow-y-hidden">
+    <div className={cn("h-4 overflow-y-hidden", className)} {...props}>
       <div
         className="h-4 transition-transform duration-500"
         style={{
