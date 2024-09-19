@@ -43,7 +43,7 @@ export default async function Projects(props: any) {
 
   return (
     <main>
-      <ContactButton className="absolute right-4 bottom-4" />
+      <ContactButton className="fixed right-4 bottom-4" />
       <section className="hidden lg:block">
         <DefaultResizablePanelGroup
           direction="horizontal"
