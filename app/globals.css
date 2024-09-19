@@ -32,9 +32,23 @@ input[type="number"] {
   display: none !important;
 }
 
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: calc(4rem + 1px);
+  height: 2px;
+  @apply bg-slate-400;
+}
+
 @layer utilities {
   .divided-background {
     background: linear-gradient(to right, #dbd4ff 50%, white 50%);
+  }
+
+  .divided-background-2 {
+    background: linear-gradient(to left, #dbd4ff 50%, white 50%);
   }
 
   .p-content {

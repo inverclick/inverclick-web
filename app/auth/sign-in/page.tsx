@@ -5,6 +5,7 @@ import {
 } from "@/components/shared/advertising-carousel/advertising-carousel";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { Header } from "@/components/shared/header/header";
+import { OrSeparator } from "@/components/shared/or-separator/or-separator";
 import { DownloadAppModal } from "@/components/sign-in/download-app-modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -80,7 +81,7 @@ function RightSection() {
           />
           Continuar con Google
         </Button>
-        <Link href="/" className="text-primary">
+        <Link href="/auth/sign-up" className="text-primary">
           Crear una cuenta
         </Link>
         <DownloadAppModal />
@@ -88,17 +89,6 @@ function RightSection() {
           Soy constructora
         </Link>
       </form>
-    </div>
-  );
-}
-
-function OrSeparator() {
-  return (
-    <div className="relative flex items-center justify-center w-full">
-      <div className="absolute inset-0 flex items-center">
-        <div className="w-full border-t border-gray-300"></div>
-      </div>
-      <span className="relative px-3 text-gray-500 bg-white">o</span>
     </div>
   );
 }
