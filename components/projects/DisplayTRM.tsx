@@ -5,9 +5,14 @@ import { currencyFormatter } from "@/lib/currencyFormatter";
 import { cn } from "@/lib/utils";
 import { ComponentProps, useEffect, useState } from "react";
 
-export type DisplayTRMProps = ComponentProps<"div">;
+export type DisplayTRMProps = Readonly<{ size?: "xs" | "base" }> &
+  ComponentProps<"div">;
 
-export default function DisplayTRM({ className, ...props }: DisplayTRMProps) {
+export default function DisplayTRM({
+  size = "xs",
+  className,
+  ...props
+}: DisplayTRMProps) {
   // 10s
   const INTERVAL = 10000;
   const RATES = 2;
@@ -30,21 +35,53 @@ export default function DisplayTRM({ className, ...props }: DisplayTRMProps) {
     loadTRM();
   }, [loadTRM]);
 
+  const lineHeight: { [key: string]: number } = {
+    xs: 16,
+    base: 24,
+  };
+
   return (
-    <div className={cn("h-4 overflow-y-hidden", className)} {...props}>
+    <div
+      className={cn("h-4 overflow-y-hidden", className, {
+        "h-6": size === "base",
+      })}
+      {...props}
+    >
       <div
-        className="h-4 transition-transform duration-500"
+        className={cn("h-4 transition-transform duration-500", {
+          "h-6": size === "base",
+        })}
         style={{
-          transform: `translateY(calc(-16px * ${translationIndex}))`,
+          transform: `translateY(calc(-${lineHeight[size]}px * ${translationIndex}))`,
         }}
       >
-        <p className="text-xs font-medium">
+        <p
+          className={cn("text-xs font-medium", {
+            "text-base": size === "base",
+          })}
+        >
           USD hoy: {currencyFormatter(TRM_USD, "COP")}&nbsp;
-          <span className="text-[10px]">COP</span>
+          <span
+            className={cn("text-[10px]", {
+              "text-[12px]": size === "base",
+            })}
+          >
+            COP
+          </span>
         </p>
-        <p className="text-xs font-medium">
+        <p
+          className={cn("text-xs font-medium", {
+            "text-base": size === "base",
+          })}
+        >
           EUR hoy: {currencyFormatter(TRM_EUR, "COP")}&nbsp;
-          <span className="text-[10px]">COP</span>
+          <span
+            className={cn("text-[10px]", {
+              "text-[12px]": size === "base",
+            })}
+          >
+            COP
+          </span>
         </p>
       </div>
     </div>
