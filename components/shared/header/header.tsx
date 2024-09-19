@@ -1,5 +1,6 @@
 import DisplayTRM from "@/components/projects/DisplayTRM";
 import { HeaderLink } from "@/components/shared/header/header-link";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +14,10 @@ import Link from "next/link";
 import { PropsWithChildren } from "react";
 
 export const MENU_OPTIONS = [
-  { name: "Nosotros", url: "/" },
+  { name: "Nosotros", url: "/about-us" },
   { name: "Proyectos", url: "/projects" },
   { name: "Financiación", url: "/financing" },
-  { name: "Otros servicios", url: "/" },
+  { name: "Otros servicios", url: "/other-services" },
   { name: "Blog", url: "/blog" },
 ];
 
@@ -102,8 +103,13 @@ function DesktopHeader({ size }: DesktopHeaderProps) {
         />
       </a>
       <MenuOptions options={RIGHT_MENU_OPTIONS} size={size} align="right">
-        <li className="flex items-center gap-4">
-          <DisplayTRM />
+        <li className="flex items-center gap-4 xl:gap-8">
+          {/* <DisplayTRM /> */}
+          <Button size="sm" variant="outline-primary" asChild>
+            <a href="https://company.inverclick.com/" target="_blank">
+              Publicar
+            </a>
+          </Button>
           <UserLink />
         </li>
       </MenuOptions>
