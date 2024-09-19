@@ -32,19 +32,19 @@ export default function Page() {
 function LeftSection() {
   return (
     <div className="relative flex justify-center items-center p-content lg:p-content-full">
-      {/* <h2 className="text-center lg:text-left text-3xl lg:text-5xl font-bold">
+      <h2 className="text-center lg:text-left text-3xl lg:text-5xl font-bold">
         <p>¡Nos alegramos</p>
         <p>
           de volver a <span className="text-primary-500">VERTE!</span>
         </p>
-      </h2> */}
-      <AdvertisingCarousel>
+      </h2>
+      {/* <AdvertisingCarousel>
         {Array.from({ length: 3 }).map((_, index) => (
           <AdvertisingCarouselItem key={index}>
             <p>lorem {index}</p>
           </AdvertisingCarouselItem>
         ))}
-      </AdvertisingCarousel>
+      </AdvertisingCarousel> */}
       <CardService
         title="Soy constructora"
         link="/"
