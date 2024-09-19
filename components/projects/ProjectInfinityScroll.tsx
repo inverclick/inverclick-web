@@ -94,10 +94,10 @@ export const ProjectInfinityScroll = ({ blueprints }: Props) => {
   }, [grid, child, cellWidth]);
 
   return (
-    <ScrollArea className="h-[500px] lg:h-[calc(100vh_-_125px)]">
+    <ScrollArea>
       <div
         ref={assignGrid}
-        className="mt-4 w-full gap-y-10 gap-x-2 pb-10 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]"
+        className="mt-4 w-full gap-y-10 gap-x-2 pb-4 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]"
       >
         {_blueprints.map((blueprint, index) => {
           const isFirstColumn = index % columns === 0;

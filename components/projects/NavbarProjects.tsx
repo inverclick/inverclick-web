@@ -10,7 +10,6 @@ import { HeaderLink } from "@/components/shared/header/header-link";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Menubar,
@@ -58,7 +57,7 @@ export default function NavbarProjects() {
     <header
       id="navbar-projects"
       ref={scrollableDivRef}
-      className="hidden bg-white shadow-md md:flex px-4 py-2 right-0 left-0"
+      className="hidden bg-white shadow-md md:flex p-4 right-0 left-0"
     >
       <nav className="flex gap-3 w-full justify-between">
         {headerPosition === "normal" ? (

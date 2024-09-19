@@ -28,7 +28,7 @@ export default async function ProjectContent({ total, blueprints }: Props) {
   const { data: departments } = departmentsResponse;
 
   return (
-    <section className="m-4">
+    <section className="flex flex-col flex-grow m-4 mb-0 overflow-y-hidden">
       <div className="flex justify-between text-sm text-primary-600 mb-3">
         <div className="hidden lg:flex gap-3 items-center">
           <Suspense>
