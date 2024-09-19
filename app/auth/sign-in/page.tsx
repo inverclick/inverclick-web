@@ -1,4 +1,8 @@
 import { CardService } from "@/components/shared/card-service";
+import {
+  AdvertisingCarousel,
+  AdvertisingCarouselItem,
+} from "@/components/shared/advertising-carousel/advertising-carousel";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { Header } from "@/components/shared/header/header";
 import { DownloadAppModal } from "@/components/sign-in/download-app-modal";
@@ -27,12 +31,19 @@ export default function Page() {
 function LeftSection() {
   return (
     <div className="relative flex justify-center items-center p-content lg:p-content-full">
-      <h2 className="text-center lg:text-left text-3xl lg:text-5xl font-bold">
+      {/* <h2 className="text-center lg:text-left text-3xl lg:text-5xl font-bold">
         <p>¡Nos alegramos</p>
         <p>
           de volver a <span className="text-primary-500">VERTE!</span>
         </p>
-      </h2>
+      </h2> */}
+      <AdvertisingCarousel>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <AdvertisingCarouselItem key={index}>
+            <p>lorem {index}</p>
+          </AdvertisingCarouselItem>
+        ))}
+      </AdvertisingCarousel>
       <CardService
         title="Soy constructora"
         link="/"
