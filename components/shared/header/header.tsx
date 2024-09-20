@@ -110,7 +110,7 @@ function DesktopHeader({ size }: DesktopHeaderProps) {
               Publicar
             </a>
           </Button>
-          <UserLink />
+          <UserLink size={32} />
         </li>
       </MenuOptions>
     </div>
@@ -148,7 +148,11 @@ function MenuOptions({
   );
 }
 
-export function UserLink() {
+export type UserLinkProps = Readonly<{
+  size?: number;
+}>;
+
+export function UserLink({ size = 24 }: UserLinkProps) {
   return (
     // <Link href="/auth/sign-in">
     //   <CircleUserRound
@@ -163,8 +167,8 @@ export function UserLink() {
     >
       <Image
         unoptimized
-        width={24}
-        height={24}
+        width={size}
+        height={size}
         src="/main-page/user.svg"
         alt="User link"
       />
