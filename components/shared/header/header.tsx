@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
@@ -150,14 +150,21 @@ function MenuOptions({
 
 export function UserLink() {
   return (
+    // <Link href="/auth/sign-in">
+    //   <CircleUserRound
+    //     strokeWidth={1}
+    //     size={32}
+    //     className="text-primary fill-primary"
+    //   />
+    // </Link>
     <Link
       href="/auth/sign-in"
       className="border-2 border-primary rounded-full cursor-pointer"
     >
       <Image
         unoptimized
-        width="25"
-        height="25"
+        width={24}
+        height={24}
         src="/main-page/user.svg"
         alt="User link"
       />

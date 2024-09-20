@@ -8,7 +8,7 @@ import {
 } from "@/components/shared/header/header";
 import { HeaderLink } from "@/components/shared/header/header-link";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, SquareMenu } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -78,11 +78,22 @@ export default function NavbarProjects() {
           />
         </a>
         <div className="flex-1 gap-3 flex justify-end items-center !text-xs !2xl:text-sm">
+          {headerPosition === "responsive" && (
+            <Button size="xs" variant="outline-primary" asChild>
+              <a href="https://company.inverclick.com/" target="_blank">
+                Publicar
+              </a>
+            </Button>
+          )}
           {headerPosition === "responsive" ? (
             <Menubar className="border-0 p-0 h-min">
               <MenubarMenu>
-                <MenubarTrigger className="p-0 border-2 rounded-md border-primary-600 ">
-                  <Menu className="h-4 w-4 text-primary-600 cursor-pointer m-1" />
+                <MenubarTrigger className="p-0">
+                  <SquareMenu
+                    strokeWidth={1}
+                    size={32}
+                    className="text-primary cursor-pointer"
+                  />
                 </MenubarTrigger>
                 <MenubarContent>
                   {MENU_OPTIONS.map(({ name, url }) => (
