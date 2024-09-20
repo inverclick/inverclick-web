@@ -13,13 +13,13 @@ export const ProjectInfinityScroll = ({ blueprints }: Props) => {
   const _blueprints = useProjectsPageStore((state) => state.blueprints);
 
   return (
-    <ScrollArea>
+    <div className="overflow-y-auto">
       <div className="mt-4 w-full gap-y-10 gap-x-2 pb-4 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
         {_blueprints.map((blueprint, index) => {
           return <ProjectCard key={blueprint._id} blueprint={blueprint} />;
         })}
       </div>
-    </ScrollArea>
+    </div>
   );
 };
 
