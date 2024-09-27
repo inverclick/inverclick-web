@@ -43,17 +43,20 @@ export default async function Projects(props: any) {
 
   return (
     <main>
-      <ContactButton className="absolute right-4 bottom-4" />
+      <ContactButton className="fixed right-4 bottom-4" />
       <section className="hidden lg:block">
-        <DefaultResizablePanelGroup direction="horizontal">
-          <DefaultResizablePanel defaultSize={35}>
+        <DefaultResizablePanelGroup
+          direction="horizontal"
+          className="!h-screen"
+        >
+          <DefaultResizablePanel defaultSize={32}>
             <MyMap2 blueprints={data} />
           </DefaultResizablePanel>
           <DefaultResizableHandle withHandle />
           <DefaultResizablePanel
-            defaultSize={65}
+            defaultSize={68}
             minSize={25}
-            className="z-10 relative"
+            className="z-10 relative flex flex-col"
           >
             <NavbarProjects />
             <ProjectContent total={count} blueprints={data} />
@@ -63,12 +66,16 @@ export default async function Projects(props: any) {
       <section className="lg:hidden">
         <MobileProjectHeader total={count} />
         <div className="h-screen">
-          <ResizablePanelGroup direction="vertical">
+          <ResizablePanelGroup direction="vertical" className="!h-screen">
             <ResizablePanel defaultSize={50}>
               <MyMap2 blueprints={data} />
             </ResizablePanel>
             <ResizableHandle />
-            <ResizablePanel defaultSize={50} maxSize={60}>
+            <ResizablePanel
+              defaultSize={50}
+              maxSize={60}
+              className="flex flex-col"
+            >
               <ProjectContent total={count} blueprints={data} />
             </ResizablePanel>
           </ResizablePanelGroup>

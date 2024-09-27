@@ -13,7 +13,7 @@ export type HeaderLinkProps = Readonly<{
 export function HeaderLink({ name, url, size = "large" }: HeaderLinkProps) {
   const pathname = usePathname();
 
-  const isActive = pathname === url;
+  const isActive = pathname.startsWith(url);
 
   return (
     <Link

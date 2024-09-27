@@ -7,7 +7,8 @@ import {
   UserLink,
 } from "@/components/shared/header/header";
 import { HeaderLink } from "@/components/shared/header/header-link";
-import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Menu, SquareMenu } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -56,7 +57,7 @@ export default function NavbarProjects() {
     <header
       id="navbar-projects"
       ref={scrollableDivRef}
-      className="hidden bg-white shadow-md md:flex px-4 py-2 right-0 left-0"
+      className="hidden bg-white shadow-md md:flex p-4 right-0 left-0"
     >
       <nav className="flex gap-3 w-full justify-between">
         {headerPosition === "normal" ? (
@@ -77,11 +78,22 @@ export default function NavbarProjects() {
           />
         </a>
         <div className="flex-1 gap-3 flex justify-end items-center !text-xs !2xl:text-sm">
+          {headerPosition === "responsive" && (
+            <Button size="xs" variant="outline-primary" asChild>
+              <a href="https://company.inverclick.com/" target="_blank">
+                Publicar
+              </a>
+            </Button>
+          )}
           {headerPosition === "responsive" ? (
             <Menubar className="border-0 p-0 h-min">
               <MenubarMenu>
-                <MenubarTrigger className="p-0 border-2 rounded-md border-primary-600 ">
-                  <Menu className="h-4 w-4 text-primary-600 cursor-pointer m-1" />
+                <MenubarTrigger className="p-0">
+                  <SquareMenu
+                    strokeWidth={1}
+                    size={32}
+                    className="text-primary cursor-pointer"
+                  />
                 </MenubarTrigger>
                 <MenubarContent>
                   {MENU_OPTIONS.map(({ name, url }) => (
@@ -105,7 +117,11 @@ export default function NavbarProjects() {
               {RIGHT_MENU_OPTIONS.map(({ name, url }) => (
                 <HeaderLink key={name} name={name} url={url} size="small" />
               ))}
-              <DisplayTRM />
+              <Button size="xs" variant="outline-primary" asChild>
+                <a href="https://company.inverclick.com/" target="_blank">
+                  Publicar
+                </a>
+              </Button>
             </>
           )}
           <UserLink />

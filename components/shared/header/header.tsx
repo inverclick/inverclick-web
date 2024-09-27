@@ -1,5 +1,6 @@
 import DisplayTRM from "@/components/projects/DisplayTRM";
 import { HeaderLink } from "@/components/shared/header/header-link";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,16 +8,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 
 export const MENU_OPTIONS = [
-  { name: "Nosotros", url: "/" },
+  { name: "Nosotros", url: "/about-us" },
   { name: "Proyectos", url: "/projects" },
   { name: "Financiación", url: "/financing" },
-  { name: "Otros servicios", url: "/" },
+  { name: "Otros servicios", url: "/other-services" },
   { name: "Blog", url: "/blog" },
 ];
 
@@ -102,9 +103,14 @@ function DesktopHeader({ size }: DesktopHeaderProps) {
         />
       </a>
       <MenuOptions options={RIGHT_MENU_OPTIONS} size={size} align="right">
-        <li className="flex items-center gap-4">
-          <DisplayTRM />
-          <UserLink />
+        <li className="flex items-center gap-4 xl:gap-8">
+          {/* <DisplayTRM /> */}
+          <Button size="sm" variant="outline-primary" asChild>
+            <a href="https://company.inverclick.com/" target="_blank">
+              Publicar
+            </a>
+          </Button>
+          <UserLink size={32} />
         </li>
       </MenuOptions>
     </div>
@@ -142,16 +148,27 @@ function MenuOptions({
   );
 }
 
-export function UserLink() {
+export type UserLinkProps = Readonly<{
+  size?: number;
+}>;
+
+export function UserLink({ size = 24 }: UserLinkProps) {
   return (
+    // <Link href="/auth/sign-in">
+    //   <CircleUserRound
+    //     strokeWidth={1}
+    //     size={32}
+    //     className="text-primary fill-primary"
+    //   />
+    // </Link>
     <Link
       href="/auth/sign-in"
       className="border-2 border-primary rounded-full cursor-pointer"
     >
       <Image
         unoptimized
-        width="25"
-        height="25"
+        width={size}
+        height={size}
         src="/main-page/user.svg"
         alt="User link"
       />

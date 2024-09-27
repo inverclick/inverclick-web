@@ -229,7 +229,7 @@ function Content({ departments }: Content) {
 
         <div className="w-full">
           <header className="px-5 md:px-16 my-16 md:mt-16 lg:mt-0 lg:mb-16">
-            <h1 className="text-center text-2xl md:text-3xl 2xl:text-5xl font-semibold text-white">
+            <h1 className="text-center lg:text-left text-2xl md:text-3xl 2xl:text-5xl font-semibold text-white">
               <p>Inverclick, el mejor sitio</p>
               <p>
                 para invertir en{" "}
