@@ -43,7 +43,7 @@ export default function FinancingPage() {
           </div>
         </article>
       </div>
-      <article className="flex flex-col md:flex-row gap-10 px-6 md:px-14 lg:px-20 mb-14 max-w-screen-2xl mx-auto">
+      <article className="flex flex-col lg:flex-row gap-10 px-6 md:px-14 lg:px-20 mb-14 max-w-screen-2xl mx-auto">
         <FinancingCard
           color="#7330f7"
           direction="horizontal"
