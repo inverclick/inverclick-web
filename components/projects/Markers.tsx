@@ -134,7 +134,7 @@ export function Markers({ blueprints }: MarkerProps) {
                   : isVisited
                   ? "bg-primary-100"
                   : "bg-white"
-              } py-1 px-2 rounded-full border-[1px] border-primary-600 shadow-md ${
+              } py-1 px-2 rounded-full border-[1px] border-primary-600 shadow-md whitespace-nowrap ${
                 isCurrentOpen ? "text-white" : "text-black"
               } `}
             >
