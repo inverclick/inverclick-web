@@ -17,19 +17,25 @@ export default function DisplayTRM({
   const INTERVAL = 10000;
   const RATES = 2;
 
-  const { TRM_USD, TRM_EUR, loadTRM } = useCurrencyContext();
+  const { currency, TRM_USD, TRM_EUR, loadTRM } = useCurrencyContext();
 
   const [translationIndex, setTranslationIndex] = useState(0);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTranslationIndex((prev) => (prev + 1) % RATES);
-    }, INTERVAL);
+    if (currency === "COP") {
+      const intervalId = setInterval(() => {
+        setTranslationIndex((prev) => (prev + 1) % RATES);
+      }, INTERVAL);
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [RATES]);
+      return () => {
+        clearInterval(intervalId);
+      };
+    } else if (currency === "USD") {
+      setTranslationIndex(0); // Fix to USD
+    } else if (currency === "EUR") {
+      setTranslationIndex(1); // Fix to EUR
+    }
+  }, [currency, RATES]);
 
   useEffect(() => {
     loadTRM();
