@@ -132,4 +132,25 @@ export const limitPrice = (price: number, currency: Currency) => {
  */
 export function getAssetUrl(imageId: string): string {
   return `${BUCKET_URL}${imageId}`;
-} 
+}
+
+/**
+ * Clones the elements of an array a specified number of times.
+ *
+ * @template T - The type of elements in the array.
+ * @param {T[]} arr - The array to be cloned.
+ * @param {number} times - The number of times to clone the array.
+ * @returns {T[]} A new array containing the elements of the original array cloned the specified number of times.
+ */
+export function cloneItems<T>(arr: T[], times: number): T[] {
+  // Create an empty array to hold the result
+  const result: T[] = [];
+
+  // Loop `times` number of times
+  for (let i = 0; i < times; i++) {
+    // Concatenate the original array to the result
+    result.push(...arr);
+  }
+
+  return result;
+}
