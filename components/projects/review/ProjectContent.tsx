@@ -69,9 +69,9 @@ export const ProjectContent = ({
             Simulador de crédito
           </TabsTrigger>
         </TabsList>
-        <div className="flex gap-6 ">
-          <div className="flex-1 flex flex-col gap-6 mb-6">
-            <TabsContent value="description">
+        <div className="grid grid-cols-[1fr,auto] gap-6">
+          <div className="overflow-x-hidden my-6">
+            <TabsContent value="description" className="mt-0">
               <div className="flex flex-col gap-3 pb-6">
                 <div className="flex flex-col gap-6 lg:flex-row mt-6">
                   <div className="flex flex-col gap-2 justify-center items-center">
@@ -132,16 +132,16 @@ export const ProjectContent = ({
                 <hr />
               </div>
             </TabsContent>
-            <TabsContent value="types">
+            <TabsContent value="types" className="mt-0">
               <Typologies typologies={typologies} />
             </TabsContent>
-            <TabsContent value="urban">
+            <TabsContent value="urban" className="mt-0">
               <Urbanism
                 urbanismPhotos={urbanismPhotos}
                 urbanismFiles={urbanismFiles}
               />
             </TabsContent>
-            <TabsContent value="credit">
+            <TabsContent value="credit" className="mt-0">
               <h3 className="font-medium text-2xl mb-10">
                 Simulador de crédito
               </h3>

@@ -17,10 +17,10 @@ export const Urbanism = ({
   urbanismFiles: string[];
 }) => {
   return (
-    <div className="flex flex-col gap-8 mt-4">
+    <div className="flex flex-col gap-8">
       {urbanismPhotos.length > 0 && (
-        <Carousel className="w-ful">
-          <CarouselContent>
+        <Carousel className="w-full">
+          <CarouselContent className="h-96">
             {urbanismPhotos.map((src, index) => (
               <CarouselItem key={src} className="flex items-center">
                 <Image
@@ -29,7 +29,7 @@ export const Urbanism = ({
                   alt="Urbanismo"
                   width={600}
                   height={400}
-                  className="object-contain w-full"
+                  className="object-contain w-full h-full"
                 />
               </CarouselItem>
             ))}

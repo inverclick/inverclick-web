@@ -34,6 +34,8 @@ const config = {
           "900": "#47169c",
           "950": "#2a0b6a",
         },
+        "light-gray": "hsl(210 40% 96.1%)",
+        "dark-gray": "hsl(215.4 16.3% 46.9%)",
       },
       maxWidth: {
         "screen-3xl": "1792px",
