@@ -124,7 +124,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
             </p>
           </div>
           <div className="flex justify-between px-4 py-3 lg:p-2 2xl:p-4 bg-primary-100 rounded-b-lg">
-            <div className="text-xs lg:text-[10px] 2xl:text-xs text-center">
+            <div className="text-xs 2xl:text-xs text-center">
               <p>
                 {blueprint.area}{" "}
                 <span className="text-xs">
@@ -133,18 +133,18 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
               </p>
               <p className="font-semibold">Área</p>
             </div>
-            <div className="text-xs lg:text-[10px] 2xl:text-xs text-center">
+            <div className="text-xs 2xl:text-xs text-center">
               <p>{blueprint.rooms}</p>
               <p className="font-semibold">Habitaciones</p>
             </div>
-            <div className="text-xs lg:text-[10px] 2xl:text-xs text-center">
+            <div className="text-xs 2xl:text-xs text-center">
               <p>{blueprint.bathrooms}</p>
               <p className="font-semibold">Baños</p>
             </div>
-            <div className="text-xs lg:text-[10px] 2xl:text-xs text-center">
+            {/* <div className="text-xs lg:text-[10px] 2xl:text-xs text-center">
               <p>{blueprint.units}</p>
               <p className="font-semibold">Unidades</p>
-            </div>
+            </div> */}
           </div>
         </a>
       </section>
