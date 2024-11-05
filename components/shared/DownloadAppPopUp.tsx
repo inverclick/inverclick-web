@@ -3,7 +3,7 @@
 import { getOS, OS } from "@/lib/getMobileOperatingSystem";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -30,6 +30,7 @@ const features: { title: string; description: string }[] = [
 
 export function DownloadAppPopUp() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const isMobileDevice = useMediaQuery("(max-width: 992px)");
   const [isOpen, setIsOpen] = useState(isMobileDevice);
 
@@ -42,9 +43,11 @@ export function DownloadAppPopUp() {
     isMobileDevice && setIsOpen(true);
   }, [pathname, isMobileDevice]);
 
+  const hidePopUp = searchParams.get("hidePopUp") ?? "false";
+
   return (
     <>
-      {isOpen && (
+      {isOpen && hidePopUp === "false" && (
         <div className="fixed z-50 top-0 left-0 flex justify-center items-center h-dvh w-screen bg-white">
           <div className="flex flex-col items-center gap-4 m-4 p-8 bg-gray-100 rounded-3xl">
             <h2 className="text-2xl font-bold text-center mt-16 mb-8">
