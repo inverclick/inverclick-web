@@ -3,7 +3,7 @@
 import { getOS, OS } from "@/lib/getMobileOperatingSystem";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -30,6 +30,7 @@ const features: { title: string; description: string }[] = [
 
 export function DownloadAppPopUp() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const isMobileDevice = useMediaQuery("(max-width: 992px)");
   const [isOpen, setIsOpen] = useState(isMobileDevice);
 
@@ -42,27 +43,29 @@ export function DownloadAppPopUp() {
     isMobileDevice && setIsOpen(true);
   }, [pathname, isMobileDevice]);
 
+  const hidePopUp = searchParams.get("hidePopUp") ?? "false";
+
   return (
     <>
-      {isOpen && (
-        <div className="fixed z-50 inset-0 grid place-content-center bg-white">
-          <div className="flex flex-col items-center gap-4 m-4 px-8 bg-gray-100 rounded-3xl">
+      {isOpen && hidePopUp === "false" && (
+        <div className="fixed z-50 top-0 left-0 flex justify-center items-center h-dvh w-screen bg-white">
+          <div className="flex flex-col items-center gap-4 m-4 p-8 bg-gray-100 rounded-3xl">
             <h2 className="text-2xl font-bold text-center mt-16 mb-8">
               Descarga nuestra aplicación móvil
             </h2>
             <Image
               unoptimized
               src="/favicon.svg"
-              className="bg-white pl-6 pr-10 py-6 rounded-3xl shadow-lg mb-8"
-              width="120"
-              height="120"
+              className="bg-white pl-6 pr-8 py-6 rounded-2xl shadow-lg mb-8"
+              width="80"
+              height="80"
               alt="Inverclick app logo"
             />
             <ul className="flex flex-col gap-2 mb-8">
               {features.map((feature) => (
                 <li key={feature.title} className="flex gap-1">
                   <Check className="text-primary-600" />
-                  <p>
+                  <p className="text-sm">
                     <span className="font-bold">{feature.title}</span>{" "}
                     {feature.description}
                   </p>
@@ -77,7 +80,7 @@ export function DownloadAppPopUp() {
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-primary-600 mb-4 mt-16 text-xs"
+              className="text-primary-600 mb-4 mt-8 text-xs"
             >
               Seguir usando la versión web
             </button>

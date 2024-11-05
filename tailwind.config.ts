@@ -1,13 +1,13 @@
-import type { Config } from "tailwindcss"
-const animations = require('@midudev/tailwind-animations')
+import type { Config } from "tailwindcss";
+const animations = require("@midudev/tailwind-animations");
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -20,19 +20,30 @@ const config = {
     },
     extend: {
       colors: {
-        'primary': {
-					'50': '#f5f2ff',
-					'100': '#ebe8ff',
-					'200': '#dbd4ff',
-					'300': '#c0b1ff',
-					'400': '#a085ff',
-					'500': '#8253ff',
-					'600': '#7330f7',
-					'700': '#651ee3',
-					'800': '#5419be',
-					'900': '#47169c',
-					'950': '#2a0b6a',
-				},	
+        primary: {
+          DEFAULT: "#8253ff",
+          "50": "#f5f2ff",
+          "100": "#ebe8ff",
+          "200": "#dbd4ff",
+          "300": "#c0b1ff",
+          "400": "#a085ff",
+          "500": "#8253ff",
+          "600": "#7330f7",
+          "700": "#651ee3",
+          "800": "#5419be",
+          "900": "#47169c",
+          "950": "#2a0b6a",
+        },
+        "light-gray": "hsl(210 40% 96.1%)",
+        "dark-gray": "hsl(215.4 16.3% 46.9%)",
+      },
+      maxWidth: {
+        "screen-3xl": "1792px",
+        "screen-4xl": "2048px",
+        "screen-5xl": "2304px",
+        "screen-6xl": "2560px",
+        "screen-7xl": "2816px",
+        "screen-8xl": "3072px",
       },
       keyframes: {
         "accordion-down": {
@@ -51,6 +62,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate"), animations],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

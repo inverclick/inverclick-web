@@ -21,6 +21,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${ENV_VARS.BASE_URL}/projects`,
       lastModified: new Date(),
     },
+    {
+      url: `${ENV_VARS.BASE_URL}/financing`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${ENV_VARS.BASE_URL}/app`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${ENV_VARS.BASE_URL}/policy`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${ENV_VARS.BASE_URL}/terms-conditions`,
+      lastModified: new Date(),
+    },
     ...projectsEntries
   ]
 }

@@ -1,7 +1,9 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ComponentProps } from "react";
+import React, { ComponentProps, useEffect, useRef } from "react";
 
 type AppButtonProps = Readonly<ComponentProps<typeof Link>>;
 
@@ -9,11 +11,30 @@ export const AppButton = ({
   className,
   ...props
 }: Omit<AppButtonProps, "href">) => {
+  // 20s
+  const INTERVAL = 20000;
+
+  const appButtonRef = useRef<HTMLAnchorElement>(null);
+
+  // Run animate-tada each minute
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (appButtonRef.current) {
+        appButtonRef.current.classList.remove("animate-tada");
+        void appButtonRef.current.offsetWidth;
+        appButtonRef.current.classList.add("animate-tada");
+      }
+    }, INTERVAL);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Link
+      ref={appButtonRef}
       href="/app"
       className={cn(
-        "hidden md:block slide-app-button z-30 cursor-pointer drop-shadow-2xl animate-tada animate-delay-800",
+        "hidden md:block slide-app-button z-30 cursor-pointer drop-shadow-2xl animate-tada animate-delay-0",
         className
       )}
       {...props}

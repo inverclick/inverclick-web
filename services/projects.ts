@@ -32,6 +32,20 @@ export const getProjectById = async (id: string): Promise<{ success: boolean, me
   }
 }
 
+export const getProjectPreviewById = async (id: string): Promise<{ success: boolean, message: string, project: IPROJECT_POPULATED | undefined, blueprints: IBLUEPRINT[] }> => {
+  try {
+    const response = await fetch(API + '/project/preview/' + id, { cache: 'no-cache' })
+    return await response.json()
+  } catch (error) {
+    return {
+      success: false,
+      message: 'Error fetching projects',
+      project: undefined,
+      blueprints: []
+    }
+  }
+}
+
 export const getProjectsCount = async (query: string): Promise<{ success: boolean, message: string, count: number }> => {
   try {
     const response = await fetch(API + '/project/resume/count' + query, { cache: 'no-cache' })
