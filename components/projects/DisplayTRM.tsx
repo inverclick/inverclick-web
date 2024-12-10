@@ -8,7 +8,7 @@ import { ComponentProps, useEffect, useState } from "react";
 export type DisplayTRMProps = Readonly<{ size?: "xs" | "base" }> &
   ComponentProps<"div">;
 
-export default function DisplayTRM({
+export function DisplayTRM({
   size = "xs",
   className,
   ...props

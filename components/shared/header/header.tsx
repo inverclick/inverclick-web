@@ -1,4 +1,4 @@
-import DisplayTRM from "@/components/projects/DisplayTRM";
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 import { HeaderLink } from "@/components/shared/header/header-link";
 import { Button } from "@/components/ui/button";
 import {

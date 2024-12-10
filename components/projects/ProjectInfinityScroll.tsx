@@ -2,13 +2,8 @@
 
 import { useProjectsPageStore } from "@/app/projects/_store";
 import { ProjectCard } from "@/components/shared/ProjectCard";
-import { ProjectToDisplay } from "@/types/project";
 
-interface Props {
-  projects: ProjectToDisplay[];
-}
-
-export const ProjectInfinityScroll = ({ projects }: Props) => {
+export const ProjectInfinityScroll = () => {
   const _projects = useProjectsPageStore((state) => state.projects);
 
   return (

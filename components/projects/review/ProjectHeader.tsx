@@ -8,7 +8,7 @@ import {
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import DisplayTRM from "../DisplayTRM";
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 
 const MENU_OPTIONS = [
   { name: "Nosotros", url: "/" },

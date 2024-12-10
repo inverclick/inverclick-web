@@ -1,4 +1,4 @@
-import DisplayTRM from "@/components/projects/DisplayTRM";
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 import {
   Menubar,
   MenubarContent,

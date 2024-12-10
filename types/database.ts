@@ -666,6 +666,25 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_draft_project: {
+        Args: {
+          draft_project_id: string
+        }
+        Returns: undefined
+      }
+      approve_project_update: {
+        Args: {
+          draft_project_id: string
+        }
+        Returns: undefined
+      }
+      cancel_project_edition: {
+        Args: {
+          project_id: string
+          draft_project_id: string
+        }
+        Returns: undefined
+      }
       init_project_edition: {
         Args: {
           project_id: string

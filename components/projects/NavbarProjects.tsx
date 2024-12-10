@@ -8,9 +8,6 @@ import {
 } from "@/components/shared/header/header";
 import { HeaderLink } from "@/components/shared/header/header-link";
 import { Button } from "@/components/ui/button";
-import { Menu, SquareMenu } from "lucide-react";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
 import {
   Menubar,
   MenubarContent,
@@ -18,12 +15,15 @@ import {
   MenubarLabel,
   MenubarMenu,
   MenubarTrigger,
-} from "../ui/menubar";
-import DisplayTRM from "./DisplayTRM";
+} from "@/components/ui/menubar";
+import { SquareMenu } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 
 const MEDIA_QUERY = 1024;
 
-export default function NavbarProjects() {
+export function NavbarProjects() {
   const scrollableDivRef = useRef(null);
 
   const [headerPosition, setHeaderPosition] = useState<"normal" | "responsive">(

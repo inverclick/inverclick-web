@@ -8,7 +8,7 @@ import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import { useDebounceCallback } from "usehooks-ts";
 
 type MyMap2Props = Readonly<{
-  projects: ProjectToDisplay[]
+  projects: ProjectToDisplay[];
 }>;
 
 export function MyMap2({ projects }: MyMap2Props) {
@@ -20,7 +20,7 @@ export function MyMap2({ projects }: MyMap2Props) {
 }
 
 type MyMap2ContentProps = Readonly<{
-  projects: ProjectToDisplay[]
+  projects: ProjectToDisplay[];
 }>;
 
 function MyMap2Content({ projects }: MyMap2ContentProps) {
@@ -36,7 +36,6 @@ function MyMap2Content({ projects }: MyMap2ContentProps) {
     if (!mapBounds) return;
 
     // Sort first the ones that are inside the bounds
-
     const sortedBlueprints = projects
       .map((blueprint) => {
         const location = new google.maps.LatLng(

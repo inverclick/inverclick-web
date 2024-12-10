@@ -1,4 +1,4 @@
-import DisplayTRM from "@/components/projects/DisplayTRM";
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 import { SelectCurrency } from "@/components/projects/SelectCurrency";
 import { ProjectGallery } from "@/components/projects/review/ProjectGallery";
 import { ShareProject } from "@/components/projects/review/ShareProject";

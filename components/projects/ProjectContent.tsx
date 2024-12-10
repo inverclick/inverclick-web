@@ -1,28 +1,34 @@
-import DisplayTRM from "@/components/projects/DisplayTRM";
+"use client";
+
+import { useProjectsPageStore } from "@/app/projects/_store";
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 import { ProjectFilters } from "@/components/projects/Filters/ProjectFilters";
 import { ProjectInfinityScroll } from "@/components/projects/ProjectInfinityScroll";
 import { SelectCurrency } from "@/components/projects/SelectCurrency";
-import { getProjectsPriceRange } from "@/services/projects";
-import { supabase } from "@/services/supabase";
+import { Department } from "@/types/department";
+import { HousingType } from "@/types/housing-type";
 import { ProjectToDisplay } from "@/types/project";
 import { Suspense } from "react";
 
-type Props = Readonly<{
+type ProjectContentProps = Readonly<{
   total: number;
   projects: ProjectToDisplay[];
+  departments: Department[];
+  housingTypes: HousingType[];
+  prices: {
+    goal: number;
+  }[];
 }>;
 
-export default async function ProjectContent({ total, projects }: Props) {
-  const [departmentsResponse, priceGraphicDataResponse, housingTypesResponse] =
-    await Promise.all([
-      supabase.from('departments').select('*'),
-      getProjectsPriceRange(),
-      supabase.from('housing_types').select('*'),
-    ]);
-
-  const  priceGraphicData = priceGraphicDataResponse;
-  const { data: housingTypes } = housingTypesResponse;
-  const { data: departments } = departmentsResponse;
+export default function ProjectContent({
+  total,
+  projects,
+  departments,
+  housingTypes,
+  prices,
+}: ProjectContentProps) {
+  const setProjects = useProjectsPageStore((state) => state.setProjects);
+  setProjects(projects);
 
   return (
     <section className="flex flex-col flex-grow m-4 mb-0 overflow-y-hidden">
@@ -31,7 +37,7 @@ export default async function ProjectContent({ total, projects }: Props) {
           <Suspense>
             <ProjectFilters
               departments={departments ?? []}
-              priceGraphicData={priceGraphicData}
+              priceGraphicData={prices}
               housingTypes={housingTypes ?? []}
               count={total}
             />
@@ -46,7 +52,7 @@ export default async function ProjectContent({ total, projects }: Props) {
           </p>
         </div>
       </div>
-      <ProjectInfinityScroll projects={projects} />
+      <ProjectInfinityScroll />
     </section>
   );
 }

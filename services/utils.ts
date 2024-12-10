@@ -34,7 +34,7 @@ export const limitPrice = (price: number, currency: Currency) => {
  * @returns The asset URL.
  */
 export function getAssetUrl(imageId: string): string {
-  return `${BUCKET_URL}${imageId}`;
+  return `${BUCKET_URL}/${imageId}`;
 }
 
 /**
