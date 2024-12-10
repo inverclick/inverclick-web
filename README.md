@@ -46,7 +46,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-# inverclick-web
+# Environment
 
 NEXT_PUBLIC_GOOGLE_MAPS_KEY=
 NEXT_PUBLIC_GOOGLE_MAP_ID=
