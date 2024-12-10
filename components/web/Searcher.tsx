@@ -11,20 +11,22 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { trimObject } from "@/lib/trimObject";
-import { getCities } from "@/services/utils";
+import { supabase } from "@/services/supabase";
+import { City } from "@/types/city";
+import { Department } from "@/types/department";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { ComponentProps, useEffect, useState } from "react";
 
 export type SearcherProps = Readonly<{
-  departments: { departamento: string }[];
+  departments: Department[]
 }>;
 
 export function Searcher({ departments }: SearcherProps) {
   const [department, setDepartment] = useState("");
   const [city, setCity] = useState("");
 
-  const [cities, setCities] = useState<{ municipio: string }[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
 
   const isCitySelectDisabled = !department || cities.length === 0;
 
@@ -34,9 +36,9 @@ export function Searcher({ departments }: SearcherProps) {
     fetchCities();
 
     async function fetchCities() {
-      const { data: cities } = await getCities(department);
+      const { data: cities } = await supabase.from('cities').select('*').eq('department_id', department);
 
-      setCities(cities);
+      setCities(cities ?? []);
     }
   }, [department]);
 
@@ -74,7 +76,7 @@ export function Searcher({ departments }: SearcherProps) {
 }
 
 type DepartmentsSelectProps = Readonly<{
-  departments: { departamento: string }[];
+  departments: Department[];
 }> &
   ComponentProps<typeof Select>;
 
@@ -87,10 +89,10 @@ function DepartmentsSelect({ departments, ...props }: DepartmentsSelectProps) {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Departamentos</SelectLabel>
-          {departments.map(({ departamento }) => {
+          {departments.map(({ name, id }) => {
             return (
-              <SelectItem key={departamento} value={departamento}>
-                {departamento}
+              <SelectItem key={id} value={id.toString()}>
+                {name}
               </SelectItem>
             );
           })}
@@ -101,7 +103,7 @@ function DepartmentsSelect({ departments, ...props }: DepartmentsSelectProps) {
 }
 
 type CitySelectProps = Readonly<{
-  cities: { municipio: string }[];
+  cities: City[];
 }> &
   ComponentProps<typeof Select>;
 
@@ -114,10 +116,10 @@ function CitySelect({ cities, ...props }: CitySelectProps) {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Ciudades</SelectLabel>
-          {cities.map(({ municipio }) => {
+          {cities.map(({ name, id }) => {
             return (
-              <SelectItem key={municipio} value={municipio}>
-                {municipio}
+              <SelectItem key={id} value={id.toString()}>
+                {name}
               </SelectItem>
             );
           })}

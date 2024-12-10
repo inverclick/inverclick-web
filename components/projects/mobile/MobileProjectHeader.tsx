@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react'
 import { ProjectFilters } from '../Filters/ProjectFilters'
 import { SelectCurrency } from '../SelectCurrency'
-import { getDepartments, getGraphicPriceRange, getHousingTypes } from '@/services/utils'
 import { supabase } from '@/services/supabase';
 import { getProjectsPriceRange } from '@/services/projects';
 

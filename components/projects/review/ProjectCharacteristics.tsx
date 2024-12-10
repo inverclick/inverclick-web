@@ -1,4 +1,4 @@
-import { getAssetUrl, getProjectCharacteristics } from "@/services/utils";
+import { getAssetUrl } from "@/services/utils";
 import { HOUSING_STATE_LABEL, HOUSING_STATE_TYPE } from "@/types/project";
 import { BadgeCheck, Check } from "lucide-react";
 import Image from "next/image";

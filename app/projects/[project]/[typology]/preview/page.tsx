@@ -4,7 +4,7 @@ import { ProjectContent } from "@/components/projects/review/ProjectContent";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { Header } from "@/components/shared/header/header";
 import { ENV_VARS } from "@/global/env";
-import { getProjectPreviewById } from "@/services/projects";
+import { supabase } from "@/services/supabase";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -13,49 +13,54 @@ export const runtime = "edge";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { project: string, typology: string };
 }): Promise<Metadata> {
-  const id = params.id;
-  const { project } = await getProjectPreviewById(id);
+  const project = params.project;
+  const typology = params.typology;
+  const [projectResult, typologyResult] = await Promise.all([
+    supabase.from("projects").select('name, description').eq("id", project).single(),
+    supabase.from("typologies").select('name').eq("id", typology).single(),
+  ])
 
   return {
-    title: project?.name,
-    description: project?.description,
+    title: projectResult.data?.name + " - " + typologyResult.data?.name,
+    description: projectResult.data?.description,
     alternates: {
-      canonical: ENV_VARS.BASE_URL + "/projects/" + id,
+      canonical: `${ENV_VARS.BASE_URL}/${project}/${typology}/preview`,
     },
     openGraph: {
-      url: ENV_VARS.BASE_URL + "/projects/" + id,
-      title: project?.name,
-      description: project?.description,
+      url: `${ENV_VARS.BASE_URL}/${project}/${typology}/preview`,
+      title: projectResult.data?.name + " - " + typologyResult.data?.name,
+      description: projectResult.data?.description,
     },
   };
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
+  // const id = params.id;
 
-  if (!id.length) return <div>Id: {id}</div>;
+  // if (!id.length) return <div>Id: {id}</div>;
 
-  const { project, blueprints } = await getProjectPreviewById(id);
+  // const { project, blueprints } = await getProjectPreviewById(id);
 
-  if (!project || !blueprints.length)
-    return (
-      <div>
-        Project: {JSON.stringify(project)}
-        <br />
-        <br />
-        <br />
-        Blueprints: {JSON.stringify(blueprints)}
-      </div>
-    );
+  // if (!project || !blueprints.length)
+  //   return (
+  //     <div>
+  //       Project: {JSON.stringify(project)}
+  //       <br />
+  //       <br />
+  //       <br />
+  //       Blueprints: {JSON.stringify(blueprints)}
+  //     </div>
+  //   );
 
-  const mainBlueprint = blueprints[0];
+  // const mainBlueprint = blueprints[0];
 
   return (
     <main>
       <Header />
       <article className="p-content flex flex-col gap-8 max-w-screen-2xl mx-auto">
+        <h1>TODO</h1>
         {/* <Hero
           name={project.name}
           photos={project.photos}
@@ -84,7 +89,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           urbanismPhotos={project.urbanismPhotos}
           urbanismFiles={project.urbanism}
         /> */}
-        <OtherProjects projectId={id} />
+        {/* <OtherProjects projectId={id} /> */}
       </article>
       <MyFooter />
     </main>
