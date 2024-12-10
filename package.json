@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
+    "gen:types": "supabase gen types typescript --project-id lvptznfprobnfjquceok > ./types/database.ts ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -26,6 +27,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@react-google-maps/api": "^2.19.3",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.47.3",
     "@vis.gl/react-google-maps": "^1.0.0",
     "atropos": "^2.0.2",
     "class-variance-authority": "^0.7.0",

@@ -1,6 +1,6 @@
-import { ENV_VARS } from "@/global/env";
-import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { supabase } from "@/services/supabase";
+import { create } from "zustand";
 
 export type Currency = "USD" | "EUR" | "COP";
 
@@ -29,9 +29,8 @@ export const useCurrencyContext = create(
 
           if (Date.now() - last_trm_update < 1000 * 60) return;
 
-          const response = await fetch(ENV_VARS.API + "/utils/trm");
-          const responseData = await response.json();
-          const { data } = responseData;
+          const response = await supabase.functions.invoke('get-trm');
+          const data = response.data.data;
 
           set(() => ({
             TRM_EUR: Number(data.EUR),

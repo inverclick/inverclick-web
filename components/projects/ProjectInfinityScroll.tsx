@@ -2,21 +2,20 @@
 
 import { useProjectsPageStore } from "@/app/projects/_store";
 import { ProjectCard } from "@/components/shared/ProjectCard";
-import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { ProjectToDisplay } from "@/types/project";
 
 interface Props {
-  blueprints: IBLUEPRINT_POPULATED[];
+  projects: ProjectToDisplay[];
 }
 
-export const ProjectInfinityScroll = ({ blueprints }: Props) => {
-  const _blueprints = useProjectsPageStore((state) => state.blueprints);
+export const ProjectInfinityScroll = ({ projects }: Props) => {
+  const _projects = useProjectsPageStore((state) => state.projects);
 
   return (
     <div className="overflow-y-auto">
       <div className="mt-4 w-full gap-y-10 gap-x-2 pb-4 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
-        {_blueprints.map((blueprint, index) => {
-          return <ProjectCard key={blueprint._id} blueprint={blueprint} />;
+        {_projects.map((project, index) => {
+          return <ProjectCard key={project.id} project={project} />;
         })}
       </div>
     </div>

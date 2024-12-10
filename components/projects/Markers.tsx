@@ -1,7 +1,6 @@
 import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import { limitPrice } from "@/services/utils";
-import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
 import {
   Marker,
   MarkerClusterer,
@@ -9,15 +8,15 @@ import {
 } from "@googlemaps/markerclusterer";
 import { AdvancedMarker, InfoWindow, useMap } from "@vis.gl/react-google-maps";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ProjectCard } from "../shared/ProjectCard";
+import { ProjectToDisplay } from "@/types/project";
 
 const DATA_URI = `data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjUxZWUzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiPgo8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIG9wYWNpdHk9Ii45IiByPSI3MCIgLz4KPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTIwIiBvcGFjaXR5PSIuMyIgcj0iOTAiIC8+Cjwvc3ZnPg==`;
 
 type MarkerProps = Readonly<{
-  blueprints: IBLUEPRINT_POPULATED[];
+  projects: ProjectToDisplay[];
 }>;
 
-export function Markers({ blueprints }: MarkerProps) {
+export function Markers({ projects }: MarkerProps) {
   const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
 
   const [selectedBlueprintKey, setSelectedBlueprintKey] = useState<
@@ -32,12 +31,12 @@ export function Markers({ blueprints }: MarkerProps) {
 
   const selectedBlueprint = useMemo(
     () =>
-      blueprints && selectedBlueprintKey
-        ? blueprints.find(
-            (blueprint) => blueprint.project._id === selectedBlueprintKey
+      projects && selectedBlueprintKey
+        ? projects.find(
+            (blueprint) => blueprint.id === selectedBlueprintKey
           )!
         : null,
-    [blueprints, selectedBlueprintKey]
+    [selectedBlueprintKey, projects]
   );
 
   const map = useMap();
@@ -105,24 +104,24 @@ export function Markers({ blueprints }: MarkerProps) {
 
   return (
     <>
-      {blueprints.map((blueprint) => {
-        const isCurrentOpen = selectedBlueprintKey === blueprint.project._id;
-        const isVisited = visitedMarkers[blueprint.project._id];
+      {projects.map((project) => {
+        const isCurrentOpen = selectedBlueprintKey === project.id;
+        const isVisited = visitedMarkers[project.id];
         return (
           <AdvancedMarker
-            key={blueprint.project._id}
+            key={project.id}
             position={{
-              lat: blueprint.project.location.lat,
-              lng: blueprint.project.location.lng,
+              lat: project.latitude,
+              lng: project.longitude,
             }}
-            ref={(marker) => setMarkerRef(marker, blueprint.project._id)}
+            ref={(marker) => setMarkerRef(marker, project.id)}
             onClick={() => {
-              setSelectedBlueprintKey(blueprint.project._id);
+              setSelectedBlueprintKey(project.id);
 
-              if (!visitedMarkers[blueprint.project._id]) {
+              if (!visitedMarkers[project.id]) {
                 setVisitedMarkers((prev) => ({
                   ...prev,
-                  [blueprint.project._id]: true,
+                  [project.id]: true,
                 }));
               }
             }}
@@ -140,8 +139,8 @@ export function Markers({ blueprints }: MarkerProps) {
             >
               <span className=" font-medium">
                 {currency === "COP"
-                  ? limitPrice(blueprint.price, currency)
-                  : currencyFormatter(convert(blueprint.price), currency)}{" "}
+                  ? limitPrice(project.typologies[0].price, currency)
+                  : currencyFormatter(convert(project.typologies[0].price), currency)}{" "}
                 {currency}
               </span>
             </div>
@@ -156,7 +155,8 @@ export function Markers({ blueprints }: MarkerProps) {
             setSelectedBlueprintKey(null);
           }}
         >
-          <ProjectCard blueprint={selectedBlueprint} />
+          {/* <ProjectCard blueprint={selectedBlueprint} /> */}
+          <h1>Hola</h1>
         </InfoWindow>
       )}
     </>

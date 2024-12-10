@@ -10,15 +10,15 @@ import {
 import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
-import { IBLUEPRINT } from "@/types/blueprint";
+import { Typology } from "@/types/typologies";
 import { Bath, BedDouble, CarFront, LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-export const Typologies = ({ typologies }: { typologies: IBLUEPRINT[] }) => {
+export const Typologies = ({ typologies }: { typologies: Typology[] }) => {
   const { convert, currency } = useCurrencyContext();
 
-  const [selectedTypology, setSelectedTypology] = useState<IBLUEPRINT>(
+  const [selectedTypology, setSelectedTypology] = useState<Typology>(
     typologies[0]
   );
 
@@ -26,16 +26,16 @@ export const Typologies = ({ typologies }: { typologies: IBLUEPRINT[] }) => {
     <div>
       <ul className="flex flex-nowrap gap-4 mb-8 overflow-x-auto">
         {typologies.map((typology) => {
-          const { _id, name, area, rooms, bathrooms, parking } = typology;
+          const { id, name, area, rooms, bathrooms, parking } = typology;
           return (
-            <li key={_id}>
+            <li key={id}>
               <h2 className="mb-1">{name}</h2>
               <button
                 onClick={() => setSelectedTypology(typology)}
                 className={cn(
                   "flex flex-col items-start w-44 bg-background border border-dark-gray p-4 rounded-lg hover:bg-light-gray",
                   {
-                    "border-primary-600": selectedTypology._id === _id,
+                    "border-primary-600": selectedTypology.id === id,
                   }
                 )}
               >
@@ -65,7 +65,7 @@ export const Typologies = ({ typologies }: { typologies: IBLUEPRINT[] }) => {
         })}
       </ul>
       <div>
-        <Carousel key={selectedTypology._id} className="w-full">
+        <Carousel key={selectedTypology.id} className="w-full">
           <CarouselContent className="h-96">
             {selectedTypology.blueprints.map((src, index) => (
               <CarouselItem key={src} className="flex items-center">

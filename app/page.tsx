@@ -5,25 +5,25 @@ import { LoginButton } from "@/components/shared/LoginButton";
 import { DynamicPhrases } from "@/components/web/DynamicPhrases";
 import { Searcher } from "@/components/web/Searcher";
 import { Services } from "@/components/web/Services";
-import { getDepartments } from "@/services/utils";
+import { supabase } from "@/services/supabase";
+import { Department } from "@/types/department";
+
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-  const { data: departments } = await getDepartments();
+  const { data: departments } = await supabase.from('departments').select('*')
 
   return (
     <div className="relative">
-      <ContentAsLayout departments={departments} />
-      <Content departments={departments} />
+      <ContentAsLayout departments={departments ?? []} />
+      <Content departments={departments ?? []} />
     </div>
   );
 }
 
 type ContentAsLayoutProps = Readonly<{
-  departments: {
-    departamento: string;
-  }[];
+  departments: Department[]
 }>;
 
 function ContentAsLayout({ departments }: ContentAsLayoutProps) {
@@ -150,9 +150,7 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
 }
 
 type Content = Readonly<{
-  departments: {
-    departamento: string;
-  }[];
+  departments: Department[]
 }>;
 
 function Content({ departments }: Content) {

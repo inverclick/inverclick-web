@@ -1,59 +1,49 @@
+import { Tables } from "@/services/supabase";
 import type { ICOMPANY } from "./company";
+import { Typology } from "./typologies";
 
-export interface IPROJECT {
-  _id: string;
-  name: string;
-  address: string;
-  videos: string[] | null;
-  logo: string;
-  id: string;
-  stratum: number;
-  characteristics: { label: string; _id: string }[];
-  department: string;
-  city: string;
-  company: ICOMPANY | string;
-  description: string;
-  photos: string[];
-  housingState: HOUSING_STATE_TYPE;
-  housingType: IHOUSING_TYPE | string;
-  deadline?: string;
-  urbanismPhotos: string[];
-  urbanism: string[];
-  location: {
-    lat: number;
-    lng: number;
-  };
-  updatedAt: string;
-  createdAt: string;
+export type IPROJECT = Tables<'projects'>['Row']
+export interface ProjectToDisplay extends IPROJECT {
+  typologies: Typology[]
+  department: Tables<'departments'>['Row']
+  city: Tables<'cities'>['Row']
+  company: ICOMPANY
 }
-
 export interface IPROJECT_POPULATED extends IPROJECT {
   company: ICOMPANY;
   housingType: IHOUSING_TYPE;
 }
 
-export type HOUSING_STATE_TYPE = "new" | "off-plan" | "used";
+export type HOUSING_STATE_TYPE = Tables<'projects'>["Row"]["housing_state"];
 
-export enum HOUSING_STATE_ENUM {
-  NEW = "new",
-  OFF_PLAN = "off-plan",
-  USED = "used",
+export const HOUSING_STATE_ENUM: Record<HOUSING_STATE_TYPE, HOUSING_STATE_TYPE> = {
+  NEW: "NEW",
+  OFF_PLAN: "OFF_PLAN",
+  USED: "USED",
 }
 
-export enum HOUSING_STATE_LABEL {
-  NEW = "Nuevo",
-  OFF_PLAN = "Sobre plano",
-  USED = "Usado",
-
-  new = "Nuevo",
-  "off-plan" = "Sobre plano",
-  used = "Usado",
+export const HOUSING_STATE_LABEL: Record<HOUSING_STATE_TYPE, string> = {
+  NEW: "Nuevo",
+  OFF_PLAN: "Sobre plano",
+  USED: "Usado",
 }
 
-export interface IHOUSING_TYPE {
-  _id: string;
-  label: string;
+export type IHOUSING_TYPE = Tables<'projects'>["Row"]["housing_type"];
+
+export const HOUSING_TYPE_ENUM: Record<IHOUSING_TYPE, IHOUSING_TYPE> = {
+  APARTAMENTO: "APARTAMENTO",
+  BODEGA: "BODEGA",
+  CASA: "CASA",
+  LOTE: "LOTE",
 }
+
+export const HOUSING_TYPE_LABEL: Record<IHOUSING_TYPE, string> = {
+  APARTAMENTO: "Apartamento",
+  BODEGA: "Bodega",
+  CASA: "Casa",
+  LOTE: "Lote",
+}
+
 
 export type IPROJECT_LOCATION = {
   _id: string;

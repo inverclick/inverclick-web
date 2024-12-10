@@ -1,9 +1,11 @@
-import { getAssetUrl, getProjectCharacteristics } from "@/services/utils";
+import { getAssetUrl } from "@/services/utils";
 import { HOUSING_STATE_LABEL, HOUSING_STATE_TYPE } from "@/types/project";
 import { BadgeCheck, Check } from "lucide-react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import React from "react";
+import { Characteristic } from "@/types/characteristic";
+import { supabase } from "@/services/supabase";
 
 interface Props {
   companyLogo: string;
@@ -12,7 +14,7 @@ interface Props {
   deadline?: string;
   units: number;
   stratum: number;
-  characteristics: { label: string; _id: string }[];
+  characteristics: Characteristic[];
 }
 
 export const ProjectCharacteristics = async ({
@@ -24,7 +26,7 @@ export const ProjectCharacteristics = async ({
   deadline,
   characteristics,
 }: Props) => {
-  const { data } = await getProjectCharacteristics();
+  const { data } = await supabase.from("characteristics").select("*");
   return (
     <section>
       <p className="font-medium text-2xl mb-8">Características del proyecto</p>
@@ -103,11 +105,11 @@ export const ProjectCharacteristics = async ({
           </p>
         </article>
         <ul className="min-w-64 mr-6">
-          {data.map(({ label, _id }) => {
-            if (!characteristics.find((c) => c._id === _id)) {
+          {data!.map(({ label, id }) => {
+            if (!characteristics.find((c) => c.id === id)) {
               return (
                 <li
-                  key={_id}
+                  key={id}
                   className="flex gap-2 items-center font-light mb-1 line-through decoration-primary-600"
                 >
                   <div className="w-5 h-5" />
@@ -116,16 +118,16 @@ export const ProjectCharacteristics = async ({
               );
             }
             return (
-              <li key={_id} className="flex gap-2 items-center font-light mb-1">
+              <li key={id} className="flex gap-2 items-center font-light mb-1">
                 <Check className="w-5 h-5 text-green-600" />
                 {label}
               </li>
             );
           })}
           {characteristics
-            .filter((c) => !data.find((d) => d._id === c._id))
-            .map(({ label, _id }) => (
-              <li key={_id} className="flex gap-2 items-center font-light mb-1">
+            .filter((c) => !data!.find((d) => d.id === c.id))
+            .map(({ label, id }) => (
+              <li key={id} className="flex gap-2 items-center font-light mb-1">
                 <Check className="w-5 h-5 text-green-600" />
                 {label}
               </li>

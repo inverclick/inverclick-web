@@ -3,25 +3,24 @@ import { IBLUEPRINT_POPULATED } from '@/types/blueprint'
 import React, { useState } from 'react'
 import { Marker, InfoWindow } from '@react-google-maps/api';
 import { ProjectCard } from '../shared/ProjectCard';
+import { ProjectToDisplay } from '@/types/project';
 
 interface Props {
-  blueprint: IBLUEPRINT_POPULATED
+  project: ProjectToDisplay
   open: string
   closeModal: () => void
   openModal: (id: string) => void 
 }
 
-export const CustomMarker = ({blueprint, open, closeModal, openModal}: Props) => {
+export const CustomMarker = ({project, open, closeModal, openModal}: Props) => {
   return (
     <Marker 
-      position={{ lat: blueprint.project.location.lat, lng: blueprint.project.location.lng }} 
-      onClick={() => openModal(blueprint._id!)}
+      position={{ lat: project.latitude, lng: project.longitude }} 
+      onClick={() => openModal(project.id!)}
     >
-      { open === blueprint._id ?
+      { open === project.id ?
         <InfoWindow onCloseClick={closeModal}>
-          
-            <ProjectCard blueprint={blueprint} />
-          
+            <ProjectCard project={project} />
         </InfoWindow>
         : null
       }

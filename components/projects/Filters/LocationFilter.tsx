@@ -1,10 +1,12 @@
 'use client'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { getCities } from '@/services/utils'
+import { supabase } from '@/services/supabase'
+import { City } from '@/types/city'
+import { Department } from '@/types/department'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 interface Props {
-  departments: {departamento: string}[], 
+  departments: Department[], 
   currentDepartment: string
   setCurrentDepartment: (value: string) => void 
   currentCity: string
@@ -12,9 +14,9 @@ interface Props {
 }  
 
 export const LocationFilter = ({departments, currentCity, currentDepartment, setCurrentCity, setCurrentDepartment}: Props) => {
-  const [cities, setCities] = useState<{municipio: string}[]>([])
-  const departmentsOptions = useMemo(() => departments.map(({departamento}) => ({label: departamento, value: departamento})), [departments])
-  const citiesOptions = useMemo(() => cities.map(({municipio}) => ({label: municipio, value: municipio})), [cities])
+  const [cities, setCities] = useState<City[]>([])
+  const departmentsOptions = useMemo(() => departments.map(({id, name}) => ({label: name, value: id.toString()})), [departments])
+  const citiesOptions = useMemo(() => cities.map(({id, name}) => ({label: name, value: id.toString()})), [cities])
   const isFetching = useRef(false)
 
   const onChangeDepartment = (value: string) => {
@@ -35,8 +37,8 @@ export const LocationFilter = ({departments, currentCity, currentDepartment, set
   useEffect(() => {
     const fetchCities = async () => {
       isFetching.current = true
-      const { data } = await getCities(currentDepartment)
-      setCities(data)
+      const { data } = await supabase.from('cities').select('*').eq('department_id', currentDepartment)
+      setCities(data ?? [])
       isFetching.current = false
     }
 
