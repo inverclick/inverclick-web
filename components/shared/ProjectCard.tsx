@@ -25,7 +25,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
     const { convert, currency } = useCurrencyContext();
     const { company } = project;
     const typology = project.typologies[0];
-    const href = `/projects/${project.id}`;
+    const href = `/projects/${project.id}/${typology.id}`;
 
     useEffect(() => {
       setIsMounted(true);

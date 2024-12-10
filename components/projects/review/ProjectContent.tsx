@@ -10,6 +10,8 @@ import { ProjectLocation } from "./ProjectLocation";
 import { StickyContact } from "./StickyContact";
 import { Typologies } from "./Typologies";
 import { Urbanism } from "./Urbanism";
+import { Characteristic } from "@/types/characteristic";
+import { Typology } from "@/types/typologies";
 
 interface DescriptionProps {
   name: string;
@@ -23,10 +25,10 @@ interface DescriptionProps {
   address: string;
   projectId: string;
   stratum: number;
-  characteristics: { label: string; _id: string }[];
+  characteristics: Characteristic[];
   units: number;
   deadline?: string;
-  typologies: IBLUEPRINT[];
+  typologies: Typology[];
   location: {
     lat: number;
     lng: number;
