@@ -9,6 +9,7 @@ import {
 import { AdvancedMarker, InfoWindow, useMap } from "@vis.gl/react-google-maps";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ProjectToDisplay } from "@/types/project";
+import { ProjectCard } from "../shared/ProjectCard";
 
 const DATA_URI = `data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjUxZWUzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiPgo8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIG9wYWNpdHk9Ii45IiByPSI3MCIgLz4KPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTIwIiBvcGFjaXR5PSIuMyIgcj0iOTAiIC8+Cjwvc3ZnPg==`;
 
@@ -16,10 +17,10 @@ type MarkerProps = Readonly<{
   projects: ProjectToDisplay[];
 }>;
 
-export function Markers({ projects }: MarkerProps) {
+export function Markers({ projects = []}: MarkerProps) {
   const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
 
-  const [selectedBlueprintKey, setSelectedBlueprintKey] = useState<
+  const [selectedProjectKey, setSelectedProjectKey] = useState<
     string | null
   >(null);
 
@@ -31,12 +32,12 @@ export function Markers({ projects }: MarkerProps) {
 
   const selectedBlueprint = useMemo(
     () =>
-      projects && selectedBlueprintKey
+      projects && selectedProjectKey
         ? projects.find(
-            (blueprint) => blueprint.id === selectedBlueprintKey
+            (blueprint) => blueprint.id === selectedProjectKey
           )!
         : null,
-    [selectedBlueprintKey, projects]
+    [selectedProjectKey, projects]
   );
 
   const map = useMap();
@@ -98,14 +99,14 @@ export function Markers({ projects }: MarkerProps) {
     if (!map) return;
 
     map.addListener("click", () => {
-      setSelectedBlueprintKey(null);
+      setSelectedProjectKey(null);
     });
   }, [map]);
 
   return (
     <>
       {projects.map((project) => {
-        const isCurrentOpen = selectedBlueprintKey === project.id;
+        const isCurrentOpen = selectedProjectKey === project.id;
         const isVisited = visitedMarkers[project.id];
         return (
           <AdvancedMarker
@@ -116,7 +117,7 @@ export function Markers({ projects }: MarkerProps) {
             }}
             ref={(marker) => setMarkerRef(marker, project.id)}
             onClick={() => {
-              setSelectedBlueprintKey(project.id);
+              setSelectedProjectKey(project.id);
 
               if (!visitedMarkers[project.id]) {
                 setVisitedMarkers((prev) => ({
@@ -148,15 +149,14 @@ export function Markers({ projects }: MarkerProps) {
         );
       })}
 
-      {selectedBlueprint && selectedBlueprintKey && (
+      {selectedBlueprint && selectedProjectKey && (
         <InfoWindow
-          anchor={markers[selectedBlueprintKey]}
+          anchor={markers[selectedProjectKey]}
           onCloseClick={() => {
-            setSelectedBlueprintKey(null);
+            setSelectedProjectKey(null);
           }}
         >
-          {/* <ProjectCard blueprint={selectedBlueprint} /> */}
-          <h1>Hola</h1>
+          <ProjectCard project={projects.find(p => p.id === selectedProjectKey)!} />
         </InfoWindow>
       )}
     </>
