@@ -3,28 +3,28 @@
 import { useProjectsPageStore } from "@/app/projects/_store";
 import { Markers } from "@/components/projects/Markers";
 import { ENV_VARS } from "@/global/env";
-import { IBLUEPRINT_POPULATED } from "@/types/blueprint";
+import { ProjectToDisplay } from "@/types/project";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import { useDebounceCallback } from "usehooks-ts";
 
 type MyMap2Props = Readonly<{
-  blueprints: IBLUEPRINT_POPULATED[];
+  projects: ProjectToDisplay[]
 }>;
 
-export function MyMap2({ blueprints }: MyMap2Props) {
+export function MyMap2({ projects }: MyMap2Props) {
   return (
     <APIProvider apiKey={ENV_VARS.GOOGLE_MAP_KEY}>
-      <MyMap2Content blueprints={blueprints} />
+      <MyMap2Content projects={projects} />
     </APIProvider>
   );
 }
 
 type MyMap2ContentProps = Readonly<{
-  blueprints: IBLUEPRINT_POPULATED[];
+  projects: ProjectToDisplay[]
 }>;
 
-function MyMap2Content({ blueprints }: MyMap2ContentProps) {
-  const setBlueprints = useProjectsPageStore((state) => state.setBlueprints);
+function MyMap2Content({ projects }: MyMap2ContentProps) {
+  const setProjects = useProjectsPageStore((state) => state.setProjects);
 
   const map = useMap();
 
@@ -37,11 +37,11 @@ function MyMap2Content({ blueprints }: MyMap2ContentProps) {
 
     // Sort first the ones that are inside the bounds
 
-    const sortedBlueprints = blueprints
+    const sortedBlueprints = projects
       .map((blueprint) => {
         const location = new google.maps.LatLng(
-          blueprint.project.location.lat,
-          blueprint.project.location.lng
+          blueprint.latitude,
+          blueprint.longitude
         );
 
         return {
@@ -57,7 +57,7 @@ function MyMap2Content({ blueprints }: MyMap2ContentProps) {
       })
       .map(({ blueprint }) => blueprint);
 
-    setBlueprints(sortedBlueprints);
+    setProjects(sortedBlueprints);
   }, 500);
 
   return (
@@ -71,7 +71,7 @@ function MyMap2Content({ blueprints }: MyMap2ContentProps) {
         disableDefaultUI={true}
         onBoundsChanged={onBoundsChanged}
       />
-      <Markers blueprints={blueprints} />
+      <Markers projects={projects} />
     </>
   );
 }

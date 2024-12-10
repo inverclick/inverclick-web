@@ -6,17 +6,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getAllProjects } from "@/services/projects";
 
 export default async function OtherProjects({
   projectId,
 }: {
   projectId: string;
 }) {
-  const { data } = await getAllProjects("");
-  const excludedCurrentProject = data.filter(
-    (b) => b.project._id !== projectId
-  );
+  // const { data } = await getAllProjects("");
+  // const excludedCurrentProject = data.filter(
+  //   (b) => b.project._id !== projectId
+  // );
 
   return (
     <section>
@@ -24,7 +23,7 @@ export default async function OtherProjects({
         Otros proyectos que podrían interesarte
       </p>
       <div className="flex px-10 w-full justify-center items-center mb-12">
-        <Carousel
+        {/* <Carousel
           opts={{
             align: "start",
           }}
@@ -42,7 +41,7 @@ export default async function OtherProjects({
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
-        </Carousel>
+        </Carousel> */}
       </div>
     </section>
   );

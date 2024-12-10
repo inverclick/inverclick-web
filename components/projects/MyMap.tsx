@@ -1,15 +1,15 @@
 'use client'
 import { ENV_VARS } from '@/global/env';
-import type { IBLUEPRINT_POPULATED } from '@/types/blueprint';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { useState } from 'react'
 import { CustomMarker } from './CustomMarker';
+import { ProjectToDisplay } from '@/types/project';
 
 interface Props {
-  blueprints: IBLUEPRINT_POPULATED[]
+  projects: ProjectToDisplay[]
 }
 
-export const MyMap = ({blueprints}: Props) => {
+export const MyMap = ({projects}: Props) => {
   const [open, setOpen] = useState('')
   const { isLoaded } = useJsApiLoader({
     id: 'inverclick-google-map-script',
@@ -27,10 +27,10 @@ export const MyMap = ({blueprints}: Props) => {
         zoom={6}
         options={mapOptions}
       >
-        {blueprints.map(blueprint => 
+        {projects.map(project => 
           <CustomMarker 
-            key={blueprint._id} 
-            blueprint={blueprint} 
+            key={project.id} 
+            project={project} 
             open={open}
             openModal={openModal}
             closeModal={closeModal}

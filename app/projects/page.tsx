@@ -2,7 +2,6 @@ import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectH
 import { MyMap2 } from "@/components/projects/MyMap2";
 import ProjectContent from "@/components/projects/ProjectContent";
 import { ContactButton } from "@/components/shared/ContactButton";
-import { Header } from "@/components/shared/header/header";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -14,9 +13,10 @@ import {
   DefaultResizablePanelGroup,
 } from "@/components/ui/resizable-default";
 import { ENV_VARS } from "@/global/env";
-import { getAllProjects } from "@/services/projects";
 import { Metadata } from "next";
 import NavbarProjects from "../../components/projects/NavbarProjects";
+import { supabase } from "@/services/supabase";
+import { ProjectToDisplay } from "@/types/project";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -34,13 +34,27 @@ export const metadata: Metadata = {
 
 export default async function Projects(props: any) {
   const { searchParams } = props;
+  const type = searchParams.type
+  const minPrice = searchParams.min_price
+  const maxPrice = searchParams.max_price
+  const department = searchParams.department
+  const city = searchParams.city
+  const housingState = searchParams.housing_state
 
-  const parsedSearchParams = new URLSearchParams(searchParams);
-
-  const { count, data } = await getAllProjects(
-    `?${parsedSearchParams.toString()}`
-  );
-
+  const query = supabase
+    .from('projects')
+    .select('*, typologies!inner(*), department:departments(*), city:cities(*), company:companies(*)', { count: 'exact' })
+    .eq('status', 'PUBLISHED')
+  
+  if (department) query.eq('department_id', Number(department))
+  if (city) query.eq('city_id', Number(city))
+  if (housingState) query.eq('housing_state', housingState)
+  if (minPrice) query.gte('typologies.price', minPrice)
+  if (maxPrice) query.lte('typologies.price', maxPrice)
+  if (type) query.in('housing_type', type.split('-'))
+  
+  const { count, data } = await query.order('price', { referencedTable: 'typologies', ascending: true }).returns<ProjectToDisplay[]>()
+  
   return (
     <main>
       <ContactButton className="fixed right-4 bottom-4" />
@@ -50,7 +64,7 @@ export default async function Projects(props: any) {
           className="!h-screen"
         >
           <DefaultResizablePanel defaultSize={32}>
-            <MyMap2 blueprints={data} />
+            <MyMap2 projects={data!} />
           </DefaultResizablePanel>
           <DefaultResizableHandle withHandle />
           <DefaultResizablePanel
@@ -59,16 +73,16 @@ export default async function Projects(props: any) {
             className="z-10 relative flex flex-col"
           >
             <NavbarProjects />
-            <ProjectContent total={count} blueprints={data} />
+            <ProjectContent total={count ?? 0} projects={data!} /> 
           </DefaultResizablePanel>
         </DefaultResizablePanelGroup>
       </section>
       <section className="lg:hidden">
-        <MobileProjectHeader total={count} />
+        <MobileProjectHeader total={count ?? 0} />
         <div className="h-screen">
           <ResizablePanelGroup direction="vertical" className="!h-screen">
             <ResizablePanel defaultSize={50}>
-              <MyMap2 blueprints={data} />
+              <MyMap2 projects={data!} />
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel
@@ -76,7 +90,7 @@ export default async function Projects(props: any) {
               maxSize={60}
               className="flex flex-col"
             >
-              <ProjectContent total={count} blueprints={data} />
+              <ProjectContent total={count ?? 0} projects={data!} />
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>

@@ -56,7 +56,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <main>
       <Header />
       <article className="p-content flex flex-col gap-8 max-w-screen-2xl mx-auto">
-        <Hero
+        {/* <Hero
           name={project.name}
           photos={project.photos}
           price={mainBlueprint.price}
@@ -83,7 +83,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           typologies={blueprints}
           urbanismPhotos={project.urbanismPhotos}
           urbanismFiles={project.urbanism}
-        />
+        /> */}
         <OtherProjects projectId={id} />
       </article>
       <MyFooter />

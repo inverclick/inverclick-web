@@ -2,28 +2,25 @@ import DisplayTRM from "@/components/projects/DisplayTRM";
 import { ProjectFilters } from "@/components/projects/Filters/ProjectFilters";
 import { ProjectInfinityScroll } from "@/components/projects/ProjectInfinityScroll";
 import { SelectCurrency } from "@/components/projects/SelectCurrency";
-import {
-  getDepartments,
-  getGraphicPriceRange,
-  getHousingTypes,
-} from "@/services/utils";
-import type { IBLUEPRINT_POPULATED } from "@/types/blueprint";
+import { getProjectsPriceRange } from "@/services/projects";
+import { supabase } from "@/services/supabase";
+import { ProjectToDisplay } from "@/types/project";
 import { Suspense } from "react";
 
 type Props = Readonly<{
   total: number;
-  blueprints: IBLUEPRINT_POPULATED[];
+  projects: ProjectToDisplay[];
 }>;
 
-export default async function ProjectContent({ total, blueprints }: Props) {
+export default async function ProjectContent({ total, projects }: Props) {
   const [departmentsResponse, priceGraphicDataResponse, housingTypesResponse] =
     await Promise.all([
-      getDepartments(),
-      getGraphicPriceRange(),
-      getHousingTypes(),
+      supabase.from('departments').select('*'),
+      getProjectsPriceRange(),
+      supabase.from('housing_types').select('*'),
     ]);
 
-  const { data: priceGraphicData } = priceGraphicDataResponse;
+  const  priceGraphicData = priceGraphicDataResponse;
   const { data: housingTypes } = housingTypesResponse;
   const { data: departments } = departmentsResponse;
 
@@ -33,9 +30,9 @@ export default async function ProjectContent({ total, blueprints }: Props) {
         <div className="hidden lg:flex gap-3 items-center">
           <Suspense>
             <ProjectFilters
-              departments={departments}
+              departments={departments ?? []}
               priceGraphicData={priceGraphicData}
-              housingTypes={housingTypes}
+              housingTypes={housingTypes ?? []}
               count={total}
             />
           </Suspense>
@@ -49,7 +46,7 @@ export default async function ProjectContent({ total, blueprints }: Props) {
           </p>
         </div>
       </div>
-      <ProjectInfinityScroll blueprints={blueprints} />
+      <ProjectInfinityScroll projects={projects} />
     </section>
   );
 }

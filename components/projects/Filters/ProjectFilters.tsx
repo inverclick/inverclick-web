@@ -11,16 +11,17 @@ import { SlidersHorizontal, X } from "lucide-react"
 import {  useEffect, useMemo, useRef, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { LocationFilter } from "./LocationFilter"
-import { IHOUSING_TYPE } from "@/types/project"
 import { StateFilter } from "./StateFilter"
 import { PriceFilter } from "./PriceFilter"
 import { useDebounce } from "@/hooks/useDebounce"
-import { getProjectsCount } from "@/services/projects"
+import { Department } from "@/types/department"
+import { HousingTypeRow } from "@/types/housing-type"
+import { supabase } from "@/services/supabase"
 
 interface Props {
-  departments: {departamento: string}[]
+  departments: Department[]
   priceGraphicData: {goal: number}[]
-  housingTypes: IHOUSING_TYPE[]
+  housingTypes: HousingTypeRow[]
   count: number
 }
 
@@ -90,16 +91,18 @@ export const ProjectFilters = ({departments, priceGraphicData, housingTypes, cou
   useEffect(() => {
     const fetchCount = async () => {
       isCounting.current = true
-      let query = '?'
-    
-      if(currentDepartment !== 'all') query += 'department=' + currentDepartment
-      if(currentCity !== 'all') query += '&city=' + currentCity
-      if(currentTypes.length) query += query.length > 1 ? '&type=' + currentTypes.join('-') : 'type=' + currentTypes.join('-')
-      if(currentState !== 'all') query += query.length > 1 ? '&housing_state=' + currentState : 'housing_state=' + currentState
-      query += `&min_price=${debouncedMinPrice}&max_price=${debouncedMaxPrice}`
-      
-      const { success, count } = await getProjectsCount(query)
-      if(success) setCount(count)
+      let query = supabase.from('projects')
+        .select('id, department_id, city_id, typologies!inner(price)', { count: 'exact' })
+
+      if (currentDepartment !== 'all') query.eq('department_id', Number(currentDepartment))
+      if (currentCity !== 'all') query.eq('city_id', Number(currentCity))
+      if (currentState !== 'all') query.eq('housing_state', currentState)
+      if (debouncedMinPrice) query.gte('typologies.price', debouncedMinPrice)
+      if (debouncedMaxPrice) query.lte('typologies.price', debouncedMaxPrice)
+      if (currentTypes) query.in('housing_type', currentTypes)
+        
+      const { count } = await query
+      setCount(count ?? 0)
       isCounting.current = false
     }
 
