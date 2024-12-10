@@ -1,15 +1,20 @@
 import { ENV_VARS } from "@/global/env";
+import { supabase } from "@/services/supabase";
 import { MetadataRoute } from "next";
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'edge' 
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  //const {data: projects} = await supabase.from('projects').select('id, created_at')
-  // const projectsEntries = (projects ?? []).map(({ id, created_at }) => ({
-  //   url: `${ENV_VARS.BASE_URL}/projects/${id}`,
-  //   lastModified: new Date(created_at),
-  // }))
+  const {data: projects} = await supabase.from('projects').select('id, created_at, typologies(*)')
+  const projectsEntries = []
+  for(const project of projects!) {
+    for (const typology of project.typologies) {
+      const url = `${ENV_VARS.BASE_URL}/projects/${project.id}/${typology.id}`
+      const lastModified = new Date(project.created_at)
+      projectsEntries.push({url, lastModified})
+    }
+  }
 
   return [
     {  
@@ -36,6 +41,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${ENV_VARS.BASE_URL}/terms-conditions`,
       lastModified: new Date(),
     },
-    // ...projectsEntries
+    ...projectsEntries
   ]
 }
