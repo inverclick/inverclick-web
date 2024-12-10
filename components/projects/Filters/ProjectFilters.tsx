@@ -93,13 +93,14 @@ export const ProjectFilters = ({departments, priceGraphicData, housingTypes, cou
       isCounting.current = true
       let query = supabase.from('projects')
         .select('id, department_id, city_id, typologies!inner(price)', { count: 'exact' })
+        .eq('status', 'PUBLISHED')
 
       if (currentDepartment !== 'all') query.eq('department_id', Number(currentDepartment))
       if (currentCity !== 'all') query.eq('city_id', Number(currentCity))
       if (currentState !== 'all') query.eq('housing_state', currentState)
       if (debouncedMinPrice) query.gte('typologies.price', debouncedMinPrice)
       if (debouncedMaxPrice) query.lte('typologies.price', debouncedMaxPrice)
-      if (currentTypes) query.in('housing_type', currentTypes)
+      if (currentTypes.length > 0) query.in('housing_type', currentTypes)
         
       const { count } = await query
       setCount(count ?? 0)
