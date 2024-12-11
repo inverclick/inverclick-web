@@ -1,95 +1,84 @@
 import { Hero } from "@/components/projects/review/Hero";
-import OtherProjects from "@/components/projects/review/OtherProjects";
 import { ProjectContent } from "@/components/projects/review/ProjectContent";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { Header } from "@/components/shared/header/header";
-import { ENV_VARS } from "@/global/env";
+import { fallback } from "@/services/fallback";
 import { supabase } from "@/services/supabase";
-import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
 
-export async function generateMetadata({
+export default async function Page({
   params,
-}: {
-  params: { project: string, typology: string };
-}): Promise<Metadata> {
-  const project = params.project;
-  const typology = params.typology;
-  const [projectResult, typologyResult] = await Promise.all([
-    supabase.from("projects").select('name, description').eq("id", project).single(),
-    supabase.from("typologies").select('name').eq("id", typology).single(),
-  ])
+}: Readonly<{
+  params: { project: string; typology: string };
+}>) {
+  const projectId = params.project;
+  const typologyId = params.typology;
 
-  return {
-    title: projectResult.data?.name + " - " + typologyResult.data?.name,
-    description: projectResult.data?.description,
-    alternates: {
-      canonical: `${ENV_VARS.BASE_URL}/${project}/${typology}/preview`,
-    },
-    openGraph: {
-      url: `${ENV_VARS.BASE_URL}/${project}/${typology}/preview`,
-      title: projectResult.data?.name + " - " + typologyResult.data?.name,
-      description: projectResult.data?.description,
-    },
-  };
-}
+  const [{ data }, { data: characteristics }] = await Promise.all([
+    supabase
+      .from("draft_projects")
+      .select(
+        "*, typologies:draft_typologies(*), department:departments(*), city:cities(*), company:companies(*)"
+      )
+      .eq("id", projectId)
+      .single(),
+    supabase
+      .from("draft_project_characteristics")
+      .select("*, characteristics(*)")
+      .eq("draft_project_id", projectId),
+  ]);
 
-export default async function Page({ params }: { params: { id: string } }) {
-  // const id = params.id;
+  if (!data) {
+    return <div>Not found draft project</div>;
+  }
 
-  // if (!id.length) return <div>Id: {id}</div>;
+  const typology = data.typologies.find(
+    (typology) => typology.id === typologyId
+  );
 
-  // const { project, blueprints } = await getProjectPreviewById(id);
-
-  // if (!project || !blueprints.length)
-  //   return (
-  //     <div>
-  //       Project: {JSON.stringify(project)}
-  //       <br />
-  //       <br />
-  //       <br />
-  //       Blueprints: {JSON.stringify(blueprints)}
-  //     </div>
-  //   );
-
-  // const mainBlueprint = blueprints[0];
+  if (!typology) {
+    return <div>Not found typology</div>;
+  }
 
   return (
     <main>
       <Header />
       <article className="p-content flex flex-col gap-8 max-w-screen-2xl mx-auto">
-        <h1>TODO</h1>
-        {/* <Hero
-          name={project.name}
-          photos={project.photos}
-          price={mainBlueprint.price}
-          department={project.department}
-          city={project.city}
-          address={project.address}
+        <Hero
+          name={fallback(data.name, "string")}
+          photos={data.photos}
+          price={typology.price}
+          department={fallback(data.department?.name, "string")}
+          city={fallback(data.city?.name, "string")}
+          address={fallback(data.address, "string")}
         />
         <ProjectContent
-          characteristics={project.characteristics}
-          companyLogo={project.company.logo_url}
-          companyName={project.company.name}
-          housingState={project.housingState}
-          description={project.description}
-          location={project.location}
-          name={project.name}
-          address={project.address}
-          city={project.city}
-          department={project.department}
-          projectLogo={project.logo}
-          projectId={project.id}
-          stratum={project.stratum}
-          units={blueprints.reduce((acc, b) => acc + b.units, 0)}
-          deadline={project?.deadline}
-          typologies={blueprints}
-          urbanismPhotos={project.urbanismPhotos}
-          urbanismFiles={project.urbanism}
-        /> */}
-        {/* <OtherProjects projectId={id} /> */}
+          characteristics={
+            characteristics?.map((c) => c.characteristics!) ?? []
+          }
+          companyLogo={data.company?.logo_url ?? ""}
+          companyName={fallback(data.company?.name, "string")}
+          housingState={fallback(data.housing_state, "string")}
+          description={fallback(data.description, "string")}
+          location={{
+            lat: fallback(data.latitude, "number"),
+            lng: fallback(data.longitude, "number"),
+          }}
+          name={fallback(data.name, "string")}
+          address={fallback(data.address, "string")}
+          city={fallback(data.city?.name, "string")}
+          department={fallback(data.department?.name, "string")}
+          projectLogo={fallback(data.logo, "string")}
+          projectId={data.id}
+          stratum={fallback(data.stratum, "number")}
+          units={data.typologies.reduce((acc, b) => acc + b.units, 0)}
+          deadline={fallback(data.deadline, "string")}
+          typologies={data.typologies}
+          urbanismPhotos={data.urbanism_photos}
+          urbanismFiles={data.urbanism_files}
+        />
       </article>
       <MyFooter />
     </main>
