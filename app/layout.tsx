@@ -1,12 +1,14 @@
 import { DownloadAppPopUp } from "@/components/shared/DownloadAppPopUp";
+import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { Toaster } from "@/components/ui/sonner";
 import { ENV_VARS } from "@/global/env";
-import "atropos/css";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
-import "./globals.css";
 import { Suspense } from "react";
+
+import "atropos/css";
+import "./globals.css";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -63,7 +65,7 @@ export default function RootLayout({
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
-        {children}
+        <TRMLoader>{children}</TRMLoader>
         <Toaster />
         <Suspense>
           <DownloadAppPopUp />

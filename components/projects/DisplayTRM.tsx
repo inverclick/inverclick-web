@@ -17,7 +17,7 @@ export function DisplayTRM({
   const INTERVAL = 10000;
   const RATES = 2;
 
-  const { currency, TRM_USD, TRM_EUR, loadTRM } = useCurrencyContext();
+  const { currency, TRM_USD, TRM_EUR } = useCurrencyContext();
 
   const [translationIndex, setTranslationIndex] = useState(0);
 
@@ -36,10 +36,6 @@ export function DisplayTRM({
       setTranslationIndex(1); // Fix to EUR
     }
   }, [currency, RATES]);
-
-  useEffect(() => {
-    loadTRM();
-  }, [loadTRM]);
 
   const lineHeight: { [key: string]: number } = {
     xs: 16,
