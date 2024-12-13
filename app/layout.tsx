@@ -1,13 +1,20 @@
+import { Chatbot } from "@/components/shared/chatbot/chatbot";
 import { DownloadAppPopUp } from "@/components/shared/DownloadAppPopUp";
+import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { Toaster } from "@/components/ui/sonner";
+import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
+import { PreRegistrationData } from "@/types/pre-registration";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { cookies } from "next/headers";
 import Script from "next/script";
 import { Suspense } from "react";
+import { getPreRegistration } from "@/services/pre-registration";
 
 import "atropos/css";
+import "@inverclick/inverclick-ui/theme.css";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -53,11 +60,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const preRegistration = getPreRegistration();
+
   return (
     <html lang="es">
       <head>
@@ -65,7 +74,11 @@ export default function RootLayout({
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
-        <TRMLoader>{children}</TRMLoader>
+        <PreRegistrationProvider preRegistration={preRegistration}>
+          <Chatbot />
+          <TRMLoader>{children}</TRMLoader>
+          <PreRegistration />
+        </PreRegistrationProvider>
         <Toaster />
         <Suspense>
           <DownloadAppPopUp />

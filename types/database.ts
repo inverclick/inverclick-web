@@ -328,6 +328,27 @@ export type Database = {
         }
         Relationships: []
       }
+      pre_registrations: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       project_characteristics: {
         Row: {
           characteristic_id: string
@@ -413,6 +434,7 @@ export type Database = {
           project_class: Database["public"]["Enums"]["PROJECT_CLASS"]
           status: Database["public"]["Enums"]["PROJECT_STATUS"]
           stratum: number
+          updated_at: string | null
           urbanism_files: string[]
           urbanism_photos: string[]
           videos: string[] | null
@@ -441,6 +463,7 @@ export type Database = {
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"]
           status?: Database["public"]["Enums"]["PROJECT_STATUS"]
           stratum: number
+          updated_at?: string | null
           urbanism_files: string[]
           urbanism_photos: string[]
           videos?: string[] | null
@@ -469,6 +492,7 @@ export type Database = {
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"]
           status?: Database["public"]["Enums"]["PROJECT_STATUS"]
           stratum?: number
+          updated_at?: string | null
           urbanism_files?: string[]
           urbanism_photos?: string[]
           videos?: string[] | null
@@ -520,6 +544,7 @@ export type Database = {
           project_id: string
           rooms: number
           units: number
+          updated_at: string | null
         }
         Insert: {
           area: number
@@ -536,6 +561,7 @@ export type Database = {
           project_id: string
           rooms: number
           units: number
+          updated_at?: string | null
         }
         Update: {
           area?: number
@@ -552,6 +578,7 @@ export type Database = {
           project_id?: string
           rooms?: number
           units?: number
+          updated_at?: string | null
         }
         Relationships: [
           {

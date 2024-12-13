@@ -147,6 +147,16 @@ export const ProjectFilters = ({
     debouncedMaxPrice,
   ]);
 
+  useEffect(() => {
+    // Update all states
+    setCurrentDepartment(searchParams.get("department") || "all");
+    setCurrentCity(searchParams.get("city") || "all");
+    setCurrentState(searchParams.get("housing_state") || "all");
+    setCurrentTypes(searchParams.get("type")?.split("-") || []);
+    setMinPrice(Number(searchParams.get("min_price") ?? 0));
+    setMaxPrice(Number(searchParams.get("max_price") ?? 999999999));
+  }, [searchParams]);
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
