@@ -5,6 +5,7 @@ import goToProjects, {
   getWelcomeMessage,
   goToProject,
   goToProjectsWithFilters,
+  questionAboutProject,
   simulateCreditByQuotaValue,
   simulateCreditByValueHousing,
 } from "@/components/shared/chatbot/functions";
@@ -28,7 +29,7 @@ import {
   PopoverTrigger,
 } from "@inverclick/inverclick-ui/popover";
 import { MessageCircle, Send } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -64,6 +65,7 @@ export const ChatbotContent = ({
 
   const { preRegistration } = usePreRegistration();
 
+  const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -76,6 +78,34 @@ export const ChatbotContent = ({
       setIsChatOpen(false);
     }
   }, [preRegistration]);
+
+  useEffect(() => {
+    const projectPageRegex = /^\/projects\/[a-f0-9\-]{36}\/[a-f0-9\-]{36}$/;
+
+    const contextualizeAssistant = async () => {
+      if (preRegistration && projectPageRegex.test(pathname)) {
+        // TODO: Avoid this request
+        const { data: project } = await supabase
+          .from("projects")
+          .select("*")
+          .eq("id", params.project)
+          .single();
+
+        // TODO: Make sure thread is ready ¿Could be creating state por openai and thread?
+        if (project) {
+          await openai.current!.beta.threads.messages.create(
+            thread.current!.id,
+            {
+              role: "assistant",
+              content: `El nombre del usuario es ${preRegistration.name} y está en la página del proyecto ${project.name} con ID ${project.id}.`,
+            }
+          );
+        }
+      }
+    };
+
+    contextualizeAssistant();
+  }, [pathname]);
 
   useEffect(() => {
     const init = async () => {
@@ -92,6 +122,7 @@ export const ChatbotContent = ({
     window.simulateCreditByQuotaValue = simulateCreditByQuotaValue;
     window.simulateCreditByValueHousing = simulateCreditByValueHousing;
     window.goToProject = goToProject;
+    window.questionAboutProject = questionAboutProject;
 
     init();
   }, []);
@@ -250,7 +281,7 @@ export const ChatbotContent = ({
      */
     await openai.current!.beta.threads.messages.create(thread.current!.id, {
       role: "user",
-      content: `Mi nombre es ${preRegistration.name} y me pregunta es: ${message}`,
+      content: `Mi nombre es ${preRegistration.name} y mi pregunta es: ${message}`,
     });
 
     /**
@@ -284,15 +315,15 @@ export const ChatbotContent = ({
       const outputsWithActions = outputs.filter((output) => output.action);
 
       outputsWithActions.forEach(async (output) => {
-        if (output.action === "go_to_projects" && output.params.filter) {
+        if (output.action === "go_to_projects" && output.params?.filter) {
           router.push(
-            `/projects?${(output.params.filter as string).replace(/,/g, "&")}`
+            `/projects?${(output.params?.filter as string).replace(/,/g, "&")}`
           );
         } else if (output.action === "go_to_projects") {
           router.push(`/projects`);
         } else if (output.action === "go_to_project") {
           router.push(
-            `/projects/${output.params.project_id}/${output.params.typology_id}`
+            `/projects/${output.params?.project_id}/${output.params?.typology_id}`
           );
         }
       });

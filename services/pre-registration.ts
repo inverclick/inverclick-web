@@ -38,8 +38,7 @@ export async function getChatbotMessagesFromPreRegistration(
       .from("chatbot_messages")
       .select("*")
       .eq("pre_registration_id", preRegistration.id)
-      .order("created_at", { ascending: true })
-      .limit(20);
+      .order("created_at", { ascending: true });
 
     return (chatbotMessages || []).map((chatbotMessage) => {
       const message: ChatMessage = {

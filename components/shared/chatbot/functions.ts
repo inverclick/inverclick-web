@@ -186,3 +186,12 @@ export async function goToProject(params: { projectName: string }) {
 
   return JSON.stringify(output);
 }
+
+export async function questionAboutProject(params: { projectId: string }) {
+  const url = `https://lvptznfprobnfjquceok.supabase.co/functions/v1/project-by-id/${params.projectId}`;
+
+  const response = await fetch(url);
+  const output = await response.json();
+
+  return JSON.stringify(output.data);
+}

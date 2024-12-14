@@ -2,6 +2,7 @@ import {
   goToProject,
   goToProjects,
   goToProjectsWithFilters,
+  questionAboutProject,
   simulateCreditByQuotaValue,
   simulateCreditByValueHousing,
 } from "@/components/shared/chatbot/functions";
@@ -14,5 +15,6 @@ declare global {
     simulateCreditByQuotaValue: typeof simulateCreditByQuotaValue;
     simulateCreditByValueHousing: typeof simulateCreditByValueHousing;
     goToProject: typeof goToProject;
+    questionAboutProject: typeof questionAboutProject;
   }
 }

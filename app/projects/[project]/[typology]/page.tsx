@@ -89,8 +89,8 @@ export default async function Page({
               name={data.name}
               photos={data.photos}
               price={mainBlueprint.price}
-              department={data.department!.name!}
-              city={data.city!.name!}
+              department={data.department!.name}
+              city={data.city!.name}
               address={data.address}
               className={cn({
                 "blur-sm pointer-events-none": !preRegistration,
