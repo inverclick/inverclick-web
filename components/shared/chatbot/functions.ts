@@ -1,10 +1,5 @@
 import { supabase } from "@/services/supabase";
 
-export const OPEN_AI_API_KEY =
-  "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";
-
-export const ASSISTANT_ID = "asst_E40E5SYeKa1EPg7m5t9rzGU1";
-
 export function getWelcomeMessage(name: string) {
   return `¡Hola, ${name}! Te damos la bienvenida al lugar donde tu inversión en Colombia comienza a hacerse realidad.`;
 }
@@ -15,13 +10,11 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
 
   const splittedFilters = params.filter.split(",");
 
-  // Filtramos los pares para excluir los que tengan clave 'department' o 'city'
   const fixedFilters = splittedFilters.filter((pair) => {
     const [key] = pair.split("=");
     return key !== "department" && key !== "city";
   });
 
-  // Encontrar la ciudad y el departamento
   const department = splittedFilters
     .find((part) => part.startsWith("department="))
     ?.split("=")[1];
@@ -163,7 +156,6 @@ export function simulateCreditByValueHousing(params: {
 
 export async function goToProject(params: { projectName: string }) {
   const projectName = params.projectName;
-  console.log(`Nombre del proyecto recibido: ${projectName}`);
 
   const { data: project } = await supabase
     .from("projects")

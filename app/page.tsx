@@ -10,9 +10,10 @@ import { Department } from "@/types/department";
 
 import Image from "next/image";
 import Link from "next/link";
+import { createPortal } from "react-dom";
 
 export default async function Home() {
-  const { data: departments } = await supabase.from('departments').select('*')
+  const { data: departments } = await supabase.from("departments").select("*");
 
   return (
     <div className="relative">
@@ -23,12 +24,12 @@ export default async function Home() {
 }
 
 type ContentAsLayoutProps = Readonly<{
-  departments: Department[]
+  departments: Department[];
 }>;
 
 function ContentAsLayout({ departments }: ContentAsLayoutProps) {
   return (
-    <main className="absolute inset-0 flex flex-col lg:flex-row h-screen">
+    <div className="absolute inset-0 flex flex-col lg:flex-row h-screen">
       {/* LEFT SECTION */}
       <section className="md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:px-10 py-6">
         <AppButton className="absolute bottom-5 right-8 invisible" />
@@ -145,12 +146,12 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
         <LoginButton className="absolute bottom-16 right-4 invisible" />
         <ContactButton className="absolute bottom-4 right-4 invisible" />
       </section>
-    </main>
+    </div>
   );
 }
 
 type Content = Readonly<{
-  departments: Department[]
+  departments: Department[];
 }>;
 
 function Content({ departments }: Content) {
@@ -224,7 +225,6 @@ function Content({ departments }: Content) {
             All rights reserved © {new Date().getFullYear()}
           </div>
         </footer>
-
         <div className="w-full">
           <header className="px-5 md:px-16 my-16 md:mt-16 lg:mt-0 lg:mb-16">
             <h1 className="text-center lg:text-left text-2xl md:text-3xl 2xl:text-5xl font-semibold text-white">
@@ -245,7 +245,6 @@ function Content({ departments }: Content) {
             </h3>
           </section>
         </div>
-
         <footer className="flex flex-col justify-center items-center gap-1 px-4 mb-8">
           <Image
             unoptimized
@@ -268,9 +267,8 @@ function Content({ departments }: Content) {
             All rights reserved © {new Date().getFullYear()}
           </div>
         </footer>
-
-        <LoginButton className="absolute bottom-16 right-4" />
-        <ContactButton className="absolute bottom-4 right-4" />
+        <LoginButton className="absolute bottom-16 right-4" />,
+        {/* <ContactButton className="absolute bottom-4 right-4" /> */}
       </section>
     </main>
   );

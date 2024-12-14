@@ -5,16 +5,19 @@ import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { Toaster } from "@/components/ui/sonner";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
-import { PreRegistrationData } from "@/types/pre-registration";
+import {
+  getChatbotMessagesFromPreRegistration,
+  getPreRegistration,
+} from "@/services/pre-registration";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import { cookies } from "next/headers";
-import Script from "next/script";
-import { Suspense } from "react";
-import { getPreRegistration } from "@/services/pre-registration";
+import { ReactNode, Suspense } from "react";
+import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 
-import "atropos/css";
+import Script from "next/script";
+
 import "@inverclick/inverclick-ui/theme.css";
+import "atropos/css";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -63,9 +66,13 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   const preRegistration = getPreRegistration();
+
+  const chatbotMessages = await getChatbotMessagesFromPreRegistration(
+    preRegistration
+  );
 
   return (
     <html lang="es">
@@ -75,9 +82,13 @@ export default async function RootLayout({
       </head>
       <body className={poppins.className}>
         <PreRegistrationProvider preRegistration={preRegistration}>
-          <Chatbot />
-          <TRMLoader>{children}</TRMLoader>
-          <PreRegistration />
+          <YupLocalization>
+            <TRMLoader>
+              {children}
+              <Chatbot messages={chatbotMessages} />
+              <PreRegistration />
+            </TRMLoader>
+          </YupLocalization>
         </PreRegistrationProvider>
         <Toaster />
         <Suspense>

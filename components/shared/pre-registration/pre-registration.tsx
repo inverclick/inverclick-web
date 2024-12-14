@@ -1,27 +1,51 @@
 "use client";
 
+import { usePreRegistration } from "@/contexts/pre-registration-context";
+import { PreRegistrationValues } from "@/types/pre-registration";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
   Dialog,
-  DialogFooter,
-  DialogHeader,
   DialogContent,
   DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
 } from "@inverclick/inverclick-ui/dialog";
-import { usePreRegistration } from "@/contexts/pre-registration-context";
-import { useRouter } from "next/navigation";
+import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
-import { InputControl } from "@inverclick/inverclick-ui/input-control";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import * as yup from "yup";
 
 export const PreRegistration = () => {
-  const form = useFormik({
+  const { isPreRegistrationOpen } = usePreRegistration();
+
+  return <>{isPreRegistrationOpen && <PreRegistrationContent />}</>;
+};
+
+const PreRegistrationContent = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const {
+    isPreRegistrationOpen,
+    setIsPreRegistrationOpen,
+    setPreRegistration,
+  } = usePreRegistration();
+
+  const router = useRouter();
+
+  const form = useFormik<PreRegistrationValues>({
+    validateOnMount: true,
     initialValues: { name: "", email: "" },
+    validationSchema: createFormSchema(),
     onSubmit: async ({ name, email }) => {
-      await fetch("/api/pre-registration", {
+      setIsLoading(true);
+
+      const response = await fetch("/api/pre-registration", {
         body: JSON.stringify({
-          name: "Juan",
-          email: "juan@gmail.com",
+          name,
+          email,
         }),
         method: "POST",
         headers: {
@@ -29,23 +53,23 @@ export const PreRegistration = () => {
         },
       });
 
+      const preRegistration = await response.json();
+
+      setPreRegistration(preRegistration);
       setIsPreRegistrationOpen(false);
+
+      setIsLoading(false);
 
       router.refresh();
     },
   });
-
-  const { isPreRegistrationOpen, setIsPreRegistrationOpen } =
-    usePreRegistration();
-
-  const router = useRouter();
 
   return (
     <Dialog
       open={isPreRegistrationOpen}
       onOpenChange={setIsPreRegistrationOpen}
     >
-      <DialogContent>
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Pre-registro</DialogTitle>
           <DialogDescription>
@@ -56,19 +80,22 @@ export const PreRegistration = () => {
           </DialogDescription>
         </DialogHeader>
         <FormikProvider value={form}>
-          <Form id="pre-registration">
-            <InputControl
+          <Form id="pre-registration" className="my-4">
+            <InputFormikNT
+              id="name"
+              form={form}
               classNames={{
                 container: "mb-4",
               }}
               properties={{
                 input: {
-                  id: "name",
                   placeholder: "Nombre",
                 },
               }}
             />
-            <InputControl
+            <InputFormikNT
+              id="email"
+              form={form}
               properties={{
                 input: {
                   id: "email",
@@ -79,7 +106,7 @@ export const PreRegistration = () => {
           </Form>
         </FormikProvider>
         <DialogFooter>
-          <Button form="pre-registration" type="submit">
+          <Button form="pre-registration" type="submit" isLoading={isLoading}>
             Continuar
           </Button>
         </DialogFooter>
@@ -87,3 +114,10 @@ export const PreRegistration = () => {
     </Dialog>
   );
 };
+
+function createFormSchema() {
+  return yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+  });
+}

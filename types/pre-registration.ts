@@ -1,6 +1,6 @@
 import { Tables } from "@/services/supabase";
 
-export type PreRegistrationData = {
+export type PreRegistrationValues = {
   name: string;
   email: string;
 };

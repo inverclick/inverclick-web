@@ -1,9 +1,14 @@
 import { supabase } from "@/services/supabase";
-import { PreRegistrationData } from "@/types/pre-registration";
+import {
+  PreRegistration,
+  PreRegistrationValues,
+} from "@/types/pre-registration";
 import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
-  const { name, email } = (await request.json()) as PreRegistrationData;
+  const { name, email } = (await request.json()) as PreRegistrationValues;
+
+  let preRegistration: PreRegistration | null = null;
 
   const { data: existingPreRegistration } = await supabase
     .from("pre_registrations")
@@ -12,26 +17,33 @@ export async function POST(request: Request) {
     .single();
 
   if (!existingPreRegistration) {
-    await supabase.from("pre_registrations").insert({
-      name,
-      email,
-    });
+    const { data } = await supabase
+      .from("pre_registrations")
+      .insert({
+        name,
+        email,
+      })
+      .select("*")
+      .single();
+
+    preRegistration = data;
   }
 
   if (existingPreRegistration) {
-    await supabase
+    const { data } = await supabase
       .from("pre_registrations")
       .update({
         name,
       })
-      .eq("email", email);
+      .eq("email", email)
+      .select("*")
+      .single();
+
+    preRegistration = data;
   }
 
   const cookieStore = cookies();
-  cookieStore.set("pre-registration", JSON.stringify({ name, email }));
+  cookieStore.set("pre-registration", JSON.stringify(preRegistration));
 
-  return Response.json({
-    name,
-    email,
-  });
+  return Response.json(preRegistration);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { PreRegistrationData } from "@/types/pre-registration";
+import { PreRegistration } from "@/types/pre-registration";
 import {
   createContext,
   PropsWithChildren,
@@ -10,8 +10,8 @@ import {
 } from "react";
 
 export type PreRegistrationContextType = {
-  preRegistration: PreRegistrationData | null;
-  setPreRegistration: (preRegistration: PreRegistrationData) => void;
+  preRegistration: PreRegistration | null;
+  setPreRegistration: (preRegistration: PreRegistration) => void;
   isPreRegistrationOpen: boolean;
   setIsPreRegistrationOpen: (isPreRegistrationOpen: boolean) => void;
   ensurePreRegistration: (callback?: Function) => void;
@@ -22,17 +22,21 @@ export const PreRegistrationContext = createContext(
 );
 
 export type PreRegistrationProviderProps = {
-  preRegistration: PreRegistrationData | null;
+  preRegistration: PreRegistration | null;
+  isPreRegistrationOpen?: boolean;
 } & PropsWithChildren;
 
 export const PreRegistrationProvider = ({
   preRegistration: initialPreregistration,
+  isPreRegistrationOpen: initialIsPreRegistrationOpen = false,
   children,
 }: PreRegistrationProviderProps) => {
   const [preRegistration, setPreRegistration] =
-    useState<PreRegistrationData | null>(null);
+    useState<PreRegistration | null>(null);
 
-  const [isPreRegistrationOpen, setIsPreRegistrationOpen] = useState(false);
+  const [isPreRegistrationOpen, setIsPreRegistrationOpen] = useState(
+    initialIsPreRegistrationOpen
+  );
 
   useEffect(() => {
     setPreRegistration(initialPreregistration);
