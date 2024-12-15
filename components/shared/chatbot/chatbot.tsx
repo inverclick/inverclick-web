@@ -16,10 +16,10 @@ export type ChatMessage = {
 };
 
 export type ChatbotProps = {
-  messages: ChatMessage[];
+  messages?: ChatMessage[];
 };
 
-export const Chatbot = ({ messages: initialMessages }: ChatbotProps) => {
+export const Chatbot = ({ messages: initialMessages = [] }: ChatbotProps) => {
   const { preRegistration, setIsPreRegistrationOpen } = usePreRegistration();
 
   const pathname = usePathname();

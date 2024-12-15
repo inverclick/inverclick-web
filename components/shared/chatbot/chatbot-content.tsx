@@ -42,9 +42,6 @@ export type ChatbotContentProps = {
 export const ChatbotContent = ({
   messages: initialMessages,
 }: ChatbotContentProps) => {
-  const openai = useRef<OpenAI>();
-  const thread = useRef<OpenAI.Beta.Threads.Thread>();
-
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
 
   const scrollAreaRefFn = useCallback((node: HTMLDivElement) => {
@@ -56,6 +53,15 @@ export const ChatbotContent = ({
       });
     }
   }, []);
+
+  const [openAI] = useState<OpenAI>(
+    new OpenAI({
+      apiKey: ENV_VARS.OPENAI_API_KEY,
+      dangerouslyAllowBrowser: true,
+    })
+  );
+
+  const [thread, setThread] = useState<OpenAI.Beta.Threads.Thread>();
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState<string>("");
@@ -83,7 +89,7 @@ export const ChatbotContent = ({
     const projectPageRegex = /^\/projects\/[a-f0-9\-]{36}\/[a-f0-9\-]{36}$/;
 
     const contextualizeAssistant = async () => {
-      if (preRegistration && projectPageRegex.test(pathname)) {
+      if (thread && preRegistration && projectPageRegex.test(pathname)) {
         // TODO: Avoid this request
         const { data: project } = await supabase
           .from("projects")
@@ -91,30 +97,21 @@ export const ChatbotContent = ({
           .eq("id", params.project)
           .single();
 
-        // TODO: Make sure thread is ready ¿Could be creating state por openai and thread?
         if (project) {
-          await openai.current!.beta.threads.messages.create(
-            thread.current!.id,
-            {
-              role: "assistant",
-              content: `El nombre del usuario es ${preRegistration.name} y está en la página del proyecto ${project.name} con ID ${project.id}.`,
-            }
-          );
+          await openAI.beta.threads.messages.create(thread.id, {
+            role: "assistant",
+            content: `El nombre del usuario es ${preRegistration.name} y está en la página del proyecto ${project.name} con ID ${project.id}.`,
+          });
         }
       }
     };
 
     contextualizeAssistant();
-  }, [pathname]);
+  }, [thread, pathname]);
 
   useEffect(() => {
     const init = async () => {
-      openai.current = new OpenAI({
-        apiKey: ENV_VARS.OPENAI_API_KEY,
-        dangerouslyAllowBrowser: true,
-      });
-
-      thread.current = await openai.current.beta.threads.create();
+      setThread(await openAI.beta.threads.create());
     };
 
     window.goToProjects = goToProjects;
@@ -150,27 +147,31 @@ export const ChatbotContent = ({
   }, [messages, isLoading]);
 
   const waitForResponseCompletion = async (runId: string) => {
-    let response = await openai.current!.beta.threads.runs.retrieve(
-      thread.current!.id,
-      runId
-    );
+    if (!thread) {
+      throw new Error("No thread found");
+    }
+
+    let response = await openAI.beta.threads.runs.retrieve(thread.id, runId);
 
     while (response.status === "in_progress" || response.status === "queued") {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      response = await openai.current!.beta.threads.runs.retrieve(
-        thread.current!.id,
-        runId
-      );
+      response = await openAI.beta.threads.runs.retrieve(thread.id, runId);
     }
 
     return response;
   };
 
   const handleResponseCompletion = async (runId: string) => {
-    const messages = await openai.current!.beta.threads.messages.list(
-      thread.current!.id
-    );
+    if (!thread) {
+      throw new Error("No thread found");
+    }
+
+    if (!preRegistration) {
+      throw new Error("No pre-registration found");
+    }
+
+    const messages = await openAI.beta.threads.messages.list(thread.id);
 
     const lastMessage = messages.data
       .filter(
@@ -182,10 +183,6 @@ export const ChatbotContent = ({
       lastMessage?.content[0].type === "text"
         ? lastMessage.content[0].text.value
         : "";
-
-    if (!preRegistration) {
-      throw new Error("No pre-registration found");
-    }
 
     setIsLoading(false);
     setMessages((messages) => [
@@ -219,6 +216,10 @@ export const ChatbotContent = ({
     toolCalls: OpenAI.Beta.Threads.Runs.RequiredActionFunctionToolCall[],
     runId: string
   ) => {
+    if (!thread) {
+      throw new Error("No thread found");
+    }
+
     const toolOutputs: OpenAI.Beta.Threads.Runs.RunSubmitToolOutputsParams.ToolOutput[] =
       [];
 
@@ -239,17 +240,23 @@ export const ChatbotContent = ({
       });
     }
 
-    await openai.current!.beta.threads.runs.submitToolOutputs(
-      thread.current!.id,
-      runId,
-      { tool_outputs: toolOutputs }
-    );
+    await openAI.beta.threads.runs.submitToolOutputs(thread.id, runId, {
+      tool_outputs: toolOutputs,
+    });
 
     return toolOutputs.map((toolOutput) => JSON.parse(toolOutput.output!));
   };
 
   const sendMessage = async (event: FormEvent) => {
     event.preventDefault();
+
+    if (!thread) {
+      throw new Error("No thread found");
+    }
+
+    if (!preRegistration) {
+      throw new Error("No pre-registration found");
+    }
 
     if (message.trim().length === 0) return;
 
@@ -258,10 +265,6 @@ export const ChatbotContent = ({
       message,
       sender: "user",
     };
-
-    if (!preRegistration) {
-      throw new Error("No pre-registration found");
-    }
 
     setIsLoading(true);
     setMessages((messages) => [...messages, chatMessage]);
@@ -279,7 +282,7 @@ export const ChatbotContent = ({
     /**
      * Create message
      */
-    await openai.current!.beta.threads.messages.create(thread.current!.id, {
+    await openAI.beta.threads.messages.create(thread.id, {
       role: "user",
       content: `Mi nombre es ${preRegistration.name} y mi pregunta es: ${message}`,
     });
@@ -287,13 +290,10 @@ export const ChatbotContent = ({
     /**
      * Create run
      */
-    const run = await openai.current!.beta.threads.runs.create(
-      thread.current!.id,
-      {
-        assistant_id: ENV_VARS.OPENAI_ASSISTANT_ID,
-        tool_choice: { type: "file_search" },
-      }
-    );
+    const run = await openAI.beta.threads.runs.create(thread.id, {
+      assistant_id: ENV_VARS.OPENAI_ASSISTANT_ID,
+      tool_choice: { type: "file_search" },
+    });
 
     /**
      * Waits for run status to be different than "in_progress" or "queued"
@@ -370,7 +370,7 @@ export const ChatbotContent = ({
         align="end"
         className="w-[calc(100vw-2rem)] md:w-96 p-0"
       >
-        <Card>
+        <Card className="border-none">
           <CardHeader>
             <CardTitle>Chatbot</CardTitle>
           </CardHeader>

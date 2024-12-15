@@ -48,7 +48,7 @@ export async function getChatbotMessagesFromPreRegistration(
       };
 
       return message;
-    }) as ChatMessage[];
+    });
   }
 
   return [] as ChatMessage[];

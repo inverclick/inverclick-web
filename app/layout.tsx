@@ -5,10 +5,7 @@ import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { Toaster } from "@/components/ui/sonner";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
-import {
-  getChatbotMessagesFromPreRegistration,
-  getPreRegistration,
-} from "@/services/pre-registration";
+import { getPreRegistration } from "@/services/pre-registration";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ReactNode, Suspense } from "react";
@@ -70,10 +67,6 @@ export default async function RootLayout({
 }>) {
   const preRegistration = getPreRegistration();
 
-  const chatbotMessages = await getChatbotMessagesFromPreRegistration(
-    preRegistration
-  );
-
   return (
     <html lang="es">
       <head>
@@ -85,7 +78,7 @@ export default async function RootLayout({
           <YupLocalization>
             <TRMLoader>
               {children}
-              <Chatbot messages={chatbotMessages} />
+              <Chatbot />
               <PreRegistration />
             </TRMLoader>
           </YupLocalization>
