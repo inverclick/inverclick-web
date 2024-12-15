@@ -3,11 +3,13 @@
 import { ChatMessage } from "@/components/shared/chatbot/chat-message";
 import { ChatbotContent } from "@/components/shared/chatbot/chatbot-content";
 import { Sender } from "@/components/shared/chatbot/types";
+import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import { MessageCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export type ChatMessage = {
   id: string;
@@ -23,6 +25,12 @@ export const Chatbot = ({ messages: initialMessages = [] }: ChatbotProps) => {
   const { preRegistration, setIsPreRegistrationOpen } = usePreRegistration();
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (!preRegistration) {
+      localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
+    }
+  }, [preRegistration]);
 
   return (
     <>

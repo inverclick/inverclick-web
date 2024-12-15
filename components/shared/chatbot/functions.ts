@@ -54,7 +54,10 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
     response_message:
       "¡Pereira! Qué excelente elección. Es una ciudad llena de oportunidades para invertir. Estas son las opciones que encontré para ti.','200 millones. Es un gran punto de partida para tu inversión. Aquí tienes las opciones que se ajustan perfectamente a ese presupuesto.'",
     params: {
-      filter: fixedFilters.concat(transformedFilters).join(","),
+      filter: fixedFilters
+        .concat(transformedFilters)
+        .join(",")
+        .replace(/\s+/g, ""),
     },
   };
 

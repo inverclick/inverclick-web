@@ -10,9 +10,16 @@ import goToProjects, {
   simulateCreditByValueHousing,
 } from "@/components/shared/chatbot/functions";
 import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
+import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
+import { getChatbotMessagesFromLocalStorage } from "@/services/chatbot-messages-client";
 import { supabase } from "@/services/supabase";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@inverclick/inverclick-ui/avatar";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
   Card,
@@ -36,11 +43,11 @@ import { v4 as uuidv4 } from "uuid";
 import OpenAI from "openai";
 
 export type ChatbotContentProps = {
-  messages: ChatMessageType[];
+  messages?: ChatMessageType[];
 };
 
 export const ChatbotContent = ({
-  messages: initialMessages,
+  messages: initialMessages = [],
 }: ChatbotContentProps) => {
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
 
@@ -65,7 +72,9 @@ export const ChatbotContent = ({
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<ChatMessageType[]>(initialMessages);
+  const [messages, setMessages] = useState<ChatMessageType[]>(
+    getChatbotMessagesFromLocalStorage()
+  );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -74,10 +83,6 @@ export const ChatbotContent = ({
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
-
-  useEffect(() => {
-    setMessages(initialMessages);
-  }, [initialMessages]);
 
   useEffect(() => {
     if (!preRegistration) {
@@ -135,6 +140,11 @@ export const ChatbotContent = ({
         },
       ]);
     }
+
+    localStorage.setItem(
+      CHATBOT_MESSAGES_LOCAL_STORAGE_KEY,
+      JSON.stringify(messages)
+    );
   }, [messages, preRegistration]);
 
   useEffect(() => {
@@ -372,7 +382,13 @@ export const ChatbotContent = ({
       >
         <Card className="border-none">
           <CardHeader>
-            <CardTitle>Chatbot</CardTitle>
+            <div className="flex gap-2 items-center">
+              <Avatar>
+                <AvatarImage src="/avatar-assistant.svg" alt="Asistente" />
+                <AvatarFallback>AS</AvatarFallback>
+              </Avatar>
+              <CardTitle>Asistente</CardTitle>
+            </div>
           </CardHeader>
           <CardContent>
             <ChatMessages ref={scrollAreaRefFn}>

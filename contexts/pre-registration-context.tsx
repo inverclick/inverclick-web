@@ -27,20 +27,20 @@ export type PreRegistrationProviderProps = {
 } & PropsWithChildren;
 
 export const PreRegistrationProvider = ({
-  preRegistration: initialPreregistration,
+  preRegistration: initialPreRegistration,
   isPreRegistrationOpen: initialIsPreRegistrationOpen = false,
   children,
 }: PreRegistrationProviderProps) => {
   const [preRegistration, setPreRegistration] =
-    useState<PreRegistration | null>(null);
+    useState<PreRegistration | null>(initialPreRegistration);
 
   const [isPreRegistrationOpen, setIsPreRegistrationOpen] = useState(
     initialIsPreRegistrationOpen
   );
 
   useEffect(() => {
-    setPreRegistration(initialPreregistration);
-  }, [initialPreregistration]);
+    setPreRegistration(initialPreRegistration);
+  }, [initialPreRegistration]);
 
   const ensurePreRegistration = (callback?: Function) => {
     if (!preRegistration) {

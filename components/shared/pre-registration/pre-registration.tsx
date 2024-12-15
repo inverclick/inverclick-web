@@ -69,14 +69,18 @@ const PreRegistrationContent = () => {
       open={isPreRegistrationOpen}
       onOpenChange={setIsPreRegistrationOpen}
     >
-      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+      <DialogContent
+        hideCloseButton
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
-          <DialogTitle>Pre-registro</DialogTitle>
+          <DialogTitle>
+            Accede a nuestro asistente virtual y descubre toda nuestra oferta
+          </DialogTitle>
           <DialogDescription>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, optio
-            praesentium! Doloremque cumque, porro repellendus quae sed
-            praesentium voluptatem corporis veniam exercitationem magnam iusto
-            dicta sapiente fuga expedita deleniti assumenda?
+            Nuestro asistente te ayudará a encontrar inmuebles ideales, simular
+            créditos, conocer opciones de financiación y resolver tus dudas
+            sobre la compra de vivienda de manera sencilla y clara.
           </DialogDescription>
         </DialogHeader>
         <FormikProvider value={form}>
