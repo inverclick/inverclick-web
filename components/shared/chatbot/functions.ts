@@ -29,11 +29,13 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
     const { data } = await supabase
       .from("departments")
       .select("id")
-      .ilike("name", `%${department}%`)
-      .single();
+      .ilike("name", `${department}%`)
+      .limit(1);
 
-    if (data) {
-      transformedFilters.push(`department=${data.id}`);
+    const _department = data?.at(0);
+
+    if (_department) {
+      transformedFilters.push(`department=${_department.id}`);
     }
   }
 
@@ -41,11 +43,13 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
     const { data } = await supabase
       .from("cities")
       .select("id")
-      .ilike("name", `%${city}%`)
-      .single();
+      .ilike("name", `${city}%`)
+      .limit(1);
 
-    if (data) {
-      transformedFilters.push(`city=${data.id}`);
+    const _city = data?.at(0);
+
+    if (_city) {
+      transformedFilters.push(`city=${_city.id}`);
     }
   }
 
@@ -197,4 +201,64 @@ export async function questionAboutProject(params: { projectId: string }) {
   const output = await response.json();
 
   return JSON.stringify(output.data);
+}
+
+export async function questionAboutInverclick(params: { question: string }) {
+  const output = `
+App móvil - Inverclick
+
+Si quieres más información puedes ingresar a este link: https://www.inverclick.com/app
+
+Invierte en propiedad raíz desde EL EXTERIOR  
+Descubre propiedades verificadas y seguras en Colombia. Inverclick te ofrece un acceso exclusivo a las mejores opciones.  
+¡Descarga nuestra app y comienza tu búsqueda!  
+
+Personaliza tu búsqueda usando filtros dinámicos.
+
+Financiación - Inverclick
+
+Si quieres más información puedes ingresar a este link: https://www.inverclick.com/financing
+
+Crédito de vivienda para Colombianos en EL EXTERIOR  
+Solicita tu preaprobado.
+
+Ofrecemos dos clases de crédito:
+
+1. Crédito Hipotecario  
+ Es un producto de financiación para comprar vivienda donde el cliente figura como propietario del inmueble. El inmueble queda como garantía hasta completar el pago total de las cuotas.  
+
+ - Porcentaje de financiación: Hasta el 70% del valor total de la vivienda.  
+ - Plazo: Desde 5 hasta 20 años.  
+ - Edad para acceder: Entre los 18 y 72 años.  
+
+2. Leasing Habitacional  
+ Es un producto de financiación donde el propietario será el banco durante el contrato de leasing. Al finalizar, el cliente podrá ejercer la opción de compra.  
+
+ - Porcentaje de financiación: Hasta el 80% del valor total de la vivienda.  
+ - Plazo: Desde 5 hasta 20 años.  
+ - Edad para acceder: Entre los 18 y 72 años.  
+
+Estos son los requisitos para solicitar un crédito:  
+- Ser colombiano residente en el exterior o extranjero casado con colombiano residente en el exterior.  
+- Tener entre 18 y 72 años.  
+- Demostrar ingresos en el país de residencia.  
+
+¡Si no cumples con los requisitos, te brindaremos alternativas!
+
+Política de privacidad y tratamiento de datos personales - Inverclick
+
+Si quieres más información puedes ingresar a este link: https://www.inverclick.com/policy
+
+Inverclick S.A.S presenta la Política de Tratamiento de Datos Personales en cumplimiento de la Ley 1581 de 2012 y el Decreto 1074 de 2015.  
+
+Incluye definiciones, marco normativo, derechos de los titulares, entre otros.
+
+Términos y condiciones - Inverclick
+
+Si quieres más información puedes ingresar a este link: https://www.inverclick.com/terms-conditions
+
+Inverclick S.A.S es la sociedad titular de la marca y activos digitales. Los términos incluyen definiciones, condiciones generales, protección al consumidor, cesión de usuario y otros temas relevantes.
+`;
+
+  return JSON.stringify({ output });
 }

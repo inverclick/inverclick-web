@@ -2,6 +2,7 @@ import {
   goToProject,
   goToProjects,
   goToProjectsWithFilters,
+  questionAboutInverclick,
   questionAboutProject,
   simulateCreditByQuotaValue,
   simulateCreditByValueHousing,
@@ -16,5 +17,6 @@ declare global {
     simulateCreditByValueHousing: typeof simulateCreditByValueHousing;
     goToProject: typeof goToProject;
     questionAboutProject: typeof questionAboutProject;
+    questionAboutInverclick: typeof questionAboutInverclick;
   }
 }
