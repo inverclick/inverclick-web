@@ -30,6 +30,38 @@ export type Database = {
         }
         Relationships: []
       }
+      chatbot_messages: {
+        Row: {
+          created_at: string
+          from: Database["public"]["Enums"]["CHATBOT_SENDER"]
+          id: string
+          message: string
+          pre_registration_id: string
+        }
+        Insert: {
+          created_at?: string
+          from: Database["public"]["Enums"]["CHATBOT_SENDER"]
+          id?: string
+          message: string
+          pre_registration_id: string
+        }
+        Update: {
+          created_at?: string
+          from?: Database["public"]["Enums"]["CHATBOT_SENDER"]
+          id?: string
+          message?: string
+          pre_registration_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chatbot_messages_pre_registration_id_fkey"
+            columns: ["pre_registration_id"]
+            isOneToOne: false
+            referencedRelation: "pre_registrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cities: {
         Row: {
           department_id: number
@@ -153,6 +185,7 @@ export type Database = {
           status: Database["public"]["Enums"]["PROJECT_STATUS"]
           step: number
           stratum: number | null
+          updated_at: string | null
           urbanism_files: string[]
           urbanism_photos: string[]
           videos: string[] | null
@@ -181,6 +214,7 @@ export type Database = {
           status: Database["public"]["Enums"]["PROJECT_STATUS"]
           step: number
           stratum?: number | null
+          updated_at?: string | null
           urbanism_files?: string[]
           urbanism_photos?: string[]
           videos?: string[] | null
@@ -209,6 +243,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["PROJECT_STATUS"]
           step?: number
           stratum?: number | null
+          updated_at?: string | null
           urbanism_files?: string[]
           urbanism_photos?: string[]
           videos?: string[] | null
@@ -267,6 +302,7 @@ export type Database = {
           project_id: string
           rooms: number
           units: number
+          updated_at: string | null
         }
         Insert: {
           area: number
@@ -283,6 +319,7 @@ export type Database = {
           project_id: string
           rooms: number
           units: number
+          updated_at?: string | null
         }
         Update: {
           area?: number
@@ -299,6 +336,7 @@ export type Database = {
           project_id?: string
           rooms?: number
           units?: number
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -325,6 +363,27 @@ export type Database = {
           icon?: string
           id?: number
           label?: Database["public"]["Enums"]["HOUSING_TYPES"]
+        }
+        Relationships: []
+      }
+      pre_registrations: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
         }
         Relationships: []
       }
@@ -413,6 +472,7 @@ export type Database = {
           project_class: Database["public"]["Enums"]["PROJECT_CLASS"]
           status: Database["public"]["Enums"]["PROJECT_STATUS"]
           stratum: number
+          updated_at: string | null
           urbanism_files: string[]
           urbanism_photos: string[]
           videos: string[] | null
@@ -441,6 +501,7 @@ export type Database = {
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"]
           status?: Database["public"]["Enums"]["PROJECT_STATUS"]
           stratum: number
+          updated_at?: string | null
           urbanism_files: string[]
           urbanism_photos: string[]
           videos?: string[] | null
@@ -469,6 +530,7 @@ export type Database = {
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"]
           status?: Database["public"]["Enums"]["PROJECT_STATUS"]
           stratum?: number
+          updated_at?: string | null
           urbanism_files?: string[]
           urbanism_photos?: string[]
           videos?: string[] | null
@@ -520,6 +582,7 @@ export type Database = {
           project_id: string
           rooms: number
           units: number
+          updated_at: string | null
         }
         Insert: {
           area: number
@@ -536,6 +599,7 @@ export type Database = {
           project_id: string
           rooms: number
           units: number
+          updated_at?: string | null
         }
         Update: {
           area?: number
@@ -552,6 +616,7 @@ export type Database = {
           project_id?: string
           rooms?: number
           units?: number
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -704,6 +769,7 @@ export type Database = {
       }
     }
     Enums: {
+      CHATBOT_SENDER: "USER" | "BOT"
       HOUSING_STATE: "NEW" | "OFF_PLAN" | "USED"
       HOUSING_TYPES: "APARTAMENTO" | "CASA" | "BODEGA" | "LOTE"
       PROJECT_CLASS: "PROJECT" | "DRAFT"

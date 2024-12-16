@@ -4,6 +4,7 @@ import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { Header } from "@/components/shared/header/header";
 import { fallback } from "@/services/fallback";
 import { supabase } from "@/services/supabase";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -23,6 +24,7 @@ export default async function Page({
         "*, typologies:draft_typologies(*), department:departments(*), city:cities(*), company:companies(*)"
       )
       .eq("id", projectId)
+      .eq("status", "PENDING")
       .single(),
     supabase
       .from("draft_project_characteristics")
@@ -31,7 +33,7 @@ export default async function Page({
   ]);
 
   if (!data) {
-    return <div>Not found draft project</div>;
+    return notFound();
   }
 
   const typology = data.typologies.find(
@@ -39,7 +41,7 @@ export default async function Page({
   );
 
   if (!typology) {
-    return <div>Not found typology</div>;
+    return notFound();
   }
 
   return (

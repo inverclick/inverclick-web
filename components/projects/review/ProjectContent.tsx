@@ -108,7 +108,6 @@ export const ProjectContent = ({
                 </div>
                 <hr />
                 <Suspense>
-                  {/* @ts-expect-error Server Component */}
                   <ProjectCharacteristics
                     characteristics={characteristics}
                     companyLogo={companyLogo}

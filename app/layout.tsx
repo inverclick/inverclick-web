@@ -1,12 +1,19 @@
+import { Chatbot } from "@/components/shared/chatbot/chatbot";
 import { DownloadAppPopUp } from "@/components/shared/DownloadAppPopUp";
+import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { Toaster } from "@/components/ui/sonner";
+import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
+import { getPreRegistration } from "@/services/pre-registration";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import Script from "next/script";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
+import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 
+import Script from "next/script";
+
+import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
 
@@ -53,11 +60,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
+  const preRegistration = getPreRegistration();
+
   return (
     <html lang="es">
       <head>
@@ -65,7 +74,15 @@ export default function RootLayout({
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
-        <TRMLoader>{children}</TRMLoader>
+        <PreRegistrationProvider preRegistration={preRegistration}>
+          <YupLocalization>
+            <TRMLoader>
+              {children}
+              <Chatbot />
+              <PreRegistration />
+            </TRMLoader>
+          </YupLocalization>
+        </PreRegistrationProvider>
         <Toaster />
         <Suspense>
           <DownloadAppPopUp />

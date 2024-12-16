@@ -1,6 +1,5 @@
-import { getAssetUrl } from "@/services/utils";
 import { HousingType } from "@/types/housing-type";
-import Image from "next/image";
+import { icons } from "lucide-react";
 
 interface Props {
   currentTypes: string[];
@@ -27,6 +26,7 @@ export const TypeFilter = ({
       <h4 className="font-medium md:text-lg">Tipo de propiedad</h4>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {housingTypes.map(({ icon, id, label }) => {
+          const IconComponent = icons[icon as keyof typeof icons];
           return (
             <button
               key={id}
@@ -37,14 +37,7 @@ export const TypeFilter = ({
                   : ""
               }`}
             >
-              <Image
-                unoptimized
-                width={24}
-                height={24}
-                src={getAssetUrl(icon)}
-                alt={label}
-                className="w-6 h-6"
-              />
+              <IconComponent />
               <span className="text-sm md:text-base font-medium">{label}</span>
             </button>
           );

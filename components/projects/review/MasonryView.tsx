@@ -12,19 +12,22 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { DialogHeader } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import { ChevronLeft, Grip, Heart, X } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import Masonry from "react-responsive-masonry";
 import { useMediaQuery } from "usehooks-ts";
 import { ShareProject } from "./ShareProject";
+
+import Image from "next/image";
+import Masonry from "react-responsive-masonry";
 
 type MasonryViewProps = {
   photoScrollTo: string;
   photos: string[];
   open: boolean;
   setOpen: (open: boolean) => void;
+  disableSharableInteractions?: boolean;
 };
 
 export const MasonryView = ({
@@ -32,6 +35,7 @@ export const MasonryView = ({
   photos,
   open,
   setOpen,
+  disableSharableInteractions = false,
 }: MasonryViewProps) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -47,7 +51,11 @@ export const MasonryView = ({
             onClick={() => setOpen(false)}
             className="cursor-pointer text-black"
           />
-          <div className="flex gap-3">
+          <div
+            className={cn("flex gap-3", {
+              "pointer-events-none": disableSharableInteractions,
+            })}
+          >
             <ShareProject />
             <span className="flex items-center gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer">
               <Heart className="w-4 h-4 md:w-5 md:h-5" />
@@ -56,7 +64,11 @@ export const MasonryView = ({
           </div>
         </DialogHeader>
         <div className="p-6">
-          <PhotosGrid photoScrollTo={photoScrollTo} photos={photos} />
+          <PhotosGrid
+            photoScrollTo={photoScrollTo}
+            photos={photos}
+            disableSharableInteractions={disableSharableInteractions}
+          />
         </div>
       </AlertDialogContent>
     </AlertDialog>
@@ -66,9 +78,14 @@ export const MasonryView = ({
 type PhotosGridProps = Readonly<{
   photoScrollTo: string;
   photos: string[];
+  disableSharableInteractions?: boolean;
 }>;
 
-function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
+function PhotosGrid({
+  photoScrollTo,
+  photos,
+  disableSharableInteractions = false,
+}: PhotosGridProps) {
   const [photosSliderOpen, setPhotosSliderOpen] = useState(false);
   const [initialPhotoIndex, setInitialPhotoIndex] = useState(0);
 
@@ -105,6 +122,7 @@ function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
         photos={photos}
         isOpen={photosSliderOpen}
         setIsOpen={setPhotosSliderOpen}
+        disableSharableInteractions={disableSharableInteractions}
       />
     </>
   );
@@ -115,6 +133,7 @@ type PhotosSliderProps = Readonly<{
   photos: string[];
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  disableSharableInteractions?: boolean;
 }>;
 
 function PhotosSlider({
@@ -122,6 +141,7 @@ function PhotosSlider({
   photos,
   isOpen,
   setIsOpen,
+  disableSharableInteractions = false,
 }: PhotosSliderProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -151,7 +171,11 @@ function PhotosSlider({
           <p className="text-start md:text-center text-white">
             {current}/{count}
           </p>
-          <div className="flex gap-3 text-white justify-end">
+          <div
+            className={cn("flex gap-3 text-white justify-end", {
+              "pointer-events-none": disableSharableInteractions,
+            })}
+          >
             <ShareProject />
             <span className="flex items-center gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer">
               <Heart className="w-4 h-4 md:w-5 md:h-5" />

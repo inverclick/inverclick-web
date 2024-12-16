@@ -42,6 +42,12 @@ input[type="number"] {
   @apply bg-slate-400;
 }
 
+.scroll-area-flex [data-radix-scroll-area-viewport] > div {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem;
+}
+
 @layer utilities {
   .divided-background {
     background: linear-gradient(to right, #dbd4ff 50%, white 50%);

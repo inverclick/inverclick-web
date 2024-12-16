@@ -2,15 +2,20 @@
 
 import { getAssetUrl } from "@/services/utils";
 import { BadgeCheck } from "lucide-react";
+import { useState } from "react";
+import { MasonryView } from "@/components/projects/review/MasonryView";
+
 import Image from "next/image";
-import React, { useState } from "react";
-import { MasonryView } from "./MasonryView";
 
 interface Props {
   photos: string[];
+  disableSharableInteractions?: boolean;
 }
 
-export const ProjectGallery = ({ photos }: Props) => {
+export const ProjectGallery = ({
+  photos,
+  disableSharableInteractions = false,
+}: Props) => {
   const [open, setOpen] = useState(false);
 
   const [photoScrollTo, setPhotoScrollTo] = useState<string>("");
@@ -68,6 +73,7 @@ export const ProjectGallery = ({ photos }: Props) => {
           setOpen={setOpen}
           photoScrollTo={photoScrollTo}
           photos={photos}
+          disableSharableInteractions={disableSharableInteractions}
         />
       </span>
     </div>

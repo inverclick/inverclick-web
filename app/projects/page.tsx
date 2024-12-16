@@ -1,8 +1,6 @@
 import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
 import { MyMap2 } from "@/components/projects/MyMap2";
 import { NavbarProjects } from "@/components/projects/NavbarProjects";
-import ProjectContent from "@/components/projects/ProjectContent";
-import { ContactButton } from "@/components/shared/ContactButton";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -20,6 +18,8 @@ import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";
 import { ProjectToDisplay } from "@/types/project";
 import { Metadata } from "next";
+
+import ProjectContent from "@/components/projects/ProjectContent";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -56,11 +56,13 @@ export default async function Projects(props: ProjectsProps) {
   const city = searchParams.city;
   const housingState = searchParams.housing_state;
 
-  const [_departments, prices, _housingTypes] = await Promise.all([
-    supabase.from("departments").select("*"),
-    getProjectsPriceRange(),
-    supabase.from("housing_types").select("*"),
-  ]);
+  const [departmentsResponse, prices, housingTypesResponse] = await Promise.all(
+    [
+      supabase.from("departments").select("*"),
+      getProjectsPriceRange(),
+      supabase.from("housing_types").select("*"),
+    ]
+  );
 
   const query = supabase
     .from("projects")
@@ -81,14 +83,14 @@ export default async function Projects(props: ProjectsProps) {
     .order("price", { referencedTable: "typologies", ascending: true })
     .returns<ProjectToDisplay[]>();
 
-  const departments = _departments.data ?? [];
-  const housingTypes = _housingTypes.data ?? [];
+  const departments = departmentsResponse.data ?? [];
+  const housingTypes = housingTypesResponse.data ?? [];
   const total = count ?? 0;
   const projects = data ?? [];
 
   return (
     <main>
-      <ContactButton className="fixed right-4 bottom-4" />
+      {/* <ContactButton className="fixed right-4 bottom-4" /> */}
       <section className="hidden lg:block">
         <DefaultResizablePanelGroup
           direction="horizontal"
