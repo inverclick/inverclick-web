@@ -1,9 +1,9 @@
 "use client";
 
+import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { PreRegistrationValues } from "@/types/pre-registration";
 import { Button } from "@inverclick/inverclick-ui/button";
-import Turnstile from "react-turnstile";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,7 @@ import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Turnstile from "react-turnstile";
 
 import * as yup from "yup";
 
@@ -27,8 +28,10 @@ export const PreRegistration = () => {
 
 const PreRegistrationContent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [captchaToken, setCaptchaToken] = useState('');
-  
+  const [captchaToken, setCaptchaToken] = useState("");
+
+  const { shouldOpenChatbot, setIsChatOpen } = useChatbot();
+
   const {
     isPreRegistrationOpen,
     setIsPreRegistrationOpen,
@@ -48,7 +51,7 @@ const PreRegistrationContent = () => {
         body: JSON.stringify({
           name,
           email,
-          captchaToken
+          captchaToken,
         }),
         method: "POST",
         headers: {
@@ -58,7 +61,7 @@ const PreRegistrationContent = () => {
 
       if (response.status !== 200) {
         setIsLoading(false);
-        alert('Error de validación, intenta de nuevo.');
+        alert("Error de validación, intenta de nuevo.");
         return;
       }
 
@@ -68,6 +71,10 @@ const PreRegistrationContent = () => {
       setIsPreRegistrationOpen(false);
 
       setIsLoading(false);
+
+      if (shouldOpenChatbot) {
+        setIsChatOpen(true);
+      }
 
       router.refresh();
     },

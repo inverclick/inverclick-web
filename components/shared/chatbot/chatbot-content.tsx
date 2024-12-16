@@ -11,6 +11,7 @@ import goToProjects, {
 } from "@/components/shared/chatbot/functions";
 import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
 import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
+import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { getChatbotMessagesFromLocalStorage } from "@/services/chatbot-messages-client";
@@ -70,13 +71,14 @@ export const ChatbotContent = ({
 
   const [thread, setThread] = useState<OpenAI.Beta.Threads.Thread>();
 
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<ChatMessageType[]>(
     getChatbotMessagesFromLocalStorage()
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { isChatOpen, setIsChatOpen } = useChatbot();
 
   const { preRegistration } = usePreRegistration();
 

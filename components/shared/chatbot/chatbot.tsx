@@ -4,12 +4,13 @@ import { ChatMessage } from "@/components/shared/chatbot/chat-message";
 import { ChatbotContent } from "@/components/shared/chatbot/chatbot-content";
 import { Sender } from "@/components/shared/chatbot/types";
 import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
+import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import { MessageCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export type ChatMessage = {
   id: string;
@@ -22,6 +23,7 @@ export type ChatbotProps = {
 };
 
 export const Chatbot = ({ messages: initialMessages = [] }: ChatbotProps) => {
+  const { setShouldOpenChatbot } = useChatbot();
   const { preRegistration, setIsPreRegistrationOpen } = usePreRegistration();
 
   const pathname = usePathname();
@@ -41,7 +43,10 @@ export const Chatbot = ({ messages: initialMessages = [] }: ChatbotProps) => {
           variant={pathname === "/" ? "secondary" : "default"}
           rounded="full"
           size="icon"
-          onClick={() => setIsPreRegistrationOpen(true)}
+          onClick={() => {
+            setIsPreRegistrationOpen(true);
+            setShouldOpenChatbot(true);
+          }}
         >
           <Icon icon={MessageCircle} />
         </Button>
