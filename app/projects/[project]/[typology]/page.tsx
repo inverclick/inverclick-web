@@ -9,6 +9,7 @@ import { getPreRegistration } from "@/services/pre-registration";
 import { supabase } from "@/services/supabase";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -46,9 +47,9 @@ export async function generateMetadata({
 
 export default async function Page({
   params,
-}: {
+}: Readonly<{
   params: { project: string; typology: string };
-}) {
+}>) {
   const preRegistration = getPreRegistration();
 
   const projectId = params.project;
@@ -61,6 +62,7 @@ export default async function Page({
         "*, typologies(*), department:departments(*), city:cities(*), company:companies(*)"
       )
       .eq("id", projectId)
+      .eq("status", "PUBLISHED")
       .single(),
     supabase
       .from("project_characteristics")
@@ -69,12 +71,12 @@ export default async function Page({
   ]);
 
   if (!data) {
-    return <div>Not found</div>;
+    return notFound();
   }
 
   const mainBlueprint = data.typologies.find((t) => t.id === typologyId);
   if (!mainBlueprint) {
-    return <div>Not found</div>;
+    return notFound();
   }
 
   return (
