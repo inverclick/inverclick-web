@@ -3,6 +3,7 @@
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { PreRegistrationValues } from "@/types/pre-registration";
 import { Button } from "@inverclick/inverclick-ui/button";
+import Turnstile from "react-turnstile";
 import {
   Dialog,
   DialogContent,
@@ -26,7 +27,8 @@ export const PreRegistration = () => {
 
 const PreRegistrationContent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [captchaToken, setCaptchaToken] = useState('');
+  
   const {
     isPreRegistrationOpen,
     setIsPreRegistrationOpen,
@@ -46,12 +48,19 @@ const PreRegistrationContent = () => {
         body: JSON.stringify({
           name,
           email,
+          captchaToken
         }),
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
+
+      if (response.status !== 200) {
+        setIsLoading(false);
+        alert('Error de validación, intenta de nuevo.');
+        return;
+      }
 
       const preRegistration = await response.json();
 
@@ -107,6 +116,14 @@ const PreRegistrationContent = () => {
                 },
               }}
             />
+            <div className="mt-4">
+              <Turnstile
+                sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                onVerify={(token) => setCaptchaToken(token)}
+                size="flexible"
+                theme="light"
+              />
+            </div>
           </Form>
         </FormikProvider>
         <DialogFooter>
