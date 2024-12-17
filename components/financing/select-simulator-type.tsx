@@ -1,9 +1,11 @@
+import { SimulatorType } from "@/components/financing/credit-simulator";
+import { useEffect, useRef, useState } from "react";
+
 import clsx from "clsx";
-import React, { useEffect, useRef } from "react";
 
 interface Props {
-  setSimulatorType: (type: "VALOR" | "CUOTA") => void;
-  simulatorType: "VALOR" | "CUOTA";
+  setSimulatorType: (type: SimulatorType) => void;
+  simulatorType: SimulatorType;
 }
 
 export const SelectSimulatorType = ({
@@ -12,8 +14,8 @@ export const SelectSimulatorType = ({
 }: Props) => {
   const activeTabRef = useRef<HTMLButtonElement | null>(null);
 
-  const [width, setWidth] = React.useState(0);
-  const [offset, setOffset] = React.useState(0);
+  const [width, setWidth] = useState(0);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     if (activeTabRef.current) {

@@ -1,22 +1,23 @@
 "use client";
 
-import "@/app/styles/flip-card.css";
 import { Plus } from "lucide-react";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
-interface Props {
+import "@/app/styles/flip-card.css";
+
+export type FinancingCardProps = {
   frontContent: ReactNode;
   color: string;
   direction: "horizontal" | "vertical";
   content: ReactNode;
-}
+};
 
 export const FinancingCard = ({
   color,
   content,
   frontContent,
   direction,
-}: Props) => {
+}: FinancingCardProps) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const [isFlipped, setIsFlipped] = useState(false);

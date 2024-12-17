@@ -4,11 +4,7 @@ import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
-import {
-  HOUSING_STATE_LABEL,
-  HOUSING_TYPE_LABEL,
-  ProjectToDisplay,
-} from "@/types/project";
+import { ProjectToDisplay } from "@/types/project";
 import Image from "next/image";
 import { ComponentProps, forwardRef, useEffect, useState } from "react";
 import {
@@ -18,6 +14,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 import { Skeleton } from "../ui/skeleton";
+import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/project";
 
 type ProjectCardProps = {
   project: ProjectToDisplay;

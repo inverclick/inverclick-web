@@ -1,3 +1,5 @@
 import { Tables } from "@/services/supabase";
 
-export type ICOMPANY = Tables<'companies'>['Row']
+export type Company = Tables<"companies">["Row"];
+export type CreateCompany = Tables<"companies">["Insert"];
+export type UpdateCompany = Tables<"companies">["Update"];

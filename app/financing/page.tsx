@@ -1,11 +1,12 @@
-import { CreditSimulador } from "@/components/financing/CreditSimulador";
-import { FinancingCard } from "@/components/financing/FinancingCard";
+import { CreditSimulador } from "@/components/financing/credit-simulator";
+import { FinancingCard } from "@/components/financing/financing-card";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { FrequentlyQuestions } from "@/components/shared/FrequentlyQuestions";
 import { Header } from "@/components/shared/header/header";
 import { ENV_VARS } from "@/global/env";
 import { Check } from "lucide-react";
 import { Metadata } from "next";
+
 import Image from "next/image";
 
 export const metadata: Metadata = {

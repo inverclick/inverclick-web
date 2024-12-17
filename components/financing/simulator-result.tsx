@@ -1,5 +1,6 @@
 "use client";
 
+import { SimulatorType } from "@/components/financing/credit-simulator";
 import { CountUp } from "@/components/shared/CountUp";
 import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
@@ -10,7 +11,7 @@ import "./financing.css";
 export type SimulatorResultProps = {
   value: number;
   ea: number;
-  type: "VALOR" | "CUOTA";
+  type: SimulatorType;
 };
 
 export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {

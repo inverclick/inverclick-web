@@ -4,13 +4,12 @@ import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
 import { LoginButton } from "@/components/shared/LoginButton";
 import { DynamicPhrases } from "@/components/web/DynamicPhrases";
 import { Searcher } from "@/components/web/Searcher";
-import { Services } from "@/components/web/Services";
+import { Services } from "@/components/web/services";
 import { supabase } from "@/services/supabase";
 import { Department } from "@/types/department";
 
 import Image from "next/image";
 import Link from "next/link";
-import { createPortal } from "react-dom";
 
 export default async function Home() {
   const { data: departments } = await supabase.from("departments").select("*");

@@ -1,7 +1,7 @@
 import { getOtherProjects } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
 import { getProject } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { getProjectMetadata } from "@/app/projects/[project]/[typology]/_services/get-project-metadata";
-import { Hero } from "@/components/projects/review/Hero";
+import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
 import { OtherProjects } from "@/components/projects/review/OtherProjects";
 import { ProjectContent } from "@/components/projects/review/ProjectContent";
 import { ViewInformationButton } from "@/components/projects/review/view-information-button";
@@ -80,7 +80,7 @@ export default async function Page({
       >
         <div className="relative">
           <div className="relative">
-            <Hero
+            <ProjectHero
               name={project.name}
               photos={project.photos}
               price={typology.price}

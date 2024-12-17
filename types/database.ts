@@ -9,6 +9,80 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      advisors: {
+        Row: {
+          company_id: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "advisors_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      appointments: {
+        Row: {
+          advisor_id: string
+          created_at: string
+          date: string
+          id: string
+          lead_id: string
+          link: string
+        }
+        Insert: {
+          advisor_id?: string
+          created_at?: string
+          date: string
+          id?: string
+          lead_id: string
+          link: string
+        }
+        Update: {
+          advisor_id?: string
+          created_at?: string
+          date?: string
+          id?: string
+          lead_id?: string
+          link?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_advisor_id_fkey"
+            columns: ["advisor_id"]
+            isOneToOne: false
+            referencedRelation: "advisors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       characteristics: {
         Row: {
           icon: string
@@ -365,6 +439,42 @@ export type Database = {
           label?: Database["public"]["Enums"]["HOUSING_TYPES"]
         }
         Relationships: []
+      }
+      leads: {
+        Row: {
+          created_at: string
+          id: string
+          pre_registration_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          pre_registration_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          pre_registration_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_pre_registration_id_fkey"
+            columns: ["pre_registration_id"]
+            isOneToOne: false
+            referencedRelation: "pre_registrations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pre_registrations: {
         Row: {
@@ -779,7 +889,7 @@ export type Database = {
         | "PUBLISHED"
         | "REJECTED"
         | "SUSPENDED"
-      USER_ROLE: "ADMIN" | "COMPANY" | "INVESTOR"
+      USER_ROLE: "ADMIN" | "COMPANY" | "INVESTOR" | "LEAD"
     }
     CompositeTypes: {
       [_ in never]: never

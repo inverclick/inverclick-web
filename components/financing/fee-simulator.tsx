@@ -1,15 +1,14 @@
 "use client";
 
-import { useCreditSimulador } from "@/components/financing/CreditSimulador";
+import { useCreditSimulador } from "@/components/financing/credit-simulator";
 import { SelectCurrency } from "@/components/projects/SelectCurrency";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@inverclick/inverclick-ui/button";
+import { Calendar } from "@inverclick/inverclick-ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from "@inverclick/inverclick-ui/popover";
 import { NativeSlider } from "@/components/ui/slider-native";
 import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { Typography } from "@inverclick/inverclick-ui/typography";
@@ -47,8 +46,10 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
 
   return (
     <article className="flex-1 flex flex-col gap-6 animate-blurred-fade-in">
-      <div className="flex gap-4 justify-between items-center">
-        <Typography>¿Cuál es el valor de la cuota que quiero pagar?</Typography>
+      <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
+        <Typography className="flex-grow flex-shrink-0">
+          ¿Cuál es el valor de la cuota que quiero pagar?
+        </Typography>
         <SelectCurrency />
       </div>
       <CurrencyInput
@@ -59,16 +60,6 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
         className="w-full text-3xl font-semibold h-20 border border-black rounded-xl px-4 focus:outline-none"
         onValueChange={(value) => setInputValue(String(value))}
       />
-      {/* <RadioGroup className="flex items-center gap-8">
-        <div className="flex  items-center gap-2">
-          <Typography>Crédito hipotecario</Typography>
-          <RadioGroupItem value="Crédito hipotecario" />
-        </div>
-        <div className="flex items-center gap-2">
-          <Typography>Leasing habitacional</Typography>
-          <RadioGroupItem value="Leasing habitacional" />
-        </div>
-      </RadioGroup> */}
       <div className="flex flex-col lg:flex-row gap-4 mb-4">
         <div className="flex-1 flex flex-col">
           <Typography variant="h4" className="mb-4 text-center lg:text-left">

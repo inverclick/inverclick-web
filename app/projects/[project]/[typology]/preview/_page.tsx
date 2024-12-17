@@ -1,4 +1,4 @@
-import { Hero } from "@/components/projects/review/Hero";
+import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
 import { ProjectContentProps } from "@/components/projects/review/ProjectContent";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { Header } from "@/components/shared/header/header";
@@ -48,7 +48,7 @@ export default async function Page({
     <main>
       <Header />
       <article className="p-content flex flex-col gap-8 max-w-screen-2xl mx-auto">
-        <Hero
+        <ProjectHero
           name={fallback(data.name, "string")}
           photos={data.photos}
           price={typology.price}

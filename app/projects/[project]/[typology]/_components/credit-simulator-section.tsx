@@ -1,5 +1,5 @@
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
-import { CreditSimulador } from "@/components/financing/CreditSimulador";
+import { CreditSimulador } from "@/components/financing/credit-simulator";
 import { cn } from "@/lib/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { ComponentProps } from "react";

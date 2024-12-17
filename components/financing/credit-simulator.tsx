@@ -8,10 +8,10 @@ import React, {
   useContext,
   useState,
 } from "react";
-import { FeeSimulator } from "./FeeSimulator";
-import { SelectSimulatorType } from "./SelectSimulatorType";
-import { SimulatorResult } from "./SimulatorResult";
-import { ValueSimulator } from "./ValueSimulator";
+import { FeeSimulator } from "./fee-simulator";
+import { SelectSimulatorType } from "./select-simulator-type";
+import { SimulatorResult } from "./simulator-result";
+import { ValueSimulator } from "./value-simulator";
 
 export type CreditSimuladorContextType = {
   value: {
@@ -46,6 +46,8 @@ export const useCreditSimulador = () => {
   return useContext(CreditSimuladorContext);
 };
 
+export type SimulatorType = "VALOR" | "CUOTA";
+
 export type CreditSimuladorProps = Readonly<{
   price: number;
 }>;
@@ -55,14 +57,11 @@ export const QUOTA_EFFECTIVE_ANNUAL_INTEREST = 0.11;
 export const INSURANCE = 0.06;
 
 export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
-  const [simulatorType, setSimulatorType] = useState<"VALOR" | "CUOTA">(
-    "VALOR"
-  );
+  const [simulatorType, setSimulatorType] = useState<SimulatorType>("VALOR");
 
   const [valueCredit, setValueCredit] = useState(0);
   const [quotaCredit, setQuotaCredit] = useState(0);
 
-  // VALOR
   const [type, setType] = useState<string>("Crédito hipotecario");
   const [inputValue, setInputValue] = useState<string>(price.toString());
   const [maxPercentage, setMaxPercentage] = useState(70);
@@ -70,7 +69,6 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
   const [date, setDate] = useState<Date>();
   const [years, setYears] = useState(15);
 
-  // CUOTA
   const [quotaInputValue, setQuotaInputValue] = useState<string>("0");
   const [quotaDate, setQuotaDate] = useState<Date>();
   const [quotaYears, setQuotaYears] = useState(15);
@@ -102,7 +100,6 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
         },
       }}
     >
-      {/* <section className="flex flex-col gap-6 h-[700px]"> */}
       <section className="flex flex-col gap-6">
         <SelectSimulatorType
           setSimulatorType={setSimulatorType}

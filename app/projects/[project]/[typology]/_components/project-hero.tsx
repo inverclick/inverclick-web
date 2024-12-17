@@ -1,16 +1,25 @@
 import { DisplayTRM } from "@/components/projects/DisplayTRM";
 import { SelectCurrency } from "@/components/projects/SelectCurrency";
 import { ProjectGallery } from "@/components/projects/review/ProjectGallery";
-import { ShareProject } from "@/components/projects/review/ShareProject";
 import { DisplayFormattedCurrency } from "@/components/shared/DisplayFormattedCurrency";
+import { SaveFavorite } from "@/components/shared/save-favorite/save-favorite";
+import { ShareProject } from "@/components/shared/share-project/share-project";
 import { cn } from "@/lib/utils";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@inverclick/inverclick-ui/breadcrumb";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import { Typography } from "@inverclick/inverclick-ui/typography";
-import { Heart, Home, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 import Link from "next/link";
 
-export type HeroProps = {
+export type ProjectHeroProps = {
   name: string;
   photos: string[];
   price: number;
@@ -21,7 +30,7 @@ export type HeroProps = {
   disableSharableInteractions?: boolean;
 };
 
-export const Hero = ({
+export const ProjectHero = ({
   name,
   department,
   city,
@@ -30,47 +39,45 @@ export const Hero = ({
   photos,
   className,
   disableSharableInteractions = false,
-}: HeroProps) => {
+}: ProjectHeroProps) => {
   return (
     <section className={cn("flex flex-col gap-4 md:gap-6 xl:gap-8", className)}>
       <div className="flex gap-4 justify-between">
-        <div className="text-xs md:text-sm flex gap-2 mb-3 md:mb-4 xl:mb-5">
-          <Link
-            href="/"
-            className="hover:text-primary-800 hover:underline transition-all ease-in flex gap-1"
-          >
-            <Home className="w-[14px] h-[14px] md:w-4 md:h-4" />
-            Home
-          </Link>
-          <span>/</span>
-          <Link
-            href="/projects"
-            className="hover:text-primary-800 hover:underline transition-all ease-in"
-          >
-            Proyectos
-          </Link>
-          <span>/</span>
-          <span className="text-primary-600">{name}</span>
-        </div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">Inicio</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/projects">Proyectos</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{name}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <DisplayTRM size="base" className="hidden md:block" />
       </div>
-      <div className="flex flex-col-reverse md:flex-row justify-between gap-6 md:items-center">
-        <h1 className="text-3xl md:text-4xl xl:text-5xl font-semibold">
-          {name}
-        </h1>
-        <div className={"flex gap-4 items-center"}>
-          <ShareProject isDisabled={disableSharableInteractions} />
-          <span
-            className={cn(
-              "flex items-center gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer",
-              {
-                "pointer-events-none": disableSharableInteractions,
-              }
-            )}
-          >
-            <Icon icon={Heart} />
-            Guardar
-          </span>
+      <div className="flex flex-col md:flex-row justify-between gap-4 md:items-center">
+        <Typography variant="h1">{name}</Typography>
+        <div className="flex gap-4">
+          <ShareProject
+            isIconOnly
+            isDisabled={disableSharableInteractions}
+            className="lg:hidden"
+          />
+          <ShareProject
+            isDisabled={disableSharableInteractions}
+            className="hidden lg:flex"
+          />
+          <SaveFavorite isIconOnly className="lg:hidden" />
+          <SaveFavorite className="hidden lg:flex" />
           <SelectCurrency />
         </div>
       </div>

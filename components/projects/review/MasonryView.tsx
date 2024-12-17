@@ -1,8 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { ShareProject } from "@/components/shared/share-project/share-project";
 import {
   Carousel,
   CarouselApi,
@@ -11,14 +7,19 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { DialogHeader } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@inverclick/inverclick-ui/dialog";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import { ChevronLeft, Grip, Heart, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { ShareProject } from "./ShareProject";
 
+import { SaveFavorite } from "@/components/shared/save-favorite/save-favorite";
 import Image from "next/image";
 import Masonry from "react-responsive-masonry";
 
@@ -38,15 +39,20 @@ export const MasonryView = ({
   disableSharableInteractions = false,
 }: MasonryViewProps) => {
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
         <div className="flex items-center justify-center gap-1">
           <Grip className="text-gray-600 h-5 w-5" />
           Mostrar más fotos
         </div>
-      </AlertDialogTrigger>
-      <AlertDialogContent className=" max-w-screen h-screen min-h-screen max-h-screen p-0 border-none !rounded-none overflow-y-auto">
-        <DialogHeader className="sticky top-0 z-10 flex flex-row items-center justify-between space-y-0 p-6 bg-white">
+      </DialogTrigger>
+      <DialogContent
+        isFullscreen
+        hideCloseButton
+        hasPadding={false}
+        className="flex flex-col"
+      >
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 p-6 h-max bg-white">
           <ChevronLeft
             onClick={() => setOpen(false)}
             className="cursor-pointer text-black"
@@ -56,22 +62,28 @@ export const MasonryView = ({
               "pointer-events-none": disableSharableInteractions,
             })}
           >
-            <ShareProject />
-            <span className="flex items-center gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer">
-              <Heart className="w-4 h-4 md:w-5 md:h-5" />
-              Guardar
-            </span>
+            <ShareProject
+              isIconOnly
+              isDisabled={disableSharableInteractions}
+              className="lg:hidden"
+            />
+            <ShareProject
+              isDisabled={disableSharableInteractions}
+              className="hidden lg:flex"
+            />
+            <SaveFavorite isIconOnly className="lg:hidden" />
+            <SaveFavorite className="hidden lg:flex" />
           </div>
         </DialogHeader>
-        <div className="p-6">
+        <div className="p-6 overflow-y-auto">
           <PhotosGrid
             photoScrollTo={photoScrollTo}
             photos={photos}
             disableSharableInteractions={disableSharableInteractions}
           />
         </div>
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -161,9 +173,14 @@ function PhotosSlider({
   }, [api, photos]);
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogContent className="grid grid-rows-[auto,minmax(0,1fr)] max-w-screen h-screen min-h-screen max-h-screen p-0 border-none !rounded-none bg-black">
-        <DialogHeader className="sticky top-0 grid grid-cols-3 items-center space-y-0 p-6 bg-black">
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent
+        isFullscreen
+        hideCloseButton
+        hasPadding={false}
+        className="grid grid-rows-[auto,minmax(0,1fr)] bg-black"
+      >
+        <DialogHeader className="grid grid-cols-3 items-center space-y-0 p-6 bg-black">
           <X
             onClick={() => setIsOpen(false)}
             className="cursor-pointer text-white"
@@ -176,11 +193,17 @@ function PhotosSlider({
               "pointer-events-none": disableSharableInteractions,
             })}
           >
-            <ShareProject />
-            <span className="flex items-center gap-2 text-sm md:text-base underline hover:text-primary-600 transition-colors ease-in cursor-pointer">
-              <Heart className="w-4 h-4 md:w-5 md:h-5" />
-              Guardar
-            </span>
+            <ShareProject
+              isIconOnly
+              properties={{ triggerButton: { variant: "black" } }}
+              className="lg:hidden"
+            />
+            <ShareProject
+              properties={{ triggerButton: { variant: "black" } }}
+              className="hidden lg:flex"
+            />
+            <SaveFavorite isIconOnly variant="black" className="lg:hidden" />
+            <SaveFavorite variant="black" className="hidden lg:flex" />
           </div>
         </DialogHeader>
         <div>
@@ -215,7 +238,7 @@ function PhotosSlider({
             )}
           </Carousel>
         </div>
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   );
 }

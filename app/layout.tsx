@@ -3,7 +3,7 @@ import { DownloadAppPopUp } from "@/components/shared/DownloadAppPopUp";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
-import { Toaster } from "@/components/ui/sonner";
+import { ChatbotProvider } from "@/contexts/chatbot-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { getPreRegistration } from "@/services/pre-registration";
@@ -13,10 +13,10 @@ import { ReactNode, Suspense } from "react";
 
 import Script from "next/script";
 
-import { ChatbotProvider } from "@/contexts/chatbot-context";
 import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
