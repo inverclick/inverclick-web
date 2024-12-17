@@ -1,26 +1,35 @@
-'use client'
-import { useCurrencyContext } from '@/contexts/CurrencyContext'
-import { currencyFormatter } from '@/lib/currencyFormatter';
-import React, { useEffect, useState } from 'react'
+"use client";
 
-interface Props {
-  className?: string;
+import { useCurrencyContext } from "@/contexts/CurrencyContext";
+import { currencyFormatter } from "@/lib/currencyFormatter";
+import { cn } from "@/lib/utils";
+import { Typography } from "@inverclick/inverclick-ui/typography";
+import { ComponentProps, useEffect, useState } from "react";
+
+export type DisplayFormattedCurrencyProps = Readonly<{
   number: number;
-}
+  showAsterix?: boolean;
+}> &
+  ComponentProps<typeof Typography>;
 
-export const DisplayFormattedCurrency = ({className, number}: Props) => {
-  const { convert, currency } = useCurrencyContext()
-  const [isMounted, setIsMounted] = useState(false)
+export const DisplayFormattedCurrency = ({
+  number,
+  showAsterix,
+  ...props
+}: DisplayFormattedCurrencyProps) => {
+  const { convert, currency } = useCurrencyContext();
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true)
-  } ,[])
+    setIsMounted(true);
+  }, []);
 
-  if(!isMounted) return null
+  if (!isMounted) return null;
 
   return (
-    <div className={className}>
-      { currencyFormatter(convert(number), currency)} {currency}
-    </div>
-  )
-}
+    <Typography variant="h3" className={cn(props.className)} {...props}>
+      {currencyFormatter(convert(number), currency)} {currency}
+      {showAsterix && "*"}
+    </Typography>
+  );
+};

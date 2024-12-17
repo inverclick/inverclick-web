@@ -54,7 +54,7 @@ function MobileHeader({ size }: MobileHeaderProps) {
         />
       </a>
       <div className="flex items-center gap-4">
-        <DisplayTRM />
+        {/* <DisplayTRM /> */}
         <DropdownMenu>
           <DropdownMenuTrigger className="p-1 border-2 border-primary rounded-md cursor-pointer">
             <Menu className="w-4 h-4" />
@@ -65,6 +65,9 @@ function MobileHeader({ size }: MobileHeaderProps) {
                 {name}
               </DropdownMenuItem>
             ))}
+            <DropdownMenuItem>
+              <DisplayTRM />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         <UserLink />

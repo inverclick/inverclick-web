@@ -1,158 +1,134 @@
-import { CreditSimulador } from "@/components/financing/CreditSimulador";
+"use client";
+
+import { CreditSimulatorSection } from "@/app/projects/[project]/[typology]/_components/credit-simulator-section";
+import { ProjectCharacteristicsSection } from "@/app/projects/[project]/[typology]/_components/project-characteristics-section";
+import { ProjectCreditSimulatorSection } from "@/app/projects/[project]/[typology]/_components/project-credit-simulator-section";
+import { ProjectFeaturesSection } from "@/app/projects/[project]/[typology]/_components/project-features-section";
+import { ProjectInformationSection } from "@/app/projects/[project]/[typology]/_components/project-information-section";
+import { ProjectLocationSection } from "@/app/projects/[project]/[typology]/_components/project-location-section";
+import { ProjectValorizationSection } from "@/app/projects/[project]/[typology]/_components/project-valorization-section";
+import { TypologiesSection } from "@/app/projects/[project]/[typology]/_components/typologies-section";
+import { UrbanismSection } from "@/app/projects/[project]/[typology]/_components/urbanism-section";
+import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getAssetUrl } from "@/services/utils";
-import { IBLUEPRINT } from "@/types/blueprint";
-import { HOUSING_STATE_TYPE } from "@/types/project";
-import Image from "next/image";
-import React, { Suspense } from "react";
-import { ProjectCharacteristics } from "./ProjectCharacteristics";
-import { ProjectLocation } from "./ProjectLocation";
-import { StickyContact } from "./StickyContact";
-import { Typologies } from "./Typologies";
-import { Urbanism } from "./Urbanism";
-import { Characteristic } from "@/types/characteristic";
+import { cn } from "@/lib/utils";
 import { Typology } from "@/types/typologies";
+import { Icon } from "@inverclick/inverclick-ui/icon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@inverclick/inverclick-ui/tooltip";
+import { Typography } from "@inverclick/inverclick-ui/typography";
+import { Info, ShieldCheck, Star } from "lucide-react";
+import { ComponentProps } from "react";
 
-interface DescriptionProps {
-  name: string;
-  description: string;
-  companyName: string;
-  companyLogo: string;
-  housingState: HOUSING_STATE_TYPE;
-  department: string;
-  city: string;
-  projectLogo: string;
-  address: string;
-  projectId: string;
-  stratum: number;
-  characteristics: Characteristic[];
-  units: number;
-  deadline?: string;
-  typologies: Typology[];
-  location: {
-    lat: number;
-    lng: number;
-  };
-  urbanismPhotos: string[];
-  urbanismFiles: string[];
-}
+const VALORIZATION_MONTHS = 18;
+const VALORIZATION_PERCENTAGE = 0.203;
 
-export const ProjectContent = ({
-  typologies,
-  urbanismPhotos = [],
-  urbanismFiles = [],
-  characteristics,
-  name,
-  description,
-  location,
-  address,
-  city,
-  department,
-  projectLogo,
-  projectId,
-  companyLogo,
-  companyName,
-  housingState,
-  stratum,
-  units,
-  deadline,
-}: DescriptionProps) => {
+export type ProjectContentProps = {
+  project: Project;
+  typology: Typology;
+};
+
+export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
   return (
     <article className="flex gap-4">
       <Tabs defaultValue="description" className="flex-1">
-        <TabsList className="flex items-center ">
+        <TabsList className="flex items-center mb-12">
           <TabsTrigger value="description">Descripción</TabsTrigger>
           <TabsTrigger value="types">Tipologías</TabsTrigger>
           <TabsTrigger value="urban">Urbanismo</TabsTrigger>
           <TabsTrigger
             value="credit"
-            className="mx-6 px-2 py-1 border border-primary-600 rounded-lg text-base md:text-lg lg:text-xl hover:bg-primary-100 transition-colors ease-in !no-underline"
+            className="mx-6 px-2 py-1 border border-primary rounded-lg text-base md:text-lg lg:text-xl hover:bg-primary-100 transition-colors ease-in !no-underline"
           >
             Simulador de crédito
           </TabsTrigger>
         </TabsList>
-        <div className="grid grid-cols-[1fr,auto] gap-6">
-          <div className="overflow-x-hidden my-6">
-            <TabsContent value="description" className="mt-0">
-              <div className="flex flex-col gap-3 pb-6">
-                <div className="flex flex-col gap-6 lg:flex-row mt-6">
-                  <div className="flex flex-col gap-2 justify-center items-center">
-                    <Image
-                      unoptimized
-                      width={100}
-                      height={100}
-                      src={getAssetUrl(projectLogo)}
-                      alt={name}
-                      className="md:h-[80px] lg:w-[100px] lg:h-[100px]"
-                    />
-                    <p className="text-xs lg:text-sm font-light">
-                      ID&nbsp;Proyecto:&nbsp;
-                      <span className="text-primary-600">{projectId}</span>
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p className="font-medium text-2xl lg:text-3xl mb-2">
-                      {name}
-                    </p>
-                    <div className="flex flex-col gap-2 p-4 bg-gray-50 rounded-3xl">
-                      {description.split("\n").map((p, i) => (
-                        <p
-                          key={i}
-                          className="md:max-w-4xl text-sm text-pretty font-light"
-                        >
-                          {p}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <hr />
-                <Suspense>
-                  <ProjectCharacteristics
-                    characteristics={characteristics}
-                    companyLogo={companyLogo}
-                    companyName={companyName}
-                    housingState={housingState}
-                    stratum={stratum}
-                    units={units}
-                    deadline={deadline}
-                  />
-                </Suspense>
-                <ProjectLocation
-                  lat={location.lat}
-                  lng={location.lng}
-                  address={address}
-                  city={city}
-                  department={department}
-                />
-                <section>
-                  <h3 className="font-medium text-2xl mb-10">
-                    Simulador de crédito
-                  </h3>
-                  <CreditSimulador />
-                </section>
-                <hr />
-              </div>
-            </TabsContent>
-            <TabsContent value="types" className="mt-0">
-              <Typologies typologies={typologies} />
-            </TabsContent>
-            <TabsContent value="urban" className="mt-0">
-              <Urbanism
-                urbanismPhotos={urbanismPhotos}
-                urbanismFiles={urbanismFiles}
-              />
-            </TabsContent>
-            <TabsContent value="credit" className="mt-0">
-              <h3 className="font-medium text-2xl mb-10">
-                Simulador de crédito
-              </h3>
-              <CreditSimulador />
-            </TabsContent>
-          </div>
-          <StickyContact />
-        </div>
+        <TabsContent value="description" className="max-w-5xl mx-auto mt-0">
+          <ProjectVerifiedCard className="mb-12" />
+          <ProjectInformationSection project={project} className="mb-12" />
+          <ProjectCharacteristicsSection project={project} className="mb-12" />
+          <ProjectLocationSection project={project} className="mb-12" />
+          <ProjectFeaturesSection project={project} className="mb-12" />
+          <ProjectValorizationSection
+            typology={typology}
+            months={VALORIZATION_MONTHS}
+            percentage={VALORIZATION_PERCENTAGE}
+            className="mb-12"
+          />
+          <ProjectCreditSimulatorSection typology={typology} />
+        </TabsContent>
+        <TabsContent value="types" className="max-w-5xl mx-auto mt-0">
+          <TypologiesSection typologies={project.typologies} />
+        </TabsContent>
+        <TabsContent value="urban" className="max-w-5xl mx-auto mt-0">
+          <UrbanismSection project={project} />
+        </TabsContent>
+        <TabsContent value="credit" className="max-w-5xl mx-auto mt-0">
+          <CreditSimulatorSection typology={typology} />
+        </TabsContent>
       </Tabs>
+    </article>
+  );
+};
+
+type ProjectVerifiedCardProps = Readonly<{}> & ComponentProps<"article">;
+
+const ProjectVerifiedCard = ({ ...props }: ProjectVerifiedCardProps) => {
+  return (
+    <article
+      className={cn(
+        "flex flex-col lg:flex-row lg:items-center border rounded-lg p-4 ",
+        props.className
+      )}
+    >
+      <div className="flex gap-2 justify-center items-center">
+        <Icon icon={ShieldCheck} className="size-6 text-green-500" />
+        <Typography>Proyecto verificado</Typography>
+        <TooltipProvider>
+          <Tooltip delayDuration={200}>
+            <TooltipTrigger asChild>
+              <Info className="size-4" />
+            </TooltipTrigger>
+            <TooltipContent className="max-w-sm">
+              <Typography>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                corporis aliquid sit aspernatur, minima quidem praesentium
+                consectetur ad. Nam vitae magnam ea nisi necessitatibus
+                veritatis officiis, quo nobis repudiandae iure?
+              </Typography>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+      <div className="my-4 lg:mx-4 lg:my-0 w-full h-[0.5px] lg:w-[0.5px] lg:h-6 bg-border"></div>
+      <div className="flex-1 flex flex-col lg:flex-row justify-between lg:items-center gap-4">
+        <Typography className="text-center">
+          Según nuestros usuarios, es uno de los proyectos más solicitados.
+        </Typography>
+        <div className="flex flex-col items-center">
+          <Typography variant="h4" className="text-center">
+            4.91
+          </Typography>
+          <div className="flex gap-1 items-center">
+            <Icon icon={Star} />
+            <Icon icon={Star} />
+            <Icon icon={Star} />
+            <Icon icon={Star} />
+            <Icon icon={Star} />
+          </div>
+        </div>
+      </div>
+      <div className="my-4 lg:mx-4 lg:my-0 w-full h-[0.5px] lg:w-[0.5px] lg:h-6 bg-border"></div>
+      <div className="flex flex-col items-center">
+        <Typography variant="h4" className="text-center">
+          54
+        </Typography>
+        <Typography>Reseñas</Typography>
+      </div>
     </article>
   );
 };

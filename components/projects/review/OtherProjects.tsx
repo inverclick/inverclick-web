@@ -1,3 +1,4 @@
+import { OtherProjects as OtherProjectsType } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
 import { ProjectCard } from "@/components/shared/ProjectCard";
 import {
   Carousel,
@@ -6,42 +7,43 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Typography } from "@inverclick/inverclick-ui/typography";
 
-export default async function OtherProjects({
-  projectId,
-}: {
-  projectId: string;
-}) {
-  // const { data } = await getAllProjects("");
-  // const excludedCurrentProject = data.filter(
-  //   (b) => b.project._id !== projectId
-  // );
+export type OtherProjectsProps = Readonly<{
+  projects: OtherProjectsType;
+}>;
 
+export function OtherProjects({ projects }: OtherProjectsProps) {
   return (
     <section>
-      <p className="font-medium text-2xl mb-8">
+      <Typography variant="h3" className="mb-4">
         Otros proyectos que podrían interesarte
-      </p>
-      <div className="flex px-10 w-full justify-center items-center mb-12">
-        {/* <Carousel
+      </Typography>
+      <div className="hidden xl:flex px-8 w-full justify-center items-center">
+        <Carousel
           opts={{
             align: "start",
           }}
           className="w-full"
         >
           <CarouselContent>
-            {excludedCurrentProject.map((b) => (
+            {projects.map((project) => (
               <CarouselItem
-                key={b._id}
-                className="md:basis-1/2 lg:basis-1/4 !flex justify-center p-6"
+                key={project.id}
+                className="md:basis-1/2 lg:basis-1/4 !flex justify-center"
               >
-                <ProjectCard blueprint={b} />
+                <ProjectCard project={project} />
               </CarouselItem>
             ))}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
-        </Carousel> */}
+        </Carousel>
+      </div>
+      <div className="xl:hidden flex gap-4 overflow-x-auto px-1 pb-2">
+        {projects.map((project) => {
+          return <ProjectCard key={project.id} project={project} />;
+        })}
       </div>
     </section>
   );

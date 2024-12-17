@@ -7,4 +7,6 @@ export const ENV_VARS = {
   SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
   OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY as string,
   OPENAI_ASSISTANT_ID: process.env.NEXT_PUBLIC_OPENAI_ASSISTANT_ID as string,
+  TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string,
+  TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY as string,
 };

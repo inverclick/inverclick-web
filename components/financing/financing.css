@@ -3,9 +3,9 @@
 }
 
 .circular-progress {
-  --size: 400px;
+  --size: 300px;
   --half-size: calc(var(--size) / 2);
-  --stroke-width: 30px;
+  --stroke-width: 20px;
   --radius: calc((var(--size) - var(--stroke-width)) / 2);
   --circumference: calc(var(--radius) * pi * 2);
   --dash: calc((var(--progress) * var(--circumference)) / 100);

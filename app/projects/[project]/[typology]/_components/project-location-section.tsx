@@ -1,24 +1,20 @@
 "use client";
 
+import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { ENV_VARS } from "@/global/env";
+import { cn } from "@/lib/utils";
+import { Typography } from "@inverclick/inverclick-ui/typography";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 
-interface Props {
-  lat: number;
-  lng: number;
-  department: string;
-  city: string;
-  address: string;
-}
+export type ProjectLocationProps = {
+  project: Project;
+} & ComponentProps<"section">;
 
-export const ProjectLocation = ({
-  lat,
-  lng,
-  address,
-  city,
-  department,
-}: Props) => {
+export const ProjectLocationSection = ({
+  project,
+  ...props
+}: ProjectLocationProps) => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const { isLoaded } = useJsApiLoader({
     id: "inverclick-google-map-script",
@@ -34,14 +30,17 @@ export const ProjectLocation = ({
   }, [map]);
 
   return isLoaded ? (
-    <div className="my-4">
-      <p className="font-medium text-2xl mb-5">Ubicación</p>
-      <p className="md:max-w-lg text-base text-pretty font-light mb-4">
-        Colombia, {department}, {city} / {address}
-      </p>
+    <section className={cn("flex flex-col", props.className)} {...props}>
+      <Typography variant="h3" className="mb-4">
+        Ubicación
+      </Typography>
+      <Typography className="mb-4">
+        Colombia, {project.department.name}, {project.city.name} /{" "}
+        {project.address}
+      </Typography>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={{ lat, lng }}
+        center={{ lat: project.latitude, lng: project.longitude }}
         tilt={20}
         zoom={12}
         onLoad={(map) => setMap(map)}
@@ -53,12 +52,10 @@ export const ProjectLocation = ({
           if (map) map.setOptions({ gestureHandling: "auto" });
         }}
       >
-        <Marker position={{ lat, lng }} />
+        <Marker position={{ lat: project.latitude, lng: project.longitude }} />
       </GoogleMap>
-    </div>
-  ) : (
-    <></>
-  );
+    </section>
+  ) : null;
 };
 
 const containerStyle = {

@@ -296,7 +296,7 @@ export default function FinancingPage() {
           </p>
         </div>
         <div className="w-full mt-10 md:mt-16">
-          <CreditSimulador />
+          <CreditSimulador price={0} />
         </div>
       </article>
       <article className="w-full flex flex-col gap-10 px-6 md:px-14 lg:px-20 mb-16 max-w-screen-2xl mx-auto">

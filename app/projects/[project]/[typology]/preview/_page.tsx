@@ -1,5 +1,5 @@
 import { Hero } from "@/components/projects/review/Hero";
-import { ProjectContent } from "@/components/projects/review/ProjectContent";
+import { ProjectContentProps } from "@/components/projects/review/ProjectContent";
 import { MyFooter } from "@/components/shared/footer/MyFooter";
 import { Header } from "@/components/shared/header/header";
 import { fallback } from "@/services/fallback";
@@ -56,7 +56,7 @@ export default async function Page({
           city={fallback(data.city?.name, "string")}
           address={fallback(data.address, "string")}
         />
-        <ProjectContent
+        {/* <ProjectContent
           characteristics={
             characteristics?.map((c) => c.characteristics!) ?? []
           }
@@ -80,7 +80,7 @@ export default async function Page({
           typologies={data.typologies}
           urbanismPhotos={data.urbanism_photos}
           urbanismFiles={data.urbanism_files}
-        />
+        /> */}
       </article>
       <MyFooter />
     </main>
