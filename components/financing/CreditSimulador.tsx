@@ -108,7 +108,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
           setSimulatorType={setSimulatorType}
           simulatorType={simulatorType}
         />
-        <div className="flex flex-col md:flex-row mb-4">
+        <div className="flex flex-col md:flex-row gap-12 justify-between lg:h-[488px] mb-4">
           {simulatorType === "VALOR" ? (
             <ValueSimulator
               onReset={() => setValueCredit(0)}
