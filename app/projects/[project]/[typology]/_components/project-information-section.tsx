@@ -1,0 +1,63 @@
+import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { cn } from "@/lib/utils";
+import { getAssetUrl } from "@/services/utils";
+import { Typography } from "@inverclick/inverclick-ui/typography";
+
+import Image from "next/image";
+import { ComponentProps } from "react";
+
+export type ProjectInformationSectionProps = Readonly<{
+  project: Project;
+}> &
+  ComponentProps<"section">;
+
+export const ProjectInformationSection = ({
+  project,
+  ...props
+}: ProjectInformationSectionProps) => {
+  return (
+    <section className={cn("flex flex-col gap-4", props.className)} {...props}>
+      <Typography
+        data-element="project-name"
+        variant="h2"
+        className="text-center lg:text-left mb-4"
+      >
+        {project.name}
+      </Typography>
+      <div
+        data-element="project-description"
+        className="flex flex-col items-start lg:flex-row gap-4 lg:gap-6"
+      >
+        <Image
+          data-element="project-logo"
+          unoptimized
+          src={getAssetUrl(project.logo)}
+          alt={project.name}
+          width={112}
+          height={112}
+          className="mx-auto"
+        />
+        <div className="flex flex-col gap-4">
+          <Typography data-element="project-description">
+            {project.description}
+          </Typography>
+          <article className="flex flex-col gap-0 lg:gap-4 lg:flex-row lg:justify-center border rounded-lg p-4">
+            <Typography variant="h4" className="text-lg">
+              Unidades disponibles:{" "}
+              <span className="font-normal">
+                {project.typologies.reduce(
+                  (acc, typology) => acc + typology.units,
+                  0
+                )}
+                *
+              </span>
+            </Typography>
+            <Typography variant="h4" className="text-lg">
+              Fecha de entrega: <span className="font-normal">01/06/2026*</span>
+            </Typography>
+          </article>
+        </div>
+      </div>
+    </section>
+  );
+};

@@ -2,6 +2,7 @@
 
 import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
+import { ENV_VARS } from "@/global/env";
 import { PreRegistrationValues } from "@/types/pre-registration";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
@@ -16,6 +17,7 @@ import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 import Turnstile from "react-turnstile";
 
 import * as yup from "yup";
@@ -125,7 +127,7 @@ const PreRegistrationContent = () => {
             />
             <div className="mt-4">
               <Turnstile
-                sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                sitekey={ENV_VARS.TURNSTILE_SITE_KEY}
                 onVerify={(token) => setCaptchaToken(token)}
                 size="flexible"
                 theme="light"

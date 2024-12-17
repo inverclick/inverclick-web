@@ -1,3 +1,4 @@
+import { ENV_VARS } from "@/global/env";
 import { supabase } from "@/services/supabase";
 import {
   PreRegistration,
@@ -6,11 +7,13 @@ import {
 import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
-  const { name, email, captchaToken } = (await request.json()) as PreRegistrationValues & { captchaToken: string };
+  const { name, email, captchaToken } =
+    (await request.json()) as PreRegistrationValues & { captchaToken: string };
 
-  const secretKey = process.env.TURNSTILE_SECRET_KEY;
-  const verifyURL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
   let preRegistration: PreRegistration | null = null;
+
+  const secretKey = ENV_VARS.TURNSTILE_SECRET_KEY;
+  const verifyURL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
   // Validar el token de captcha
   const response = await fetch(verifyURL, {
@@ -26,8 +29,11 @@ export async function POST(request: Request) {
 
   const captchaResponse = await response.json();
 
-  if (!captchaResponse.success) { 
-    return Response.json({ success: false, message: captchaResponse["error-codes"] }, { status: 400 });
+  if (!captchaResponse.success) {
+    return Response.json(
+      { success: false, message: captchaResponse["error-codes"] },
+      { status: 400 }
+    );
   }
 
   const { data: existingPreRegistration } = await supabase

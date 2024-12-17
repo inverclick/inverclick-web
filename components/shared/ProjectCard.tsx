@@ -4,7 +4,11 @@ import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
-import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL, ProjectToDisplay } from "@/types/project";
+import {
+  HOUSING_STATE_LABEL,
+  HOUSING_TYPE_LABEL,
+  ProjectToDisplay,
+} from "@/types/project";
 import Image from "next/image";
 import { ComponentProps, forwardRef, useEffect, useState } from "react";
 import {
@@ -38,7 +42,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         ref={ref}
         data-element="project-card"
         className={cn(
-          "flex flex-col w-[280px] lg:w-[220px] 2xl:w-[280px] shadow-md hover:shadow-lg transition-shadow ease-in h-full rounded-b-lg",
+          "flex flex-col w-[280px] lg:w-[220px] 2xl:w-[280px] shadow-md hover:shadow-lg transition-shadow ease-in rounded-b-lg",
           className
         )}
       >

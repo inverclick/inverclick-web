@@ -12,15 +12,21 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { NativeSlider } from "@/components/ui/slider-native";
 import { useCurrencyContext } from "@/contexts/CurrencyContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
+import { Button } from "@inverclick/inverclick-ui/button";
+import { Typography } from "@inverclick/inverclick-ui/typography";
 import { useEffect } from "react";
+
 import CurrencyInput from "react-currency-input-field";
 
 export type ValueSimulatorProps = Readonly<{
   onSimulate: () => void;
-  onRest: () => void;
+  onReset: () => void;
 }>;
 
-export const ValueSimulator = ({ onSimulate, onRest }: ValueSimulatorProps) => {
+export const ValueSimulator = ({
+  onSimulate,
+  onReset,
+}: ValueSimulatorProps) => {
   const { currency } = useCurrencyContext();
 
   const {
@@ -63,76 +69,103 @@ export const ValueSimulator = ({ onSimulate, onRest }: ValueSimulatorProps) => {
   }
 
   return (
-    <article className="flex-1 flex flex-col gap-6 animate-blurred-fade-in">
-      <div className="flex gap-4 items-center">
-        <p className="text-lg font-medium">
-          ¿Cuál es el valor comercial de la vivienda?
-        </p>
+    <article className="flex-1 flex flex-col gap-6 mb-12 lg:mb-0 animate-blurred-fade-in">
+      <div className="flex gap-4 justify-between items-center">
+        <Typography>¿Cuál es el valor comercial de la vivienda?</Typography>
         <SelectCurrency />
       </div>
-      <div className="w-fit">
-        <CurrencyInput
-          key={currency}
-          intlConfig={{ locale, currency }}
-          decimalsLimit={2}
-          value={inputValue}
-          className="text-3xl h-20 border border-black rounded-xl px-4 focus:outline-none"
-          onValueChange={(value) => setInputValue(String(value))}
-        />
-      </div>
+      <CurrencyInput
+        key={currency}
+        intlConfig={{ locale, currency }}
+        decimalsLimit={2}
+        value={inputValue}
+        className="w-full text-3xl font-semibold h-20 border border-black rounded-xl px-4 focus:outline-none"
+        onValueChange={(value) => setInputValue(String(value))}
+      />
       <RadioGroup
         value={type}
         onValueChange={setType}
         className="flex items-center gap-8"
       >
         <div className="flex  items-center gap-2">
-          <p className="font-light">Crédito hipotecario</p>
+          <Typography>Crédito hipotecario</Typography>
           <RadioGroupItem value="Crédito hipotecario" />
         </div>
         <div className="flex items-center gap-2">
-          <p className="font-light">Leasing habitacional</p>
+          <Typography>Leasing habitacional</Typography>
           <RadioGroupItem value="Leasing habitacional" />
         </div>
       </RadioGroup>
-      <div className="flex gap-10 my-8 justify-center items-center">
-        <div className="flex-1 text-center">
-          <p className="font-medium text-lg mb-4">¿Cuanto dinero necesitas?</p>
-          <p className="font-medium text-3xl mb-4 ">{percentage}%</p>
-          <NativeSlider
-            defaultValue={[percentage]}
-            onValueChange={(values) => setPercentage(values[0])}
-            max={maxPercentage}
-            step={1}
-          />
-        </div>
-        <div className="text-4xl">=</div>
-        <div className="flex-1 text-3xl text-center">
-          {isNaN(Number(inputValue))
-            ? ""
-            : currencyFormatter(
-                (Number(inputValue) * percentage) / 100,
-                currency
-              )}
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col w-full">
+          <Typography variant="h4" className="mb-4 text-center lg:text-left">
+            ¿Cuanto dinero necesitas?
+          </Typography>
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex-1">
+              <Typography
+                variant="h3"
+                className="mb-2 text-center lg:text-left"
+              >
+                {percentage}%
+              </Typography>
+              <NativeSlider
+                defaultValue={[percentage]}
+                onValueChange={(values) => setPercentage(values[0])}
+                max={maxPercentage}
+                step={1}
+              />
+            </div>
+            <Typography
+              variant="h3"
+              className="w-full lg:w-4 text-center lg:text-left"
+            >
+              =
+            </Typography>
+            <Typography
+              variant="h3"
+              className="flex-1 text-center lg:text-left"
+            >
+              {isNaN(Number(inputValue))
+                ? ""
+                : currencyFormatter(
+                    (Number(inputValue) * percentage) / 100,
+                    currency
+                  )}
+            </Typography>
+          </div>
         </div>
       </div>
-      <div className="flex gap-10">
-        <div className="flex-1 text-center">
-          <p className="font-medium text-lg mb-4">¿A cuantos años?</p>
-          <p className="font-medium text-3xl mb-4 ">{years} años</p>
-          <NativeSlider
-            defaultValue={[years]}
-            onValueChange={(values) => setYears(values[0])}
-            max={15}
-            step={1}
-          />
+      <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-[calc(2rem+1rem)] mb-4">
+        <div className="flex-1 flex flex-col">
+          <Typography variant="h4" className="mb-4 text-center lg:text-left">
+            ¿A cuantos años?
+          </Typography>
+          <div>
+            <Typography variant="h3" className="mb-2 text-center lg:text-left">
+              {years} años
+            </Typography>
+            <NativeSlider
+              defaultValue={[years]}
+              onValueChange={(values) => setYears(values[0])}
+              min={5}
+              max={20}
+              step={1}
+            />
+          </div>
         </div>
-        <div className="flex-1 text-center">
-          <p className="font-medium text-lg mb-4">Fecha de nacimiento</p>
+        <div className="flex-1 flex flex-col">
+          <Typography variant="h4" className="mb-4 text-center lg:text-left">
+            Fecha de nacimiento
+          </Typography>
           <Popover>
             <PopoverTrigger asChild>
-              <p className="cursor-pointer text-2xl">
+              <Typography
+                variant="h3"
+                className="cursor-pointer text-center lg:text-left"
+              >
                 {formatDate(date) || "DD/MM/AAAA"}
-              </p>
+              </Typography>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
               <Calendar
@@ -147,20 +180,12 @@ export const ValueSimulator = ({ onSimulate, onRest }: ValueSimulatorProps) => {
           </Popover>
         </div>
       </div>
-      <div className="mt-4 self-center flex gap-3">
-        <button
-          onClick={onSimulate}
-          className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700"
-        >
-          Simular
-        </button>
-        <button
-          onClick={onRest}
-          className="text-sm md:text-base px-6 py-2 rounded-full bg-slate-300 text-slate-600 hover:bg-slate-200 transition-colors ease-in"
-        >
-          Reiniciar
-        </button>
-      </div>
+      <Button
+        onClick={onSimulate}
+        disabled={isNaN(Number(inputValue)) || !date}
+      >
+        Simular
+      </Button>
     </article>
   );
 };

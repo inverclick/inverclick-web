@@ -11,6 +11,7 @@ import { SelectSimulatorType } from "./SelectSimulatorType";
 import { FeeSimulator } from "./FeeSimulator";
 import { ValueSimulator } from "./ValueSimulator";
 import { SimulatorResult } from "./SimulatorResult";
+import { Typography } from "@inverclick/inverclick-ui/typography";
 
 export type CreditSimuladorContextType = {
   value: {
@@ -45,7 +46,14 @@ export const useCreditSimulador = () => {
   return useContext(CreditSimuladorContext);
 };
 
-export const CreditSimulador = () => {
+export type CreditSimuladorProps = Readonly<{
+  price: number;
+}>;
+
+export const VALUE_EFFECTIVE_ANNUAL_INTEREST = 0.1645;
+export const QUOTA_EFFECTIVE_ANNUAL_INTEREST = 0.11;
+
+export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
   const [simulatorType, setSimulatorType] = useState<"VALOR" | "CUOTA">(
     "VALOR"
   );
@@ -55,14 +63,16 @@ export const CreditSimulador = () => {
 
   // VALOR
   const [type, setType] = useState<string>("Crédito hipotecario");
-  const [inputValue, setInputValue] = useState<string>("1000000");
+  const [inputValue, setInputValue] = useState<string>(price.toString());
   const [maxPercentage, setMaxPercentage] = useState(70);
   const [percentage, setPercentage] = useState(70);
   const [date, setDate] = useState<Date>();
   const [years, setYears] = useState(15);
 
   // CUOTA
-  const [quotaInputValue, setQuotaInputValue] = useState<string>("1000000");
+  const [quotaInputValue, setQuotaInputValue] = useState<string>(
+    price.toString()
+  );
   const [quotaDate, setQuotaDate] = useState<Date>();
   const [quotaYears, setQuotaYears] = useState(15);
 
@@ -93,27 +103,56 @@ export const CreditSimulador = () => {
         },
       }}
     >
-      <section className="flex flex-col gap-6 h-[700px]">
+      {/* <section className="flex flex-col gap-6 h-[700px]"> */}
+      <section className="flex flex-col gap-6">
         <SelectSimulatorType
           setSimulatorType={setSimulatorType}
           simulatorType={simulatorType}
         />
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row mb-4">
           {simulatorType === "VALOR" ? (
             <ValueSimulator
-              onRest={() => setValueCredit(0)}
+              onReset={() => setValueCredit(0)}
               onSimulate={() => {
-                setValueCredit(3124434000);
-                setSimulatorType("VALOR");
+                setValueCredit(0);
+
+                setTimeout(() => {
+                  const monthlyInterestRate =
+                    Math.pow(1 + VALUE_EFFECTIVE_ANNUAL_INTEREST, 1 / 12) - 1;
+                  const amountFunded =
+                    parseInt(inputValue) * (percentage / 100);
+                  const monthsFunding = years * 12;
+
+                  const fixedQuota =
+                    (amountFunded *
+                      monthlyInterestRate *
+                      Math.pow(1 + monthlyInterestRate, monthsFunding)) /
+                    (Math.pow(1 + monthlyInterestRate, monthsFunding) - 1);
+
+                  setValueCredit(fixedQuota);
+                }, 0);
               }}
             />
           ) : null}
           {simulatorType === "CUOTA" ? (
             <FeeSimulator
-              onRest={() => setQuotaCredit(0)}
+              onReset={() => setQuotaCredit(0)}
               onSimulate={() => {
-                setQuotaCredit(3124434000);
-                setSimulatorType("CUOTA");
+                setQuotaCredit(0);
+
+                setTimeout(() => {
+                  const monthlyInterestRate =
+                    Math.pow(1 + QUOTA_EFFECTIVE_ANNUAL_INTEREST, 1 / 12) - 1;
+                  const monthsFunding = quotaYears * 12;
+
+                  const amountFunded =
+                    parseInt(quotaInputValue) *
+                    ((Math.pow(1 + monthlyInterestRate, monthsFunding) - 1) /
+                      (monthlyInterestRate *
+                        Math.pow(1 + monthlyInterestRate, monthsFunding)));
+
+                  setQuotaCredit(amountFunded);
+                }, 0);
               }}
             />
           ) : null}
@@ -123,9 +162,19 @@ export const CreditSimulador = () => {
           >
             <SimulatorResult
               value={simulatorType === "VALOR" ? valueCredit : quotaCredit}
+              ea={
+                simulatorType === "VALOR"
+                  ? VALUE_EFFECTIVE_ANNUAL_INTEREST
+                  : QUOTA_EFFECTIVE_ANNUAL_INTEREST
+              }
             />
           </article>
         </div>
+        <Typography>
+          Los resultados de este simulador son aproximaciones con fines
+          informativos, los valores reales se establecerán con la entidad
+          financiera en el momento del desembolso*
+        </Typography>
       </section>
     </CreditSimuladorContext.Provider>
   );

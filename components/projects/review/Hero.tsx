@@ -4,7 +4,9 @@ import { ProjectGallery } from "@/components/projects/review/ProjectGallery";
 import { ShareProject } from "@/components/projects/review/ShareProject";
 import { DisplayFormattedCurrency } from "@/components/shared/DisplayFormattedCurrency";
 import { cn } from "@/lib/utils";
-import { Heart, Home, MapPinned } from "lucide-react";
+import { Icon } from "@inverclick/inverclick-ui/icon";
+import { Typography } from "@inverclick/inverclick-ui/typography";
+import { Heart, Home, MapPin } from "lucide-react";
 
 import Link from "next/link";
 
@@ -31,7 +33,6 @@ export const Hero = ({
 }: HeroProps) => {
   return (
     <section className={cn("flex flex-col gap-4 md:gap-6 xl:gap-8", className)}>
-      {/* Breadcrumb */}
       <div className="flex gap-4 justify-between">
         <div className="text-xs md:text-sm flex gap-2 mb-3 md:mb-4 xl:mb-5">
           <Link
@@ -51,17 +52,13 @@ export const Hero = ({
           <span>/</span>
           <span className="text-primary-600">{name}</span>
         </div>
-        <DisplayTRM size="base" />
+        <DisplayTRM size="base" className="hidden md:block" />
       </div>
-
-      {/* Título */}
       <div className="flex flex-col-reverse md:flex-row justify-between gap-6 md:items-center">
         <h1 className="text-3xl md:text-4xl xl:text-5xl font-semibold">
           {name}
         </h1>
-        <div
-          className={"flex flex-col md:flex-row gap-3 md:gap-6 md:items-center"}
-        >
+        <div className={"flex gap-4 items-center"}>
           <ShareProject isDisabled={disableSharableInteractions} />
           <span
             className={cn(
@@ -71,35 +68,27 @@ export const Hero = ({
               }
             )}
           >
-            <Heart className="w-4 h-4 md:w-5 md:h-5" />
+            <Icon icon={Heart} />
             Guardar
           </span>
           <SelectCurrency />
         </div>
       </div>
-
-      {/* Fotos */}
       <ProjectGallery
         photos={photos}
         disableSharableInteractions={disableSharableInteractions}
       />
-
-      {/* Info */}
-      <div className="flex flex-col md:flex-row justify-between gap-4 px-6">
-        <span className="flex gap-3 items-center text-sm md:text-base font-extralight max-w-xl">
-          <MapPinned className="text-primary-600 min-w-6 min-h-6 md:w-8 md:h-8" />
-          {department}, {city} / {address}
+      <div className="flex flex-col xl:flex-row justify-between gap-4 px-0 xl:px-6">
+        <span className="flex gap-2 justify-center">
+          <Icon icon={MapPin} className="hidden xl:flex size-6 text-primary" />
+          <Typography className="text-center xl:text-left">
+            {department}, {city} / {address}
+          </Typography>
         </span>
-        <span className="flex gap-4 md:gap-6 text-base md:text-lg items-center">
-          Desde:
-          <div className="flex justify-center items-start">
-            <DisplayFormattedCurrency
-              className="text-2xl md:text-3xl xl:text-4xl font-medium"
-              number={price}
-            />
-            <span>*</span>
-          </div>
-        </span>
+        <div className="flex justify-center items-center gap-2">
+          <Typography>Desde:</Typography>
+          <DisplayFormattedCurrency number={price} showAsterix />
+        </div>
       </div>
     </section>
   );
