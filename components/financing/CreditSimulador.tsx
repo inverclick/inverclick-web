@@ -1,17 +1,17 @@
 "use client";
+
+import { Typography } from "@inverclick/inverclick-ui/typography";
 import React, {
   createContext,
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
   useState,
 } from "react";
-import { SelectSimulatorType } from "./SelectSimulatorType";
 import { FeeSimulator } from "./FeeSimulator";
-import { ValueSimulator } from "./ValueSimulator";
+import { SelectSimulatorType } from "./SelectSimulatorType";
 import { SimulatorResult } from "./SimulatorResult";
-import { Typography } from "@inverclick/inverclick-ui/typography";
+import { ValueSimulator } from "./ValueSimulator";
 
 export type CreditSimuladorContextType = {
   value: {
@@ -52,6 +52,7 @@ export type CreditSimuladorProps = Readonly<{
 
 export const VALUE_EFFECTIVE_ANNUAL_INTEREST = 0.1645;
 export const QUOTA_EFFECTIVE_ANNUAL_INTEREST = 0.11;
+export const INSURANCE = 0.06;
 
 export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
   const [simulatorType, setSimulatorType] = useState<"VALOR" | "CUOTA">(
@@ -70,9 +71,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
   const [years, setYears] = useState(15);
 
   // CUOTA
-  const [quotaInputValue, setQuotaInputValue] = useState<string>(
-    price.toString()
-  );
+  const [quotaInputValue, setQuotaInputValue] = useState<string>("0");
   const [quotaDate, setQuotaDate] = useState<Date>();
   const [quotaYears, setQuotaYears] = useState(15);
 
@@ -109,7 +108,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
           setSimulatorType={setSimulatorType}
           simulatorType={simulatorType}
         />
-        <div className="flex flex-col md:flex-row mb-4">
+        <div className="flex flex-col md:flex-row gap-12 justify-between lg:h-[488px] mb-4">
           {simulatorType === "VALOR" ? (
             <ValueSimulator
               onReset={() => setValueCredit(0)}
@@ -129,7 +128,10 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
                       Math.pow(1 + monthlyInterestRate, monthsFunding)) /
                     (Math.pow(1 + monthlyInterestRate, monthsFunding) - 1);
 
-                  setValueCredit(fixedQuota);
+                  const insurance = fixedQuota * INSURANCE;
+                  const totalQuota = fixedQuota + insurance;
+
+                  setValueCredit(totalQuota);
                 }, 0);
               }}
             />
@@ -167,6 +169,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
                   ? VALUE_EFFECTIVE_ANNUAL_INTEREST
                   : QUOTA_EFFECTIVE_ANNUAL_INTEREST
               }
+              type={simulatorType}
             />
           </article>
         </div>
