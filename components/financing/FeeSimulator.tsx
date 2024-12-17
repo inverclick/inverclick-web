@@ -48,7 +48,7 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
   return (
     <article className="flex-1 flex flex-col gap-6 mb-12 lg:mb-0 animate-blurred-fade-in">
       <div className="flex gap-4 justify-between items-center">
-        <Typography>¿Cuál es el valor comercial de la vivienda?</Typography>
+        <Typography>¿Cuál es el valor de la cuota que quiero pagar?</Typography>
         <SelectCurrency />
       </div>
       <CurrencyInput

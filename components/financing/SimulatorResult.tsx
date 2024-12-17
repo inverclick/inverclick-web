@@ -9,9 +9,10 @@ import "./financing.css";
 export type SimulatorResultProps = {
   value: number;
   ea: number;
+  type: "VALOR" | "CUOTA";
 };
 
-export const SimulatorResult = ({ value, ea }: SimulatorResultProps) => {
+export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
   const { currency, convert } = useCurrencyContext();
 
   const _ea = ea * 100;
@@ -68,9 +69,12 @@ export const SimulatorResult = ({ value, ea }: SimulatorResultProps) => {
             startOffset="50%"
             textAnchor="middle"
             lengthAdjust="spacingAndGlyphs"
+            fontSize={12}
             className="fill-gray-400"
           >
-            Cuota mensual fija a pagar*
+            {type === "VALOR"
+              ? "Cuota mensual fija a pagar*"
+              : "Te podrían prestar un valor aproximado de*"}
           </textPath>
         </text>
       </svg>
