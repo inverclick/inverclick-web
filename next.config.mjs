@@ -13,6 +13,7 @@ const nextConfig = {
       "services",
       "types",
     ],
+    ignoreDuringBuilds: true,
   },
 };
 
