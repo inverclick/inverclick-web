@@ -2,13 +2,12 @@
 
 import { useProjectsPageStore } from "@/app/projects/_store";
 import { DisplayTRM } from "@/components/projects/DisplayTRM";
-import { ProjectFilters } from "@/components/projects/Filters/ProjectFilters";
+import { ProjectFilters } from "@/components/projects/Filters/project-filters";
 import { ProjectInfinityScroll } from "@/components/projects/ProjectInfinityScroll";
-import { SelectCurrency } from "@/components/projects/SelectCurrency";
+import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
 import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";
 import { ProjectToDisplay } from "@/types/project";
-import { Suspense } from "react";
 
 type ProjectContentProps = Readonly<{
   total: number;
@@ -28,20 +27,19 @@ export default function ProjectContent({
   prices,
 }: ProjectContentProps) {
   const setProjects = useProjectsPageStore((state) => state.setProjects);
+
   setProjects(projects);
 
   return (
     <section className="flex flex-col flex-grow m-4 mb-0 overflow-y-hidden">
       <div className="flex justify-between text-sm text-primary-600 mb-3 px-1 pt-1">
         <div className="hidden lg:flex gap-3 items-center">
-          <Suspense>
-            <ProjectFilters
-              departments={departments ?? []}
-              priceGraphicData={prices}
-              housingTypes={housingTypes ?? []}
-              count={total}
-            />
-          </Suspense>
+          <ProjectFilters
+            departments={departments ?? []}
+            priceGraphicData={prices}
+            housingTypes={housingTypes ?? []}
+            count={total}
+          />
           <SelectCurrency />
         </div>
         <div className="flex gap-4 items-center">

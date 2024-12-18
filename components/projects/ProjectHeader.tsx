@@ -5,8 +5,9 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar";
+} from "@inverclick/inverclick-ui/menubar";
 import { Menu } from "lucide-react";
+
 import Image from "next/image";
 import React from "react";
 

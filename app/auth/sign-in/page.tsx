@@ -1,14 +1,11 @@
 import { CardService } from "@/components/shared/card-service";
-import {
-  AdvertisingCarousel,
-  AdvertisingCarouselItem,
-} from "@/components/shared/advertising-carousel/advertising-carousel";
-import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { OrSeparator } from "@/components/shared/or-separator/or-separator";
 import { DownloadAppModal } from "@/components/sign-in/download-app-modal";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@inverclick/inverclick-ui/button";
+import { Input } from "@inverclick/inverclick-ui/input";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,7 +21,7 @@ export default function Page() {
           </article>
         </div>
       </div>
-      <MyFooter />
+      <Footer />
     </main>
   );
 }
@@ -72,7 +69,7 @@ function RightSection() {
           Iniciar sesión
         </Button>
         <OrSeparator />
-        <Button rounded="full" size="xl" variant="outline" className="w-full">
+        <Button rounded="full" variant="outline" className="w-full">
           <Image
             src="/icons/google.svg"
             alt="Google icon"

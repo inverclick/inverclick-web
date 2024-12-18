@@ -6,11 +6,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import {
-  DefaultResizableHandle,
-  DefaultResizablePanel,
-  DefaultResizablePanelGroup,
-} from "@/components/ui/resizable-default";
 import { ENV_VARS } from "@/global/env";
 import { getProjectsPriceRange } from "@/services/projects";
 import { supabase } from "@/services/supabase";
@@ -92,15 +87,12 @@ export default async function Projects(props: ProjectsProps) {
     <main>
       {/* <ContactButton className="fixed right-4 bottom-4" /> */}
       <section className="hidden lg:block">
-        <DefaultResizablePanelGroup
-          direction="horizontal"
-          className="!h-screen"
-        >
-          <DefaultResizablePanel defaultSize={32}>
+        <ResizablePanelGroup direction="horizontal" className="!h-screen">
+          <ResizablePanel defaultSize={32}>
             <MyMap2 projects={projects} />
-          </DefaultResizablePanel>
-          <DefaultResizableHandle withHandle />
-          <DefaultResizablePanel
+          </ResizablePanel>
+          <ResizableHandle className="bg-border w-5" withHandle />
+          <ResizablePanel
             defaultSize={68}
             minSize={25}
             className="z-10 relative flex flex-col"
@@ -113,8 +105,8 @@ export default async function Projects(props: ProjectsProps) {
               housingTypes={housingTypes as HousingType[]}
               prices={prices}
             />
-          </DefaultResizablePanel>
-        </DefaultResizablePanelGroup>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </section>
       <section className="lg:hidden">
         <MobileProjectHeader
@@ -128,7 +120,7 @@ export default async function Projects(props: ProjectsProps) {
             <ResizablePanel defaultSize={50}>
               <MyMap2 projects={projects} />
             </ResizablePanel>
-            <ResizableHandle />
+            <ResizableHandle className="bg-border w-5" />
             <ResizablePanel
               defaultSize={50}
               maxSize={60}

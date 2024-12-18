@@ -1,5 +1,6 @@
 "use client";
 
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 import {
   LEFT_MENU_OPTIONS,
   MENU_OPTIONS,
@@ -7,7 +8,7 @@ import {
   UserLink,
 } from "@/components/shared/header/header";
 import { HeaderLink } from "@/components/shared/header/header-link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@inverclick/inverclick-ui/button";
 import {
   Menubar,
   MenubarContent,
@@ -15,11 +16,11 @@ import {
   MenubarLabel,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar";
+} from "@inverclick/inverclick-ui/menubar";
 import { SquareMenu } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { DisplayTRM } from "@/components/projects/DisplayTRM";
+
+import Image from "next/image";
 
 const MEDIA_QUERY = 1024;
 

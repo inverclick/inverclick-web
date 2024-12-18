@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@inverclick/inverclick-ui/button";
+import { Input } from "@inverclick/inverclick-ui/input";
 import { ArrowLeft } from "lucide-react";
+
 import Link from "next/link";
 
 type StepThreeProps = Readonly<{

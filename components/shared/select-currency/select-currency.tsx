@@ -1,13 +1,14 @@
 "use client";
+
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { cn } from "@/lib/utils";
+} from "@inverclick/inverclick-ui/select";
 import { ComponentProps } from "react";
 
 export type SelectCurrencyProps = ComponentProps<typeof SelectTrigger>;
@@ -17,7 +18,7 @@ export const SelectCurrency = ({ ...props }: SelectCurrencyProps) => {
 
   return (
     <Select value={currency} onValueChange={changeCurrency}>
-      <SelectTrigger className={cn(props.className, "min-w-20")} {...props}>
+      <SelectTrigger className={cn(props.className, "w-20")} {...props}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

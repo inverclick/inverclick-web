@@ -1,4 +1,9 @@
+"use client";
+
+import { SaveFavorite } from "@/components/shared/save-favorite/save-favorite";
 import { ShareProject } from "@/components/shared/share-project/share-project";
+import { cn } from "@/lib/utils";
+import { getAssetUrl } from "@/services/utils";
 import {
   Carousel,
   CarouselApi,
@@ -6,20 +11,17 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "@inverclick/inverclick-ui/carousel";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTrigger,
 } from "@inverclick/inverclick-ui/dialog";
-import { cn } from "@/lib/utils";
-import { getAssetUrl } from "@/services/utils";
-import { ChevronLeft, Grip, Heart, X } from "lucide-react";
+import { ChevronLeft, Grip, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-import { SaveFavorite } from "@/components/shared/save-favorite/save-favorite";
 import Image from "next/image";
 import Masonry from "react-responsive-masonry";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter } from "@/lib/currencyFormatter";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { ComponentProps, useEffect, useState } from "react";
 
@@ -62,7 +62,7 @@ export function DisplayTRM({
             "text-base": size === "base",
           })}
         >
-          USD hoy: {currencyFormatter(TRM_USD, "COP")}&nbsp;
+          USD hoy: {formatCurrency(TRM_USD, "COP")}&nbsp;
           <span
             className={cn("text-[10px]", {
               "text-[12px]": size === "base",
@@ -76,7 +76,7 @@ export function DisplayTRM({
             "text-base": size === "base",
           })}
         >
-          EUR hoy: {currencyFormatter(TRM_EUR, "COP")}&nbsp;
+          EUR hoy: {formatCurrency(TRM_EUR, "COP")}&nbsp;
           <span
             className={cn("text-[10px]", {
               "text-[12px]": size === "base",

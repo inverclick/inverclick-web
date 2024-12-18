@@ -1,9 +1,9 @@
 "use client";
 
 import { SimulatorType } from "@/components/financing/credit-simulator";
-import { CountUp } from "@/components/shared/CountUp";
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter } from "@/lib/currencyFormatter";
+import { CountUp } from "@/components/shared/count-up";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
 import { Button } from "@inverclick/inverclick-ui/button";
 
 import "./financing.css";
@@ -41,7 +41,7 @@ export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
               final={value}
               decimals={2}
               formatter={(newValue) =>
-                currencyFormatter(convert(Number(newValue)), currency)
+                formatCurrency(convert(Number(newValue)), currency)
               }
             />
             *

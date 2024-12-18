@@ -1,20 +1,21 @@
 "use client";
 
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter } from "@/lib/currencyFormatter";
+import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/project";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import { ProjectToDisplay } from "@/types/project";
-import Image from "next/image";
-import { ComponentProps, forwardRef, useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselNext,
   CarouselPrevious,
-} from "../ui/carousel";
-import { Skeleton } from "../ui/skeleton";
-import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/project";
+} from "@inverclick/inverclick-ui/carousel";
+import { Skeleton } from "@inverclick/inverclick-ui/skeleton";
+import { ComponentProps, forwardRef, useEffect, useState } from "react";
+
+import Image from "next/image";
 
 type ProjectCardProps = {
   project: ProjectToDisplay;
@@ -117,7 +118,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
           <div className="py-2 2xl:py-3 px-4 lg:px-2 2xl:px-4 gap-2 flex items-center">
             <p className="font-medium text-sm lg:text-xs 2xl:text-sm">Desde:</p>
             <p className="text-sm lg:text-xs 2xl:text-sm">
-              {currencyFormatter(convert(typology.price), currency)} {currency}
+              {formatCurrency(convert(typology.price), currency)} {currency}
             </p>
           </div>
           <div className="flex justify-between px-4 py-3 lg:p-2 2xl:p-4 bg-primary-100 rounded-b-lg">

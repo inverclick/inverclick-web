@@ -1,6 +1,8 @@
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter } from "@/lib/currencyFormatter";
+import { ProjectCard } from "@/components/shared/ProjectCard";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
 import { limitPrice } from "@/services/utils";
+import { ProjectToDisplay } from "@/types/project";
 import {
   Marker,
   MarkerClusterer,
@@ -8,8 +10,6 @@ import {
 } from "@googlemaps/markerclusterer";
 import { AdvancedMarker, InfoWindow, useMap } from "@vis.gl/react-google-maps";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ProjectToDisplay } from "@/types/project";
-import { ProjectCard } from "../shared/ProjectCard";
 
 const DATA_URI = `data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjUxZWUzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiPgo8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIG9wYWNpdHk9Ii45IiByPSI3MCIgLz4KPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTIwIiBvcGFjaXR5PSIuMyIgcj0iOTAiIC8+Cjwvc3ZnPg==`;
 
@@ -17,12 +17,12 @@ type MarkerProps = Readonly<{
   projects: ProjectToDisplay[];
 }>;
 
-export function Markers({ projects = []}: MarkerProps) {
+export function Markers({ projects = [] }: MarkerProps) {
   const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
 
-  const [selectedProjectKey, setSelectedProjectKey] = useState<
-    string | null
-  >(null);
+  const [selectedProjectKey, setSelectedProjectKey] = useState<string | null>(
+    null
+  );
 
   const [visitedMarkers, setVisitedMarkers] = useState<{
     [key: string]: boolean;
@@ -33,9 +33,7 @@ export function Markers({ projects = []}: MarkerProps) {
   const selectedBlueprint = useMemo(
     () =>
       projects && selectedProjectKey
-        ? projects.find(
-            (blueprint) => blueprint.id === selectedProjectKey
-          )!
+        ? projects.find((blueprint) => blueprint.id === selectedProjectKey)!
         : null,
     [selectedProjectKey, projects]
   );
@@ -141,7 +139,10 @@ export function Markers({ projects = []}: MarkerProps) {
               <span className=" font-medium">
                 {currency === "COP"
                   ? limitPrice(project.typologies[0].price, currency)
-                  : currencyFormatter(convert(project.typologies[0].price), currency)}{" "}
+                  : formatCurrency(
+                      convert(project.typologies[0].price),
+                      currency
+                    )}{" "}
                 {currency}
               </span>
             </div>
@@ -156,7 +157,9 @@ export function Markers({ projects = []}: MarkerProps) {
             setSelectedProjectKey(null);
           }}
         >
-          <ProjectCard project={projects.find(p => p.id === selectedProjectKey)!} />
+          <ProjectCard
+            project={projects.find((p) => p.id === selectedProjectKey)!}
+          />
         </InfoWindow>
       )}
     </>

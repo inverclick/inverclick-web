@@ -1,7 +1,7 @@
 "use client";
 
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter } from "@/lib/currencyFormatter";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { ComponentProps, useEffect, useState } from "react";
@@ -28,7 +28,7 @@ export const DisplayFormattedCurrency = ({
 
   return (
     <Typography variant="h3" className={cn(props.className)} {...props}>
-      {currencyFormatter(convert(number), currency)} {currency}
+      {formatCurrency(convert(number), currency)} {currency}
       {showAsterix && "*"}
     </Typography>
   );

@@ -1,14 +1,15 @@
+import { DisplayTRM } from "@/components/projects/DisplayTRM";
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar";
+} from "@inverclick/inverclick-ui/menubar";
 import { Menu } from "lucide-react";
+
 import Image from "next/image";
 import React from "react";
-import { DisplayTRM } from "@/components/projects/DisplayTRM";
 
 const MENU_OPTIONS = [
   { name: "Nosotros", url: "/" },

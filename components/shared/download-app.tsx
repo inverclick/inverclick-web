@@ -28,7 +28,7 @@ const features: { title: string; description: string }[] = [
   },
 ];
 
-export function DownloadAppPopUp() {
+export function DownloadApp() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isMobileDevice = useMediaQuery("(max-width: 992px)");

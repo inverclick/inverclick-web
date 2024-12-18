@@ -1,7 +1,10 @@
 "use client";
 
 import { useCreditSimulador } from "@/components/financing/credit-simulator";
-import { SelectCurrency } from "@/components/projects/SelectCurrency";
+import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
+import { Button } from "@inverclick/inverclick-ui/button";
 import { Calendar } from "@inverclick/inverclick-ui/calendar";
 import {
   Popover,
@@ -12,10 +15,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "@inverclick/inverclick-ui/radio-group";
-import { NativeSlider } from "@/components/ui/slider-native";
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter } from "@/lib/currencyFormatter";
-import { Button } from "@inverclick/inverclick-ui/button";
+import { Slider } from "@inverclick/inverclick-ui/slider";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { useEffect } from "react";
 
@@ -77,7 +77,7 @@ export const ValueSimulator = ({
         <Typography className="flex-grow flex-shrink-0">
           ¿Cuál es el valor comercial de la vivienda?
         </Typography>
-        <SelectCurrency />
+        <SelectCurrency className="min-w-20" />
       </div>
       <CurrencyInput
         key={currency}
@@ -114,7 +114,7 @@ export const ValueSimulator = ({
               >
                 {percentage}%
               </Typography>
-              <NativeSlider
+              <Slider
                 defaultValue={[percentage]}
                 onValueChange={(values) => setPercentage(values[0])}
                 max={maxPercentage}
@@ -133,7 +133,7 @@ export const ValueSimulator = ({
             >
               {isNaN(Number(inputValue))
                 ? ""
-                : currencyFormatter(
+                : formatCurrency(
                     (Number(inputValue) * percentage) / 100,
                     currency
                   )}
@@ -150,7 +150,7 @@ export const ValueSimulator = ({
             <Typography variant="h3" className="mb-2 text-center lg:text-left">
               {years} años
             </Typography>
-            <NativeSlider
+            <Slider
               defaultValue={[years]}
               onValueChange={(values) => setYears(values[0])}
               min={5}

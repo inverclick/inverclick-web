@@ -1,6 +1,6 @@
 import { CreditSimulador } from "@/components/financing/credit-simulator";
 import { FinancingCard } from "@/components/financing/financing-card";
-import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { Footer } from "@/components/shared/footer/footer";
 import { FrequentlyQuestions } from "@/components/shared/FrequentlyQuestions";
 import { Header } from "@/components/shared/header/header";
 import { ENV_VARS } from "@/global/env";
@@ -306,7 +306,7 @@ export default function FinancingPage() {
         </h2>
         <FrequentlyQuestions />
       </article>
-      <MyFooter />
+      <Footer />
     </main>
   );
 }

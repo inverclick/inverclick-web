@@ -1,3 +1,5 @@
+"use client";
+
 import { OtherProjects as OtherProjectsType } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
 import { ProjectCard } from "@/components/shared/ProjectCard";
 import {
@@ -6,7 +8,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "@inverclick/inverclick-ui/carousel";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 
 export type OtherProjectsProps = Readonly<{

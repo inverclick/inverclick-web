@@ -1,4 +1,4 @@
-import { Currency } from "@/contexts/CurrencyContext";
+import { Currency } from "@/contexts/currency-context";
 
 const BUCKET_URL = process.env.NEXT_PUBLIC_BUCKET_URL;
 

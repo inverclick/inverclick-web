@@ -1,7 +1,8 @@
 import { OrSeparator } from "@/components/shared/or-separator/or-separator";
 import { DownloadAppModal } from "@/components/sign-in/download-app-modal";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@inverclick/inverclick-ui/button";
+import { Input } from "@inverclick/inverclick-ui/input";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,12 +22,7 @@ export function StepOne() {
           Siguiente
         </Button>
         <OrSeparator text="Continúa con" />
-        <Button
-          rounded="full"
-          size="xl"
-          variant="outline"
-          className="w-full mb-8"
-        >
+        <Button rounded="full" variant="outline" className="w-full mb-8">
           <Image
             src="/icons/google.svg"
             alt="Google icon"

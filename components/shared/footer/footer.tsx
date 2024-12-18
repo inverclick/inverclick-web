@@ -1,11 +1,12 @@
+import { AppButton } from "@/components/shared/AppButton";
+import { ContactButton } from "@/components/shared/ContactButton";
+import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
+import { SignupNewsletter } from "@/components/shared/footer/SignupNewsletter";
+
 import Image from "next/image";
 import Link from "next/link";
-import { AppButton } from "../AppButton";
-import { ContactButton } from "../ContactButton";
-import { SOCIAL_NETWORKS } from "../data/socialNetworks";
-import { SignupNewsletter } from "./SignupNewsletter";
 
-export const MyFooter = () => {
+export const Footer = () => {
   return (
     <footer className="bg-gray-50">
       <div className="relative flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20 max-w-screen-2xl mx-auto">

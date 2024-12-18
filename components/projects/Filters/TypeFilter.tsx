@@ -1,4 +1,5 @@
 import { HousingType } from "@/types/housing-type";
+import { Icon } from "@inverclick/inverclick-ui/icon";
 import { icons } from "lucide-react";
 
 interface Props {
@@ -26,7 +27,6 @@ export const TypeFilter = ({
       <h4 className="font-medium md:text-lg">Tipo de propiedad</h4>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {housingTypes.map(({ icon, id, label }) => {
-          const IconComponent = icons[icon as keyof typeof icons];
           return (
             <button
               key={id}
@@ -37,7 +37,7 @@ export const TypeFilter = ({
                   : ""
               }`}
             >
-              <IconComponent />
+              <Icon iconName={icon as keyof typeof icons} />
               <span className="text-sm md:text-base font-medium">{label}</span>
             </button>
           );

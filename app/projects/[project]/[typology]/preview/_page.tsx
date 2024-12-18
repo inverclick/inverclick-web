@@ -1,6 +1,6 @@
+import { ProjectContentProps } from "@/app/projects/[project]/[typology]/_components/project-content";
 import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
-import { ProjectContentProps } from "@/components/projects/review/ProjectContent";
-import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { fallback } from "@/services/fallback";
 import { supabase } from "@/services/supabase";
@@ -82,7 +82,7 @@ export default async function Page({
           urbanismFiles={data.urbanism_files}
         /> */}
       </article>
-      <MyFooter />
+      <Footer />
     </main>
   );
 }

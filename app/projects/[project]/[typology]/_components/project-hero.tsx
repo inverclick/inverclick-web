@@ -1,8 +1,8 @@
 import { DisplayTRM } from "@/components/projects/DisplayTRM";
-import { SelectCurrency } from "@/components/projects/SelectCurrency";
 import { ProjectGallery } from "@/components/projects/review/ProjectGallery";
 import { DisplayFormattedCurrency } from "@/components/shared/DisplayFormattedCurrency";
 import { SaveFavorite } from "@/components/shared/save-favorite/save-favorite";
+import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
 import { ShareProject } from "@/components/shared/share-project/share-project";
 import { cn } from "@/lib/utils";
 import {
@@ -78,7 +78,7 @@ export const ProjectHero = ({
           />
           <SaveFavorite isIconOnly className="lg:hidden" />
           <SaveFavorite className="hidden lg:flex" />
-          <SelectCurrency />
+          <SelectCurrency className="min-w-20" />
         </div>
       </div>
       <ProjectGallery

@@ -1,7 +1,8 @@
 "use client";
 
 import { useCreditSimulador } from "@/components/financing/credit-simulator";
-import { SelectCurrency } from "@/components/projects/SelectCurrency";
+import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
+import { useCurrencyContext } from "@/contexts/currency-context";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { Calendar } from "@inverclick/inverclick-ui/calendar";
 import {
@@ -9,8 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@inverclick/inverclick-ui/popover";
-import { NativeSlider } from "@/components/ui/slider-native";
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
+import { Slider } from "@inverclick/inverclick-ui/slider";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 
 import CurrencyInput from "react-currency-input-field";
@@ -69,7 +69,7 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
             <Typography variant="h3" className="mb-2 text-center lg:text-left">
               {years} años
             </Typography>
-            <NativeSlider
+            <Slider
               defaultValue={[years]}
               onValueChange={(values) => setYears(values[0])}
               min={5}

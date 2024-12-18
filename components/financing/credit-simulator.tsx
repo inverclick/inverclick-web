@@ -1,17 +1,17 @@
 "use client";
 
+import { FeeSimulator } from "@/components/financing/fee-simulator";
+import { SelectSimulatorType } from "@/components/financing/select-simulator-type";
+import { SimulatorResult } from "@/components/financing/simulator-result";
+import { ValueSimulator } from "@/components/financing/value-simulator";
 import { Typography } from "@inverclick/inverclick-ui/typography";
-import React, {
+import {
   createContext,
   Dispatch,
   SetStateAction,
   useContext,
   useState,
 } from "react";
-import { FeeSimulator } from "./fee-simulator";
-import { SelectSimulatorType } from "./select-simulator-type";
-import { SimulatorResult } from "./simulator-result";
-import { ValueSimulator } from "./value-simulator";
 
 export type CreditSimuladorContextType = {
   value: {

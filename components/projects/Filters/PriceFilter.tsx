@@ -1,8 +1,8 @@
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter, currencyParser } from "@/lib/currencyFormatter";
-import { SelectCurrency } from "../SelectCurrency";
+import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
+import { Slider } from "@/components/ui/price-slider";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency, parseCurrency } from "@/lib/format-currency";
+import { Input } from "@inverclick/inverclick-ui/input";
 
 interface Props {
   priceGraphicData: { goal: number }[];
@@ -84,7 +84,7 @@ const CustomInput = ({
 
   const onChangeCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const parsedValue = currencyParser(value, currency);
+    const parsedValue = parseCurrency(value, currency);
     onChange(name, parsedValue.toString());
   };
 
@@ -92,7 +92,7 @@ const CustomInput = ({
     <div className="flex-1 relative h-14 rounded-lg text-base border border-zinc-800">
       <p className="absolute text-[10px] md:text-xs top-1 left-3">{label}</p>
       <Input
-        value={currencyFormatter(convert(Number(value)), currency)}
+        value={formatCurrency(convert(Number(value)), currency)}
         className="mt-3 text-sm md:text-base border-0 bg-white focus-visible:ring-0 focus-visible:ring-offset-0"
         name={name}
         onChange={onChangeCurrency}
