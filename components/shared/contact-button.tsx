@@ -8,7 +8,7 @@ import { ComponentProps } from "react";
 
 import "@/app/styles/animations.css";
 
-type ContactButtonProps = Readonly<ComponentProps<"div">>;
+export type ContactButtonProps = Readonly<ComponentProps<"div">>;
 
 export const ContactButton = ({ className, ...props }: ContactButtonProps) => {
   const pathname = usePathname();

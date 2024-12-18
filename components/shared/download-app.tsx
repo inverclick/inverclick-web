@@ -2,10 +2,11 @@
 
 import { getOS, OS } from "@/lib/get-os";
 import { Check } from "lucide-react";
-import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+
+import Image from "next/image";
 
 const stores: { [key in OS]: string } = {
   Android: "https://play.google.com/store/games?hl=en&pli=1",

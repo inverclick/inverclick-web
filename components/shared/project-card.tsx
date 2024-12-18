@@ -17,7 +17,7 @@ import { ComponentProps, forwardRef, useEffect, useState } from "react";
 
 import Image from "next/image";
 
-type ProjectCardProps = {
+export type ProjectCardProps = {
   project: ProjectToDisplay;
 } & ComponentProps<"section">;
 

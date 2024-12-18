@@ -2,17 +2,17 @@ import { HousingType } from "@/types/housing-type";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import { icons } from "lucide-react";
 
-interface Props {
+export type TypeFilterProps = {
   currentTypes: string[];
   setCurrentTypes: (value: string[]) => void;
   housingTypes: HousingType[];
-}
+};
 
 export const TypeFilter = ({
   currentTypes,
   setCurrentTypes,
   housingTypes,
-}: Props) => {
+}: TypeFilterProps) => {
   const onChange = (type: string) => {
     const newTypes = (
       currentTypes.includes(type)

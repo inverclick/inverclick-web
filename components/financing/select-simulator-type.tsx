@@ -3,15 +3,15 @@ import { useEffect, useRef, useState } from "react";
 
 import clsx from "clsx";
 
-interface Props {
+export type SelectSimulatorTypeProps = {
   setSimulatorType: (type: SimulatorType) => void;
   simulatorType: SimulatorType;
-}
+};
 
 export const SelectSimulatorType = ({
   setSimulatorType,
   simulatorType,
-}: Props) => {
+}: SelectSimulatorTypeProps) => {
   const activeTabRef = useRef<HTMLButtonElement | null>(null);
 
   const [width, setWidth] = useState(0);

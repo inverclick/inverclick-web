@@ -5,7 +5,7 @@ import { SelectCurrency } from "@/components/shared/select-currency/select-curre
 import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";
 
-type MobileProjectHeader = Readonly<{
+export type MobileProjectHeader = Readonly<{
   total: number;
   departments: Department[];
   housingTypes: HousingType[];

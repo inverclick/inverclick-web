@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
-import Link from "next/link";
 import { ComponentProps } from "react";
+
+import Link from "next/link";
 
 export type CardServiceProps = Readonly<{
   link: string;

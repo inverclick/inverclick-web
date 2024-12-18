@@ -1,9 +1,9 @@
 import { AppButton } from "@/components/shared/app-button";
-import { SOCIAL_NETWORKS } from "@/constants/social-networks";
 import { LoginButton } from "@/components/shared/login-button";
 import { DynamicPhrases } from "@/components/web/dynamic-phrases";
 import { Searcher } from "@/components/web/searcher";
 import { Services } from "@/components/web/services";
+import { SOCIAL_NETWORKS } from "@/constants/social-networks";
 import { supabase } from "@/services/supabase";
 import { Department } from "@/types/department";
 

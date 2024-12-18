@@ -9,7 +9,7 @@ import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";
 import { ProjectToDisplay } from "@/types/project";
 
-type ProjectContentProps = Readonly<{
+export type ProjectContentProps = Readonly<{
   total: number;
   projects: ProjectToDisplay[];
   departments: Department[];

@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 
 import Link from "next/link";
 
-type StepThreeProps = Readonly<{
+export type StepThreeProps = Readonly<{
   onBack: () => void;
 }>;
 

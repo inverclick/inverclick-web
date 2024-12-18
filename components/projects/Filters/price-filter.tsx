@@ -4,13 +4,13 @@ import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency, parseCurrency } from "@/lib/format-currency";
 import { Input } from "@inverclick/inverclick-ui/input";
 
-interface Props {
+export type PriceFilterProps = {
   priceGraphicData: { goal: number }[];
   maxPrice: number;
   minPrice: number;
   setMaxPrice: (value: number) => void;
   setMinPrice: (value: number) => void;
-}
+};
 
 export const PriceFilter = ({
   priceGraphicData,
@@ -18,7 +18,7 @@ export const PriceFilter = ({
   minPrice,
   setMaxPrice,
   setMinPrice,
-}: Props) => {
+}: PriceFilterProps) => {
   const onChange = (name: string, value: string) => {
     const newValue = value.length ? Number(value) : undefined;
     console.log(newValue);

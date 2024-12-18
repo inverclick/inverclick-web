@@ -1,5 +1,5 @@
-import { MobileProjectHeader } from "@/components/projects/mobile/mobile-project-header";
 import { Map2 } from "@/components/projects/map-2";
+import { MobileProjectHeader } from "@/components/projects/mobile/mobile-project-header";
 import { NavbarProjects } from "@/components/projects/navbar-projects";
 import {
   ResizableHandle,

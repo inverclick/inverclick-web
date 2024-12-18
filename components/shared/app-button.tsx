@@ -1,11 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
 import React, { ComponentProps, useEffect, useRef } from "react";
 
-type AppButtonProps = Readonly<ComponentProps<typeof Link>>;
+import Image from "next/image";
+import Link from "next/link";
+
+export type AppButtonProps = Readonly<ComponentProps<typeof Link>>;
 
 export const AppButton = ({
   className,

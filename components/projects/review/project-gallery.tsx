@@ -1,21 +1,21 @@
 "use client";
 
+import { MasonryView } from "@/components/projects/review/masonry-view";
 import { getAssetUrl } from "@/services/utils";
 import { BadgeCheck } from "lucide-react";
 import { useState } from "react";
-import { MasonryView } from "@/components/projects/review/masonry-view";
 
 import Image from "next/image";
 
-interface Props {
+export type ProjectGalleryProps = {
   photos: string[];
   disableSharableInteractions?: boolean;
-}
+};
 
 export const ProjectGallery = ({
   photos,
   disableSharableInteractions = false,
-}: Props) => {
+}: ProjectGalleryProps) => {
   const [open, setOpen] = useState(false);
 
   const [photoScrollTo, setPhotoScrollTo] = useState<string>("");

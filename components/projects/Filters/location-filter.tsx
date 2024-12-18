@@ -14,13 +14,13 @@ import {
 } from "@inverclick/inverclick-ui/select";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-interface Props {
+export type LocationFilterProps = {
   departments: Department[];
   currentDepartment: string;
   setCurrentDepartment: (value: string) => void;
   currentCity: string;
   setCurrentCity: (value: string) => void;
-}
+};
 
 export const LocationFilter = ({
   departments,
@@ -28,7 +28,7 @@ export const LocationFilter = ({
   currentDepartment,
   setCurrentCity,
   setCurrentDepartment,
-}: Props) => {
+}: LocationFilterProps) => {
   const [cities, setCities] = useState<City[]>([]);
   const departmentsOptions = useMemo(
     () =>

@@ -3,13 +3,13 @@ import { DownloadApp } from "@/components/shared/download-app";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
-import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/sonner";
 import { ChatbotProvider } from "@/contexts/chatbot-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { getPreRegistration } from "@/services/pre-registration";
-import { Toaster } from "@/components/ui/sonner";
 import { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
 import { ReactNode, Suspense } from "react";
 

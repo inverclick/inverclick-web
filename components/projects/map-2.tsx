@@ -7,7 +7,7 @@ import { ProjectToDisplay } from "@/types/project";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import { useDebounceCallback } from "usehooks-ts";
 
-type MyMap2Props = Readonly<{
+export type MyMap2Props = Readonly<{
   projects: ProjectToDisplay[];
 }>;
 

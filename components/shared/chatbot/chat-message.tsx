@@ -1,5 +1,6 @@
 import { Sender } from "@/components/shared/chatbot/types";
 import { cn } from "@/lib/utils";
+
 import Markdown from "react-markdown";
 
 export type ChatMessageProps = {

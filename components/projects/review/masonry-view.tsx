@@ -25,7 +25,7 @@ import { useMediaQuery } from "usehooks-ts";
 import Image from "next/image";
 import Masonry from "react-responsive-masonry";
 
-type MasonryViewProps = {
+export type MasonryViewProps = {
   photoScrollTo: string;
   photos: string[];
   open: boolean;

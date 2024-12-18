@@ -1,15 +1,16 @@
 "use client";
+
 import { ENV_VARS } from "@/global/env";
+import { ProjectToDisplay } from "@/types/project";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
 import { CustomMarker } from "./custom-marker";
-import { ProjectToDisplay } from "@/types/project";
 
-interface Props {
+export type Map1Props = {
   projects: ProjectToDisplay[];
-}
+};
 
-export const Map1 = ({ projects }: Props) => {
+export const Map1 = ({ projects }: Map1Props) => {
   const [open, setOpen] = useState("");
   const { isLoaded } = useJsApiLoader({
     id: "inverclick-google-map-script",

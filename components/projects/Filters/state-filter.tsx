@@ -7,12 +7,15 @@ const STATE_FILTER_OPTIONS = [
   { label: "Usados", value: HOUSING_STATE_ENUM.USED },
 ];
 
-interface Props {
+export type StateFilterProps = {
   currentState: string;
   setCurrentState: (value: string) => void;
-}
+};
 
-export const StateFilter = ({ currentState, setCurrentState }: Props) => {
+export const StateFilter = ({
+  currentState,
+  setCurrentState,
+}: StateFilterProps) => {
   const onChange = (type: string) => {
     if (type === "all") return setCurrentState("all");
     setCurrentState(type);
