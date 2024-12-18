@@ -35,7 +35,7 @@ export const StateFilter = ({
                 : ""
             }`}
           >
-            <span className="text-sm md:text-base font-medium">{label}</span>
+            <span className="text-xs md:text-base font-medium">{label}</span>
           </button>
         ))}
       </div>

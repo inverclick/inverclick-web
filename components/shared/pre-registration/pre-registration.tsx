@@ -90,7 +90,7 @@ const PreRegistrationContent = () => {
       <DialogContent
         hideCloseButton
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="lg:max-w-2xl"
+        className="max-w-xl"
       >
         <DialogHeader>
           <DialogTitle>

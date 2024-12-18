@@ -117,13 +117,13 @@ export default async function Projects(props: ProjectsProps) {
         />
         <div className="h-screen">
           <ResizablePanelGroup direction="vertical" className="!h-screen">
-            <ResizablePanel defaultSize={50}>
+            <ResizablePanel defaultSize={30}>
               <Map2 projects={projects} />
             </ResizablePanel>
-            <ResizableHandle className="bg-border w-5" />
+            <ResizableHandle className="bg-border !h-5" withHandle />
             <ResizablePanel
-              defaultSize={50}
-              maxSize={60}
+              defaultSize={60}
+              maxSize={80}
               className="flex flex-col"
             >
               <ProjectContent
