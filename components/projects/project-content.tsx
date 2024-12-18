@@ -1,9 +1,9 @@
 "use client";
 
 import { useProjectsPageStore } from "@/app/projects/_store";
-import { DisplayTRM } from "@/components/projects/DisplayTRM";
-import { ProjectFilters } from "@/components/projects/Filters/project-filters";
-import { ProjectInfinityScroll } from "@/components/projects/ProjectInfinityScroll";
+import { DisplayTRM } from "@/components/projects/display-trm";
+import { ProjectFilters } from "@/components/projects/filters/project-filters";
+import { ProjectInfinityScroll } from "@/components/projects/project-infinity-scroll";
 import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
 import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";

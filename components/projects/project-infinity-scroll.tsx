@@ -1,7 +1,7 @@
 "use client";
 
 import { useProjectsPageStore } from "@/app/projects/_store";
-import { ProjectCard } from "@/components/shared/ProjectCard";
+import { ProjectCard } from "@/components/shared/project-card";
 
 export const ProjectInfinityScroll = () => {
   const _projects = useProjectsPageStore((state) => state.projects);

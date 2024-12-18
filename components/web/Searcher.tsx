@@ -1,6 +1,6 @@
 "use client";
 
-import { trimObject } from "@/lib/trimObject";
+import { trimObject } from "@/lib/trim-object";
 import { supabase } from "@/services/supabase";
 import { City } from "@/types/city";
 import { Department } from "@/types/department";

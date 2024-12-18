@@ -1,7 +1,7 @@
 import { CreditSimulador } from "@/components/financing/credit-simulator";
 import { FinancingCard } from "@/components/financing/financing-card";
 import { Footer } from "@/components/shared/footer/footer";
-import { FrequentlyQuestions } from "@/components/shared/FrequentlyQuestions";
+import { FrequentlyQuestions } from "@/components/shared/frequently-questions";
 import { Header } from "@/components/shared/header/header";
 import { ENV_VARS } from "@/global/env";
 import { Check } from "lucide-react";

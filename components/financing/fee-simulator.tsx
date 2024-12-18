@@ -50,7 +50,7 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
         <Typography className="flex-grow flex-shrink-0">
           ¿Cuál es el valor de la cuota que quiero pagar?
         </Typography>
-        <SelectCurrency />
+        <SelectCurrency className="lg:max-w-20" />
       </div>
       <CurrencyInput
         key={currency}

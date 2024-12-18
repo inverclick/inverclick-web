@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Marker, InfoWindow } from "@react-google-maps/api";
-import { ProjectCard } from "../shared/ProjectCard";
+import { ProjectCard } from "../shared/project-card";
 import { ProjectToDisplay } from "@/types/project";
 
 interface Props {

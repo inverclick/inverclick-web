@@ -1,4 +1,4 @@
-import { DisplayTRM } from "@/components/projects/DisplayTRM";
+import { DisplayTRM } from "@/components/projects/display-trm";
 import { HeaderLink } from "@/components/shared/header/header-link";
 import { cn } from "@/lib/utils";
 import { Button } from "@inverclick/inverclick-ui/button";

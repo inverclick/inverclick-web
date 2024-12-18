@@ -1,6 +1,6 @@
 "use client";
 
-import { ProjectFilters } from "@/components/projects/Filters/project-filters";
+import { ProjectFilters } from "@/components/projects/filters/project-filters";
 import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
 import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";

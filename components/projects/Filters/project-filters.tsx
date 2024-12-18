@@ -1,9 +1,9 @@
 "use client";
 
-import { LocationFilter } from "@/components/projects/Filters/LocationFilter";
-import { PriceFilter } from "@/components/projects/Filters/PriceFilter";
-import { StateFilter } from "@/components/projects/Filters/StateFilter";
-import { TypeFilter } from "@/components/projects/Filters/TypeFilter";
+import { LocationFilter } from "@/components/projects/filters/location-filter";
+import { PriceFilter } from "@/components/projects/filters/price-filter";
+import { StateFilter } from "@/components/projects/filters/state-filter";
+import { TypeFilter } from "@/components/projects/filters/type-filter";
 import { useDebounce } from "@/hooks/use-debounce";
 import { supabase } from "@/services/supabase";
 import { Department } from "@/types/department";

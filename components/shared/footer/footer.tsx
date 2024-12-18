@@ -1,7 +1,7 @@
-import { AppButton } from "@/components/shared/AppButton";
-import { ContactButton } from "@/components/shared/ContactButton";
-import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
-import { SignupNewsletter } from "@/components/shared/footer/SignupNewsletter";
+import { AppButton } from "@/components/shared/app-button";
+import { ContactButton } from "@/components/shared/contact-button";
+import { SOCIAL_NETWORKS } from "@/constants/social-networks";
+import { SignupNewsletter } from "@/components/shared/footer/signup-newsletter";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -10,8 +10,8 @@ export const Footer = () => {
   return (
     <footer className="bg-gray-50">
       <div className="relative flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20 max-w-screen-2xl mx-auto">
-        <ContactButton className="absolute right-8 bottom-[114px]" />
-        <AppButton className="absolute right-8 bottom-8" />
+        <ContactButton className="absolute right-4 bottom-40" />
+        <AppButton className="absolute right-4 bottom-20" />
         <section className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-4">
           <div className="w-full">
             <SignupNewsletter />

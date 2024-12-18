@@ -1,7 +1,7 @@
 "use client";
 
 import { useProjectsPageStore } from "@/app/projects/_store";
-import { Markers } from "@/components/projects/Markers";
+import { Markers } from "@/components/projects/markers";
 import { ENV_VARS } from "@/global/env";
 import { ProjectToDisplay } from "@/types/project";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
@@ -11,7 +11,7 @@ type MyMap2Props = Readonly<{
   projects: ProjectToDisplay[];
 }>;
 
-export function MyMap2({ projects }: MyMap2Props) {
+export function Map2({ projects }: MyMap2Props) {
   return (
     <APIProvider apiKey={ENV_VARS.GOOGLE_MAP_KEY}>
       <MyMap2Content projects={projects} />

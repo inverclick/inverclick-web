@@ -1,7 +1,6 @@
 /* Contact y Login Button */
 
 .slide-button {
-  background-color: white;
   width: 40px;
   height: 40px;
   overflow: hidden;
@@ -9,7 +8,7 @@
 }
 
 .slide-button:hover {
-  width: 120px;
+  width: 140px;
 }
 
 .slide-button span {

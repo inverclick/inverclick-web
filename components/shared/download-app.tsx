@@ -1,6 +1,6 @@
 "use client";
 
-import { getOS, OS } from "@/lib/getMobileOperatingSystem";
+import { getOS, OS } from "@/lib/get-os";
 import { Check } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";

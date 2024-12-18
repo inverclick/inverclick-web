@@ -77,7 +77,7 @@ export const ValueSimulator = ({
         <Typography className="flex-grow flex-shrink-0">
           ¿Cuál es el valor comercial de la vivienda?
         </Typography>
-        <SelectCurrency className="min-w-20" />
+        <SelectCurrency className="lg:max-w-20" />
       </div>
       <CurrencyInput
         key={currency}

@@ -1,4 +1,4 @@
-import { ProjectCard } from "@/components/shared/ProjectCard";
+import { ProjectCard } from "@/components/shared/project-card";
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency } from "@/lib/format-currency";
 import { limitPrice } from "@/services/utils";

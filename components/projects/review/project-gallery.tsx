@@ -3,7 +3,7 @@
 import { getAssetUrl } from "@/services/utils";
 import { BadgeCheck } from "lucide-react";
 import { useState } from "react";
-import { MasonryView } from "@/components/projects/review/MasonryView";
+import { MasonryView } from "@/components/projects/review/masonry-view";
 
 import Image from "next/image";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { OtherProjects as OtherProjectsType } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
-import { ProjectCard } from "@/components/shared/ProjectCard";
+import { ProjectCard } from "@/components/shared/project-card";
 import {
   Carousel,
   CarouselContent,

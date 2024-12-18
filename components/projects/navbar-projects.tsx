@@ -1,6 +1,6 @@
 "use client";
 
-import { DisplayTRM } from "@/components/projects/DisplayTRM";
+import { DisplayTRM } from "@/components/projects/display-trm";
 import {
   LEFT_MENU_OPTIONS,
   MENU_OPTIONS,

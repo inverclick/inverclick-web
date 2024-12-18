@@ -1,6 +1,6 @@
-import { DisplayTRM } from "@/components/projects/DisplayTRM";
-import { ProjectGallery } from "@/components/projects/review/ProjectGallery";
-import { DisplayFormattedCurrency } from "@/components/shared/DisplayFormattedCurrency";
+import { DisplayTRM } from "@/components/projects/display-trm";
+import { ProjectGallery } from "@/components/projects/review/project-gallery";
+import { DisplayFormattedCurrency } from "@/components/shared/display-formatted-currency";
 import { SaveFavorite } from "@/components/shared/save-favorite/save-favorite";
 import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
 import { ShareProject } from "@/components/shared/share-project/share-project";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Typewriter } from "@/components/web/Typewriter";
+import { Typewriter } from "@/components/web/typewriter";
 
 const texts = [
   {
