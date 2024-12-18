@@ -23,6 +23,8 @@ export const useProgressiveNumber = (
       setCurrentStep(1);
       setCurrent(lerp(initial, Number(nextTarget), easeOutCubic(1 / steps)));
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [delay, duration, target]
   );
 
@@ -38,6 +40,8 @@ export const useProgressiveNumber = (
     }, delay);
 
     return () => clearTimeout(timeout);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, currentStep, target]);
   const value = current.toFixed(decimals);
   return [value, setValue];

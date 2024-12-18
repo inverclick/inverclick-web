@@ -18,6 +18,8 @@ export const CountUp = ({
 
   useEffect(() => {
     setCount(String(final));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [final]);
 
   if (formatter) return <span>{formatter(count)}</span>;

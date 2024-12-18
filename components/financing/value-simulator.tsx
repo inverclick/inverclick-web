@@ -59,6 +59,8 @@ export const ValueSimulator = ({
       setMaxPercentage(80);
       if (percentage > 80) setPercentage(80);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   let locale: string;

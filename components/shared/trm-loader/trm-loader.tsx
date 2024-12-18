@@ -10,6 +10,8 @@ export const TRMLoader = ({ children }: TRMLoaderProps) => {
 
   useEffect(() => {
     loadTRM();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <>{children}</>;

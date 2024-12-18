@@ -1,6 +1,10 @@
 # Inverclick WEB
 
-## Getting Started
+## Linting
+
+ESLint is configured to run in specific folders, please, if you create a new folder, add it to the configuration file at `next.config.mjs` in `eslint.dirs`.
+
+## Environment variables
 
 Environment variables are stored in a `.env`:
 

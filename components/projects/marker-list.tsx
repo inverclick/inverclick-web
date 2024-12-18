@@ -130,8 +130,8 @@ export function Markers({ projects = [] }: MarkerProps) {
                 isCurrentOpen
                   ? "bg-primary-700"
                   : isVisited
-                  ? "bg-primary-100"
-                  : "bg-white"
+                    ? "bg-primary-100"
+                    : "bg-white"
               } py-1 px-2 rounded-full border-[1px] border-primary-600 shadow-md whitespace-nowrap ${
                 isCurrentOpen ? "text-white" : "text-black"
               } `}

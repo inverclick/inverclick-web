@@ -1,7 +1,7 @@
 "use client";
 
 import { useProjectsPageStore } from "@/app/projects/_store";
-import { Markers } from "@/components/projects/markers";
+import { Markers } from "@/components/projects/marker-list";
 import { ENV_VARS } from "@/global/env";
 import { ProjectToDisplay } from "@/types/project";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";

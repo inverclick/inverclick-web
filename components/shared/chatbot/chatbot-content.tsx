@@ -90,6 +90,8 @@ export const ChatbotContent = ({
     if (!preRegistration) {
       setIsChatOpen(false);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preRegistration]);
 
   useEffect(() => {
@@ -114,6 +116,8 @@ export const ChatbotContent = ({
     };
 
     contextualizeAssistant();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thread, pathname]);
 
   useEffect(() => {
@@ -129,6 +133,8 @@ export const ChatbotContent = ({
     window.questionAboutProject = questionAboutProject;
 
     init();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
