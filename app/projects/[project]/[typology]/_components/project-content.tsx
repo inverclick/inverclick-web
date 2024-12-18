@@ -35,7 +35,7 @@ export type ProjectContentProps = {
 export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
   return (
     <article className="flex gap-4">
-      <Tabs defaultValue="description" className="flex-1">
+      <Tabs defaultValue="description" className="w-full">
         <TabsList className="flex items-center mb-12">
           <TabsTrigger value="description">Descripción</TabsTrigger>
           <TabsTrigger value="types">Tipologías</TabsTrigger>
