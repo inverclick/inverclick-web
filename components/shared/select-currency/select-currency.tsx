@@ -14,7 +14,7 @@ import { ComponentProps } from "react";
 export type SelectCurrencyProps = ComponentProps<typeof SelectTrigger>;
 
 export const SelectCurrency = ({ ...props }: SelectCurrencyProps) => {
-  const { currency, changeCurrency } = useCurrencyContext();
+  const { currency, changeCurrency } = useCurrencyContext((s) => s);
 
   return (
     <Select value={currency} onValueChange={changeCurrency}>

@@ -21,7 +21,7 @@ export type FeeSimulatorProps = Readonly<{
 }>;
 
 export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
-  const { currency } = useCurrencyContext();
+  const { currency } = useCurrencyContext((s) => s);
 
   const {
     quota: {

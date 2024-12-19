@@ -80,7 +80,7 @@ const CustomInput = ({
   onChange: (name: string, value: string) => void;
   name: string;
 }) => {
-  const { currency, convert } = useCurrencyContext();
+  const { currency, convert } = useCurrencyContext((s) => s);
 
   const onChangeCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
