@@ -72,7 +72,7 @@ export default async function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://public-bucket.inverclick.com" />
+        <link rel="preconnect" href="https://lvptznfprobnfjquceok.supabase.co/storage/v1/object/public/inverclick-public" />
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>

@@ -5,6 +5,7 @@ import goToProjects, {
   getWelcomeMessage,
   goToProject,
   goToProjectsWithFilters,
+  questionAboutInverclick,
   questionAboutProject,
   simulateCreditByQuotaValue,
   simulateCreditByValueHousing,
@@ -131,6 +132,7 @@ export const ChatbotContent = ({
     window.simulateCreditByValueHousing = simulateCreditByValueHousing;
     window.goToProject = goToProject;
     window.questionAboutProject = questionAboutProject;
+    window.questionAboutInverclick = questionAboutInverclick;
 
     init();
 
@@ -310,7 +312,8 @@ export const ChatbotContent = ({
      */
     const run = await openAI.beta.threads.runs.create(thread.id, {
       assistant_id: ENV_VARS.OPENAI_ASSISTANT_ID,
-      tool_choice: { type: "file_search" },
+      tool_choice: "required",
+      // tool_choice: { type: "file_search" },
     });
 
     /**
