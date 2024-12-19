@@ -12,8 +12,8 @@ importers:
         specifier: ^2.5.3
         version: 2.5.3
       '@inverclick/inverclick-ui':
-        specifier: file:C:/Users/Unknown/Documents/GitHub/inverclick-ui
-        version: file:../inverclick-ui(@midudev/tailwind-animations@0.1.0(tailwindcss@3.4.16))(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(autoprefixer@10.4.20(postcss@8.4.49))(class-variance-authority@0.7.1)(clsx@2.1.1)(cmdk@1.0.4(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(date-fns@4.1.0)(embla-carousel-react@8.5.1(react@18.3.1))(formik@2.4.6(react@18.3.1))(i18next@23.16.8)(lucide-react@0.456.0(react@18.3.1))(next-themes@0.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(postcss@8.4.49)(react-day-picker@8.10.1(date-fns@4.1.0)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-i18next@15.2.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-resizable-panels@2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sonner@1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwind-merge@2.5.5)(tailwindcss-animate@1.0.7(tailwindcss@3.4.16))(tailwindcss@3.4.16)(yup@1.5.0)
+        specifier: ^1.4.8
+        version: 1.4.8(@midudev/tailwind-animations@0.1.0(tailwindcss@3.4.16))(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(autoprefixer@10.4.20(postcss@8.4.49))(class-variance-authority@0.7.1)(clsx@2.1.1)(cmdk@1.0.4(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(date-fns@4.1.0)(embla-carousel-react@8.5.1(react@18.3.1))(formik@2.4.6(react@18.3.1))(i18next@23.16.8)(lucide-react@0.456.0(react@18.3.1))(postcss@8.4.49)(react-day-picker@8.10.1(date-fns@4.1.0)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-i18next@15.2.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-resizable-panels@2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sonner@1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwind-merge@2.5.5)(tailwindcss-animate@1.0.7(tailwindcss@3.4.16))(tailwindcss@3.4.16)(yup@1.5.0)
       '@midudev/tailwind-animations':
         specifier: ^0.1.0
         version: 0.1.0(tailwindcss@3.4.16)
@@ -65,6 +65,9 @@ importers:
       formik:
         specifier: ^2.4.6
         version: 2.4.6(react@18.3.1)
+      inverclick-web:
+        specifier: 'link:'
+        version: 'link:'
       lucide-react:
         specifier: ^0.456.0
         version: 0.456.0(react@18.3.1)
@@ -262,8 +265,8 @@ packages:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
 
-  '@inverclick/inverclick-ui@file:../inverclick-ui':
-    resolution: {directory: ../inverclick-ui, type: directory}
+  '@inverclick/inverclick-ui@1.4.8':
+    resolution: {integrity: sha512-eK5RO+mrtk34UtmxMjsNkvO7RYX8Dc3kGcaxCUi2EfAG0Q7wtTcgw2gg+g8ThOy/kuxSVP4s9L655rd2ubDvDg==}
     peerDependencies:
       '@midudev/tailwind-animations': ^0.1.0
       autoprefixer: ^10.4.20
@@ -276,7 +279,6 @@ packages:
       i18next: ^23.16.8
       input-otp: ^1.4.1
       lucide-react: ^0.456.0
-      next-themes: ^0.4.3
       postcss: ^8.4.47
       react: ^18.3.1
       react-day-picker: 8.10.1
@@ -300,8 +302,6 @@ packages:
       i18next:
         optional: true
       input-otp:
-        optional: true
-      next-themes:
         optional: true
       react-day-picker:
         optional: true
@@ -3853,8 +3853,8 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  ? '@inverclick/inverclick-ui@file:../inverclick-ui(@midudev/tailwind-animations@0.1.0(tailwindcss@3.4.16))(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(autoprefixer@10.4.20(postcss@8.4.49))(class-variance-authority@0.7.1)(clsx@2.1.1)(cmdk@1.0.4(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(date-fns@4.1.0)(embla-carousel-react@8.5.1(react@18.3.1))(formik@2.4.6(react@18.3.1))(i18next@23.16.8)(lucide-react@0.456.0(react@18.3.1))(next-themes@0.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(postcss@8.4.49)(react-day-picker@8.10.1(date-fns@4.1.0)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-i18next@15.2.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-resizable-panels@2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sonner@1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwind-merge@2.5.5)(tailwindcss-animate@1.0.7(tailwindcss@3.4.16))(tailwindcss@3.4.16)(yup@1.5.0)'
-  : dependencies:
+  '@inverclick/inverclick-ui@1.4.8(@midudev/tailwind-animations@0.1.0(tailwindcss@3.4.16))(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(autoprefixer@10.4.20(postcss@8.4.49))(class-variance-authority@0.7.1)(clsx@2.1.1)(cmdk@1.0.4(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(date-fns@4.1.0)(embla-carousel-react@8.5.1(react@18.3.1))(formik@2.4.6(react@18.3.1))(i18next@23.16.8)(lucide-react@0.456.0(react@18.3.1))(postcss@8.4.49)(react-day-picker@8.10.1(date-fns@4.1.0)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-i18next@15.2.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-resizable-panels@2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sonner@1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwind-merge@2.5.5)(tailwindcss-animate@1.0.7(tailwindcss@3.4.16))(tailwindcss@3.4.16)(yup@1.5.0)':
+    dependencies:
       '@midudev/tailwind-animations': 0.1.0(tailwindcss@3.4.16)
       '@radix-ui/react-accordion': 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-alert-dialog': 1.1.4(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3886,6 +3886,7 @@ snapshots:
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       lucide-react: 0.456.0(react@18.3.1)
+      next-themes: 0.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       postcss: 8.4.49
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -3898,7 +3899,6 @@ snapshots:
       embla-carousel-react: 8.5.1(react@18.3.1)
       formik: 2.4.6(react@18.3.1)
       i18next: 23.16.8
-      next-themes: 0.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-day-picker: 8.10.1(date-fns@4.1.0)(react@18.3.1)
       react-i18next: 15.2.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-resizable-panels: 2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5642,7 +5642,7 @@ snapshots:
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0-canary-7118f5dd7-20230705(eslint@8.57.1)
@@ -5669,8 +5669,8 @@ snapshots:
       debug: 4.4.0
       enhanced-resolve: 5.17.1
       eslint: 8.57.1
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-core-module: 2.16.0
@@ -5681,7 +5681,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1):
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -5692,7 +5692,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -5702,7 +5702,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.16.0
       is-glob: 4.0.3

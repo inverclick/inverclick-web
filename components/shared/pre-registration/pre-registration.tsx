@@ -106,7 +106,6 @@ const PreRegistrationContent = () => {
           <Form id="pre-registration" className="my-4">
             <InputFormikNT
               id="name"
-              form={form}
               classNames={{
                 container: "mb-4",
               }}
@@ -118,7 +117,6 @@ const PreRegistrationContent = () => {
             />
             <InputFormikNT
               id="email"
-              form={form}
               properties={{
                 input: {
                   id: "email",
