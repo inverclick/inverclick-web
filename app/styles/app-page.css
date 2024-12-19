@@ -1,21 +1,22 @@
 :root {
-	--card-height: 40vw;
-	--card-margin: 4vw;
-	--card-top-offset: 6em;
-	--outline-width: 0px;
+  --card-height: 40vw;
+  --card-margin: 4vw;
+  --card-top-offset: 6em;
+  --outline-width: 0px;
 }
 
 @supports (animation-timeline: view()) {
   .card {
     --index0: calc(var(--index) - 1); /* 0-based index */
     --reverse-index: calc(var(--numcards) - var(--index0)); /* reverse index */
-    --reverse-index0: calc(var(--reverse-index) - 1); /* 0-based reverse index */
+    --reverse-index0: calc(
+      var(--reverse-index) - 1
+    ); /* 0-based reverse index */
   }
 
   @keyframes scale {
     to {
-      transform:
-        scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+      transform: scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
     }
   }
 
@@ -30,46 +31,46 @@
 
     animation: linear scale forwards;
     animation-timeline: --cards-element-scrolls-in-body;
-    animation-range: exit-crossing var(--start-range) exit-crossing var(--end-range);
+    animation-range: exit-crossing var(--start-range) exit-crossing
+      var(--end-range);
   }
 }
 
 #cards {
-	/* Make place at bottom, as items will slide to that position*/
-	padding-bottom: calc(var(--numcards) * var(--card-top-offset));
-	/* Don't include the --card-margin in padding, as that will affect the scroll-timeline*/
-	margin-bottom: var(--card-margin);
+  /* Make place at bottom, as items will slide to that position*/
+  padding-bottom: calc(var(--numcards) * var(--card-top-offset));
+  /* Don't include the --card-margin in padding, as that will affect the scroll-timeline*/
+  margin-bottom: var(--card-margin);
 }
 
 #card_1 {
-	--index: 1;
+  --index: 1;
   padding-top: 7rem;
 }
 
 #card_2 {
   padding-top: 9rem;
-	--index: 2;
+  --index: 2;
 }
 
 #card_3 {
-	--index: 3;
+  --index: 3;
 }
 
 #card_4 {
-	--index: 4;
+  --index: 4;
 }
 
 .card {
-	position: sticky;
-	top: 0;
-	padding-top: calc(var(--index) * var(--card-top-offset)/1.5 );
+  position: sticky;
+  top: 0;
+  padding-top: calc(var(--index) * var(--card-top-offset) / 1.5);
 }
 
 .card__content {
-	transform-origin: 50% 0%;
-	will-change: transform;
+  transform-origin: 50% 0%;
+  will-change: transform;
 }
-
 
 #debug {
   position: fixed;
@@ -88,19 +89,19 @@
 }
 
 #cards {
-	list-style: none;
-	outline: calc(var(--outline-width) * 10) solid hotpink;
+  list-style: none;
+  outline: calc(var(--outline-width) * 10) solid hotpink;
 
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: repeat(var(--numcards), var(--card-height));
-	gap: var(--card-margin);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(var(--numcards), var(--card-height));
+  gap: var(--card-margin);
 }
 
 .card__content {
-	/* box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1), 0 1em 2em rgba(0, 0, 0, 0.1); */
-	/* background: rgb(255, 255, 255); */
-	color: rgb(10, 5, 7);
-	border-radius: 1em;
-	overflow: hidden;
+  /* box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1), 0 1em 2em rgba(0, 0, 0, 0.1); */
+  /* background: rgb(255, 255, 255); */
+  color: rgb(10, 5, 7);
+  border-radius: 1em;
+  overflow: hidden;
 }

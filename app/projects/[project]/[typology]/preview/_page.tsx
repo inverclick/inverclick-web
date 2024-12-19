@@ -1,6 +1,6 @@
-import { Hero } from "@/components/projects/review/Hero";
-import { ProjectContentProps } from "@/components/projects/review/ProjectContent";
-import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { ProjectContentProps } from "@/app/projects/[project]/[typology]/_components/project-content";
+import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
+import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { fallback } from "@/services/fallback";
 import { supabase } from "@/services/supabase";
@@ -48,7 +48,7 @@ export default async function Page({
     <main>
       <Header />
       <article className="p-content flex flex-col gap-8 max-w-screen-2xl mx-auto">
-        <Hero
+        <ProjectHero
           name={fallback(data.name, "string")}
           photos={data.photos}
           price={typology.price}
@@ -82,7 +82,7 @@ export default async function Page({
           urbanismFiles={data.urbanism_files}
         /> */}
       </article>
-      <MyFooter />
+      <Footer />
     </main>
   );
 }

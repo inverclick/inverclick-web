@@ -1,7 +1,7 @@
 import { ScrollArea } from "@inverclick/inverclick-ui/scroll-area";
 import { forwardRef, PropsWithChildren } from "react";
 
-type ChatMessagesProps = PropsWithChildren;
+export type ChatMessagesProps = PropsWithChildren;
 
 export const ChatMessages = forwardRef<HTMLDivElement, ChatMessagesProps>(
   ({ children }, ref) => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { ProjectToDisplay } from "@/types/project";
-
 import { create } from "zustand";
 
 export type ProjectStore = {

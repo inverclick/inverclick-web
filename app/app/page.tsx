@@ -1,10 +1,12 @@
-import "@/app/styles/app-page.css";
-import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { ENV_VARS } from "@/global/env";
 import { Metadata } from "next";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import "@/app/styles/app-page.css";
 
 export const metadata: Metadata = {
   title: "App móvil",
@@ -174,7 +176,7 @@ export default function App() {
           </li>
         </ul>
       </article>
-      <MyFooter />
+      <Footer />
     </main>
   );
 }

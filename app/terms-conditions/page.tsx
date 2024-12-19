@@ -1,12 +1,12 @@
-import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
+import { ENV_VARS } from "@/global/env";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTriggerWithArrowFirst,
-} from "@/components/ui/accordion";
-import { ENV_VARS } from "@/global/env";
+} from "@inverclick/inverclick-ui/accordion";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -1581,7 +1581,7 @@ export default function Index() {
           </AccordionItem>
         </Accordion>
       </article>
-      <MyFooter />
+      <Footer />
     </main>
   );
 }

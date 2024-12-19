@@ -2,9 +2,9 @@ import { Project } from "@/app/projects/[project]/[typology]/_services/get-proje
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
+import { ComponentProps } from "react";
 
 import Image from "next/image";
-import { ComponentProps } from "react";
 
 export type ProjectInformationSectionProps = Readonly<{
   project: Project;

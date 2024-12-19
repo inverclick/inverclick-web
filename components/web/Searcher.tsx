@@ -1,5 +1,9 @@
 "use client";
 
+import { trimObject } from "@/lib/trim-object";
+import { supabase } from "@/services/supabase";
+import { City } from "@/types/city";
+import { Department } from "@/types/department";
 import {
   Select,
   SelectContent,
@@ -8,18 +12,15 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { trimObject } from "@/lib/trimObject";
-import { supabase } from "@/services/supabase";
-import { City } from "@/types/city";
-import { Department } from "@/types/department";
+} from "@inverclick/inverclick-ui/select";
+import { Separator } from "@inverclick/inverclick-ui/separator";
 import { Search } from "lucide-react";
-import Link from "next/link";
 import { ComponentProps, useEffect, useState } from "react";
 
+import Link from "next/link";
+
 export type SearcherProps = Readonly<{
-  departments: Department[]
+  departments: Department[];
 }>;
 
 export function Searcher({ departments }: SearcherProps) {
@@ -36,7 +37,10 @@ export function Searcher({ departments }: SearcherProps) {
     fetchCities();
 
     async function fetchCities() {
-      const { data: cities } = await supabase.from('cities').select('*').eq('department_id', department);
+      const { data: cities } = await supabase
+        .from("cities")
+        .select("*")
+        .eq("department_id", department);
 
       setCities(cities ?? []);
     }

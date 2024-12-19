@@ -1,17 +1,18 @@
-import { DisplayTRM } from "@/components/projects/DisplayTRM";
+import { DisplayTRM } from "@/components/projects/display-trm";
 import { HeaderLink } from "@/components/shared/header/header-link";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Button } from "@inverclick/inverclick-ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { CircleUserRound, Menu } from "lucide-react";
+} from "@inverclick/inverclick-ui/dropdown-menu";
+import { Menu } from "lucide-react";
+import { PropsWithChildren } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
-import { PropsWithChildren } from "react";
 
 export const MENU_OPTIONS = [
   { name: "Nosotros", url: "/about-us" },

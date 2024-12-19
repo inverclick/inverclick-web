@@ -1,19 +1,20 @@
 import { Chatbot } from "@/components/shared/chatbot/chatbot";
-import { DownloadAppPopUp } from "@/components/shared/DownloadAppPopUp";
+import { DownloadApp } from "@/components/shared/download-app";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 import { Toaster } from "@/components/ui/sonner";
+import { ChatbotProvider } from "@/contexts/chatbot-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { getPreRegistration } from "@/services/pre-registration";
 import { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
 import { ReactNode, Suspense } from "react";
 
 import Script from "next/script";
 
-import { ChatbotProvider } from "@/contexts/chatbot-context";
 import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
@@ -69,27 +70,29 @@ export default async function RootLayout({
   const preRegistration = getPreRegistration();
 
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://lvptznfprobnfjquceok.supabase.co/storage/v1/object/public/inverclick-public" />
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
-        <PreRegistrationProvider preRegistration={preRegistration}>
-          <ChatbotProvider>
-            <YupLocalization>
-              <TRMLoader>
-                {children}
-                <Chatbot />
-                <PreRegistration />
-              </TRMLoader>
-            </YupLocalization>
-          </ChatbotProvider>
-        </PreRegistrationProvider>
-        <Toaster />
-        <Suspense>
-          <DownloadAppPopUp />
-        </Suspense>
+        <ThemeProvider defaultTheme="light">
+          <PreRegistrationProvider preRegistration={preRegistration}>
+            <ChatbotProvider>
+              <YupLocalization>
+                <TRMLoader>
+                  {children}
+                  <Chatbot />
+                  <PreRegistration />
+                  <Toaster closeButton />
+                  <Suspense>
+                    <DownloadApp />
+                  </Suspense>
+                </TRMLoader>
+              </YupLocalization>
+            </ChatbotProvider>
+          </PreRegistrationProvider>
+        </ThemeProvider>
       </body>
       <Script
         async

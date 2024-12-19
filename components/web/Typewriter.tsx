@@ -1,13 +1,14 @@
-import "@/app/styles/typewriter.css";
 import { useEffect, useState } from "react";
 
-type TypewriterProps = {
-  texts: { title: string; subtitle: string }[];
-};
+import "@/app/styles/typewriter.css";
 
 const typingSpeed = 50; // Speed of typing effect in milliseconds
 const pauseDuration = 2000; // Pause duration before switching texts
 const fadeInDuration = 1000; // Fade-in duration in milliseconds
+
+export type TypewriterProps = {
+  texts: { title: string; subtitle: string }[];
+};
 
 export const Typewriter = ({ texts }: TypewriterProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);

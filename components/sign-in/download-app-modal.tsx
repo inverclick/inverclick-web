@@ -1,27 +1,28 @@
 "use client";
 
 import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { DialogHeader } from "@/components/ui/dialog";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@inverclick/inverclick-ui/dialog";
 import { X } from "lucide-react";
+import { useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export function DownloadAppModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger asChild>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
         <p className="text-center text-primary cursor-pointer">
           Inténtalo desde nuestra Aplicación Móvil
         </p>
-      </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-xl">
+      </DialogTrigger>
+      <DialogContent className="max-w-xl">
         <DialogHeader>
           <X
             onClick={() => setIsOpen(false)}
@@ -54,7 +55,7 @@ export function DownloadAppModal() {
             alt="Inverclick logo"
           />
         </Link>
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   );
 }

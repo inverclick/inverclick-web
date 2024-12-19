@@ -1,0 +1,133 @@
+"use client";
+
+import { DisplayTRM } from "@/components/projects/display-trm";
+import {
+  LEFT_MENU_OPTIONS,
+  MENU_OPTIONS,
+  RIGHT_MENU_OPTIONS,
+  UserLink,
+} from "@/components/shared/header/header";
+import { HeaderLink } from "@/components/shared/header/header-link";
+import { Button } from "@inverclick/inverclick-ui/button";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarLabel,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@inverclick/inverclick-ui/menubar";
+import { SquareMenu } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+import Image from "next/image";
+
+const MEDIA_QUERY = 1024;
+
+export function NavbarProjects() {
+  const scrollableDivRef = useRef(null);
+
+  const [headerPosition, setHeaderPosition] = useState<"normal" | "responsive">(
+    "normal"
+  );
+
+  useEffect(() => {
+    if (scrollableDivRef.current) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          if (entry.target === scrollableDivRef.current) {
+            const { width } = entry.contentRect;
+            if (width <= MEDIA_QUERY && headerPosition === "normal") {
+              setHeaderPosition("responsive");
+            } else if (width > MEDIA_QUERY && headerPosition === "responsive") {
+              setHeaderPosition("normal");
+            }
+          }
+        }
+      });
+
+      resizeObserver.observe(scrollableDivRef.current);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }
+  }, [headerPosition]);
+
+  return (
+    <header
+      id="navbar-projects"
+      ref={scrollableDivRef}
+      className="hidden bg-white shadow-md md:flex p-4 right-0 left-0"
+    >
+      <nav className="flex gap-3 w-full justify-between">
+        {headerPosition === "normal" ? (
+          <div className="flex-1 flex items-center gap-3">
+            {LEFT_MENU_OPTIONS.map(({ name, url }) => (
+              <HeaderLink key={name} name={name} url={url} size="small" />
+            ))}
+          </div>
+        ) : null}
+        <a href="/">
+          <Image
+            unoptimized
+            width="107"
+            height="60"
+            className="w-[120px] md:w-[90px] xl:w-[107px] 2xl:w-[120px] cursor-pointer"
+            src="/main-page/inverclick-logo.avif"
+            alt="Inverclick logo"
+          />
+        </a>
+        <div className="flex-1 gap-3 flex justify-end items-center !text-xs !2xl:text-sm">
+          {headerPosition === "responsive" && (
+            <Button size="xs" variant="outline-primary" asChild>
+              <a href="https://company.inverclick.com/" target="_blank">
+                Publicar
+              </a>
+            </Button>
+          )}
+          {headerPosition === "responsive" ? (
+            <Menubar className="border-0 p-0 h-min">
+              <MenubarMenu>
+                <MenubarTrigger className="p-0">
+                  <SquareMenu
+                    strokeWidth={1}
+                    size={32}
+                    className="text-primary cursor-pointer"
+                  />
+                </MenubarTrigger>
+                <MenubarContent>
+                  {MENU_OPTIONS.map(({ name, url }) => (
+                    <MenubarItem asChild key={name}>
+                      <a
+                        href={url}
+                        className="text-sm text-primary-600 !hover:text-primary-800 font-medium cursor-pointer transition-colors ease-in"
+                      >
+                        {name}
+                      </a>
+                    </MenubarItem>
+                  ))}
+                  <MenubarLabel>
+                    <DisplayTRM />
+                  </MenubarLabel>
+                </MenubarContent>
+              </MenubarMenu>
+            </Menubar>
+          ) : (
+            <>
+              {RIGHT_MENU_OPTIONS.map(({ name, url }) => (
+                <HeaderLink key={name} name={name} url={url} size="small" />
+              ))}
+              <Button size="xs" variant="outline-primary" asChild>
+                <a href="https://company.inverclick.com/" target="_blank">
+                  Publicar
+                </a>
+              </Button>
+            </>
+          )}
+          <UserLink />
+        </div>
+      </nav>
+    </header>
+  );
+}

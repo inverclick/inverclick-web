@@ -1,16 +1,14 @@
-import { AppButton } from "@/components/shared/AppButton";
-import { ContactButton } from "@/components/shared/ContactButton";
-import { SOCIAL_NETWORKS } from "@/components/shared/data/socialNetworks";
-import { LoginButton } from "@/components/shared/LoginButton";
-import { DynamicPhrases } from "@/components/web/DynamicPhrases";
-import { Searcher } from "@/components/web/Searcher";
-import { Services } from "@/components/web/Services";
+import { AppButton } from "@/components/shared/app-button";
+import { LoginButton } from "@/components/shared/login-button";
+import { DynamicPhrases } from "@/components/web/dynamic-phrases";
+import { Searcher } from "@/components/web/searcher";
+import { Services } from "@/components/web/services";
+import { SOCIAL_NETWORKS } from "@/constants/social-networks";
 import { supabase } from "@/services/supabase";
 import { Department } from "@/types/department";
 
 import Image from "next/image";
 import Link from "next/link";
-import { createPortal } from "react-dom";
 
 export default async function Home() {
   const { data: departments } = await supabase.from("departments").select("*");
@@ -144,7 +142,6 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
         </footer>
 
         <LoginButton className="absolute bottom-16 right-4 invisible" />
-        <ContactButton className="absolute bottom-4 right-4 invisible" />
       </section>
     </div>
   );
@@ -268,7 +265,6 @@ function Content({ departments }: Content) {
           </div>
         </footer>
         <LoginButton className="absolute bottom-16 right-4" />,
-        {/* <ContactButton className="absolute bottom-4 right-4" /> */}
       </section>
     </main>
   );

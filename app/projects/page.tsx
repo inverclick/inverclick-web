@@ -1,16 +1,11 @@
-import { MobileProjectHeader } from "@/components/projects/mobile/MobileProjectHeader";
-import { MyMap2 } from "@/components/projects/MyMap2";
-import { NavbarProjects } from "@/components/projects/NavbarProjects";
+import { Map2 } from "@/components/projects/map-2";
+import { MobileProjectHeader } from "@/components/projects/mobile/mobile-project-header";
+import { NavbarProjects } from "@/components/projects/navbar-projects";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import {
-  DefaultResizableHandle,
-  DefaultResizablePanel,
-  DefaultResizablePanelGroup,
-} from "@/components/ui/resizable-default";
 import { ENV_VARS } from "@/global/env";
 import { getProjectsPriceRange } from "@/services/projects";
 import { supabase } from "@/services/supabase";
@@ -19,7 +14,7 @@ import { HousingType } from "@/types/housing-type";
 import { ProjectToDisplay } from "@/types/project";
 import { Metadata } from "next";
 
-import ProjectContent from "@/components/projects/ProjectContent";
+import ProjectContent from "@/components/projects/project-content";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -92,15 +87,12 @@ export default async function Projects(props: ProjectsProps) {
     <main>
       {/* <ContactButton className="fixed right-4 bottom-4" /> */}
       <section className="hidden lg:block">
-        <DefaultResizablePanelGroup
-          direction="horizontal"
-          className="!h-screen"
-        >
-          <DefaultResizablePanel defaultSize={32}>
-            <MyMap2 projects={projects} />
-          </DefaultResizablePanel>
-          <DefaultResizableHandle withHandle />
-          <DefaultResizablePanel
+        <ResizablePanelGroup direction="horizontal" className="!h-screen">
+          <ResizablePanel defaultSize={32}>
+            <Map2 projects={projects} />
+          </ResizablePanel>
+          <ResizableHandle className="bg-border w-5" withHandle />
+          <ResizablePanel
             defaultSize={68}
             minSize={25}
             className="z-10 relative flex flex-col"
@@ -113,8 +105,8 @@ export default async function Projects(props: ProjectsProps) {
               housingTypes={housingTypes as HousingType[]}
               prices={prices}
             />
-          </DefaultResizablePanel>
-        </DefaultResizablePanelGroup>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </section>
       <section className="lg:hidden">
         <MobileProjectHeader
@@ -125,13 +117,13 @@ export default async function Projects(props: ProjectsProps) {
         />
         <div className="h-screen">
           <ResizablePanelGroup direction="vertical" className="!h-screen">
-            <ResizablePanel defaultSize={50}>
-              <MyMap2 projects={projects} />
+            <ResizablePanel defaultSize={40}>
+              <Map2 projects={projects} />
             </ResizablePanel>
-            <ResizableHandle />
+            <ResizableHandle className="bg-border !h-5" withHandle />
             <ResizablePanel
-              defaultSize={50}
-              maxSize={60}
+              defaultSize={60}
+              maxSize={80}
               className="flex flex-col"
             >
               <ProjectContent

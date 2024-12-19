@@ -3,10 +3,11 @@
 import { StepOne } from "@/components/auth/sign-up/step-one";
 import { StepThree } from "@/components/auth/sign-up/step-three";
 import { StepTwo } from "@/components/auth/sign-up/step-two";
-import { MyFooter } from "@/components/shared/footer/MyFooter";
+import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { cn } from "@/lib/utils";
 import { ComponentProps, useState } from "react";
+
 import "react-phone-input-2/lib/style.css";
 
 export default function Page() {
@@ -21,7 +22,7 @@ export default function Page() {
           </article>
         </div>
       </div>
-      <MyFooter />
+      <Footer />
     </main>
   );
 }

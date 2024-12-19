@@ -1,6 +1,6 @@
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
-import { useCurrencyContext } from "@/contexts/CurrencyContext";
-import { currencyFormatter } from "@/lib/currencyFormatter";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { ComponentProps } from "react";
@@ -33,7 +33,7 @@ export const ProjectValorizationSection = ({
           <div className="flex flex-col">
             <Typography>Precio actual:</Typography>
             <Typography className="font-semibold">
-              {currencyFormatter(convert(typology.price), currency)} {currency}
+              {formatCurrency(convert(typology.price), currency)} {currency}
             </Typography>
           </div>
         </div>
@@ -42,7 +42,7 @@ export const ProjectValorizationSection = ({
           <div className="flex flex-col">
             <Typography>Valor proyectado en 18 meses:</Typography>
             <Typography className="font-semibold">
-              {currencyFormatter(convert(valorization), currency)} {currency}
+              {formatCurrency(convert(valorization), currency)} {currency}
             </Typography>
           </div>
         </div>
@@ -51,7 +51,7 @@ export const ProjectValorizationSection = ({
           <div className="flex flex-col">
             <Typography>Podrías ganar en valoración:</Typography>
             <Typography className="font-semibold">
-              {currencyFormatter(convert(gain), currency)} {currency}
+              {formatCurrency(convert(gain), currency)} {currency}
             </Typography>
           </div>
         </div>
@@ -70,7 +70,7 @@ export const ProjectValorizationSection = ({
               Precio actual:
             </Typography>
             <Typography variant="h4" className="whitespace-nowrap text-right">
-              {currencyFormatter(convert(typology.price), currency)} {currency}
+              {formatCurrency(convert(typology.price), currency)} {currency}
             </Typography>
           </div>
         </div>
@@ -85,7 +85,7 @@ export const ProjectValorizationSection = ({
               Podrías ganar en valorización:
             </Typography>
             <Typography variant="h4" className="whitespace-nowrap text-right">
-              {currencyFormatter(convert(gain), currency)} {currency}
+              {formatCurrency(convert(gain), currency)} {currency}
             </Typography>
             <Typography variant="h4" className="whitespace-nowrap text-right">
               {percentage * 100}%
@@ -102,7 +102,7 @@ export const ProjectValorizationSection = ({
               Valor proyectado en {months} meses:
             </Typography>
             <Typography variant="h4" className="whitespace-nowrap text-right">
-              {currencyFormatter(convert(valorization), currency)} {currency}
+              {formatCurrency(convert(valorization), currency)} {currency}
             </Typography>
           </div>
         </div>

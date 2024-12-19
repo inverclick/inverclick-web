@@ -1,12 +1,12 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
+} from "@inverclick/inverclick-ui/carousel";
 import Autoplay, { AutoplayType } from "embla-carousel-autoplay";
 import { Children, ComponentProps, useEffect, useState } from "react";
 

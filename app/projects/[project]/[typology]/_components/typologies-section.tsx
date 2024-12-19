@@ -1,15 +1,15 @@
 "use client";
 
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { cn } from "@/lib/utils";
+import { getAssetUrl } from "@/services/utils";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-import { getAssetUrl } from "@/services/utils";
+} from "@inverclick/inverclick-ui/carousel";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { Bath, BedDouble, CarFront } from "lucide-react";
 import { ComponentProps, useState } from "react";
