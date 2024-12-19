@@ -24,7 +24,7 @@ export type ProjectCardProps = {
 export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
   ({ project, className }, ref) => {
     const [isMounted, setIsMounted] = useState(false);
-    const { convert, currency } = useCurrencyContext();
+    const { convert, currency } = useCurrencyContext((s) => s);
     const { company } = project;
     const typology = project.typologies[0];
     const href = `/projects/${project.id}/${typology.id}`;

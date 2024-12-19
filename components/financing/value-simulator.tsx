@@ -30,7 +30,7 @@ export const ValueSimulator = ({
   onSimulate,
   onReset,
 }: ValueSimulatorProps) => {
-  const { currency } = useCurrencyContext();
+  const { currency } = useCurrencyContext((s) => s);
 
   const {
     value: {

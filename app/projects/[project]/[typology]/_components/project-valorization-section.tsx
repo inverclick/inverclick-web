@@ -17,7 +17,7 @@ export const ProjectValorizationSection = ({
   months,
   ...props
 }: ValorizaGraphSectionProps) => {
-  const { currency, convert } = useCurrencyContext();
+  const { currency, convert } = useCurrencyContext((s) => s);
 
   const valorization = typology.price + typology.price * percentage;
   const gain = typology.price * percentage;

@@ -31,6 +31,7 @@
     "embla-carousel-fade": "^8.1.8",
     "embla-carousel-react": "^8.0.0",
     "formik": "^2.4.6",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.456.0",
     "next": "14.1.4",
     "next-themes": "^0.4.3",
@@ -57,6 +58,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",

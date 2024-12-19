@@ -1,6 +1,7 @@
 "use client";
 
 import { getOS, OS } from "@/lib/get-os";
+import { Button } from "@inverclick/inverclick-ui/button";
 import { Check } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,7 +34,7 @@ export function DownloadApp() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isMobileDevice = useMediaQuery("(max-width: 992px)");
-  const [isOpen, setIsOpen] = useState(isMobileDevice);
+  const [isOpen, setIsOpen] = useState(false);
 
   const openStore = () => {
     const os = getOS();
@@ -41,7 +42,7 @@ export function DownloadApp() {
   };
 
   useEffect(() => {
-    isMobileDevice && setIsOpen(true);
+    if (isMobileDevice) setIsOpen(true);
   }, [pathname, isMobileDevice]);
 
   const hidePopUp = searchParams.get("hidePopUp") ?? "false";
@@ -73,18 +74,10 @@ export function DownloadApp() {
                 </li>
               ))}
             </ul>
-            <button
-              onClick={openStore}
-              className="uppercase bg-primary-600 hover:bg-primary-800 transition-colors ease-in text-white px-4 py-2 rounded-md text-sm md:text-base font-medium"
-            >
-              Descargar
-            </button>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-primary-600 mb-4 mt-8 text-xs"
-            >
+            <Button onClick={openStore}>Descargar</Button>
+            <Button onClick={() => setIsOpen(false)} variant="secondary">
               Seguir usando la versión web
-            </button>
+            </Button>
           </div>
         </div>
       )}

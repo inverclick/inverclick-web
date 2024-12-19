@@ -15,7 +15,7 @@ export type SimulatorResultProps = {
 };
 
 export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
-  const { currency, convert } = useCurrencyContext();
+  const { currency, convert } = useCurrencyContext((s) => s);
 
   const _ea = ea * 100;
   const _nvm = (Math.pow(1 + ea, 1 / 12) - 1) * 100;

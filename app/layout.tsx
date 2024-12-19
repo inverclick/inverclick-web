@@ -1,20 +1,21 @@
 import { Chatbot } from "@/components/shared/chatbot/chatbot";
-import { DownloadApp } from "@/components/shared/download-app";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
-import { TRMLoader } from "@/components/shared/trm-loader/trm-loader";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 import { Toaster } from "@/components/ui/sonner";
 import { ChatbotProvider } from "@/contexts/chatbot-context";
+import { CurrencyProvider } from "@/contexts/currency-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
+import { getTRM } from "@/services/get-trm";
 import { getPreRegistration } from "@/services/pre-registration";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 
 import Script from "next/script";
 
+import { DownloadApp } from "@/components/shared/download-app";
 import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
@@ -67,31 +68,38 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const { TRM_USD, TRM_EUR, last_trm_update } = await getTRM();
   const preRegistration = getPreRegistration();
 
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://lvptznfprobnfjquceok.supabase.co/storage/v1/object/public/inverclick-public" />
+        <link
+          rel="preconnect"
+          href="https://lvptznfprobnfjquceok.supabase.co/storage/v1/object/public/inverclick-public"
+        />
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
         <ThemeProvider defaultTheme="light">
-          <PreRegistrationProvider preRegistration={preRegistration}>
-            <ChatbotProvider>
-              <YupLocalization>
-                <TRMLoader>
+          <CurrencyProvider
+            TRM_USD={TRM_USD}
+            TRM_EUR={TRM_EUR}
+            last_trm_update={last_trm_update}
+            currency="USD"
+          >
+            <PreRegistrationProvider preRegistration={preRegistration}>
+              <ChatbotProvider>
+                <YupLocalization>
                   {children}
                   <Chatbot />
                   <PreRegistration />
                   <Toaster closeButton />
-                  <Suspense>
-                    <DownloadApp />
-                  </Suspense>
-                </TRMLoader>
-              </YupLocalization>
-            </ChatbotProvider>
-          </PreRegistrationProvider>
+                  <DownloadApp />
+                </YupLocalization>
+              </ChatbotProvider>
+            </PreRegistrationProvider>
+          </CurrencyProvider>
         </ThemeProvider>
       </body>
       <Script

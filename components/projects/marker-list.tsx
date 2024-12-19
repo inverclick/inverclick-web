@@ -28,7 +28,7 @@ export function Markers({ projects = [] }: MarkerProps) {
     [key: string]: boolean;
   }>({});
 
-  const { convert, currency } = useCurrencyContext();
+  const { convert, currency } = useCurrencyContext((s) => s);
 
   const selectedBlueprint = useMemo(
     () =>

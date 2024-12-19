@@ -17,7 +17,7 @@ export function DisplayTRM({
   const INTERVAL = 10000;
   const RATES = 2;
 
-  const { currency, TRM_USD, TRM_EUR } = useCurrencyContext();
+  const { currency, TRM_USD, TRM_EUR } = useCurrencyContext((s) => s);
 
   const [translationIndex, setTranslationIndex] = useState(0);
 
