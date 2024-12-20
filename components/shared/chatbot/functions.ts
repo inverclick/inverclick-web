@@ -1,7 +1,7 @@
 import { supabase } from "@/services/supabase";
 
 export function getWelcomeMessage(name: string) {
-  return `¡Hola, ${name}! Te damos la bienvenida al lugar donde tu inversión en Colombia comienza a hacerse realidad.`;
+  return `¡Hola, ${name}! Te damos la bienvenida al lugar donde tu inversión en Colombia comienza a hacerse realidad. Puedes preguntarme por métodos de financiación, simular un crédito o buscar proyectos inmobiliarios para invertir.`;
 }
 
 export async function goToProjectsWithFilters(params: { filter: string }) {
@@ -29,7 +29,7 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
     const { data } = await supabase
       .from("departments")
       .select("id")
-      .ilike("name", `${department}%`)
+      .ilike("name", `${department}`)
       .limit(1);
 
     const _department = data?.at(0);
@@ -43,7 +43,7 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
     const { data } = await supabase
       .from("cities")
       .select("id")
-      .ilike("name", `${city}%`)
+      .ilike("name", `${city}`)
       .limit(1);
 
     const _city = data?.at(0);
@@ -56,7 +56,7 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
   const data = {
     action: "go_to_projects",
     response_message:
-      "¡Pereira! Qué excelente elección. Es una ciudad llena de oportunidades para invertir. Estas son las opciones que encontré para ti.','200 millones. Es un gran punto de partida para tu inversión. Aquí tienes las opciones que se ajustan perfectamente a ese presupuesto.'",
+      "Qué excelente elección. Tenemos muchas oportunidades de inversión. Estas son las opciones que encontré para ti.",
     params: {
       filter: fixedFilters
         .concat(transformedFilters)
@@ -74,7 +74,7 @@ export default function goToProjects() {
   const data = {
     action: "go_to_projects",
     response_message:
-      "¡Perfecto! Aquí tienes las mejores opciones para invertir en Colombia. ¿Quieres filtrar por ubicación, presupuesto, tipo de proyecto o tipo de propiedad?",
+      "¡Laura! ¿Te imaginas disfrutando un café en tu nueva casa en Colombia? ¡Hablemos de cómo hacerlo realidad! ¿Qué te parecen estas oportunidades de inversión?",
   };
 
   const output = JSON.stringify(data);
