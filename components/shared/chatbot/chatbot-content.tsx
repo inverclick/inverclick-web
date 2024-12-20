@@ -44,6 +44,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import OpenAI from "openai";
 
+const WAIT_FOR_RESPONSE_TIME = 500;
+
 export type ChatbotContentProps = {
   messages?: ChatMessageType[];
 };
@@ -174,7 +176,9 @@ export const ChatbotContent = ({
     let response = await openAI.beta.threads.runs.retrieve(thread.id, runId);
 
     while (response.status === "in_progress" || response.status === "queued") {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) =>
+        setTimeout(resolve, WAIT_FOR_RESPONSE_TIME)
+      );
 
       response = await openAI.beta.threads.runs.retrieve(thread.id, runId);
     }
