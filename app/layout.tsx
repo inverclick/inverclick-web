@@ -1,4 +1,5 @@
 import { Chatbot } from "@/components/shared/chatbot/chatbot";
+import { DownloadApp } from "@/components/shared/download-app";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 import { Toaster } from "@/components/ui/sonner";
@@ -15,7 +16,6 @@ import { ReactNode } from "react";
 
 import Script from "next/script";
 
-import { DownloadApp } from "@/components/shared/download-app";
 import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
@@ -69,7 +69,8 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   const { TRM_USD, TRM_EUR, last_trm_update } = await getTRM();
-  const preRegistration = getPreRegistration();
+
+  const preRegistration = await getPreRegistration();
 
   return (
     <html lang="es" suppressHydrationWarning>

@@ -1,13 +1,14 @@
 import { Button } from "@inverclick/inverclick-ui/button";
 import { Typography } from "@inverclick/inverclick-ui/typography";
+
 import Image from "next/image";
 import Link from "next/link";
 
-export default function NotFound() {
+export const IncompleteProjectPage = () => {
   return (
-    <section className="h-screen w-screen flex flex-col justify-center items-center gap-2">
+    <main className="h-screen w-screen flex flex-col justify-center items-center gap-2">
       <Typography variant="h1">404</Typography>
-      <Typography className="mb-4">Página no encontrada</Typography>
+      <Typography className="mb-4">Proyecto incompleto</Typography>
       <Button>
         <Link href="/">Volver al inicio</Link>
       </Button>
@@ -19,6 +20,6 @@ export default function NotFound() {
         width="1200"
         height="1200"
       />
-    </section>
+    </main>
   );
-}
+};

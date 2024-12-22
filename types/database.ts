@@ -110,21 +110,24 @@ export type Database = {
           from: Database["public"]["Enums"]["CHATBOT_SENDER"];
           id: string;
           message: string;
-          pre_registration_id: string;
+          pre_registration_id: string | null;
+          user_id: string | null;
         };
         Insert: {
           created_at?: string;
           from: Database["public"]["Enums"]["CHATBOT_SENDER"];
           id?: string;
           message: string;
-          pre_registration_id: string;
+          pre_registration_id?: string | null;
+          user_id?: string | null;
         };
         Update: {
           created_at?: string;
           from?: Database["public"]["Enums"]["CHATBOT_SENDER"];
           id?: string;
           message?: string;
-          pre_registration_id?: string;
+          pre_registration_id?: string | null;
+          user_id?: string | null;
         };
         Relationships: [
           {
@@ -132,6 +135,13 @@ export type Database = {
             columns: ["pre_registration_id"];
             isOneToOne: false;
             referencedRelation: "pre_registrations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "chatbot_messages_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
             referencedColumns: ["id"];
           },
         ];
@@ -444,29 +454,19 @@ export type Database = {
         Row: {
           created_at: string;
           id: string;
-          pre_registration_id: string;
           user_id: string;
         };
         Insert: {
           created_at?: string;
           id?: string;
-          pre_registration_id: string;
           user_id: string;
         };
         Update: {
           created_at?: string;
           id?: string;
-          pre_registration_id?: string;
           user_id?: string;
         };
         Relationships: [
-          {
-            foreignKeyName: "leads_pre_registration_id_fkey";
-            columns: ["pre_registration_id"];
-            isOneToOne: false;
-            referencedRelation: "pre_registrations";
-            referencedColumns: ["id"];
-          },
           {
             foreignKeyName: "leads_user_id_fkey";
             columns: ["user_id"];
@@ -804,35 +804,26 @@ export type Database = {
         Row: {
           created_at: string;
           email: string;
-          first_last_name: string;
           id: string;
           is_confirmed: boolean;
-          middle_name: string | null;
           name: string;
           role: Database["public"]["Enums"]["USER_ROLE"];
-          second_last_name: string;
         };
         Insert: {
           created_at?: string;
           email: string;
-          first_last_name: string;
           id?: string;
           is_confirmed?: boolean;
-          middle_name?: string | null;
           name: string;
           role: Database["public"]["Enums"]["USER_ROLE"];
-          second_last_name: string;
         };
         Update: {
           created_at?: string;
           email?: string;
-          first_last_name?: string;
           id?: string;
           is_confirmed?: boolean;
-          middle_name?: string | null;
           name?: string;
           role?: Database["public"]["Enums"]["USER_ROLE"];
-          second_last_name?: string;
         };
         Relationships: [];
       };

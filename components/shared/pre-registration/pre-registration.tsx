@@ -3,7 +3,11 @@
 import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
-import { PreRegistrationValues } from "@/types/pre-registration";
+import { APIResponse } from "@/types/api";
+import {
+  PreRegistration as PreRegistrationType,
+  PreRegistrationValues,
+} from "@/types/pre-registration";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
   Dialog,
@@ -17,6 +21,7 @@ import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import Turnstile from "react-turnstile";
 
@@ -61,18 +66,22 @@ const PreRegistrationContent = () => {
         },
       });
 
-      if (response.status !== 200) {
-        setIsLoading(false);
-        alert("Error de validación, intenta de nuevo.");
-        return;
-      }
-
-      const preRegistration = await response.json();
-
-      setPreRegistration(preRegistration);
-      setIsPreRegistrationOpen(false);
+      const body = (await response.json()) as APIResponse<PreRegistrationType>;
 
       setIsLoading(false);
+      setIsPreRegistrationOpen(false);
+
+      if (!body.success) {
+        return toast.error(body.message);
+      }
+
+      if (response.status === 303) {
+        toast.success(body.message);
+
+        return router.push(`/auth/sign-in?email=${email}`);
+      }
+
+      setPreRegistration(body.data);
 
       if (shouldOpenChatbot) {
         setIsChatOpen(true);

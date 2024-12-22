@@ -220,7 +220,7 @@ export const ChatbotContent = ({
     await supabase.from("chatbot_messages").insert({
       from: "BOT",
       message,
-      pre_registration_id: preRegistration.id,
+      user_id: preRegistration.id,
     });
   };
 
@@ -300,7 +300,7 @@ export const ChatbotContent = ({
     await supabase.from("chatbot_messages").insert({
       from: "USER",
       message,
-      pre_registration_id: preRegistration.id,
+      user_id: preRegistration.id,
     });
 
     /**

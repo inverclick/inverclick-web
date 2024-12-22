@@ -50,7 +50,7 @@ export default async function Page({
 }: Readonly<{
   params: { project: string; typology: string };
 }>) {
-  const preRegistration = getPreRegistration();
+  const preRegistration = await getPreRegistration();
 
   const projectId = params.project;
   const typologyId = params.typology;
@@ -90,7 +90,6 @@ export default async function Page({
               className={cn({
                 "blur-sm pointer-events-none": !preRegistration,
               })}
-              disableSharableInteractions={Boolean(!preRegistration)}
             />
             {!preRegistration && (
               <div className="absolute top-0 -left-1 w-[calc(100%+0.5rem)] h-full bg-gradient-to-b from-transparent to-white"></div>

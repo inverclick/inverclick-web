@@ -1,24 +1,43 @@
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
+import { supabase } from "@/services/supabase";
 import { PreRegistration } from "@/types/pre-registration";
 import { cookies } from "next/headers";
 
-/**
- * Returns the pre-registration data from the cookies, if it exists. Otherwise, returns null.
- *
- * @returns The pre-registration data or null if it doesn't exist.
- */
-export function getPreRegistration() {
+import * as yup from "yup";
+
+export async function getPreRegistration(): Promise<PreRegistration | null> {
   const cookieStore = cookies();
 
-  let preRegistration: PreRegistration | null = null;
+  try {
+    const cookie = cookieStore.get(PRE_REGISTRATION_COOKIE_NAME);
 
-  const rawPreRegistration = cookieStore.get(
-    PRE_REGISTRATION_COOKIE_NAME
-  )?.value;
+    if (!cookie) {
+      return null;
+    }
 
-  if (rawPreRegistration) {
-    preRegistration = JSON.parse(rawPreRegistration);
+    const parsedPreRegistration = JSON.parse(cookie.value);
+
+    const preRegistration = await schema.validate(parsedPreRegistration);
+
+    const { data: user, error } = await supabase
+      .from("users")
+      .select("id")
+      .eq("id", preRegistration.id)
+      .eq("email", preRegistration.email)
+      .single();
+
+    if (!user || error) {
+      throw new Error("User not found");
+    }
+
+    return preRegistration;
+  } catch (error) {
+    return null;
   }
-
-  return preRegistration;
 }
+
+const schema = yup.object().shape({
+  id: yup.string().uuid().required(),
+  name: yup.string().required(),
+  email: yup.string().email().required(),
+});

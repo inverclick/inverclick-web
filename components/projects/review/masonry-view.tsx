@@ -30,7 +30,6 @@ export type MasonryViewProps = {
   photos: string[];
   open: boolean;
   setOpen: (open: boolean) => void;
-  disableSharableInteractions?: boolean;
 };
 
 export const MasonryView = ({
@@ -38,7 +37,6 @@ export const MasonryView = ({
   photos,
   open,
   setOpen,
-  disableSharableInteractions = false,
 }: MasonryViewProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -59,30 +57,15 @@ export const MasonryView = ({
             onClick={() => setOpen(false)}
             className="cursor-pointer text-black"
           />
-          <div
-            className={cn("flex gap-3", {
-              "pointer-events-none": disableSharableInteractions,
-            })}
-          >
-            <ShareProject
-              isIconOnly
-              isDisabled={disableSharableInteractions}
-              className="lg:hidden"
-            />
-            <ShareProject
-              isDisabled={disableSharableInteractions}
-              className="hidden lg:flex"
-            />
+          <div className={cn("flex gap-3")}>
+            <ShareProject isIconOnly className="lg:hidden" />
+            <ShareProject className="hidden lg:flex" />
             <SaveFavorite isIconOnly className="lg:hidden" />
             <SaveFavorite className="hidden lg:flex" />
           </div>
         </DialogHeader>
         <div className="p-6 overflow-y-auto">
-          <PhotosGrid
-            photoScrollTo={photoScrollTo}
-            photos={photos}
-            disableSharableInteractions={disableSharableInteractions}
-          />
+          <PhotosGrid photoScrollTo={photoScrollTo} photos={photos} />
         </div>
       </DialogContent>
     </Dialog>
@@ -92,14 +75,9 @@ export const MasonryView = ({
 type PhotosGridProps = Readonly<{
   photoScrollTo: string;
   photos: string[];
-  disableSharableInteractions?: boolean;
 }>;
 
-function PhotosGrid({
-  photoScrollTo,
-  photos,
-  disableSharableInteractions = false,
-}: PhotosGridProps) {
+function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
   const [photosSliderOpen, setPhotosSliderOpen] = useState(false);
   const [initialPhotoIndex, setInitialPhotoIndex] = useState(0);
 
@@ -136,7 +114,6 @@ function PhotosGrid({
         photos={photos}
         isOpen={photosSliderOpen}
         setIsOpen={setPhotosSliderOpen}
-        disableSharableInteractions={disableSharableInteractions}
       />
     </>
   );
@@ -147,7 +124,6 @@ type PhotosSliderProps = Readonly<{
   photos: string[];
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  disableSharableInteractions?: boolean;
 }>;
 
 function PhotosSlider({
@@ -155,7 +131,6 @@ function PhotosSlider({
   photos,
   isOpen,
   setIsOpen,
-  disableSharableInteractions = false,
 }: PhotosSliderProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -190,11 +165,7 @@ function PhotosSlider({
           <p className="text-start md:text-center text-white">
             {current}/{count}
           </p>
-          <div
-            className={cn("flex gap-3 text-white justify-end", {
-              "pointer-events-none": disableSharableInteractions,
-            })}
-          >
+          <div className={cn("flex gap-3 text-white justify-end")}>
             <ShareProject
               isIconOnly
               properties={{ triggerButton: { variant: "black" } }}
