@@ -1,4 +1,4 @@
-import { Tables } from "@/services/supabase";
+import { Tables } from "@/services/supabase/supabase";
 
 export type ChatbotMessage = Tables<"chatbot_messages">["Row"];
 export type CreateChatbotMessage = Tables<"chatbot_messages">["Insert"];

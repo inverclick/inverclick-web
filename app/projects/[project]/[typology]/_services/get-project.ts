@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { PostgrestSingleResponse, QueryData } from "@supabase/supabase-js";
 
 export type GetProjectParams = {

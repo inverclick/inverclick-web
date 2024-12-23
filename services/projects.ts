@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 
 export const getProjectsPriceRange = async () => {
   const draftData = Array.from({ length: 50 }, () => ({ goal: 0 }));

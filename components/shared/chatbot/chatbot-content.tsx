@@ -16,7 +16,7 @@ import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { getChatbotMessagesFromLocalStorage } from "@/services/chatbot-messages-client";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import {
   Avatar,
   AvatarFallback,

@@ -1,5 +1,5 @@
 import { ENV_VARS } from "@/global/env";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { MetadataRoute } from "next";
 
 export const dynamic = "force-dynamic";

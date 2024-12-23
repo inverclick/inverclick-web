@@ -1,5 +1,5 @@
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { PreRegistration } from "@/types/pre-registration";
 import { cookies } from "next/headers";
 

@@ -1,4 +1,4 @@
-import { Tables } from "@/services/supabase";
+import { Tables } from "@/services/supabase/supabase";
 
 export type Characteristic = Tables<"characteristics">["Row"];
 export type CreateCharacteristic = Tables<"characteristics">["Insert"];

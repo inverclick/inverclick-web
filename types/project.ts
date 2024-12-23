@@ -1,4 +1,4 @@
-import { Tables } from "@/services/supabase";
+import { Tables } from "@/services/supabase/supabase";
 import { Company } from "@/types/company";
 import { Typology } from "@/types/typologies";
 

@@ -1,6 +1,6 @@
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { ENV_VARS } from "@/global/env";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { APIResponse, EmptyAPIResponse } from "@/types/api";
 import {
   PreRegistration,

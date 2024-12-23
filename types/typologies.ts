@@ -1,4 +1,4 @@
-import { Tables } from "@/services/supabase";
+import { Tables } from "@/services/supabase/supabase";
 
 export type Typology = Tables<"typologies">["Row"];
 export type CreateTypology = Tables<"typologies">["Insert"];

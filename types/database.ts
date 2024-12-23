@@ -110,33 +110,23 @@ export type Database = {
           from: Database["public"]["Enums"]["CHATBOT_SENDER"];
           id: string;
           message: string;
-          pre_registration_id: string | null;
-          user_id: string | null;
+          user_id: string;
         };
         Insert: {
           created_at?: string;
           from: Database["public"]["Enums"]["CHATBOT_SENDER"];
           id?: string;
           message: string;
-          pre_registration_id?: string | null;
-          user_id?: string | null;
+          user_id: string;
         };
         Update: {
           created_at?: string;
           from?: Database["public"]["Enums"]["CHATBOT_SENDER"];
           id?: string;
           message?: string;
-          pre_registration_id?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Relationships: [
-          {
-            foreignKeyName: "chatbot_messages_pre_registration_id_fkey";
-            columns: ["pre_registration_id"];
-            isOneToOne: false;
-            referencedRelation: "pre_registrations";
-            referencedColumns: ["id"];
-          },
           {
             foreignKeyName: "chatbot_messages_user_id_fkey";
             columns: ["user_id"];
@@ -475,27 +465,6 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
-      };
-      pre_registrations: {
-        Row: {
-          created_at: string;
-          email: string;
-          id: string;
-          name: string;
-        };
-        Insert: {
-          created_at?: string;
-          email: string;
-          id?: string;
-          name: string;
-        };
-        Update: {
-          created_at?: string;
-          email?: string;
-          id?: string;
-          name?: string;
-        };
-        Relationships: [];
       };
       project_characteristics: {
         Row: {
