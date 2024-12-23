@@ -262,3 +262,30 @@ Inverclick S.A.S es la sociedad titular de la marca y activos digitales. Los té
 
   return JSON.stringify({ output });
 }
+
+export function scheduleAnAppointment(params: {
+  projectName: string;
+  date: string;
+  time: string;
+  email: string;
+}) {
+  const data = {
+    action: "schedule_an_appointment",
+    response_message: `Correo confirmación: ${params.email}`,
+    params: {
+      projectName: params.projectName,
+      date: params.date,
+      time: params.time,
+    },
+  };
+
+  const output = JSON.stringify(data);
+
+  return output;
+}
+
+export function voidFunction(params: {}) {
+  const output = 0;
+
+  return JSON.stringify(output);
+}

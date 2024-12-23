@@ -7,8 +7,10 @@ import goToProjects, {
   goToProjectsWithFilters,
   questionAboutInverclick,
   questionAboutProject,
+  scheduleAnAppointment,
   simulateCreditByQuotaValue,
   simulateCreditByValueHousing,
+  voidFunction,
 } from "@/components/shared/chatbot/functions";
 import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
 import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
@@ -43,6 +45,7 @@ import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import OpenAI from "openai";
+import { formatTimezoneOffset } from "@/services/format-timezone-offset";
 
 const WAIT_FOR_RESPONSE_TIME = 500;
 
@@ -135,6 +138,8 @@ export const ChatbotContent = ({
     window.goToProject = goToProject;
     window.questionAboutProject = questionAboutProject;
     window.questionAboutInverclick = questionAboutInverclick;
+    window.scheduleAnAppointment = scheduleAnAppointment;
+    window.voidFunction = voidFunction;
 
     init();
 
@@ -254,9 +259,22 @@ export const ChatbotContent = ({
         ? JSON.parse(toolCall.function.arguments)
         : null;
 
-      const output = args
-        ? ((await window[functionName](args)) as string)
-        : ((await window[functionName]()) as string);
+      let output: string;
+
+      if (functionName === "scheduleAnAppointment") {
+        if (!preRegistration) {
+          throw new Error("Missing pre-registration");
+        }
+
+        output = await window[functionName]({
+          ...args,
+          email: preRegistration.email,
+        });
+      } else {
+        output = args
+          ? ((await window[functionName](args)) as string)
+          : ((await window[functionName]()) as string);
+      }
 
       toolOutputs.push({
         tool_call_id: toolCall.id,
@@ -274,105 +292,124 @@ export const ChatbotContent = ({
   const sendMessage = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (!thread) {
-      throw new Error("No thread found");
-    }
+    try {
+      if (!thread) {
+        throw new Error("No thread found");
+      }
 
-    if (!preRegistration) {
-      throw new Error("No pre-registration found");
-    }
+      if (!preRegistration) {
+        throw new Error("No pre-registration found");
+      }
 
-    if (message.trim().length === 0) return;
+      if (message.trim().length === 0) return;
 
-    const chatMessage: ChatMessageType = {
-      id: uuidv4(),
-      message,
-      sender: "user",
-    };
+      const chatMessage: ChatMessageType = {
+        id: uuidv4(),
+        message,
+        sender: "user",
+      };
 
-    setIsLoading(true);
-    setMessages((messages) => [...messages, chatMessage]);
-    setMessage("");
+      setIsLoading(true);
+      setMessages((messages) => [...messages, chatMessage]);
+      setMessage("");
 
-    /**
-     * Save user message on DB
-     */
-    await supabase.from("chatbot_messages").insert({
-      from: "USER",
-      message,
-      user_id: preRegistration.id,
-    });
-
-    /**
-     * Create message
-     */
-    await openAI.beta.threads.messages.create(thread.id, {
-      role: "user",
-      content: `Mi nombre es ${preRegistration.name} y mi pregunta es: ${message}`,
-    });
-
-    /**
-     * Create run
-     */
-    const run = await openAI.beta.threads.runs.create(thread.id, {
-      assistant_id: ENV_VARS.OPENAI_ASSISTANT_ID,
-      tool_choice: "required",
-      // tool_choice: { type: "file_search" },
-    });
-
-    /**
-     * Waits for run status to be different than "in_progress" or "queued"
-     */
-    let response = await waitForResponseCompletion(run.id);
-
-    if (response.status === "completed") {
-      return await handleResponseCompletion(run.id);
-    }
-
-    if (response.status === "requires_action" && response.required_action) {
-      const outputs = await submitToolOutputs(
-        response.required_action.submit_tool_outputs.tool_calls,
-        run.id
-      );
-
-      let requiredActionResponse = await waitForResponseCompletion(run.id);
-
-      const outputsWithActions = outputs.filter((output) => output.action);
-
-      outputsWithActions.forEach(async (output) => {
-        if (output.action === "go_to_projects" && output.params?.filter) {
-          router.push(
-            `/projects?${(output.params?.filter as string).replace(/,/g, "&")}`
-          );
-        } else if (output.action === "go_to_projects") {
-          router.push(`/projects`);
-        } else if (output.action === "go_to_project") {
-          router.push(
-            `/projects/${output.params?.project_id}/${output.params?.typology_id}`
-          );
-        }
+      /**
+       * Save user message on DB
+       */
+      await supabase.from("chatbot_messages").insert({
+        from: "USER",
+        message,
+        user_id: preRegistration.id,
       });
 
-      if (requiredActionResponse.status === "completed") {
+      /**
+       * Create message
+       */
+      await openAI.beta.threads.messages.create(thread.id, {
+        role: "user",
+        content: `Mi nombre es ${preRegistration.name} y mi pregunta es: ${message}`,
+      });
+
+      /**
+       * Create run
+       */
+      const run = await openAI.beta.threads.runs.create(thread.id, {
+        assistant_id: ENV_VARS.OPENAI_ASSISTANT_ID,
+        tool_choice: "required",
+        // tool_choice: { type: "file_search" },
+      });
+
+      /**
+       * Waits for run status to be different than "in_progress" or "queued"
+       */
+      let response = await waitForResponseCompletion(run.id);
+
+      if (response.status === "completed") {
         return await handleResponseCompletion(run.id);
       }
 
+      if (response.status === "requires_action" && response.required_action) {
+        const outputs = await submitToolOutputs(
+          response.required_action.submit_tool_outputs.tool_calls,
+          run.id
+        );
+
+        let requiredActionResponse = await waitForResponseCompletion(run.id);
+
+        const outputsWithActions = outputs.filter((output) => output.action);
+
+        outputsWithActions.forEach(async (output) => {
+          if (output.action === "go_to_projects" && output.params?.filter) {
+            router.push(
+              `/projects?${(output.params?.filter as string).replace(/,/g, "&")}`
+            );
+          } else if (output.action === "go_to_projects") {
+            router.push(`/projects`);
+          } else if (output.action === "go_to_project") {
+            router.push(
+              `/projects/${output.params?.project_id}/${output.params?.typology_id}`
+            );
+          } else if (output.action === "schedule_an_appointment") {
+            const { date, time } = output.params;
+
+            if (date && time) {
+              const formattedOffset = formatTimezoneOffset(
+                new Date().getTimezoneOffset()
+              );
+
+              const appointmentDate = new Date(
+                `${date}T${time}${formattedOffset}`
+              );
+
+              // TODO: schedule
+              console.log({ appointmentDate });
+            }
+          }
+        });
+
+        if (requiredActionResponse.status === "completed") {
+          return await handleResponseCompletion(run.id);
+        }
+
+        if (
+          requiredActionResponse.status === "failed" ||
+          requiredActionResponse.status === "expired" ||
+          requiredActionResponse.status === "cancelled"
+        ) {
+          handleFailedResponse();
+        }
+
+        return;
+      }
+
       if (
-        requiredActionResponse.status === "failed" ||
-        requiredActionResponse.status === "expired" ||
-        requiredActionResponse.status === "cancelled"
+        response.status === "failed" ||
+        response.status === "expired" ||
+        response.status === "cancelled"
       ) {
         handleFailedResponse();
       }
-
-      return;
-    }
-
-    if (
-      response.status === "failed" ||
-      response.status === "expired" ||
-      response.status === "cancelled"
-    ) {
+    } catch (error) {
       handleFailedResponse();
     }
   };
