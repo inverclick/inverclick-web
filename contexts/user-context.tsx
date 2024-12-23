@@ -15,6 +15,9 @@ import {
   useState,
 } from "react";
 import { toast } from "sonner";
+import Cookies from "js-cookie";
+import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
+import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 
 export type UserContextType = {
   user: User | null;
@@ -44,6 +47,9 @@ export const UserProvider = ({
       toast.error(error.message);
       return;
     }
+
+    Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
+    localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
 
     /**
      * We're not setting user manually since router.refresh() refresh, in this case /projects page.

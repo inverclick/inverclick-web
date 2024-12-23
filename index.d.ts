@@ -4,8 +4,10 @@ import {
   goToProjectsWithFilters,
   questionAboutInverclick,
   questionAboutProject,
+  scheduleAnAppointment,
   simulateCreditByQuotaValue,
   simulateCreditByValueHousing,
+  voidFunction,
 } from "@/components/shared/chatbot/functions";
 
 declare global {
@@ -18,5 +20,7 @@ declare global {
     goToProject: typeof goToProject;
     questionAboutProject: typeof questionAboutProject;
     questionAboutInverclick: typeof questionAboutInverclick;
+    scheduleAnAppointment: typeof scheduleAnAppointment;
+    voidFunction: typeof voidFunction;
   }
 }
