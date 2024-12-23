@@ -27,7 +27,6 @@ export type ShareProjectProps = {
 } & ComponentProps<typeof DialogTrigger>;
 
 export const ShareProject = ({
-  isDisabled = false,
   isIconOnly = false,
   classNames,
   properties,
@@ -49,12 +48,7 @@ export const ShareProject = ({
       <DialogTrigger asChild className={cn(props.className)} {...props}>
         <Button
           variant="outline"
-          className={cn(
-            {
-              "pointer-events-none": isDisabled,
-            },
-            classNames?.triggerButton
-          )}
+          className={cn(classNames?.triggerButton)}
           onClick={() => setOpen(true)}
           {...properties?.triggerButton}
         >

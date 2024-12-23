@@ -9,13 +9,9 @@ import Image from "next/image";
 
 export type ProjectGalleryProps = {
   photos: string[];
-  disableSharableInteractions?: boolean;
 };
 
-export const ProjectGallery = ({
-  photos,
-  disableSharableInteractions = false,
-}: ProjectGalleryProps) => {
+export const ProjectGallery = ({ photos }: ProjectGalleryProps) => {
   const [open, setOpen] = useState(false);
 
   const [photoScrollTo, setPhotoScrollTo] = useState<string>("");
@@ -73,7 +69,6 @@ export const ProjectGallery = ({
           setOpen={setOpen}
           photoScrollTo={photoScrollTo}
           photos={photos}
-          disableSharableInteractions={disableSharableInteractions}
         />
       </span>
     </div>

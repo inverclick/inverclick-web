@@ -1,0 +1,25 @@
+import { Button } from "@inverclick/inverclick-ui/button";
+import { Typography } from "@inverclick/inverclick-ui/typography";
+
+import Image from "next/image";
+import Link from "next/link";
+
+export const IncompleteProjectPage = () => {
+  return (
+    <main className="h-screen w-screen flex flex-col justify-center items-center gap-2">
+      <Typography variant="h1">404</Typography>
+      <Typography className="mb-4">Proyecto incompleto</Typography>
+      <Button>
+        <Link href="/">Volver al inicio</Link>
+      </Button>
+      <Image
+        unoptimized
+        className="absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full"
+        src="/main-page/main-background.avif"
+        alt="Inverclick fondo de pantalla"
+        width="1200"
+        height="1200"
+      />
+    </main>
+  );
+};

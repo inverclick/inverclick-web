@@ -1,14 +1,8 @@
-import { DisplayTRM } from "@/components/projects/display-trm";
 import { HeaderLink } from "@/components/shared/header/header-link";
+import { InverclickDropdownMenu } from "@/components/shared/inverclick-dropdown-menu/inverclick-dropdown-menu";
+import { ProfileDropdown } from "@/components/shared/profile-dropdown/profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Button } from "@inverclick/inverclick-ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@inverclick/inverclick-ui/dropdown-menu";
-import { Menu } from "lucide-react";
 import { PropsWithChildren } from "react";
 
 import Image from "next/image";
@@ -26,25 +20,19 @@ export const LEFT_MENU_OPTIONS = MENU_OPTIONS.slice(0, 3);
 
 export const RIGHT_MENU_OPTIONS = MENU_OPTIONS.slice(3);
 
-type HeaderProps = Readonly<{
-  size?: "small" | "large";
-}>;
-
-export function Header({ size = "large" }: HeaderProps) {
+export function Header() {
   return (
     <header className="sticky top-0 bg-white shadow-md z-50">
-      <MobileHeader size={size} />
-      <DesktopHeader size={size} />
+      <MobileHeader />
+      <DesktopHeader />
     </header>
   );
 }
 
-type MobileHeaderProps = HeaderProps;
-
-function MobileHeader({ size }: MobileHeaderProps) {
+function MobileHeader() {
   return (
     <div className="flex lg:hidden justify-between items-center h-full px-6 py-4">
-      <a href="/">
+      <Link href="/">
         <Image
           unoptimized
           width="170"
@@ -53,68 +41,43 @@ function MobileHeader({ size }: MobileHeaderProps) {
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
         />
-      </a>
+      </Link>
       <div className="flex items-center gap-4">
-        {/* <DisplayTRM /> */}
-        <DropdownMenu>
-          <DropdownMenuTrigger className="p-1 border-2 border-primary rounded-md cursor-pointer">
-            <Menu className="w-4 h-4" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {MENU_OPTIONS.map(({ name, url }) => (
-              <DropdownMenuItem key={name} className="text-primary">
-                {name}
-              </DropdownMenuItem>
-            ))}
-            <DropdownMenuItem>
-              <DisplayTRM />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <UserLink />
+        <InverclickDropdownMenu />
+        <ProfileDropdown size="small" />
       </div>
     </div>
   );
 }
 
-type DesktopHeaderProps = HeaderProps;
-
-function DesktopHeader({ size }: DesktopHeaderProps) {
+function DesktopHeader() {
   return (
     <div
       className={cn(
-        "hidden lg:grid grid-cols-3 gap-4 items-center h-full px-6 py-4 max-w-screen-2xl mx-auto",
-        {
-          "px-3 py-2": size === "small",
-        }
+        "hidden lg:grid grid-cols-3 gap-4 items-center h-full px-6 py-4 max-w-screen-2xl mx-auto"
       )}
     >
-      <MenuOptions options={LEFT_MENU_OPTIONS} size={size} />
-      <a href="/" className="place-self-center cursor-pointer">
+      <MenuOptions options={LEFT_MENU_OPTIONS} />
+      <Link href="/" className="place-self-center cursor-pointer">
         <Image
           unoptimized
           width="170"
           height="60"
           className={cn(
-            "animate-slide-in-top w-[120px] md:w-[140px] xl:w-[155px] 2xl:w-[170px]",
-            {
-              "w-[120px] md:w-[90px] xl:w-[107px] 2xl:w-[120px]":
-                size === "small",
-            }
+            "animate-slide-in-top w-[120px] md:w-[90px] xl:w-[107px] 2xl:w-[120px]"
           )}
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
         />
-      </a>
-      <MenuOptions options={RIGHT_MENU_OPTIONS} size={size} align="right">
+      </Link>
+      <MenuOptions options={RIGHT_MENU_OPTIONS} align="right">
         <li className="flex items-center gap-4 xl:gap-8">
-          {/* <DisplayTRM /> */}
           <Button size="sm" variant="outline-primary" asChild>
-            <a href="https://company.inverclick.com/" target="_blank">
+            <Link href="https://company.inverclick.com/" target="_blank">
               Publicar
-            </a>
+            </Link>
           </Button>
-          <UserLink size={32} />
+          <ProfileDropdown />
         </li>
       </MenuOptions>
     </div>
@@ -123,59 +86,24 @@ function DesktopHeader({ size }: DesktopHeaderProps) {
 
 type MenuOptionsProps = Readonly<{
   options: { name: string; url: string }[];
-  size?: "small" | "large";
   align?: "left" | "right";
 }> &
   PropsWithChildren;
 
-function MenuOptions({
-  options,
-  size,
-  align = "left",
-  children,
-}: MenuOptionsProps) {
+function MenuOptions({ options, align = "left", children }: MenuOptionsProps) {
   return (
     <ul
       className={cn("flex gap-4 xl:gap-8 items-center", {
-        "!gap-3": size === "small",
         "justify-self-start": align === "left",
         "justify-self-end": align === "right",
       })}
     >
       {options.map(({ name, url }) => (
         <li key={name} className="flex">
-          <HeaderLink name={name} url={url} size={size} />
+          <HeaderLink name={name} url={url} />
         </li>
       ))}
       {children}
     </ul>
-  );
-}
-
-export type UserLinkProps = Readonly<{
-  size?: number;
-}>;
-
-export function UserLink({ size = 24 }: UserLinkProps) {
-  return (
-    // <Link href="/auth/sign-in">
-    //   <CircleUserRound
-    //     strokeWidth={1}
-    //     size={32}
-    //     className="text-primary fill-primary"
-    //   />
-    // </Link>
-    <Link
-      href="/auth/sign-in"
-      className="border-2 border-primary rounded-full cursor-pointer"
-    >
-      <Image
-        unoptimized
-        width={size}
-        height={size}
-        src="/main-page/user.svg"
-        alt="User link"
-      />
-    </Link>
   );
 }

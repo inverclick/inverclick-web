@@ -27,7 +27,6 @@ export type ProjectHeroProps = {
   city: string;
   address: string;
   className?: string;
-  disableSharableInteractions?: boolean;
 };
 
 export const ProjectHero = ({
@@ -38,7 +37,6 @@ export const ProjectHero = ({
   price,
   photos,
   className,
-  disableSharableInteractions = false,
 }: ProjectHeroProps) => {
   return (
     <section className={cn("flex flex-col gap-4 md:gap-6 xl:gap-8", className)}>
@@ -67,24 +65,14 @@ export const ProjectHero = ({
       <div className="flex flex-col md:flex-row justify-between gap-4 md:items-center">
         <Typography variant="h1">{name}</Typography>
         <div className="flex gap-4">
-          <ShareProject
-            isIconOnly
-            isDisabled={disableSharableInteractions}
-            className="lg:hidden"
-          />
-          <ShareProject
-            isDisabled={disableSharableInteractions}
-            className="hidden lg:flex"
-          />
+          <ShareProject isIconOnly className="lg:hidden" />
+          <ShareProject className="hidden lg:flex" />
           <SaveFavorite isIconOnly className="lg:hidden" />
           <SaveFavorite className="hidden lg:flex" />
           <SelectCurrency className="min-w-20" />
         </div>
       </div>
-      <ProjectGallery
-        photos={photos}
-        disableSharableInteractions={disableSharableInteractions}
-      />
+      <ProjectGallery photos={photos} />
       <div className="flex flex-col xl:flex-row justify-between gap-4 px-0 xl:px-6">
         <span className="flex gap-2 justify-center">
           <Icon icon={MapPin} className="hidden xl:flex size-6 text-primary" />

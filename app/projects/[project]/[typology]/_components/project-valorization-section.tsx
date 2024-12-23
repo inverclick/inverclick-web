@@ -51,7 +51,8 @@ export const ProjectValorizationSection = ({
           <div className="flex flex-col">
             <Typography>Podrías ganar en valoración:</Typography>
             <Typography className="font-semibold">
-              {formatCurrency(convert(gain), currency)} {currency}
+              {formatCurrency(convert(gain), currency)} {currency}{" "}
+              {`(${percentage * 100}%)`}
             </Typography>
           </div>
         </div>

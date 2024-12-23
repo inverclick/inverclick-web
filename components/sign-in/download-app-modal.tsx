@@ -11,6 +11,7 @@ import { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@inverclick/inverclick-ui/button";
 
 export function DownloadAppModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +19,7 @@ export function DownloadAppModal() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <p className="text-center text-primary cursor-pointer">
-          Inténtalo desde nuestra Aplicación Móvil
-        </p>
+        <Button variant="link">Inténtalo desde nuestra Aplicación Móvil</Button>
       </DialogTrigger>
       <DialogContent className="max-w-xl">
         <DialogHeader>

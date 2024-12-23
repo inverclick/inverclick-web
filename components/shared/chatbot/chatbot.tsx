@@ -10,7 +10,7 @@ import { Button } from "@inverclick/inverclick-ui/button";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import { MessageCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export type ChatMessage = {
   id: string;

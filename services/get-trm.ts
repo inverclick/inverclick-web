@@ -1,5 +1,5 @@
 import { TRM_COOKIE_NAME } from "@/constants/trm";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { cookies } from "next/headers";
 
 const ONE_HOUR = 1000 * 60 * 60;

@@ -1,5 +1,6 @@
 import { HousingStateEnum } from "@/types/housing-state";
 import { HousingTypeEnum } from "@/types/housing-type";
+import { ProjectClass, ProjectStatus } from "@/types/project";
 
 export const HOUSING_STATE_ENUM: Record<HousingStateEnum, HousingStateEnum> = {
   NEW: "NEW",
@@ -25,4 +26,17 @@ export const HOUSING_TYPE_LABEL: Record<HousingTypeEnum, string> = {
   BODEGA: "Bodega",
   CASA: "Casa",
   LOTE: "Lote",
+};
+
+export const PROJECT_CLASS_ENUM: Record<ProjectClass, ProjectClass> = {
+  DRAFT: "DRAFT",
+  PROJECT: "PROJECT",
+};
+
+export const PROJECT_STATUS: Record<ProjectStatus, ProjectStatus> = {
+  PENDING: "PENDING",
+  REJECTED: "REJECTED",
+  DRAFT: "DRAFT",
+  PUBLISHED: "PUBLISHED",
+  SUSPENDED: "SUSPENDED",
 };

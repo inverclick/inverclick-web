@@ -9,6 +9,7 @@ import {
 import { Menu } from "lucide-react";
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const MENU_OPTIONS = [
@@ -39,7 +40,7 @@ const DesktopMenu = () => (
         </a>
       ))}
     </div>
-    <a href="/" className="cursor-pointer">
+    <Link href="/" className="cursor-pointer">
       <Image
         unoptimized
         width="170"
@@ -48,7 +49,7 @@ const DesktopMenu = () => (
         src="/main-page/inverclick-logo.avif"
         alt="Inverclick logo"
       />
-    </a>
+    </Link>
     <div className="flex-1 flex sm:gap-4 xl:gap-6 justify-end items-center">
       <DisplayTRM />
       <a

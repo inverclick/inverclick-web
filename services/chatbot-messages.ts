@@ -1,5 +1,5 @@
 import { ChatMessage } from "@/components/shared/chatbot/chatbot";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { PreRegistration } from "@/types/pre-registration";
 
 /**

@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { City } from "@/types/city";
 import { Department } from "@/types/department";
 import {

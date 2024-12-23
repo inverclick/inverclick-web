@@ -1,4 +1,4 @@
-import { Tables } from "@/services/supabase";
+import { Tables } from "@/services/supabase/supabase";
 
 export type City = Tables<"cities">["Row"];
 export type CreateCity = Tables<"cities">["Insert"];

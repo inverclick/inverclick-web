@@ -16,7 +16,7 @@ import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { getChatbotMessagesFromLocalStorage } from "@/services/chatbot-messages-client";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import {
   Avatar,
   AvatarFallback,
@@ -220,7 +220,7 @@ export const ChatbotContent = ({
     await supabase.from("chatbot_messages").insert({
       from: "BOT",
       message,
-      pre_registration_id: preRegistration.id,
+      user_id: preRegistration.id,
     });
   };
 
@@ -300,7 +300,7 @@ export const ChatbotContent = ({
     await supabase.from("chatbot_messages").insert({
       from: "USER",
       message,
-      pre_registration_id: preRegistration.id,
+      user_id: preRegistration.id,
     });
 
     /**

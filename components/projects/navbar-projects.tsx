@@ -1,26 +1,17 @@
 "use client";
 
-import { DisplayTRM } from "@/components/projects/display-trm";
 import {
   LEFT_MENU_OPTIONS,
-  MENU_OPTIONS,
   RIGHT_MENU_OPTIONS,
-  UserLink,
 } from "@/components/shared/header/header";
 import { HeaderLink } from "@/components/shared/header/header-link";
+import { InverclickDropdownMenu } from "@/components/shared/inverclick-dropdown-menu/inverclick-dropdown-menu";
+import { ProfileDropdown } from "@/components/shared/profile-dropdown/profile-dropdown";
 import { Button } from "@inverclick/inverclick-ui/button";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarLabel,
-  MenubarMenu,
-  MenubarTrigger,
-} from "@inverclick/inverclick-ui/menubar";
-import { SquareMenu } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
+import Link from "next/link";
 
 const MEDIA_QUERY = 1024;
 
@@ -68,7 +59,7 @@ export function NavbarProjects() {
             ))}
           </div>
         ) : null}
-        <a href="/">
+        <Link href="/">
           <Image
             unoptimized
             width="107"
@@ -77,55 +68,30 @@ export function NavbarProjects() {
             src="/main-page/inverclick-logo.avif"
             alt="Inverclick logo"
           />
-        </a>
+        </Link>
         <div className="flex-1 gap-3 flex justify-end items-center !text-xs !2xl:text-sm">
           {headerPosition === "responsive" && (
             <Button size="xs" variant="outline-primary" asChild>
-              <a href="https://company.inverclick.com/" target="_blank">
+              <Link href="https://company.inverclick.com/" target="_blank">
                 Publicar
-              </a>
+              </Link>
             </Button>
           )}
           {headerPosition === "responsive" ? (
-            <Menubar className="border-0 p-0 h-min">
-              <MenubarMenu>
-                <MenubarTrigger className="p-0">
-                  <SquareMenu
-                    strokeWidth={1}
-                    size={32}
-                    className="text-primary cursor-pointer"
-                  />
-                </MenubarTrigger>
-                <MenubarContent>
-                  {MENU_OPTIONS.map(({ name, url }) => (
-                    <MenubarItem asChild key={name}>
-                      <a
-                        href={url}
-                        className="text-sm text-primary-600 !hover:text-primary-800 font-medium cursor-pointer transition-colors ease-in"
-                      >
-                        {name}
-                      </a>
-                    </MenubarItem>
-                  ))}
-                  <MenubarLabel>
-                    <DisplayTRM />
-                  </MenubarLabel>
-                </MenubarContent>
-              </MenubarMenu>
-            </Menubar>
+            <InverclickDropdownMenu />
           ) : (
             <>
               {RIGHT_MENU_OPTIONS.map(({ name, url }) => (
                 <HeaderLink key={name} name={name} url={url} size="small" />
               ))}
-              <Button size="xs" variant="outline-primary" asChild>
-                <a href="https://company.inverclick.com/" target="_blank">
+              <Button size="xs" variant="outline-primary">
+                <Link href="https://company.inverclick.com/" target="_blank">
                   Publicar
-                </a>
+                </Link>
               </Button>
             </>
           )}
-          <UserLink />
+          <ProfileDropdown size="small" />
         </div>
       </nav>
     </header>

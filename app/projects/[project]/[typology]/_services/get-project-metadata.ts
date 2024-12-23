@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 
 export type GetProjectMetadataParams = {
   projectId: string;

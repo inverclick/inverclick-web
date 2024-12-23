@@ -1,13 +1,16 @@
 import { Chatbot } from "@/components/shared/chatbot/chatbot";
+import { DownloadApp } from "@/components/shared/download-app";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 import { Toaster } from "@/components/ui/sonner";
 import { ChatbotProvider } from "@/contexts/chatbot-context";
 import { CurrencyProvider } from "@/contexts/currency-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
+import { UserProvider } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
 import { getTRM } from "@/services/get-trm";
 import { getPreRegistration } from "@/services/pre-registration";
+import { getUserServerSide } from "@/services/user/get-user-server-side";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
@@ -15,7 +18,6 @@ import { ReactNode } from "react";
 
 import Script from "next/script";
 
-import { DownloadApp } from "@/components/shared/download-app";
 import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
@@ -69,7 +71,9 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   const { TRM_USD, TRM_EUR, last_trm_update } = await getTRM();
-  const preRegistration = getPreRegistration();
+
+  const user = await getUserServerSide();
+  const preRegistration = await getPreRegistration();
 
   return (
     <html lang="es" suppressHydrationWarning>
@@ -81,26 +85,28 @@ export default async function RootLayout({
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
-        <ThemeProvider defaultTheme="light">
-          <CurrencyProvider
-            TRM_USD={TRM_USD}
-            TRM_EUR={TRM_EUR}
-            last_trm_update={last_trm_update}
-            currency="USD"
-          >
-            <PreRegistrationProvider preRegistration={preRegistration}>
-              <ChatbotProvider>
-                <YupLocalization>
-                  {children}
-                  <Chatbot />
-                  <PreRegistration />
-                  <Toaster closeButton />
-                  <DownloadApp />
-                </YupLocalization>
-              </ChatbotProvider>
-            </PreRegistrationProvider>
-          </CurrencyProvider>
-        </ThemeProvider>
+        <UserProvider user={user}>
+          <ThemeProvider defaultTheme="light">
+            <CurrencyProvider
+              TRM_USD={TRM_USD}
+              TRM_EUR={TRM_EUR}
+              last_trm_update={last_trm_update}
+              currency="USD"
+            >
+              <PreRegistrationProvider preRegistration={preRegistration}>
+                <ChatbotProvider>
+                  <YupLocalization>
+                    {children}
+                    <Chatbot />
+                    <PreRegistration />
+                    <Toaster closeButton />
+                    <DownloadApp />
+                  </YupLocalization>
+                </ChatbotProvider>
+              </PreRegistrationProvider>
+            </CurrencyProvider>
+          </ThemeProvider>
+        </UserProvider>
       </body>
       <Script
         async

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/resizable";
 import { ENV_VARS } from "@/global/env";
 import { getProjectsPriceRange } from "@/services/projects";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase/supabase";
 import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";
 import { ProjectToDisplay } from "@/types/project";
