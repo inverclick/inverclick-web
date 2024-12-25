@@ -8,12 +8,15 @@ import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 import Link from "next/link";
 
 import * as yup from "yup";
 
 export const RightSection = () => {
+  const [loading, setLoading] = useState(false);
+
   const { signIn } = useUser();
 
   const searchParams = useSearchParams();
@@ -25,10 +28,14 @@ export const RightSection = () => {
     },
     validationSchema: createFormSchema(),
     onSubmit: async ({ email, password }) => {
+      setLoading(true);
+
       await signIn({
         email,
         password,
       });
+
+      setLoading(false);
     },
   });
 
@@ -67,7 +74,7 @@ export const RightSection = () => {
           <Link href="/" className="self-start text-primary mb-4">
             He olvidado mi contraseña
           </Link>
-          <Button form="sign-in-form" type="submit">
+          <Button form="sign-in-form" type="submit" isLoading={loading}>
             Iniciar sesión
           </Button>
           <OrSeparator />
@@ -75,9 +82,9 @@ export const RightSection = () => {
             <Link href="/auth/sign-up">Crear una cuenta</Link>
           </Button>
           <DownloadAppModal />
-          <Link href="/" className="lg:hidden text-primary">
-            Soy constructora
-          </Link>
+          <Button variant="link" className="lg:hidden">
+            <Link href="https://company.inverclick.com">Soy constructora</Link>
+          </Button>
         </Form>
       </FormikProvider>
     </div>

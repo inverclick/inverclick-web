@@ -40,4 +40,5 @@ const schema = yup.object().shape({
   id: yup.string().uuid().required(),
   name: yup.string().required(),
   email: yup.string().email().required(),
+  nickname: yup.string().nullable().defined(),
 });

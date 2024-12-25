@@ -39,7 +39,7 @@ function LeftSection() {
       <CardService
         title="Soy constructora"
         link="https://company.inverclick.com"
-        className="hidden lg:block absolute bottom-4 left-4"
+        className="hidden lg:flex absolute bottom-4 left-4"
         target="_blank"
       />
     </div>

@@ -1,9 +1,9 @@
 import { Chatbot } from "@/components/shared/chatbot/chatbot";
 import { DownloadApp } from "@/components/shared/download-app";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
+import { WelcomeDialog } from "@/components/shared/pre-registration/welcome-dialog";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 import { Toaster } from "@/components/ui/sonner";
-import { ChatbotProvider } from "@/contexts/chatbot-context";
 import { CurrencyProvider } from "@/contexts/currency-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { UserProvider } from "@/contexts/user-context";
@@ -94,15 +94,14 @@ export default async function RootLayout({
               currency="USD"
             >
               <PreRegistrationProvider preRegistration={preRegistration}>
-                <ChatbotProvider>
-                  <YupLocalization>
-                    {children}
-                    <Chatbot />
-                    <PreRegistration />
-                    <Toaster closeButton />
-                    <DownloadApp />
-                  </YupLocalization>
-                </ChatbotProvider>
+                <YupLocalization>
+                  {children}
+                  <Chatbot />
+                  <WelcomeDialog />
+                  <PreRegistration />
+                  <Toaster closeButton />
+                  <DownloadApp />
+                </YupLocalization>
               </PreRegistrationProvider>
             </CurrencyProvider>
           </ThemeProvider>

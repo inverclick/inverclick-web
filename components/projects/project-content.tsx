@@ -8,6 +8,7 @@ import { SelectCurrency } from "@/components/shared/select-currency/select-curre
 import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";
 import { ProjectToDisplay } from "@/types/project";
+import { useEffect } from "react";
 
 export type ProjectContentProps = Readonly<{
   total: number;
@@ -28,7 +29,9 @@ export default function ProjectContent({
 }: ProjectContentProps) {
   const setProjects = useProjectsPageStore((state) => state.setProjects);
 
-  setProjects(projects);
+  useEffect(() => {
+    setProjects(projects);
+  }, [projects]);
 
   return (
     <section className="flex flex-col flex-grow m-4 mb-0 overflow-y-hidden">

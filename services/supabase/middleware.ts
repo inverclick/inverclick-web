@@ -7,6 +7,8 @@ const SUPABASE_KEY = ENV_VARS.SUPABASE_ANON_KEY;
 
 const PROTECTED_ROUTES: string[] = [];
 
+const AUTH_ROUTES: string[] = ["/auth/sign-in", "/auth/sign-up"];
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -43,9 +45,20 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const pathname = request.nextUrl.pathname;
+
+  // Redirect authenticated users away from auth pages
+  if (user && AUTH_ROUTES.includes(pathname)) {
+    const url = request.nextUrl.clone();
+
+    url.pathname = "/projects";
+
+    return NextResponse.redirect(url);
+  }
+
   // Check if the requested route is protected
   const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
-    request.nextUrl.pathname.startsWith(route)
+    pathname.startsWith(route)
   );
 
   // If it's a protected route and the user is not logged in, redirect to login

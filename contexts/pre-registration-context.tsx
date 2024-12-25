@@ -1,11 +1,13 @@
 "use client";
 
+import { useUser } from "@/contexts/user-context";
 import { PreRegistration } from "@/types/pre-registration";
 import {
   createContext,
   PropsWithChildren,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -14,7 +16,9 @@ export type PreRegistrationContextType = {
   setPreRegistration: (preRegistration: PreRegistration) => void;
   isPreRegistrationOpen: boolean;
   setIsPreRegistrationOpen: (isPreRegistrationOpen: boolean) => void;
-  ensurePreRegistration: (callback?: Function) => void;
+  welcomeDialogOpen: boolean;
+  setWelcomeDialogOpen: (welcomeDialogOpen: boolean) => void;
+  canInteractWithFeatures: boolean;
 };
 
 export const PreRegistrationContext = createContext(
@@ -38,26 +42,36 @@ export const PreRegistrationProvider = ({
     initialIsPreRegistrationOpen
   );
 
+  const [welcomeDialogOpen, setWelcomeDialogOpen] = useState(false);
+
+  const { user } = useUser();
+
   useEffect(() => {
     setPreRegistration(initialPreRegistration);
   }, [initialPreRegistration]);
 
-  const ensurePreRegistration = (callback?: Function) => {
-    if (!preRegistration) {
-      return setIsPreRegistrationOpen(true);
-    }
+  const canInteractWithFeatures = Boolean(preRegistration) || Boolean(user);
 
-    if (callback) callback();
-  };
-
-  const context: PreRegistrationContextType = {
-    preRegistration,
-    setPreRegistration,
-    isPreRegistrationOpen,
-    setIsPreRegistrationOpen,
-    ensurePreRegistration,
-  };
-
+  const context = useMemo(
+    () => ({
+      preRegistration,
+      setPreRegistration,
+      isPreRegistrationOpen,
+      setIsPreRegistrationOpen,
+      welcomeDialogOpen,
+      setWelcomeDialogOpen,
+      canInteractWithFeatures,
+    }),
+    [
+      preRegistration,
+      setPreRegistration,
+      isPreRegistrationOpen,
+      setIsPreRegistrationOpen,
+      welcomeDialogOpen,
+      setWelcomeDialogOpen,
+      canInteractWithFeatures,
+    ]
+  );
   return (
     <PreRegistrationContext.Provider value={context}>
       {children}

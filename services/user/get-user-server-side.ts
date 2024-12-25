@@ -1,4 +1,5 @@
 import { createClient } from "@/services/supabase/server-client";
+import { Database } from "@/types/database";
 import {
   PostgrestSingleResponse,
   QueryData,
@@ -30,9 +31,13 @@ const fetchUser = ({
   supabaseClient,
 }: {
   id: string;
-  supabaseClient: SupabaseClient;
+  supabaseClient: SupabaseClient<Database>;
 }) => {
-  return supabaseClient.from("users").select("*").eq("id", id).single();
+  return supabaseClient
+    .from("users")
+    .select("*, lead:leads(*)")
+    .eq("id", id)
+    .single();
 };
 
 export type GetUserServerResponse = PostgrestSingleResponse<User>;

@@ -1,23 +1,21 @@
+import { getUser, User } from "@/app/api/pre-registration/services/get-user";
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { ENV_VARS } from "@/global/env";
 import { supabase } from "@/services/supabase/supabase";
 import { APIResponse, EmptyAPIResponse } from "@/types/api";
-import {
-  PreRegistration,
-  PreRegistrationValues,
-} from "@/types/pre-registration";
-import { User } from "@/types/user";
+import { PreRegistration, PreRegistrationBody } from "@/types/pre-registration";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
   const cookieStore = cookies();
 
-  const { name, email, captchaToken } =
-    (await request.json()) as PreRegistrationValues & { captchaToken: string };
+  const body = (await request.json()) as PreRegistrationBody & {
+    captchaToken: string;
+  };
 
   // Validar el token de captcha
-  const captchaResponse = await verifyCaptcha(captchaToken);
+  const captchaResponse = await verifyCaptcha(body.captchaToken);
   if (!captchaResponse.success) {
     const response: EmptyAPIResponse = {
       success: false,
@@ -28,15 +26,11 @@ export async function POST(request: Request) {
   }
 
   // Verificar si el usuario ya está pre-registrado
-  const { data: user } = await supabase
-    .from("users")
-    .select("*")
-    .eq("email", email)
-    .single();
+  const { data: user } = await getUser({ email: body.email });
 
-  if (user) return handleExistingUser(user, email, cookieStore);
+  if (!user) return handleNewUser(body, cookieStore);
 
-  return handleNewUser(name, email, cookieStore);
+  return handleExistingUser(user, body, cookieStore);
 }
 
 async function verifyCaptcha(captchaToken: string): Promise<{
@@ -58,15 +52,31 @@ async function verifyCaptcha(captchaToken: string): Promise<{
   return response.json();
 }
 
+/**
+ * Handles the case where an existing user is pre-registered.
+ *
+ * @param {User} user - The existing user object containing user details.
+ * @param {ReadonlyRequestCookies} cookieStore - The request cookies for managing sessions.
+ * @returns {Promise<Response>} A promise that resolves to a Response object indicating the result.
+ *
+ * If the user is confirmed, returns a response with a success message and a 303 status.
+ * Otherwise, attempts to send a continuation email and update user and lead information in the database.
+ * If email sending fails, returns a response with an error message and a 400 status.
+ * If database updates fail, returns a response with an error message and a 400 status.
+ * On successful updates, sets a pre-registration cookie and returns a success response with user data.
+ */
+
 async function handleExistingUser(
   user: User,
-  email: string,
+  body: PreRegistrationBody,
   cookieStore: ReadonlyRequestCookies
 ): Promise<Response> {
+  const { email } = user;
+
   if (user.is_confirmed) {
     const response: EmptyAPIResponse = {
       success: true,
-      message: "Parece que ya estas registrado, intenta iniciar sesión",
+      message: "Parece que ya estás registrado, intenta iniciar sesión",
     };
 
     return Response.json(response, { status: 303 });
@@ -78,7 +88,7 @@ async function handleExistingUser(
       body: {
         to: email,
         subject: "Continúa con tu proceso de registro en Inverclick",
-        body: `<p>Completa tu registro en el siguiente enlace: <a href='/onboarding'>Completa tu registro</a></p>`,
+        body: `<p>Para continuar <a href='/onboarding'>completa tu registro</a></p>`,
       },
     }
   );
@@ -92,30 +102,79 @@ async function handleExistingUser(
     return Response.json(response, { status: 400 });
   }
 
-  setPreRegistrationCookie(cookieStore, {
+  const { data: updatedUser, error: updateUserError } = await supabase
+    .from("users")
+    .update({
+      name: body.name,
+    })
+    .eq("id", user.id)
+    .select("*")
+    .single();
+
+  if (!updatedUser || updateUserError) {
+    const response: EmptyAPIResponse = {
+      success: false,
+      message: "Error al actualizar usuario",
+    };
+
+    return Response.json(response, { status: 400 });
+  }
+
+  const { data: updatedLead, error: updateLeadError } = await supabase
+    .from("leads")
+    .update({
+      phone: body.phone,
+      nickname: body.nickname,
+    })
+    .eq("user_id", user.id)
+    .select("*")
+    .single();
+
+  if (!updatedLead || updateLeadError) {
+    const response: EmptyAPIResponse = {
+      success: false,
+      message: "Error al actualizar lead",
+    };
+
+    return Response.json(response, { status: 400 });
+  }
+
+  const preRegistration: PreRegistration = {
     id: user.id,
-    name: user.name,
+    name: updatedUser.name,
     email: user.email,
-  });
+    nickname: updatedLead.nickname,
+  };
+
+  setPreRegistrationCookie(cookieStore, preRegistration);
 
   const response: APIResponse<PreRegistration> = {
     success: true,
     message: "",
-    data: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    },
+    data: preRegistration,
   };
 
   return Response.json(response);
 }
 
+/**
+ * Handles the case where a new user is pre-registered.
+ *
+ * @param {PreRegistrationBody} body - The user object containing user details.
+ * @param {ReadonlyRequestCookies} cookieStore - The request cookies for managing sessions.
+ * @returns {Promise<Response>} A promise that resolves to a Response object indicating the result.
+ *
+ * If the user is inserted successfully, attempts to send a continuation email and update user and lead information in the database.
+ * If email sending fails, returns a response with an error message and a 400 status.
+ * If database updates fail, returns a response with an error message and a 400 status.
+ * On successful updates, sets a pre-registration cookie and returns a success response with user data.
+ */
 async function handleNewUser(
-  name: string,
-  email: string,
+  body: PreRegistrationBody,
   cookieStore: ReadonlyRequestCookies
 ): Promise<Response> {
+  const { name, email, phone, nickname } = body;
+
   const { data: insertedUser, error: insertUserError } = await supabase
     .from("users")
     .insert({
@@ -136,11 +195,17 @@ async function handleNewUser(
     return Response.json(response, { status: 400 });
   }
 
-  const { error: insertLeadError } = await supabase.from("leads").insert({
-    user_id: insertedUser.id,
-  });
+  const { data: insertedLead, error: insertLeadError } = await supabase
+    .from("leads")
+    .insert({
+      user_id: insertedUser.id,
+      phone,
+      nickname,
+    })
+    .select("*")
+    .single();
 
-  if (insertLeadError) {
+  if (!insertedLead || insertLeadError) {
     const response: EmptyAPIResponse = {
       success: false,
       message: "Error al crear/obtener lead",
@@ -173,6 +238,7 @@ async function handleNewUser(
     id: insertedUser.id,
     name: insertedUser.name,
     email: insertedUser.email,
+    nickname: insertedLead.nickname,
   });
 
   const response: APIResponse<PreRegistration> = {
@@ -182,6 +248,7 @@ async function handleNewUser(
       id: insertedUser.id,
       name: insertedUser.name,
       email: insertedUser.email,
+      nickname: insertedLead.nickname,
     },
   };
 
@@ -194,10 +261,6 @@ function setPreRegistrationCookie(
 ) {
   cookieStore.set(
     PRE_REGISTRATION_COOKIE_NAME,
-    JSON.stringify({
-      id: preRegistration.id,
-      name: preRegistration.name,
-      email: preRegistration.email,
-    } as PreRegistration)
+    JSON.stringify(preRegistration)
   );
 }
