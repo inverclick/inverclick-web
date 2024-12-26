@@ -1,7 +1,15 @@
-import { updateSession } from "@/services/supabase/middleware";
+import { handlePreRegistration } from "@/middlewares/handle-pre-registration";
+import { handleTRM } from "@/middlewares/handle-trm";
+import { updateSession } from "@/middlewares/update-session";
 import { type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  console.log("Running middleware");
+
+  await handlePreRegistration(request);
+
+  await handleTRM(request);
+
   return await updateSession(request);
 }
 

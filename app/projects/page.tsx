@@ -7,7 +7,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { ENV_VARS } from "@/global/env";
-import { getProjectsPriceRange } from "@/services/projects";
+import { getProjectsPriceRange } from "@/services/get-projects-price-range";
 import { supabase } from "@/services/supabase/supabase";
 import { Department } from "@/types/department";
 import { HousingType } from "@/types/housing-type";

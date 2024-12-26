@@ -1,9 +1,10 @@
 import { ChatMessage } from "@/components/shared/chatbot/chat-message";
 import { ChatMessages } from "@/components/shared/chatbot/chat-messages";
 import { ChatMessage as ChatMessageType } from "@/components/shared/chatbot/chatbot";
-import goToProjects, {
+import {
   getWelcomeMessage,
   goToProject,
+  goToProjects,
   goToProjectsWithFilters,
   questionAboutInverclick,
   questionAboutProject,
@@ -13,11 +14,11 @@ import goToProjects, {
   voidFunction,
 } from "@/components/shared/chatbot/functions";
 import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
-import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
-import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
+import { useUser } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
-import { getChatbotMessagesFromLocalStorage } from "@/services/chatbot-messages-client";
+import { formatTimezoneOffset } from "@/lib/format-timezone-offset";
+import { getChatbotMessagesFromLocalStorage } from "@/services/get-chatbot-messages-from-local-storage";
 import { supabase } from "@/services/supabase/supabase";
 import {
   Avatar,
@@ -39,23 +40,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@inverclick/inverclick-ui/popover";
-import { MessageCircle, Send } from "lucide-react";
+import { Loader2, MessageCircle, Send } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import OpenAI from "openai";
-import { formatTimezoneOffset } from "@/services/format-timezone-offset";
+
+type MessagesSource = "db" | "local";
+
+type Chatter = {
+  id: string;
+  name: string;
+  email: string;
+  messagesSource: MessagesSource;
+};
 
 const WAIT_FOR_RESPONSE_TIME = 500;
 
-export type ChatbotContentProps = {
-  messages?: ChatMessageType[];
-};
+export const ChatbotContent = () => {
+  /**
+   * References
+   */
 
-export const ChatbotContent = ({
-  messages: initialMessages = [],
-}: ChatbotContentProps) => {
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
 
   const scrollAreaRefFn = useCallback((node: HTMLDivElement) => {
@@ -68,6 +76,10 @@ export const ChatbotContent = ({
     }
   }, []);
 
+  /**
+   * States
+   */
+
   const [openAI] = useState<OpenAI>(
     new OpenAI({
       apiKey: ENV_VARS.OPENAI_API_KEY,
@@ -78,56 +90,83 @@ export const ChatbotContent = ({
   const [thread, setThread] = useState<OpenAI.Beta.Threads.Thread>();
 
   const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<ChatMessageType[]>(
-    getChatbotMessagesFromLocalStorage()
-  );
+  const [messages, setMessages] = useState<ChatMessageType[]>([]);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loadingMessages, setLoadingMessages] = useState<boolean>(false);
+  const [assistantTyping, setAssistantTyping] = useState<boolean>(false);
 
-  const { isChatOpen, setIsChatOpen } = useChatbot();
+  /**
+   * Hooks
+   */
 
+  const { user } = useUser();
   const { preRegistration } = usePreRegistration();
 
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!preRegistration) {
-      setIsChatOpen(false);
-    }
+  /**
+   * Constants
+   */
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preRegistration]);
+  /**
+   * Chatter existence (user or pre-registration) is validated in chatbot.tsx component.
+   * So user or pre-registration are guaranteed to exist at this point. It is safe to ignore '|| ""'
+   */
+  const chatter: Chatter = {
+    id: user?.id || preRegistration?.id || "",
+    name:
+      user?.lead?.[0]?.nickname ||
+      user?.name ||
+      preRegistration?.nickname ||
+      preRegistration?.name ||
+      "",
+    email: user?.email || preRegistration?.email || "",
+    messagesSource: user ? "db" : "local",
+  };
 
-  useEffect(() => {
-    const projectPageRegex = /^\/projects\/[a-f0-9\-]{36}\/[a-f0-9\-]{36}$/;
-
-    const contextualizeAssistant = async () => {
-      if (thread && preRegistration && projectPageRegex.test(pathname)) {
-        // TODO: Avoid this request
-        const { data: project } = await supabase
-          .from("projects")
-          .select("*")
-          .eq("id", params.project)
-          .single();
-
-        if (project) {
-          await openAI.beta.threads.messages.create(thread.id, {
-            role: "assistant",
-            content: `El nombre del usuario es ${preRegistration.name} y está en la página del proyecto ${project.name} con ID ${project.id}.`,
-          });
-        }
-      }
-    };
-
-    contextualizeAssistant();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [thread, pathname]);
+  /**
+   * Effects
+   */
 
   useEffect(() => {
     const init = async () => {
+      setLoadingMessages(true);
+
+      let messages: ChatMessageType[] = [];
+
+      if (chatter.messagesSource === "db") {
+        const { data } = await supabase
+          .from("chatbot_messages")
+          .select("*")
+          .eq("user_id", chatter.id);
+
+        messages = (data || []).map((data) => {
+          const message: ChatMessageType = {
+            id: data.id,
+            message: data.message,
+            sender: data.from === "BOT" ? "assistant" : "user",
+          };
+
+          return message;
+        });
+      } else if (chatter.messagesSource === "local") {
+        messages = getChatbotMessagesFromLocalStorage();
+      }
+
+      if (messages.length === 0) {
+        messages.push({
+          id: uuidv4(),
+          message: getWelcomeMessage(chatter.name),
+          sender: "assistant",
+        });
+      }
+
+      setMessages(messages);
+
+      setLoadingMessages(false);
+
       setThread(await openAI.beta.threads.create());
     };
 
@@ -147,22 +186,13 @@ export const ChatbotContent = ({
   }, []);
 
   useEffect(() => {
-    if (messages.length === 0 && preRegistration) {
-      setMessages((messages) => [
-        ...messages,
-        {
-          id: uuidv4(),
-          message: getWelcomeMessage(preRegistration.name),
-          sender: "assistant",
-        },
-      ]);
+    if (messages.length > 0 && chatter.messagesSource === "local") {
+      localStorage.setItem(
+        CHATBOT_MESSAGES_LOCAL_STORAGE_KEY,
+        JSON.stringify(messages)
+      );
     }
-
-    localStorage.setItem(
-      CHATBOT_MESSAGES_LOCAL_STORAGE_KEY,
-      JSON.stringify(messages)
-    );
-  }, [messages, preRegistration]);
+  }, [messages, chatter.messagesSource]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -171,7 +201,33 @@ export const ChatbotContent = ({
         behavior: "smooth",
       });
     }
-  }, [messages, isLoading]);
+  }, [messages, assistantTyping]);
+
+  useEffect(() => {
+    const projectPageRegex = /^\/projects\/[a-f0-9-]{36}\/[a-f0-9-]{36}$/;
+
+    const contextualizeAssistant = async () => {
+      if (thread && projectPageRegex.test(pathname)) {
+        // TODO: Avoid this request
+        const { data: project } = await supabase
+          .from("projects")
+          .select("*")
+          .eq("id", params.project)
+          .single();
+
+        if (project) {
+          await openAI.beta.threads.messages.create(thread.id, {
+            role: "assistant",
+            content: `El nombre del usuario es ${chatter.name} y está en la página del proyecto ${project.name} con ID ${project.id}.`,
+          });
+        }
+      }
+    };
+
+    contextualizeAssistant();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [thread, pathname]);
 
   const waitForResponseCompletion = async (runId: string) => {
     if (!thread) {
@@ -196,10 +252,6 @@ export const ChatbotContent = ({
       throw new Error("No thread found");
     }
 
-    if (!preRegistration) {
-      throw new Error("No pre-registration found");
-    }
-
     const messages = await openAI.beta.threads.messages.list(thread.id);
 
     const lastMessage = messages.data
@@ -213,7 +265,8 @@ export const ChatbotContent = ({
         ? lastMessage.content[0].text.value
         : "";
 
-    setIsLoading(false);
+    setAssistantTyping(false);
+
     setMessages((messages) => [
       ...messages,
       { id: uuidv4(), message, sender: "assistant" },
@@ -225,12 +278,13 @@ export const ChatbotContent = ({
     await supabase.from("chatbot_messages").insert({
       from: "BOT",
       message,
-      user_id: preRegistration.id,
+      user_id: chatter.id,
     });
   };
 
   const handleFailedResponse = () => {
-    setIsLoading(false);
+    setAssistantTyping(false);
+
     setMessages((messages) => [
       ...messages,
       {
@@ -262,13 +316,9 @@ export const ChatbotContent = ({
       let output: string;
 
       if (functionName === "scheduleAnAppointment") {
-        if (!preRegistration) {
-          throw new Error("Missing pre-registration");
-        }
-
-        output = await window[functionName]({
+        output = window[functionName]({
           ...args,
-          email: preRegistration.email,
+          email: chatter.email,
         });
       } else {
         output = args
@@ -297,10 +347,6 @@ export const ChatbotContent = ({
         throw new Error("No thread found");
       }
 
-      if (!preRegistration) {
-        throw new Error("No pre-registration found");
-      }
-
       if (message.trim().length === 0) return;
 
       const chatMessage: ChatMessageType = {
@@ -309,7 +355,7 @@ export const ChatbotContent = ({
         sender: "user",
       };
 
-      setIsLoading(true);
+      setAssistantTyping(true);
       setMessages((messages) => [...messages, chatMessage]);
       setMessage("");
 
@@ -319,7 +365,7 @@ export const ChatbotContent = ({
       await supabase.from("chatbot_messages").insert({
         from: "USER",
         message,
-        user_id: preRegistration.id,
+        user_id: chatter.id,
       });
 
       /**
@@ -327,7 +373,7 @@ export const ChatbotContent = ({
        */
       await openAI.beta.threads.messages.create(thread.id, {
         role: "user",
-        content: `Mi nombre es ${preRegistration.name} y mi pregunta es: ${message}`,
+        content: `Mi nombre es ${chatter.name} y mi pregunta es: ${message}`,
       });
 
       /**
@@ -336,7 +382,6 @@ export const ChatbotContent = ({
       const run = await openAI.beta.threads.runs.create(thread.id, {
         assistant_id: ENV_VARS.OPENAI_ASSISTANT_ID,
         tool_choice: "required",
-        // tool_choice: { type: "file_search" },
       });
 
       /**
@@ -415,7 +460,7 @@ export const ChatbotContent = ({
   };
 
   return (
-    <Popover open={isChatOpen} onOpenChange={setIsChatOpen}>
+    <Popover>
       <PopoverTrigger asChild>
         <Button
           type="button"
@@ -443,16 +488,23 @@ export const ChatbotContent = ({
             </div>
           </CardHeader>
           <CardContent>
-            <ChatMessages ref={scrollAreaRefFn}>
-              {messages.map((message) => (
-                <ChatMessage
-                  key={message.id}
-                  message={message.message}
-                  sender={message.sender}
-                />
-              ))}
-              {isLoading && <TypingIndicator />}
-            </ChatMessages>
+            {loadingMessages && (
+              <div className="grid place-content-center w-full h-96">
+                <Loader2 className="animate-spin-clockwise repeat-infinite" />
+              </div>
+            )}
+            {messages.length > 0 && (
+              <ChatMessages ref={scrollAreaRefFn}>
+                {messages.map((message) => (
+                  <ChatMessage
+                    key={message.id}
+                    message={message.message}
+                    sender={message.sender}
+                  />
+                ))}
+                {assistantTyping && <TypingIndicator />}
+              </ChatMessages>
+            )}
           </CardContent>
           <CardFooter>
             <form onSubmit={sendMessage} className="flex gap-2 w-full">

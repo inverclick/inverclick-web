@@ -444,16 +444,22 @@ export type Database = {
         Row: {
           created_at: string;
           id: string;
+          nickname: string | null;
+          phone: string;
           user_id: string;
         };
         Insert: {
           created_at?: string;
           id?: string;
+          nickname?: string | null;
+          phone: string;
           user_id: string;
         };
         Update: {
           created_at?: string;
           id?: string;
+          nickname?: string | null;
+          phone?: string;
           user_id?: string;
         };
         Relationships: [

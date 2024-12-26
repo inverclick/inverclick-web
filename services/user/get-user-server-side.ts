@@ -1,4 +1,5 @@
 import { createClient } from "@/services/supabase/server-client";
+import { Database } from "@/types/database";
 import {
   PostgrestSingleResponse,
   QueryData,
@@ -6,9 +7,9 @@ import {
 } from "@supabase/supabase-js";
 
 export const getUserServerSide = async () => {
-  const supabaseClient = createClient();
+  const supabase = createClient();
 
-  const response = await supabaseClient.auth.getUser();
+  const response = await supabase.auth.getUser();
 
   if (response.error) {
     return null;
@@ -20,19 +21,26 @@ export const getUserServerSide = async () => {
     return null;
   }
 
-  const { data: user } = await fetchUser({ id: auth.id, supabaseClient });
+  const { data: user } = await fetchUser({
+    id: auth.id,
+    supabase,
+  });
 
   return user;
 };
 
 const fetchUser = ({
   id,
-  supabaseClient,
+  supabase,
 }: {
   id: string;
-  supabaseClient: SupabaseClient;
+  supabase: SupabaseClient<Database>;
 }) => {
-  return supabaseClient.from("users").select("*").eq("id", id).single();
+  return supabase
+    .from("users")
+    .select("*, lead:leads(*)")
+    .eq("id", id)
+    .single();
 };
 
 export type GetUserServerResponse = PostgrestSingleResponse<User>;

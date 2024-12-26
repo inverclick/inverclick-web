@@ -21,7 +21,7 @@ export const PriceFilter = ({
 }: PriceFilterProps) => {
   const onChange = (name: string, value: string) => {
     const newValue = value.length ? Number(value) : undefined;
-    console.log(newValue);
+
     if (name === "min_price") {
       setMinPrice(Math.min(maxPrice, Number(newValue)));
     } else {

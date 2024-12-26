@@ -7,8 +7,10 @@ const SUPABASE_KEY = ENV_VARS.SUPABASE_ANON_KEY;
 
 const PROTECTED_ROUTES: string[] = [];
 
+const AUTH_ROUTES: string[] = ["/auth/sign-in", "/auth/sign-up"];
+
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
+  let response = NextResponse.next({
     request,
   });
 
@@ -22,12 +24,12 @@ export async function updateSession(request: NextRequest) {
           request.cookies.set(name, value)
         );
 
-        supabaseResponse = NextResponse.next({
+        response = NextResponse.next({
           request,
         });
 
         cookiesToSet.forEach(({ name, value, options }) =>
-          supabaseResponse.cookies.set(name, value, options)
+          response.cookies.set(name, value, options)
         );
       },
     },
@@ -43,9 +45,20 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const pathname = request.nextUrl.pathname;
+
+  // Redirect authenticated users away from auth pages
+  if (user && AUTH_ROUTES.includes(pathname)) {
+    const url = request.nextUrl.clone();
+
+    url.pathname = "/projects";
+
+    return NextResponse.redirect(url);
+  }
+
   // Check if the requested route is protected
   const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
-    request.nextUrl.pathname.startsWith(route)
+    pathname.startsWith(route)
   );
 
   // If it's a protected route and the user is not logged in, redirect to login
@@ -70,5 +83,5 @@ export async function updateSession(request: NextRequest) {
   // If this is not done, you may be causing the browser and server to go out
   // of sync and terminate the user's session prematurely!
 
-  return supabaseResponse;
+  return response;
 }

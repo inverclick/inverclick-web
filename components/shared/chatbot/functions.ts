@@ -70,7 +70,7 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
   return output;
 }
 
-export default function goToProjects() {
+export function goToProjects() {
   const data = {
     action: "go_to_projects",
     response_message:

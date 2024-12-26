@@ -1,12 +1,11 @@
 "use client";
 
-import { useChatbot } from "@/contexts/chatbot-context";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { APIResponse } from "@/types/api";
 import {
+  PreRegistrationFormValues,
   PreRegistration as PreRegistrationType,
-  PreRegistrationValues,
 } from "@/types/pre-registration";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
@@ -18,6 +17,7 @@ import {
   DialogTitle,
 } from "@inverclick/inverclick-ui/dialog";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
+import { PhoneInputFormikNT } from "@inverclick/inverclick-ui/phone-input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -37,27 +37,28 @@ const PreRegistrationContent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [captchaToken, setCaptchaToken] = useState("");
 
-  const { shouldOpenChatbot, setIsChatOpen } = useChatbot();
-
   const {
     isPreRegistrationOpen,
     setIsPreRegistrationOpen,
     setPreRegistration,
+    setWelcomeDialogOpen,
   } = usePreRegistration();
 
   const router = useRouter();
 
-  const form = useFormik<PreRegistrationValues>({
+  const form = useFormik<PreRegistrationFormValues>({
     validateOnMount: true,
-    initialValues: { name: "", email: "" },
+    initialValues: { name: "", email: "", phone: "", nickname: "" },
     validationSchema: createFormSchema(),
-    onSubmit: async ({ name, email }) => {
+    onSubmit: async ({ name, email, phone, nickname }) => {
       setIsLoading(true);
 
       const response = await fetch("/api/pre-registration", {
         body: JSON.stringify({
           name,
           email,
+          phone,
+          nickname: nickname.trim() || null,
           captchaToken,
         }),
         method: "POST",
@@ -83,9 +84,7 @@ const PreRegistrationContent = () => {
 
       setPreRegistration(body.data);
 
-      if (shouldOpenChatbot) {
-        setIsChatOpen(true);
-      }
+      setWelcomeDialogOpen(true);
 
       router.refresh();
     },
@@ -100,6 +99,7 @@ const PreRegistrationContent = () => {
         hideCloseButton
         onOpenAutoFocus={(e) => e.preventDefault()}
         className="max-w-xl"
+        tabIndex={-1}
       >
         <DialogHeader>
           <DialogTitle>
@@ -126,10 +126,35 @@ const PreRegistrationContent = () => {
             />
             <InputFormikNT
               id="email"
+              classNames={{
+                container: "mb-4",
+              }}
               properties={{
                 input: {
-                  id: "email",
                   placeholder: "Correo electrónico",
+                },
+              }}
+            />
+            <PhoneInputFormikNT
+              id="phone"
+              classNames={{
+                container: "mb-4",
+              }}
+              properties={{
+                phoneInput: {
+                  placeholder: "Teléfono",
+                  customLabels: {
+                    input: "Busca el país",
+                    notFound: "País no encontrado",
+                  },
+                },
+              }}
+            />
+            <InputFormikNT
+              id="nickname"
+              properties={{
+                input: {
+                  placeholder: "Cómo quieres que te llamemos",
                 },
               }}
             />
@@ -137,6 +162,7 @@ const PreRegistrationContent = () => {
               <Turnstile
                 sitekey={ENV_VARS.TURNSTILE_SITE_KEY}
                 onVerify={(token) => setCaptchaToken(token)}
+                fixedSize={true}
                 size="flexible"
                 theme="light"
               />
@@ -157,5 +183,7 @@ function createFormSchema() {
   return yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
+    phone: yup.string().required(),
+    nickname: yup.string().min(0),
   });
 }

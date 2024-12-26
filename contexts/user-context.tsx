@@ -1,12 +1,12 @@
 "use client";
 
+import { signInAction } from "@/actions/auth/sign-in";
+import { signOutAction } from "@/actions/auth/sign-out";
+import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
+import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { User } from "@/services/user/get-user-server-side";
-import {
-  signInClientSide,
-  SignInClientSideParams,
-} from "@/services/user/sign-in-client-side";
-import { signOutClientSide } from "@/services/user/sign-out-client-side";
-import { useRouter } from "next/navigation";
+import { SignInClientSideParams } from "@/services/user/sign-in-client-side";
+import Cookies from "js-cookie";
 import {
   createContext,
   PropsWithChildren,
@@ -15,9 +15,6 @@ import {
   useState,
 } from "react";
 import { toast } from "sonner";
-import Cookies from "js-cookie";
-import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
-import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 
 export type UserContextType = {
   user: User | null;
@@ -38,36 +35,27 @@ export const UserProvider = ({
 }: UserContextProps) => {
   const [user, setUser] = useState<User | null>(initialUser);
 
-  const router = useRouter();
-
   const signIn = async (params: SignInClientSideParams) => {
-    const { error } = await signInClientSide(params);
+    try {
+      await signInAction(params);
 
-    if (error) {
-      toast.error(error.message);
-      return;
+      Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
+      localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     }
-
-    Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
-    localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
-
-    /**
-     * We're not setting user manually since router.refresh() refresh, in this case /projects page.
-     * Projects calls getUserServerSide and the returned user feeds this UserProvider
-     */
-    router.push("/projects");
-    router.refresh();
   };
 
   const signOut = async () => {
-    const { error } = await signOutClientSide();
-
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await signOutAction();
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     }
-
-    router.refresh();
   };
 
   useEffect(() => {

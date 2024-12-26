@@ -1,14 +1,14 @@
-import { createClient } from "@/services/supabase/browser-client";
+import { createClient } from "@/services/supabase/server-client";
 
-export type SignInClientSideParams = {
+export type SignInServerSideParams = {
   email: string;
   password: string;
 };
 
-export const signInClientSide = ({
+export const signInServerSide = ({
   email,
   password,
-}: SignInClientSideParams) => {
+}: SignInServerSideParams) => {
   const supabase = createClient();
 
   return supabase.auth.signInWithPassword({
