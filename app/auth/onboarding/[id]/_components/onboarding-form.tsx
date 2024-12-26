@@ -41,46 +41,52 @@ export const OnboardingForm = ({ user }: OnboardingFormProps) => {
     validationSchema: createFormSchema(),
     onSubmit: async ({ password }) => {
       setLoading(true);
+      try {
+        const { data: signUp, error: signUpError } = await supabase.auth.signUp(
+          {
+            email: user.email,
+            password,
+          }
+        );
 
-      const { data: signUp, error: signUpError } = await supabase.auth.signUp({
-        email: user.email,
-        password,
-      });
+        if (!signUp.user) {
+          throw new Error(ERROR_CREATING_ACCOUNT);
+        }
 
-      if (!signUp.user) {
-        toast.error(ERROR_CREATING_ACCOUNT);
-        return;
+        if (signUpError) {
+          throw new Error(signUpError.message);
+        }
+
+        await supabase.auth.signOut();
+
+        const { error: updateUserError } = await supabase
+          .from("users")
+          .update({
+            id: signUp.user.id,
+            is_confirmed: true,
+          })
+          .eq("email", user.email)
+          .select("*");
+
+        if (updateUserError) {
+          throw new Error(updateUserError.message);
+        }
+
+        setLoading(false);
+
+        Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
+        localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
+
+        toast.success(ACCOUNT_CREATED_SIGN_IN);
+
+        router.push(`/auth/sign-in?email=${user.email}`);
+      } catch (error) {
+        setLoading(false);
+
+        if (error instanceof Error) {
+          toast.error(error.message);
+        }
       }
-
-      if (signUpError) {
-        toast.error(signUpError.message);
-        return;
-      }
-
-      await supabase.auth.signOut();
-
-      const { error: updateUserError } = await supabase
-        .from("users")
-        .update({
-          id: signUp.user.id,
-          is_confirmed: true,
-        })
-        .eq("email", user.email)
-        .select("*");
-
-      if (updateUserError) {
-        toast.error(updateUserError.message);
-        return;
-      }
-
-      setLoading(false);
-
-      Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
-      localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
-
-      toast.success(ACCOUNT_CREATED_SIGN_IN);
-
-      router.push(`/auth/sign-in?email=${user.email}`);
     },
   });
 
