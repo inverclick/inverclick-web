@@ -1,5 +1,6 @@
 import { getUser, User } from "@/app/api/pre-registration/services/get-user";
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
+import { getOnboardingEmailTemplate } from "@/emails/get-onboarding-email-template";
 import { ENV_VARS } from "@/global/env";
 import { supabase } from "@/services/supabase/supabase";
 import { APIResponse, EmptyAPIResponse } from "@/types/api";
@@ -82,16 +83,10 @@ async function handleExistingUser(
     return Response.json(response, { status: 303 });
   }
 
-  const { error: sendEmailError } = await supabase.functions.invoke(
-    "send-email",
-    {
-      body: {
-        to: email,
-        subject: "Continúa con tu proceso de registro en Inverclick",
-        body: `<p>Para continuar <a href='/onboarding'>completa tu registro</a></p>`,
-      },
-    }
-  );
+  const { error: sendEmailError } = await sendOnboardingEmail({
+    to: email,
+    userId: user.id,
+  });
 
   if (sendEmailError) {
     const response: EmptyAPIResponse = {
@@ -214,16 +209,10 @@ async function handleNewUser(
     return Response.json(response, { status: 400 });
   }
 
-  const { error: sendEmailError } = await supabase.functions.invoke(
-    "send-email",
-    {
-      body: {
-        to: email,
-        subject: "Continúa con tu proceso de registro en Inverclick",
-        body: `<p>Completa tu registro en el siguiente enlace: <a href='/onboarding'>Completa tu registro</a></p>`,
-      },
-    }
-  );
+  const { error: sendEmailError } = await sendOnboardingEmail({
+    to: email,
+    userId: insertedUser.id,
+  });
 
   if (sendEmailError) {
     const response: EmptyAPIResponse = {
@@ -263,4 +252,10 @@ function setPreRegistrationCookie(
     PRE_REGISTRATION_COOKIE_NAME,
     JSON.stringify(preRegistration)
   );
+}
+
+function sendOnboardingEmail({ to, userId }: { to: string; userId: string }) {
+  return supabase.functions.invoke("send-email", {
+    body: getOnboardingEmailTemplate({ to, userId }),
+  });
 }

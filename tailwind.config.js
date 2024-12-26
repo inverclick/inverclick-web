@@ -1,4 +1,5 @@
 import { inverclick } from "@inverclick/inverclick-ui/plugin";
+
 import tailwindAnimations from "@midudev/tailwind-animations";
 import tailwindAnimate from "tailwindcss-animate";
 
@@ -22,6 +23,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        main: "url('/main-page/main-background.avif')",
+      },
       maxWidth: {
         "screen-3xl": "1792px",
         "screen-4xl": "2048px",
