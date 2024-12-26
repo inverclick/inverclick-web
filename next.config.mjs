@@ -12,6 +12,8 @@ const nextConfig = {
       "lib",
       "services",
       "types",
+      "middlewares",
+      "actions",
     ],
     ignoreDuringBuilds: true,
   },

@@ -1,7 +1,7 @@
 import { createClient } from "@/services/supabase/browser-client";
 
 export const signOutClientSide = () => {
-  const supabaseClient = createClient();
+  const supabase = createClient();
 
-  return supabaseClient.auth.signOut();
+  return supabase.auth.signOut();
 };

@@ -17,8 +17,8 @@ import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { useUser } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
-import { getChatbotMessagesFromLocalStorage } from "@/services/chatbot-messages-client";
-import { formatTimezoneOffset } from "@/services/format-timezone-offset";
+import { formatTimezoneOffset } from "@/lib/format-timezone-offset";
+import { getChatbotMessagesFromLocalStorage } from "@/services/get-chatbot-messages-from-local-storage";
 import { supabase } from "@/services/supabase/supabase";
 import {
   Avatar,
@@ -60,52 +60,6 @@ type Chatter = {
 const WAIT_FOR_RESPONSE_TIME = 500;
 
 export const ChatbotContent = () => {
-  const pathname = usePathname();
-
-  const { user } = useUser();
-  const { preRegistration } = usePreRegistration();
-
-  const chatter: Chatter = {
-    id: user?.id || preRegistration?.id || "",
-    name:
-      user?.lead?.[0]?.nickname ||
-      user?.name ||
-      preRegistration?.nickname ||
-      preRegistration?.name ||
-      "",
-    email: user?.email || preRegistration?.email || "",
-    messagesSource: user ? "db" : "local",
-  };
-
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          type="button"
-          className="fixed bottom-4 right-4 z-50"
-          variant={pathname === "/" ? "secondary" : "default"}
-          rounded="full"
-          size="icon"
-        >
-          <Icon icon={MessageCircle} />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        side="top"
-        align="end"
-        className="w-[calc(100vw-2rem)] md:w-96 p-0"
-      >
-        <ChatbotChat chatter={chatter} />
-      </PopoverContent>
-    </Popover>
-  );
-};
-
-type ChatbotChatProps = {
-  chatter: Chatter;
-};
-
-const ChatbotChat = ({ chatter }: ChatbotChatProps) => {
   /**
    * References
    */
@@ -145,9 +99,32 @@ const ChatbotChat = ({ chatter }: ChatbotChatProps) => {
    * Hooks
    */
 
+  const { user } = useUser();
+  const { preRegistration } = usePreRegistration();
+
   const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
+
+  /**
+   * Constants
+   */
+
+  /**
+   * Chatter existence (user or pre-registration) is validated in chatbot.tsx component.
+   * So user or pre-registration are guaranteed to exist at this point. It is safe to ignore '|| ""'
+   */
+  const chatter: Chatter = {
+    id: user?.id || preRegistration?.id || "",
+    name:
+      user?.lead?.[0]?.nickname ||
+      user?.name ||
+      preRegistration?.nickname ||
+      preRegistration?.name ||
+      "",
+    email: user?.email || preRegistration?.email || "",
+    messagesSource: user ? "db" : "local",
+  };
 
   /**
    * Effects
@@ -483,47 +460,66 @@ const ChatbotChat = ({ chatter }: ChatbotChatProps) => {
   };
 
   return (
-    <Card className="border-none">
-      <CardHeader>
-        <div className="flex gap-2 items-center">
-          <Avatar>
-            <AvatarImage src="/avatar-assistant.svg" alt="Asistente" />
-            <AvatarFallback>AS</AvatarFallback>
-          </Avatar>
-          <CardTitle>Asistente</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent>
-        {loadingMessages && (
-          <div className="grid place-content-center w-full h-96">
-            <Loader2 className="animate-spin-clockwise repeat-infinite" />
-          </div>
-        )}
-        {messages.length > 0 && (
-          <ChatMessages ref={scrollAreaRefFn}>
-            {messages.map((message) => (
-              <ChatMessage
-                key={message.id}
-                message={message.message}
-                sender={message.sender}
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          className="fixed bottom-4 right-4 z-50"
+          variant={pathname === "/" ? "secondary" : "default"}
+          rounded="full"
+          size="icon"
+        >
+          <Icon icon={MessageCircle} />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        side="top"
+        align="end"
+        className="w-[calc(100vw-2rem)] md:w-96 p-0"
+      >
+        <Card className="border-none">
+          <CardHeader>
+            <div className="flex gap-2 items-center">
+              <Avatar>
+                <AvatarImage src="/avatar-assistant.svg" alt="Asistente" />
+                <AvatarFallback>AS</AvatarFallback>
+              </Avatar>
+              <CardTitle>Asistente</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {loadingMessages && (
+              <div className="grid place-content-center w-full h-96">
+                <Loader2 className="animate-spin-clockwise repeat-infinite" />
+              </div>
+            )}
+            {messages.length > 0 && (
+              <ChatMessages ref={scrollAreaRefFn}>
+                {messages.map((message) => (
+                  <ChatMessage
+                    key={message.id}
+                    message={message.message}
+                    sender={message.sender}
+                  />
+                ))}
+                {assistantTyping && <TypingIndicator />}
+              </ChatMessages>
+            )}
+          </CardContent>
+          <CardFooter>
+            <form onSubmit={sendMessage} className="flex gap-2 w-full">
+              <Input
+                placeholder="Escribe un mensaje"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
-            ))}
-            {assistantTyping && <TypingIndicator />}
-          </ChatMessages>
-        )}
-      </CardContent>
-      <CardFooter>
-        <form onSubmit={sendMessage} className="flex gap-2 w-full">
-          <Input
-            placeholder="Escribe un mensaje"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <Button type="submit" size="icon" className="flex-shrink-0">
-            <Icon icon={Send} className="text-white" />
-          </Button>
-        </form>
-      </CardFooter>
-    </Card>
+              <Button type="submit" size="icon" className="flex-shrink-0">
+                <Icon icon={Send} className="text-white" />
+              </Button>
+            </form>
+          </CardFooter>
+        </Card>
+      </PopoverContent>
+    </Popover>
   );
 };
