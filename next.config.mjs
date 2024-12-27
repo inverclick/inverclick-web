@@ -14,6 +14,7 @@ const nextConfig = {
       "types",
       "middlewares",
       "actions",
+      "emails",
     ],
     ignoreDuringBuilds: true,
   },

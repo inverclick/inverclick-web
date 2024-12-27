@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  PRE_REGISTRATION_DESCRIPTION,
+  PRE_REGISTRATION_TITLE,
+} from "@/components/shared/pre-registration/messages";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { ENV_VARS } from "@/global/env";
 import { APIResponse } from "@/types/api";
@@ -99,17 +103,10 @@ const PreRegistrationContent = () => {
         hideCloseButton
         onOpenAutoFocus={(e) => e.preventDefault()}
         className="max-w-xl"
-        tabIndex={-1}
       >
         <DialogHeader>
-          <DialogTitle>
-            Accede a nuestro asistente virtual y descubre toda nuestra oferta
-          </DialogTitle>
-          <DialogDescription>
-            Nuestro asistente te ayudará a encontrar inmuebles ideales, simular
-            créditos, conocer opciones de financiación y resolver tus dudas
-            sobre la compra de vivienda de manera sencilla y clara.
-          </DialogDescription>
+          <DialogTitle>{PRE_REGISTRATION_TITLE}</DialogTitle>
+          <DialogDescription>{PRE_REGISTRATION_DESCRIPTION}</DialogDescription>
         </DialogHeader>
         <FormikProvider value={form}>
           <Form id="pre-registration" className="my-4">

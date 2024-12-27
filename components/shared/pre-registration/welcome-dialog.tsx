@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  WELCOME_DESCRIPTION,
+  WELCOME_TITLE,
+} from "@/components/shared/pre-registration/messages";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
@@ -11,11 +15,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@inverclick/inverclick-ui/dialog";
-import { Typography } from "@inverclick/inverclick-ui/typography";
 import { confetti } from "@tsparticles/confetti";
 import { useEffect } from "react";
-
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export const WelcomeDialog = () => {
   const { welcomeDialogOpen } = usePreRegistration();
@@ -38,17 +39,9 @@ const WelcomeDialogContent = () => {
     <Dialog open={welcomeDialogOpen} onOpenChange={setWelcomeDialogOpen}>
       <DialogContent hideCloseButton>
         <DialogHeader>
-          <DialogTitle>Bienvenido a bordo</DialogTitle>
-          <VisuallyHidden.Root>
-            <DialogDescription>Bienvenido a bordo</DialogDescription>
-          </VisuallyHidden.Root>
+          <DialogTitle>{WELCOME_TITLE}</DialogTitle>
+          <DialogDescription>{WELCOME_DESCRIPTION}</DialogDescription>
         </DialogHeader>
-        <Typography>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-          quos eum dicta? Similique maiores voluptas perferendis sapiente
-          voluptate obcaecati non nemo saepe quo, nesciunt autem, esse odio
-          numquam laborum? Voluptate!
-        </Typography>
         <DialogFooter>
           <DialogClose asChild>
             <Button>Continuar</Button>
