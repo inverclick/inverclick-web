@@ -1,5 +1,5 @@
 import { Tables } from "@/services/supabase/supabase";
-import { Company } from "@/types/company";
+import { Company } from "@/types/companies";
 import { Typology } from "@/types/typologies";
 
 export type Project = Tables<"projects">["Row"];

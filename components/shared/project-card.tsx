@@ -1,11 +1,11 @@
 "use client";
 
-import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/project";
+import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/projects";
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
-import { ProjectToDisplay } from "@/types/project";
+import { ProjectToDisplay } from "@/types/projects";
 import {
   Carousel,
   CarouselContent,

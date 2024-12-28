@@ -1,4 +1,4 @@
-import { HOUSING_STATE_ENUM } from "@/constants/project";
+import { HOUSING_STATE_ENUM } from "@/constants/projects";
 
 const STATE_FILTER_OPTIONS = [
   { label: "Todos", value: "all" },

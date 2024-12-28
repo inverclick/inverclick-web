@@ -18,7 +18,7 @@ export const SignupNewsletter = () => {
     <FormikProvider value={form}>
       <Form
         id="signup-newsletter-form"
-        className="flex flex-col gap-2 md:max-w-sm xl:max-w-md text-base md:text-lg"
+        className="flex flex-col gap-4 md:max-w-sm xl:max-w-md text-base md:text-lg"
       >
         <Typography>
           Suscríbete <span className="text-primary font-medium">GRATIS</span>{" "}

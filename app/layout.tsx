@@ -10,7 +10,8 @@ import { UserProvider } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
 import { getPreRegistration } from "@/services/get-pre-registration";
 import { getTRM } from "@/services/get-trm";
-import { getUserServerSide } from "@/services/user/get-user-server-side";
+import { createClient } from "@/services/supabase/server-client";
+import { getUser } from "@/services/user/get-user";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
@@ -72,7 +73,7 @@ export default async function RootLayout({
 }>) {
   const { TRM_USD, TRM_EUR, last_trm_update } = await getTRM();
 
-  const user = await getUserServerSide();
+  const user = await getUser(createClient())();
   const preRegistration = await getPreRegistration();
 
   return (

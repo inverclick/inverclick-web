@@ -2,8 +2,8 @@
 
 import { ProjectFilters } from "@/components/projects/filters/project-filters";
 import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
-import { Department } from "@/types/department";
-import { HousingType } from "@/types/housing-type";
+import { Department } from "@/types/departments";
+import { HousingType } from "@/types/housing-types";
 
 export type MobileProjectHeader = Readonly<{
   total: number;

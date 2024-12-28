@@ -5,7 +5,7 @@ import { Searcher } from "@/components/web/searcher";
 import { Services } from "@/components/web/services";
 import { SOCIAL_NETWORKS } from "@/constants/social-networks";
 import { supabase } from "@/services/supabase/supabase";
-import { Department } from "@/types/department";
+import { Department } from "@/types/departments";
 
 import Image from "next/image";
 import Link from "next/link";

@@ -9,9 +9,9 @@ import {
 import { ENV_VARS } from "@/global/env";
 import { getProjectsPriceRange } from "@/services/get-projects-price-range";
 import { supabase } from "@/services/supabase/supabase";
-import { Department } from "@/types/department";
-import { HousingType } from "@/types/housing-type";
-import { ProjectToDisplay } from "@/types/project";
+import { Department } from "@/types/departments";
+import { HousingType } from "@/types/housing-types";
+import { ProjectToDisplay } from "@/types/projects";
 import { Metadata } from "next";
 
 import ProjectContent from "@/components/projects/project-content";

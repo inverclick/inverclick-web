@@ -1,4 +1,4 @@
-import { HousingType } from "@/types/housing-type";
+import { HousingType } from "@/types/housing-types";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import { icons } from "lucide-react";
 

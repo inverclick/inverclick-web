@@ -155,7 +155,7 @@ const PreRegistrationContent = () => {
                 },
               }}
             />
-            <div className="mt-4">
+            <div className="mt-6">
               <Turnstile
                 sitekey={ENV_VARS.TURNSTILE_SITE_KEY}
                 onVerify={(token) => setCaptchaToken(token)}

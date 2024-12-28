@@ -4,8 +4,8 @@ import { signInAction } from "@/actions/auth/sign-in";
 import { signOutAction } from "@/actions/auth/sign-out";
 import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
-import { User } from "@/services/user/get-user-server-side";
-import { SignInClientSideParams } from "@/services/user/sign-in-client-side";
+import { User } from "@/services/user/get-user";
+import { SignInParams } from "@/services/user/sign-in";
 import Cookies from "js-cookie";
 import {
   createContext,
@@ -19,7 +19,7 @@ import { toast } from "sonner";
 export type UserContextType = {
   user: User | null;
   setUser: (user: User | null) => void;
-  signIn: (params: SignInClientSideParams) => Promise<void>;
+  signIn: (params: SignInParams) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -35,7 +35,7 @@ export const UserProvider = ({
 }: UserContextProps) => {
   const [user, setUser] = useState<User | null>(initialUser);
 
-  const signIn = async (params: SignInClientSideParams) => {
+  const signIn = async (params: SignInParams) => {
     try {
       await signInAction(params);
 
