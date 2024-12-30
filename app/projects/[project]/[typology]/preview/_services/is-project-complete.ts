@@ -5,7 +5,7 @@ import {
   HOUSING_TYPE_ENUM,
   PROJECT_CLASS_ENUM,
   PROJECT_STATUS,
-} from "@/constants/project";
+} from "@/constants/projects";
 import { MatchingProperties } from "@/types/typescript";
 
 import * as yup from "yup";

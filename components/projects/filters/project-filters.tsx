@@ -6,8 +6,8 @@ import { StateFilter } from "@/components/projects/filters/state-filter";
 import { TypeFilter } from "@/components/projects/filters/type-filter";
 import { useDebounce } from "@/hooks/use-debounce";
 import { supabase } from "@/services/supabase/supabase";
-import { Department } from "@/types/department";
-import { HousingType } from "@/types/housing-type";
+import { Department } from "@/types/departments";
+import { HousingType } from "@/types/housing-types";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
   Dialog,

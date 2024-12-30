@@ -41,6 +41,7 @@ export const OnboardingForm = ({ user }: OnboardingFormProps) => {
     validationSchema: createFormSchema(),
     onSubmit: async ({ password }) => {
       setLoading(true);
+
       try {
         const { data: signUp, error: signUpError } = await supabase.auth.signUp(
           {

@@ -1,4 +1,3 @@
-import { createClient } from "@/services/supabase/server-client";
 import { Database } from "@/types/database";
 import {
   PostgrestSingleResponse,
@@ -6,9 +5,7 @@ import {
   SupabaseClient,
 } from "@supabase/supabase-js";
 
-export const getUserServerSide = async () => {
-  const supabase = createClient();
-
+export const getUser = (supabase: SupabaseClient<Database>) => async () => {
   const response = await supabase.auth.getUser();
 
   if (response.error) {

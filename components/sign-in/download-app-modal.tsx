@@ -1,17 +1,21 @@
 "use client";
 
+import { Button } from "@inverclick/inverclick-ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@inverclick/inverclick-ui/dialog";
-import { X } from "lucide-react";
+import { Typography } from "@inverclick/inverclick-ui/typography";
 import { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@inverclick/inverclick-ui/button";
+
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export function DownloadAppModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,22 +25,24 @@ export function DownloadAppModal() {
       <DialogTrigger asChild>
         <Button variant="link">Inténtalo desde nuestra Aplicación Móvil</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-xl">
-        <DialogHeader>
-          <X
-            onClick={() => setIsOpen(false)}
-            className="cursor-pointer text-primary"
-          />
-        </DialogHeader>
-        <h2 className="text-center text-4xl font-bold">
+      <DialogContent>
+        <VisuallyHidden.Root>
+          <DialogHeader>
+            <DialogTitle>Descargar nuestra Aplicación Móvil</DialogTitle>
+            <DialogDescription>
+              Escanea el código para descargar la aplicación móvil
+            </DialogDescription>
+          </DialogHeader>
+        </VisuallyHidden.Root>
+        <Typography variant="h2" className="text-center">
           <p>
-            Descarga nuestra <span className="text-primary">APP</span>
+            Descarga nuestra <span className="text-primary">aplicación</span>
           </p>
           <p>y haz tu mejor inversión</p>
-        </h2>
-        <p className="text-center mb-4">
+        </Typography>
+        <Typography className="text-center mb-4">
           Escanea el código para descargar la aplicación móvil
-        </p>
+        </Typography>
         <Image
           src="/app-qr.png"
           width={200}

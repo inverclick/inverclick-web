@@ -1,4 +1,4 @@
-import { RightSection } from "@/app/auth/sign-in/_components/right-section";
+import { SignInForm } from "@/app/auth/sign-in/_components/sign-in-form";
 import { CardService } from "@/components/shared/card-service";
 import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
@@ -29,19 +29,20 @@ function LeftSection() {
           de volver a <span className="text-primary-500">VERTE!</span>
         </p>
       </h2>
-      {/* <AdvertisingCarousel>
-        {Array.from({ length: 3 }).map((_, index) => (
-          <AdvertisingCarouselItem key={index}>
-            <p>lorem {index}</p>
-          </AdvertisingCarouselItem>
-        ))}
-      </AdvertisingCarousel> */}
       <CardService
         title="Soy constructora"
         link="https://company.inverclick.com"
         className="hidden lg:flex absolute bottom-4 left-4"
         target="_blank"
       />
+    </div>
+  );
+}
+
+function RightSection() {
+  return (
+    <div className="flex flex-col justify-center items-center w-full p-content-full">
+      <SignInForm />
     </div>
   );
 }

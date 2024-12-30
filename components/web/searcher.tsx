@@ -2,8 +2,8 @@
 
 import { trimObject } from "@/lib/trim-object";
 import { supabase } from "@/services/supabase/supabase";
-import { City } from "@/types/city";
-import { Department } from "@/types/department";
+import { City } from "@/types/cities";
+import { Department } from "@/types/departments";
 import {
   Select,
   SelectContent,
