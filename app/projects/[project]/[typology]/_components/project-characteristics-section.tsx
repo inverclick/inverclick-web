@@ -17,6 +17,7 @@ import {
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { BadgeCheck, Info } from "lucide-react";
 import { ComponentProps } from "react";
+import { isCompanyVerified } from "@/services/companies/is-company-verified";
 
 import Image from "next/image";
 
@@ -48,28 +49,30 @@ export const ProjectCharacteristicsSection = ({
               Constructora:{" "}
               <span className="font-medium">{project.company.name}</span>
             </Typography>
-            <div className="flex items-center gap-1">
-              <Icon icon={BadgeCheck} className="text-green-500" />
-              <Typography className="font-medium">
-                Constructora verificada
-              </Typography>
-              <TooltipProvider>
-                <Tooltip delayDuration={200}>
-                  <TooltipTrigger asChild>
-                    <Info className="size-4" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-sm">
-                    <Typography>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Ab corporis aliquid sit aspernatur, minima quidem
-                      praesentium consectetur ad. Nam vitae magnam ea nisi
-                      necessitatibus veritatis officiis, quo nobis repudiandae
-                      iure?
-                    </Typography>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+            {isCompanyVerified(project.company.subscription_status) && (
+              <div className="flex items-center gap-1">
+                <Icon icon={BadgeCheck} className="text-green-500" />
+                <Typography className="font-medium">
+                  Constructora verificada
+                </Typography>
+                <TooltipProvider>
+                  <Tooltip delayDuration={200}>
+                    <TooltipTrigger asChild>
+                      <Info className="size-4" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-sm">
+                      <Typography>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Ab corporis aliquid sit aspernatur, minima quidem
+                        praesentium consectetur ad. Nam vitae magnam ea nisi
+                        necessitatibus veritatis officiis, quo nobis repudiandae
+                        iure?
+                      </Typography>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            )}
           </div>
         </div>
       </section>

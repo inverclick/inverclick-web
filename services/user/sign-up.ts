@@ -1,11 +1,11 @@
 import { COULD_NOT_FIND_INSERTED_USER } from "@/services/user/messages";
 import { Database } from "@/types/database";
-import { CreateLeadDto } from "@/types/leads";
-import { CreateUserDto } from "@/types/users";
+import { CreateLead } from "@/types/domain/leads";
+import { CreateUser } from "@/types/domain/users";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-export type SignUpParams = Pick<CreateUserDto, "email" | "name"> &
-  Pick<CreateLeadDto, "phone" | "nickname"> & { password: string };
+export type SignUpParams = Pick<CreateUser, "email" | "name"> &
+  Pick<CreateLead, "phone" | "nickname"> & { password: string };
 
 export const signUp = (supabase: SupabaseClient<Database>) => {
   return async ({ email, phone, name, nickname, password }: SignUpParams) => {

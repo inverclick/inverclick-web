@@ -1,6 +1,7 @@
 "use client";
 
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { DisplayFormattedCurrency } from "@/components/shared/display-formatted-currency";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import {
@@ -33,10 +34,15 @@ export const TypologiesSection = ({
       </Typography>
       <ul className="flex flex-nowrap gap-4 mb-6 overflow-x-auto">
         {typologies.map((typology) => {
-          const { id, name, area, rooms, bathrooms, parking } = typology;
+          const { id, name, area, rooms, bathrooms, parking, price } = typology;
           return (
             <li key={id}>
               <Typography className="mb-1 font-medium">{name}</Typography>
+              <DisplayFormattedCurrency
+                variant="p"
+                className="mb-1"
+                number={price}
+              />
               <button
                 onClick={() => setSelectedTypology(typology)}
                 className={cn(

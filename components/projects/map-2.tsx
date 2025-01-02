@@ -3,7 +3,7 @@
 import { useProjectsPageStore } from "@/app/projects/_store";
 import { Markers } from "@/components/projects/marker-list";
 import { ENV_VARS } from "@/global/env";
-import { ProjectToDisplay } from "@/types/projects";
+import { ProjectToDisplay } from "@/types/domain/projects";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import { useDebounceCallback } from "usehooks-ts";
 

@@ -14,7 +14,8 @@ export const getProject = ({ projectId }: GetProjectParams) => {
       department:departments(*),
       city:cities(*),
       company:companies(*),
-      characteristics:project_characteristics(*, characteristic:characteristics(*))
+      characteristics:project_characteristics(*, characteristic:characteristics(*)),
+      plan:project_plans(*)
       `
     )
     .eq("id", projectId)

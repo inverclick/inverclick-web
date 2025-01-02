@@ -18,6 +18,7 @@ import { toast } from "sonner";
 
 export type UserContextType = {
   user: User | null;
+  getUserOrThrow: () => User;
   setUser: (user: User | null) => void;
   signIn: (params: SignInParams) => Promise<void>;
   signOut: () => Promise<void>;
@@ -34,6 +35,14 @@ export const UserProvider = ({
   children,
 }: UserContextProps) => {
   const [user, setUser] = useState<User | null>(initialUser);
+
+  const getUserOrThrow = () => {
+    if (!user) {
+      throw new Error("No user found");
+    }
+
+    return user;
+  };
 
   const signIn = async (params: SignInParams) => {
     try {
@@ -64,6 +73,7 @@ export const UserProvider = ({
 
   const context: UserContextType = {
     user,
+    getUserOrThrow,
     setUser,
     signIn,
     signOut,

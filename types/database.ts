@@ -11,35 +11,24 @@ export type Database = {
     Tables: {
       advisors: {
         Row: {
-          company_id: string;
           created_at: string;
           email: string;
           id: string;
           name: string;
         };
         Insert: {
-          company_id: string;
           created_at?: string;
           email: string;
           id?: string;
           name: string;
         };
         Update: {
-          company_id?: string;
           created_at?: string;
           email?: string;
           id?: string;
           name?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "advisors_company_id_fkey";
-            columns: ["company_id"];
-            isOneToOne: false;
-            referencedRelation: "companies";
-            referencedColumns: ["id"];
-          },
-        ];
+        Relationships: [];
       };
       appointments: {
         Row: {
@@ -169,6 +158,7 @@ export type Database = {
           id: string;
           logo_url: string;
           name: string;
+          subscription_status: Database["public"]["Enums"]["SUBSCRIPTION_STATUS"];
         };
         Insert: {
           created_at?: string;
@@ -176,6 +166,7 @@ export type Database = {
           id?: string;
           logo_url: string;
           name: string;
+          subscription_status?: Database["public"]["Enums"]["SUBSCRIPTION_STATUS"];
         };
         Update: {
           created_at?: string;
@@ -183,6 +174,7 @@ export type Database = {
           id?: string;
           logo_url?: string;
           name?: string;
+          subscription_status?: Database["public"]["Enums"]["SUBSCRIPTION_STATUS"];
         };
         Relationships: [];
       };
@@ -511,7 +503,7 @@ export type Database = {
           days_term: number;
           features: string[];
           id: string;
-          name: string;
+          name: Database["public"]["Enums"]["PROJECT_PLAN"];
           price: number;
         };
         Insert: {
@@ -519,7 +511,7 @@ export type Database = {
           days_term?: number;
           features: string[];
           id?: string;
-          name: string;
+          name: Database["public"]["Enums"]["PROJECT_PLAN"];
           price: number;
         };
         Update: {
@@ -527,7 +519,7 @@ export type Database = {
           days_term?: number;
           features?: string[];
           id?: string;
-          name?: string;
+          name?: Database["public"]["Enums"]["PROJECT_PLAN"];
           price?: number;
         };
         Relationships: [];
@@ -849,12 +841,20 @@ export type Database = {
       HOUSING_STATE: "NEW" | "OFF_PLAN" | "USED";
       HOUSING_TYPES: "APARTAMENTO" | "CASA" | "BODEGA" | "LOTE";
       PROJECT_CLASS: "PROJECT" | "DRAFT";
+      PROJECT_PLAN: "LITE" | "PLUS" | "ENTERPRISE";
       PROJECT_STATUS:
         | "DRAFT"
         | "PENDING"
         | "PUBLISHED"
         | "REJECTED"
         | "SUSPENDED";
+      SUBSCRIPTION_STATUS:
+        | "NOT_ACQUIRED"
+        | "PAID"
+        | "PAYMENT_PENDING"
+        | "PAYMENT_REJECTED"
+        | "PAYMENT_EXPIRED"
+        | "MEMBERSHIP_CANCELLED";
       USER_ROLE: "ADMIN" | "COMPANY" | "INVESTOR" | "LEAD";
     };
     CompositeTypes: {

@@ -1,7 +1,7 @@
 "use client";
 
 import { ENV_VARS } from "@/global/env";
-import { ProjectToDisplay } from "@/types/projects";
+import { ProjectToDisplay } from "@/types/domain/projects";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
 import { CustomMarker } from "./custom-marker";

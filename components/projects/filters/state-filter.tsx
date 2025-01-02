@@ -1,10 +1,10 @@
-import { HOUSING_STATE_ENUM } from "@/constants/projects";
+import { HOUSING_STATE } from "@/constants/enums";
 
 const STATE_FILTER_OPTIONS = [
   { label: "Todos", value: "all" },
-  { label: "Sobre planos", value: HOUSING_STATE_ENUM.OFF_PLAN },
-  { label: "Nuevos", value: HOUSING_STATE_ENUM.NEW },
-  { label: "Usados", value: HOUSING_STATE_ENUM.USED },
+  { label: "Sobre planos", value: HOUSING_STATE.OFF_PLAN },
+  { label: "Nuevos", value: HOUSING_STATE.NEW },
+  { label: "Usados", value: HOUSING_STATE.USED },
 ];
 
 export type StateFilterProps = {

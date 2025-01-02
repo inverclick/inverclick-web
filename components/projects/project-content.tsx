@@ -5,9 +5,9 @@ import { DisplayTRM } from "@/components/projects/display-trm";
 import { ProjectFilters } from "@/components/projects/filters/project-filters";
 import { ProjectInfinityScroll } from "@/components/projects/project-infinity-scroll";
 import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
-import { Department } from "@/types/departments";
-import { HousingType } from "@/types/housing-types";
-import { ProjectToDisplay } from "@/types/projects";
+import { Department } from "@/types/domain/departments";
+import { HousingType } from "@/types/domain/housing-types";
+import { ProjectToDisplay } from "@/types/domain/projects";
 import { useEffect } from "react";
 
 export type ProjectContentProps = Readonly<{

@@ -1,12 +1,10 @@
 import { Tables } from "@/services/supabase/supabase";
-import { Company } from "@/types/companies";
-import { Typology } from "@/types/typologies";
+import { Company } from "@/types/domain/companies";
+import { Typology } from "@/types/domain/typologies";
 
 export type Project = Tables<"projects">["Row"];
-
-export type ProjectClass = Tables<"projects">["Row"]["project_class"];
-
-export type ProjectStatus = Tables<"projects">["Row"]["status"];
+export type CreateProject = Tables<"projects">["Insert"];
+export type UpdateProject = Tables<"projects">["Update"];
 
 export interface ProjectToDisplay extends Project {
   typologies: Typology[];

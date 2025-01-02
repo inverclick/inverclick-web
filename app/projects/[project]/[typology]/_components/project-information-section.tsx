@@ -8,11 +8,13 @@ import Image from "next/image";
 
 export type ProjectInformationSectionProps = Readonly<{
   project: Project;
+  typology: Project["typologies"][0];
 }> &
   ComponentProps<"section">;
 
 export const ProjectInformationSection = ({
   project,
+  typology,
   ...props
 }: ProjectInformationSectionProps) => {
   return (
@@ -52,9 +54,12 @@ export const ProjectInformationSection = ({
                 *
               </span>
             </Typography>
-            <Typography variant="h4" className="text-lg">
-              Fecha de entrega: <span className="font-normal">01/06/2026*</span>
-            </Typography>
+            {typology.delivery_date && (
+              <Typography variant="h4" className="text-lg">
+                Fecha de entrega:{" "}
+                <span className="font-normal">01/06/2026*</span>
+              </Typography>
+            )}
           </article>
         </div>
       </div>

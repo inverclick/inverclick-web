@@ -1,7 +1,7 @@
 "use client";
 
 import { ProjectCard } from "@/components/shared/project-card";
-import { ProjectToDisplay } from "@/types/projects";
+import { ProjectToDisplay } from "@/types/domain/projects";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 
 export type CustomMarkerProps = {
