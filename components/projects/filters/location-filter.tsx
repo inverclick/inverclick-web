@@ -1,8 +1,8 @@
 "use client";
 
 import { supabase } from "@/services/supabase/supabase";
-import { City } from "@/types/cities";
-import { Department } from "@/types/departments";
+import { City } from "@/types/domain/cities";
+import { Department } from "@/types/domain/departments";
 import {
   Select,
   SelectContent,

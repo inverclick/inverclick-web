@@ -2,19 +2,18 @@
 const nextConfig = {
   eslint: {
     dirs: [
+      "actions",
       "app",
       "components",
       "constants",
       "contexts",
-      "services",
+      "emails",
       "global",
       "hooks",
       "lib",
+      "middlewares",
       "services",
       "types",
-      "middlewares",
-      "actions",
-      "emails",
     ],
     ignoreDuringBuilds: true,
   },

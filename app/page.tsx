@@ -5,7 +5,7 @@ import { Searcher } from "@/components/web/searcher";
 import { Services } from "@/components/web/services";
 import { SOCIAL_NETWORKS } from "@/constants/social-networks";
 import { supabase } from "@/services/supabase/supabase";
-import { Department } from "@/types/departments";
+import { Department } from "@/types/domain/departments";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -264,7 +264,7 @@ function Content({ departments }: Content) {
             All rights reserved © {new Date().getFullYear()}
           </div>
         </footer>
-        <LoginButton className="absolute bottom-16 right-4" />,
+        <LoginButton className="absolute bottom-16 right-4" />
       </section>
     </main>
   );

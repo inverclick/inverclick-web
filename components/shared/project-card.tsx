@@ -1,11 +1,10 @@
 "use client";
 
-import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/projects";
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
-import { ProjectToDisplay } from "@/types/projects";
+import { ProjectToDisplay } from "@/types/domain/projects";
 import {
   Carousel,
   CarouselContent,
@@ -16,6 +15,7 @@ import { Skeleton } from "@inverclick/inverclick-ui/skeleton";
 import { ComponentProps, forwardRef, useEffect, useState } from "react";
 
 import Image from "next/image";
+import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/labels";
 
 export type ProjectCardProps = {
   project: ProjectToDisplay;

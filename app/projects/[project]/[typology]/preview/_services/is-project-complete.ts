@@ -1,11 +1,12 @@
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { DraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import {
-  HOUSING_STATE_ENUM,
-  HOUSING_TYPE_ENUM,
-  PROJECT_CLASS_ENUM,
+  HOUSING_STATE,
+  HOUSING_TYPE,
+  PROJECT_CLASS,
   PROJECT_STATUS,
-} from "@/constants/projects";
+  SUBSCRIPTION_STATUS,
+} from "@/constants/enums";
 import { MatchingProperties } from "@/types/typescript";
 
 import * as yup from "yup";
@@ -27,12 +28,9 @@ export function isProjectComplete(
       features: yup.array(yup.string().defined()).required(),
       housing_state: yup
         .string()
-        .oneOf(Object.values(HOUSING_STATE_ENUM))
+        .oneOf(Object.values(HOUSING_STATE))
         .required(),
-      housing_type: yup
-        .string()
-        .oneOf(Object.values(HOUSING_TYPE_ENUM))
-        .required(),
+      housing_type: yup.string().oneOf(Object.values(HOUSING_TYPE)).required(),
       id: yup.string().uuid().required(),
       latitude: yup.number().required(),
       logo: yup.string().required(),
@@ -42,7 +40,7 @@ export function isProjectComplete(
       plan_id: yup.string().uuid().required(),
       project_class: yup
         .string()
-        .oneOf(Object.values(PROJECT_CLASS_ENUM))
+        .oneOf(Object.values(PROJECT_CLASS))
         .required(),
       status: yup.string().oneOf(Object.values(PROJECT_STATUS)).required(),
       stratum: yup.number().required(),
@@ -112,6 +110,10 @@ export function isProjectComplete(
           id: yup.string().required(),
           logo_url: yup.string().required(),
           name: yup.string().required(),
+          subscription_status: yup
+            .string()
+            .oneOf(Object.values(SUBSCRIPTION_STATUS))
+            .required(),
         })
         .required(),
     });
