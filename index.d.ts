@@ -5,8 +5,7 @@ import {
   questionAboutInverclick,
   questionAboutProject,
   scheduleAnAppointment,
-  simulateCreditByQuotaValue,
-  simulateCreditByValueHousing,
+  simulateCredit,
   voidFunction,
 } from "@/components/shared/chatbot/functions";
 
@@ -15,8 +14,7 @@ declare global {
     [key: string]: (...args: unknown[]) => Promise<unknown> | unknown;
     goToProjects: typeof goToProjects;
     goToProjectsWithFilters: typeof goToProjectsWithFilters;
-    simulateCreditByQuotaValue: typeof simulateCreditByQuotaValue;
-    simulateCreditByValueHousing: typeof simulateCreditByValueHousing;
+    simulateCredit: typeof simulateCredit;
     goToProject: typeof goToProject;
     questionAboutProject: typeof questionAboutProject;
     questionAboutInverclick: typeof questionAboutInverclick;

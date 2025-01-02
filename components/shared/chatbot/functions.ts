@@ -1,3 +1,14 @@
+import {
+  generateGoToProjectMessages,
+  generateGoToProjectsMessages,
+  generateGoToProjectsWithFiltersMessages,
+  generateQuestionAboutProjectMessages,
+  generateScheduleAnAppointmentMessages,
+  generateSimulateCreditByQuotaValueMessages,
+  generateSimulateCreditByValueHousingMessages,
+} from "@/components/shared/chatbot/messages";
+import { formatDate } from "@/lib/format-date";
+import { getRandomElement } from "@/lib/get-random-element";
 import { supabase } from "@/services/supabase/supabase";
 
 export function getWelcomeMessage(name: string) {
@@ -55,8 +66,9 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
 
   const data = {
     action: "go_to_projects",
-    response_message:
-      "Qué excelente elección. Tenemos muchas oportunidades de inversión. Estas son las opciones que encontré para ti.",
+    response_message: getRandomElement(
+      generateGoToProjectsWithFiltersMessages()
+    ),
     params: {
       filter: fixedFilters
         .concat(transformedFilters)
@@ -70,16 +82,42 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
   return output;
 }
 
-export function goToProjects() {
+export function goToProjects(params: {}) {
   const data = {
     action: "go_to_projects",
-    response_message:
-      "¡Laura! ¿Te imaginas disfrutando un café en tu nueva casa en Colombia? ¡Hablemos de cómo hacerlo realidad! ¿Qué te parecen estas oportunidades de inversión?",
+    response_message: getRandomElement(generateGoToProjectsMessages()),
   };
 
   const output = JSON.stringify(data);
 
   return output;
+}
+
+export function simulateCredit(params: {
+  simulationType: "valueHousing" | "quotaValue";
+  yearsFunding: number;
+  // Value Housing
+  housingValue: number;
+  percentageFunding: number;
+  // Quota value
+  quotaValue: number;
+}) {
+  if (params.simulationType === "valueHousing") {
+    return simulateCreditByValueHousing({
+      housingValue: params.housingValue,
+      percentageFunding: params.percentageFunding,
+      yearsFunding: params.yearsFunding,
+    });
+  } else if (params.simulationType === "quotaValue") {
+    return simulateCreditByQuotaValue({
+      quotaValue: params.quotaValue,
+      yearsFunding: params.yearsFunding,
+    });
+  }
+
+  return JSON.stringify({
+    response_message: "Necesito que me especifiques el tipo de simulación.",
+  });
 }
 
 export function simulateCreditByQuotaValue(params: {
@@ -106,9 +144,9 @@ export function simulateCreditByQuotaValue(params: {
     data: data,
     amountFunded: amountFunded.toFixed(2),
     monthlyInterestRate: monthlyInterestRate.toFixed(6),
-    response_message: `Con una cuota fija de ${quotaValue} y un plazo de ${yearsFunding} años, puedes financiar hasta ${amountFunded.toFixed(
-      2
-    )}.`,
+    response_message: getRandomElement(
+      generateSimulateCreditByQuotaValueMessages()
+    ),
   };
 
   return JSON.stringify(output);
@@ -124,9 +162,9 @@ export function simulateCreditByValueHousing(params: {
   const yearsFunding = params.yearsFunding;
 
   const data = {
-    response_message: `¡Perfecto! Vamos a calcular cómo quedaría tu crédito para una vivienda de ${housingValue} con ${
-      percentageFunding * 100
-    }% de financiación a ${yearsFunding} años. Esto solo tomará un momento.`,
+    response_message: getRandomElement(
+      generateSimulateCreditByValueHousingMessages()
+    ),
   };
 
   if (percentageFunding > 0.7) {
@@ -184,7 +222,7 @@ export async function goToProject(params: { projectName: string }) {
   const output = {
     action: "go_to_project",
     _id: projectId,
-    response_message: `Claro que sí, aquí está el proyecto ${projectName}. Es una excelente opción para invertir. ¿Te gustaría saber más detalles o prefieres agendar una cita con uno de nuestros asesores?`,
+    response_message: getRandomElement(generateGoToProjectMessages()),
     params: {
       project_id: projectId,
       typology_id: typologyId,
@@ -200,7 +238,10 @@ export async function questionAboutProject(params: { projectId: string }) {
   const response = await fetch(url);
   const output = await response.json();
 
-  return JSON.stringify(output.data);
+  return JSON.stringify({
+    ...output.data,
+    response_message: getRandomElement(generateQuestionAboutProjectMessages()),
+  });
 }
 
 export async function questionAboutInverclick(params: { question: string }) {
@@ -263,16 +304,29 @@ Inverclick S.A.S es la sociedad titular de la marca y activos digitales. Los té
   return JSON.stringify({ output });
 }
 
-export function scheduleAnAppointment(params: {
+export async function scheduleAnAppointment(params: {
   projectName: string;
   date: string;
   time: string;
   email: string;
 }) {
+  let projectId: string | null = null;
+
+  if (params.projectName !== "null") {
+    const { data: project } = await supabase
+      .from("projects")
+      .select("id")
+      .ilike("name", `%${params.projectName}%`)
+      .single();
+
+    projectId = project?.id || null;
+  }
+
   const data = {
     action: "schedule_an_appointment",
-    response_message: `Correo confirmación: ${params.email}`,
+    response_message: `Fecha actual: ${formatDate(new Date())}. ${getRandomElement(generateScheduleAnAppointmentMessages())}. Te llegará un correo de confirmación a: ${params.email}`,
     params: {
+      projectId,
       projectName: params.projectName,
       date: params.date,
       time: params.time,
