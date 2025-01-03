@@ -70,7 +70,10 @@ export function SignInForm() {
               },
             }}
           />
-          <Link href="/" className="self-start text-primary mb-6">
+          <Link
+            href="/auth/forgot-password"
+            className="self-start text-primary mb-6"
+          >
             He olvidado mi contraseña
           </Link>
           <Button

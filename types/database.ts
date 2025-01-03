@@ -774,6 +774,7 @@ export type Database = {
           id: string;
           is_confirmed: boolean;
           name: string;
+          recovery_password_code: string | null;
           role: Database["public"]["Enums"]["USER_ROLE"];
         };
         Insert: {
@@ -782,6 +783,7 @@ export type Database = {
           id?: string;
           is_confirmed?: boolean;
           name: string;
+          recovery_password_code?: string | null;
           role: Database["public"]["Enums"]["USER_ROLE"];
         };
         Update: {
@@ -790,6 +792,7 @@ export type Database = {
           id?: string;
           is_confirmed?: boolean;
           name?: string;
+          recovery_password_code?: string | null;
           role?: Database["public"]["Enums"]["USER_ROLE"];
         };
         Relationships: [];
