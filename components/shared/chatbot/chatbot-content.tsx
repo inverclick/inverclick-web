@@ -9,11 +9,13 @@ import {
   questionAboutInverclick,
   questionAboutProject,
   scheduleAnAppointment,
+  simulateCredit,
   simulateCreditByQuotaValue,
   simulateCreditByValueHousing,
   voidFunction,
 } from "@/components/shared/chatbot/functions";
 import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
+import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { useUser } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
@@ -45,7 +47,6 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import OpenAI from "openai";
 
 type MessagesSource = "db" | "local";
@@ -172,13 +173,11 @@ export const ChatbotContent = () => {
 
     window.goToProjects = goToProjects;
     window.goToProjectsWithFilters = goToProjectsWithFilters;
-    window.simulateCreditByQuotaValue = simulateCreditByQuotaValue;
-    window.simulateCreditByValueHousing = simulateCreditByValueHousing;
+    window.simulateCredit = simulateCredit;
     window.goToProject = goToProject;
     window.questionAboutProject = questionAboutProject;
     window.questionAboutInverclick = questionAboutInverclick;
     window.scheduleAnAppointment = scheduleAnAppointment;
-    window.voidFunction = voidFunction;
 
     init();
 
@@ -315,16 +314,17 @@ export const ChatbotContent = () => {
 
       let output: string;
 
-      if (functionName === "scheduleAnAppointment") {
-        output = window[functionName]({
-          ...args,
-          email: chatter.email,
-        });
-      } else {
-        output = args
-          ? ((await window[functionName](args)) as string)
-          : ((await window[functionName]()) as string);
-      }
+      const commonArguments = {
+        name: chatter.name,
+        email: chatter.email,
+      };
+
+      output = args
+        ? ((await window[functionName]({
+            ...args,
+            ...commonArguments,
+          })) as string)
+        : ((await window[functionName]()) as string);
 
       toolOutputs.push({
         tool_call_id: toolCall.id,
@@ -415,7 +415,7 @@ export const ChatbotContent = () => {
               `/projects/${output.params?.project_id}/${output.params?.typology_id}`
             );
           } else if (output.action === "schedule_an_appointment") {
-            const { date, time } = output.params;
+            const { projectId, date, time } = output.params;
 
             if (date && time) {
               const formattedOffset = formatTimezoneOffset(
@@ -427,7 +427,7 @@ export const ChatbotContent = () => {
               );
 
               // TODO: schedule
-              console.log({ appointmentDate });
+              console.log({ projectId, appointmentDate });
             }
           }
         });
