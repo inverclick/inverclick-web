@@ -18,8 +18,7 @@ export const getDraftProject = ({ projectId }: GetDraftProjectParams) => {
       `
     )
     .eq("id", projectId)
-    .eq("status", "PENDING")
-    .single()
+    .maybeSingle()
     .throwOnError();
 };
 
