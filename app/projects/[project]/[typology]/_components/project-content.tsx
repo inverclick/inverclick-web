@@ -27,6 +27,10 @@ import { ComponentProps } from "react";
 const VALORIZATION_MONTHS = 18;
 const VALORIZATION_PERCENTAGE = 0.203;
 
+/**
+ * TODO: Allow to receive as prop Project | DraftProject (Needs refactor)
+ */
+
 export type ProjectContentProps = {
   project: Project;
   typology: Project["typologies"][0];
@@ -93,7 +97,8 @@ const ProjectVerifiedCard = ({
         props.className
       )}
     >
-      {isProjectVerified(project.plan.name) && (
+      {/* WARNING: project.plan can be undefined */}
+      {project.plan && isProjectVerified(project.plan.name) && (
         <>
           <div className="flex gap-2 justify-center items-center">
             <Icon
