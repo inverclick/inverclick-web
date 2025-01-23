@@ -31,7 +31,7 @@ export const ProjectValorizationSection = ({
         <div className="flex items-start gap-1">
           <div className="mt-1 size-4 aspect-square bg-slate-500 rounded-full"></div>
           <div className="flex flex-col">
-            <Typography>Precio actual:</Typography>
+            <Typography>Valor actual:</Typography>
             <Typography className="font-semibold">
               {formatCurrency(convert(typology.price), currency)} {currency}
             </Typography>
@@ -40,7 +40,7 @@ export const ProjectValorizationSection = ({
         <div className="flex items-start gap-1">
           <div className="mt-1 size-4 aspect-square bg-teal-500 rounded-full"></div>
           <div className="flex flex-col">
-            <Typography>Valor proyectado en 18 meses:</Typography>
+            <Typography>Valor proyectado en {months} meses:</Typography>
             <Typography className="font-semibold">
               {formatCurrency(convert(valorization), currency)} {currency}
             </Typography>
@@ -68,7 +68,7 @@ export const ProjectValorizationSection = ({
           <div className="w-full h-full bg-slate-500"></div>
           <div className="hidden lg:block absolute bottom-full right-full">
             <Typography className="whitespace-nowrap text-right">
-              Precio actual:
+              Valor actual:
             </Typography>
             <Typography variant="h4" className="whitespace-nowrap text-right">
               {formatCurrency(convert(typology.price), currency)} {currency}

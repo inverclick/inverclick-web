@@ -24,9 +24,6 @@ import { Typography } from "@inverclick/inverclick-ui/typography";
 import { Info, ShieldCheck, Star } from "lucide-react";
 import { ComponentProps } from "react";
 
-const VALORIZATION_MONTHS = 18;
-const VALORIZATION_PERCENTAGE = 0.203;
-
 /**
  * TODO: Allow to receive as prop Project | DraftProject (Needs refactor)
  */
@@ -63,8 +60,8 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
           <ProjectFeaturesSection project={project} className="mb-12" />
           <ProjectValorizationSection
             typology={typology}
-            months={VALORIZATION_MONTHS}
-            percentage={VALORIZATION_PERCENTAGE}
+            months={project.valuation_months}
+            percentage={project.valuation}
             className="mb-12"
           />
           <ProjectCreditSimulatorSection typology={typology} />

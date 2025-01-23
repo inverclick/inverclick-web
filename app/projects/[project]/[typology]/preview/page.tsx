@@ -1,11 +1,11 @@
 import { ProjectContent } from "@/app/projects/[project]/[typology]/_components/project-content";
 import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
+import { IncompleteProjectPage } from "@/app/projects/[project]/[typology]/preview/_components/incomplete-project-page";
 import { getDraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { notFound } from "next/navigation";
 import { isProjectComplete } from "./_services/is-project-complete";
-import { IncompleteProjectPage } from "@/app/projects/[project]/[typology]/preview/_components/incomplete-project-page";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";

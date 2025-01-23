@@ -103,7 +103,7 @@ export const ChatbotContent = () => {
   const { user } = useUser();
   const { preRegistration } = usePreRegistration();
 
-  const params = useParams();
+  const params = useParams<{ project: string; typology: string }>();
   const pathname = usePathname();
   const router = useRouter();
 

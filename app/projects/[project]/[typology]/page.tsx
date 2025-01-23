@@ -52,9 +52,15 @@ export default async function Page({
     return notFound();
   }
 
-  const typology = project.typologies.find(
-    (typology) => typology.id === typologyId
-  );
+  /**
+   * Editing project typologies re-creates (Delete and create)
+   * the typologies, so the typology id may not be found
+   *
+   * TODO: Avoid changing the typologies id
+   */
+  const typology =
+    project.typologies.find((typology) => typology.id === typologyId) ||
+    project.typologies[0];
 
   if (!typology) {
     return notFound();
