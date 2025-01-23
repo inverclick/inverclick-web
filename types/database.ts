@@ -254,6 +254,8 @@ export type Database = {
           updated_at: string | null;
           urbanism_files: string[];
           urbanism_photos: string[];
+          valuation: number;
+          valuation_months: number;
           videos: string[] | null;
         };
         Insert: {
@@ -283,6 +285,8 @@ export type Database = {
           updated_at?: string | null;
           urbanism_files?: string[];
           urbanism_photos?: string[];
+          valuation?: number;
+          valuation_months?: number;
           videos?: string[] | null;
         };
         Update: {
@@ -312,6 +316,8 @@ export type Database = {
           updated_at?: string | null;
           urbanism_files?: string[];
           urbanism_photos?: string[];
+          valuation?: number;
+          valuation_months?: number;
           videos?: string[] | null;
         };
         Relationships: [
@@ -552,6 +558,8 @@ export type Database = {
           updated_at: string | null;
           urbanism_files: string[];
           urbanism_photos: string[];
+          valuation: number;
+          valuation_months: number;
           videos: string[] | null;
         };
         Insert: {
@@ -581,6 +589,8 @@ export type Database = {
           updated_at?: string | null;
           urbanism_files: string[];
           urbanism_photos: string[];
+          valuation?: number;
+          valuation_months?: number;
           videos?: string[] | null;
         };
         Update: {
@@ -610,6 +620,8 @@ export type Database = {
           updated_at?: string | null;
           urbanism_files?: string[];
           urbanism_photos?: string[];
+          valuation?: number;
+          valuation_months?: number;
           videos?: string[] | null;
         };
         Relationships: [

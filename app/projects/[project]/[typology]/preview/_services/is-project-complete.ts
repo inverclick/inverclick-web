@@ -48,6 +48,8 @@ export function isProjectComplete(
       urbanism_files: yup.array(yup.string().defined()).required(),
       urbanism_photos: yup.array(yup.string().defined()).required(),
       videos: yup.array(yup.string().defined()).required(),
+      valuation: yup.number().required(),
+      valuation_months: yup.number().required(),
       characteristics: yup
         .array(
           yup.object().shape({

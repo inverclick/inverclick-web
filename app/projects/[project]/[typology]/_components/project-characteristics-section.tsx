@@ -2,6 +2,7 @@
 
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { cn } from "@/lib/utils";
+import { isCompanyVerified } from "@/services/companies/is-company-verified";
 import { getAssetUrl } from "@/services/utils";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import {
@@ -17,7 +18,6 @@ import {
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { BadgeCheck, Info } from "lucide-react";
 import { ComponentProps } from "react";
-import { isCompanyVerified } from "@/services/companies/is-company-verified";
 
 import Image from "next/image";
 
@@ -89,7 +89,7 @@ export const ProjectCharacteristicsSection = ({
             <ToggleGroupItem
               key={characteristic.id.toString()}
               value={characteristic.id.toString()}
-              className="flex-grow flex flex-col items-start gap-2 p-2 h-auto"
+              className="flex-grow flex flex-col items-start gap-2 p-2 h-auto text-left"
             >
               <Image
                 unoptimized
