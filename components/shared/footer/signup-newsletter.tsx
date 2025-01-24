@@ -1,18 +1,43 @@
 "use client";
 
+import { registerUserToNewsletter } from "@/components/shared/footer/services/register-email-to-newsletter";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { Form, FormikProvider, useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import * as yup from "yup";
 
 export const SignupNewsletter = () => {
+  const [loading, setLoading] = useState(false);
+  const [emailRegistered, setEmailRegistered] = useState(false);
+
   const form = useFormik({
     initialValues: { email: "" },
-    validationSchema: SCHEMA,
-    onSubmit: () => {},
+    validationSchema: createFormSchema(),
+    onSubmit: async ({ email }) => {
+      setLoading(true);
+      try {
+        await registerUserToNewsletter(email);
+        setEmailRegistered(true);
+        form.resetForm();
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    },
   });
+
+  useEffect(() => {
+    if (emailRegistered && form.values.email) {
+      setEmailRegistered(false);
+    }
+  }, [form.values.email, emailRegistered]);
 
   return (
     <FormikProvider value={form}>
@@ -31,8 +56,12 @@ export const SignupNewsletter = () => {
           }}
         />
         <div className="flex items-end justify-end">
-          <Button form="signup-newsletter-form" type="submit">
-            Suscribirse
+          <Button
+            form="signup-newsletter-form"
+            type="submit"
+            isLoading={loading}
+          >
+            {!emailRegistered ? "Suscribirse" : "Suscrito"}
           </Button>
         </div>
       </Form>
@@ -40,6 +69,7 @@ export const SignupNewsletter = () => {
   );
 };
 
-const SCHEMA = yup.object().shape({
-  email: yup.string().email().required(),
-});
+const createFormSchema = () =>
+  yup.object().shape({
+    email: yup.string().email().required(),
+  });
