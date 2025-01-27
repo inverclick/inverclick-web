@@ -21,6 +21,7 @@ import {
   DialogTitle,
 } from "@inverclick/inverclick-ui/dialog";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
+import { RPNInput } from "@inverclick/inverclick-ui/phone-input";
 import { PhoneInputFormikNT } from "@inverclick/inverclick-ui/phone-input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
@@ -94,6 +95,8 @@ const PreRegistrationContent = () => {
     },
   });
 
+  console.log("countries", RPNInput.getCountries());
+
   return (
     <Dialog
       open={isPreRegistrationOpen}
@@ -144,6 +147,13 @@ const PreRegistrationContent = () => {
                     input: "Busca el país",
                     notFound: "País no encontrado",
                   },
+                  countryOptionsOrder: [
+                    "CO",
+                    "US",
+                    ...RPNInput.getCountries().filter(
+                      (country) => !["CO", "US"].includes(country)
+                    ),
+                  ],
                 },
               }}
             />
