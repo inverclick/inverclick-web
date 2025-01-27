@@ -13,7 +13,7 @@ export const MENU_OPTIONS = [
   { name: "Proyectos", url: "/projects" },
   { name: "Financiación", url: "/financing" },
   { name: "Otros servicios", url: "/other-services" },
-  { name: "Blog", url: "/blog" },
+  // { name: "Blog", url: "/blog" },
 ];
 
 export const LEFT_MENU_OPTIONS = MENU_OPTIONS.slice(0, 3);
