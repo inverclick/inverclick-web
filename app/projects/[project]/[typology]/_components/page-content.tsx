@@ -3,6 +3,7 @@
 import { OtherProjects } from "@/app/projects/[project]/[typology]/_components/other-projects";
 import { ProjectContent } from "@/app/projects/[project]/[typology]/_components/project-content";
 import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
+// import { ProjectReviews } from "@/app/projects/[project]/[typology]/_components/project-reviews";
 import { OtherProjects as OtherProjectsType } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { ViewInformationButton } from "@/components/projects/review/view-information-button";
@@ -62,6 +63,7 @@ export const PageContent = ({
         {canInteractWithFeatures && (
           <ProjectContent project={project} typology={typology} />
         )}
+        {/* <ProjectReviews projectId={project.id} /> */}
         <OtherProjects projects={otherProjects} />
       </div>
       <Footer />
