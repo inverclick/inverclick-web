@@ -12,6 +12,7 @@ import { getPreRegistration } from "@/services/get-pre-registration";
 import { getTRM } from "@/services/get-trm";
 import { createClient } from "@/services/supabase/server-client";
 import { getUser } from "@/services/user/get-user";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
@@ -19,6 +20,7 @@ import { ReactNode } from "react";
 
 import Script from "next/script";
 
+import { Providers } from "@/app/providers";
 import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
@@ -86,27 +88,15 @@ export default async function RootLayout({
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
       <body className={poppins.className}>
-        <UserProvider user={user}>
-          <ThemeProvider defaultTheme="light">
-            <CurrencyProvider
-              TRM_USD={TRM_USD}
-              TRM_EUR={TRM_EUR}
-              last_trm_update={last_trm_update}
-              currency="USD"
-            >
-              <PreRegistrationProvider preRegistration={preRegistration}>
-                <YupLocalization>
-                  {children}
-                  <Chatbot />
-                  <WelcomeDialog />
-                  <PreRegistration />
-                  <Toaster closeButton />
-                  <DownloadApp />
-                </YupLocalization>
-              </PreRegistrationProvider>
-            </CurrencyProvider>
-          </ThemeProvider>
-        </UserProvider>
+        <Providers
+          user={user}
+          TRM_USD={TRM_USD}
+          TRM_EUR={TRM_EUR}
+          last_trm_update={last_trm_update}
+          preRegistration={preRegistration}
+        >
+          {children}
+        </Providers>
       </body>
       <Script
         async

@@ -11,18 +11,18 @@ import { TypologiesSection } from "@/app/projects/[project]/[typology]/_componen
 import { UrbanismSection } from "@/app/projects/[project]/[typology]/_components/urbanism-section";
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
-import { isProjectVerified } from "@/services/projects/is-project-verified";
-import { Icon } from "@inverclick/inverclick-ui/icon";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@inverclick/inverclick-ui/tooltip";
-import { Typography } from "@inverclick/inverclick-ui/typography";
-import { Info, ShieldCheck, Star } from "lucide-react";
-import { ComponentProps } from "react";
+// import { cn } from "@/lib/utils";
+// import { isProjectVerified } from "@/services/projects/is-project-verified";
+// import { Icon } from "@inverclick/inverclick-ui/icon";
+// import {
+//   Tooltip,
+//   TooltipContent,
+//   TooltipProvider,
+//   TooltipTrigger,
+// } from "@inverclick/inverclick-ui/tooltip";
+// import { Typography } from "@inverclick/inverclick-ui/typography";
+// import { Info, ShieldCheck, Star } from "lucide-react";
+// import { ComponentProps } from "react";
 
 /**
  * TODO: Allow to receive as prop Project | DraftProject (Needs refactor)
@@ -49,7 +49,7 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mx-auto mt-0 max-w-5xl">
-          <ProjectVerifiedCard project={project} className="mb-12" />
+          {/* <ProjectVerifiedCard project={project} className="mb-12" /> */}
           <ProjectInformationSection
             project={project}
             typology={typology}
@@ -80,75 +80,75 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
   );
 };
 
-type ProjectVerifiedCardProps = Readonly<{ project: Project }> &
-  ComponentProps<"article">;
+// type ProjectVerifiedCardProps = Readonly<{ project: Project }> &
+//   ComponentProps<"article">;
 
-const ProjectVerifiedCard = ({
-  project,
-  ...props
-}: ProjectVerifiedCardProps) => {
-  return (
-    <article
-      className={cn(
-        "flex flex-col rounded-lg border p-4 lg:flex-row lg:items-center",
-        props.className
-      )}
-    >
-      {/* WARNING: project.plan can be undefined */}
-      {project.plan && isProjectVerified(project.plan.name) && (
-        <>
-          <div className="flex items-center justify-center gap-2">
-            <Icon
-              icon={ShieldCheck}
-              className={cn("size-6", {
-                "text-green-500": isProjectVerified(project.plan.name),
-                "text-slate-500": !isProjectVerified(project.plan.name),
-              })}
-            />
-            <Typography>Proyecto verificado</Typography>
-            <TooltipProvider>
-              <Tooltip delayDuration={200}>
-                <TooltipTrigger asChild>
-                  <Info className="size-4" />
-                </TooltipTrigger>
-                <TooltipContent className="max-w-sm">
-                  <Typography>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                    corporis aliquid sit aspernatur, minima quidem praesentium
-                    consectetur ad. Nam vitae magnam ea nisi necessitatibus
-                    veritatis officiis, quo nobis repudiandae iure?
-                  </Typography>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div className="my-4 h-[0.5px] w-full bg-border lg:mx-4 lg:my-0 lg:h-6 lg:w-[0.5px]"></div>
-        </>
-      )}
-      <div className="flex flex-1 flex-col justify-between gap-4 lg:flex-row lg:items-center">
-        <Typography className="text-center">
-          Según nuestros usuarios, es uno de los proyectos más solicitados.
-        </Typography>
-        <div className="flex flex-col items-center">
-          <Typography variant="h4" className="text-center">
-            4.91
-          </Typography>
-          <div className="flex items-center gap-1">
-            <Icon icon={Star} />
-            <Icon icon={Star} />
-            <Icon icon={Star} />
-            <Icon icon={Star} />
-            <Icon icon={Star} />
-          </div>
-        </div>
-      </div>
-      <div className="my-4 h-[0.5px] w-full bg-border lg:mx-4 lg:my-0 lg:h-6 lg:w-[0.5px]"></div>
-      <div className="flex flex-col items-center">
-        <Typography variant="h4" className="text-center">
-          54
-        </Typography>
-        <Typography>Reseñas</Typography>
-      </div>
-    </article>
-  );
-};
+// const ProjectVerifiedCard = ({
+//   project,
+//   ...props
+// }: ProjectVerifiedCardProps) => {
+//   return (
+//     <article
+//       className={cn(
+//         "flex flex-col rounded-lg border p-4 lg:flex-row lg:items-center",
+//         props.className
+//       )}
+//     >
+//       {/* WARNING: project.plan can be undefined */}
+//       {project.plan && isProjectVerified(project.plan.name) && (
+//         <>
+//           <div className="flex items-center justify-center gap-2">
+//             <Icon
+//               icon={ShieldCheck}
+//               className={cn("size-6", {
+//                 "text-green-500": isProjectVerified(project.plan.name),
+//                 "text-slate-500": !isProjectVerified(project.plan.name),
+//               })}
+//             />
+//             <Typography>Proyecto verificado</Typography>
+//             <TooltipProvider>
+//               <Tooltip delayDuration={200}>
+//                 <TooltipTrigger asChild>
+//                   <Info className="size-4" />
+//                 </TooltipTrigger>
+//                 <TooltipContent className="max-w-sm">
+//                   <Typography>
+//                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+//                     corporis aliquid sit aspernatur, minima quidem praesentium
+//                     consectetur ad. Nam vitae magnam ea nisi necessitatibus
+//                     veritatis officiis, quo nobis repudiandae iure?
+//                   </Typography>
+//                 </TooltipContent>
+//               </Tooltip>
+//             </TooltipProvider>
+//           </div>
+//           <div className="my-4 h-[0.5px] w-full bg-border lg:mx-4 lg:my-0 lg:h-6 lg:w-[0.5px]"></div>
+//         </>
+//       )}
+//       <div className="flex flex-1 flex-col justify-between gap-4 lg:flex-row lg:items-center">
+//         <Typography className="text-center">
+//           Según nuestros usuarios, es uno de los proyectos más solicitados.
+//         </Typography>
+//         <div className="flex flex-col items-center">
+//           <Typography variant="h4" className="text-center">
+//             4.91
+//           </Typography>
+//           <div className="flex items-center gap-1">
+//             <Icon icon={Star} />
+//             <Icon icon={Star} />
+//             <Icon icon={Star} />
+//             <Icon icon={Star} />
+//             <Icon icon={Star} />
+//           </div>
+//         </div>
+//       </div>
+//       <div className="my-4 h-[0.5px] w-full bg-border lg:mx-4 lg:my-0 lg:h-6 lg:w-[0.5px]"></div>
+//       <div className="flex flex-col items-center">
+//         <Typography variant="h4" className="text-center">
+//           54
+//         </Typography>
+//         <Typography>Reseñas</Typography>
+//       </div>
+//     </article>
+//   );
+// };

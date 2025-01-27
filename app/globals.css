@@ -42,6 +42,29 @@ input[type="number"] {
   @apply bg-slate-400;
 }
 
+/* width */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .scroll-area-flex [data-radix-scroll-area-viewport] > div {
   display: flex !important;
   flex-direction: column !important;
