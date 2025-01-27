@@ -15,7 +15,7 @@ export const ContactButton = ({ className, ...props }: ContactButtonProps) => {
   return (
     <div
       className={cn(
-        "z-30 relative rounded-full slide-button bg-secondary",
+        "slide-button relative z-30 rounded-full bg-secondary",
         {
           "bg-primary text-primary-foreground": pathname !== "/",
         },
@@ -31,7 +31,7 @@ export const ContactButton = ({ className, ...props }: ContactButtonProps) => {
         width="36"
         alt="Inverclick - contacto"
       /> */}
-      <Icon icon={Mail} className="absolute top-1/2 left-3 -translate-y-1/2" />
+      <Icon icon={Mail} className="absolute left-3 top-1/2 -translate-y-1/2" />
       <span>Contáctenos</span>
     </div>
   );

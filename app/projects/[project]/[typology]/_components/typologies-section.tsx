@@ -32,7 +32,7 @@ export const TypologiesSection = ({
       <Typography variant="h2" className="mb-4">
         Tipologías
       </Typography>
-      <ul className="flex flex-nowrap gap-4 mb-6 overflow-x-auto">
+      <ul className="mb-6 flex flex-nowrap gap-4 overflow-x-auto">
         {typologies.map((typology) => {
           const { id, name, area, rooms, bathrooms, parking, price } = typology;
           return (
@@ -46,13 +46,13 @@ export const TypologiesSection = ({
               <button
                 onClick={() => setSelectedTypology(typology)}
                 className={cn(
-                  "flex flex-col items-start w-44 bg-background border border-dark-gray p-4 rounded-lg hover:border-primary",
+                  "border-dark-gray flex w-44 flex-col items-start rounded-lg border bg-background p-4 hover:border-primary",
                   {
                     "border-primary": selectedTypology.id === id,
                   }
                 )}
               >
-                <div className="flex gap-4 justify-between items-center">
+                <div className="flex items-center justify-between gap-4">
                   <p className="text-sm">Area*</p>
                 </div>
                 <p className="mb-2">
@@ -88,13 +88,13 @@ export const TypologiesSection = ({
                 alt="Tipología"
                 width={600}
                 height={400}
-                className="object-contain w-full h-full"
+                className="h-full w-full object-contain"
               />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="translate-x-14 z-10" />
-        <CarouselNext className="-translate-x-14 z-10" />
+        <CarouselPrevious className="z-10 translate-x-14" />
+        <CarouselNext className="z-10 -translate-x-14" />
       </Carousel>
     </section>
   );

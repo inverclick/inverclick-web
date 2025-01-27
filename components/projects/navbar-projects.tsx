@@ -49,11 +49,11 @@ export function NavbarProjects() {
     <header
       id="navbar-projects"
       ref={scrollableDivRef}
-      className="hidden bg-white shadow-md md:flex p-4 right-0 left-0"
+      className="left-0 right-0 hidden bg-white p-4 shadow-md md:flex"
     >
-      <nav className="flex gap-3 w-full justify-between">
+      <nav className="flex w-full justify-between gap-3">
         {headerPosition === "normal" ? (
-          <div className="flex-1 flex items-center gap-3">
+          <div className="flex flex-1 items-center gap-3">
             {LEFT_MENU_OPTIONS.map(({ name, url }) => (
               <HeaderLink key={name} name={name} url={url} size="small" />
             ))}
@@ -64,12 +64,12 @@ export function NavbarProjects() {
             unoptimized
             width="107"
             height="60"
-            className="w-[120px] md:w-[90px] xl:w-[107px] 2xl:w-[120px] cursor-pointer"
+            className="w-[120px] cursor-pointer md:w-[90px] xl:w-[107px] 2xl:w-[120px]"
             src="/main-page/inverclick-logo.avif"
             alt="Inverclick logo"
           />
         </Link>
-        <div className="flex-1 gap-3 flex justify-end items-center !text-xs !2xl:text-sm">
+        <div className="!2xl:text-sm flex flex-1 items-center justify-end gap-3 !text-xs">
           {headerPosition === "responsive" && (
             <Button size="xs" variant="outline-primary" asChild>
               <Link href="https://company.inverclick.com/" target="_blank">

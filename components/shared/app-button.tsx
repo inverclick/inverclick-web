@@ -35,14 +35,14 @@ export const AppButton = ({
       ref={appButtonRef}
       href="/app"
       className={cn(
-        "hidden md:block slide-app-button z-30 cursor-pointer drop-shadow-2xl animate-tada animate-delay-0",
+        "slide-app-button z-30 hidden animate-tada cursor-pointer drop-shadow-2xl animate-delay-0 md:block",
         className
       )}
       {...props}
     >
       <Image
         unoptimized
-        className=" object-cover shadow-2xl"
+        className="object-cover shadow-2xl"
         src="/main-page/download_app.svg"
         width="40"
         height="80"

@@ -23,41 +23,41 @@ export const metadata: Metadata = {
 export default function FinancingPage() {
   return (
     <main>
-      <div className="flex flex-col h-dvh">
+      <div className="flex h-dvh flex-col">
         <Header />
-        <article className="flex-grow p-content-full flex flex-col justify-between max-w-screen-2xl mx-auto">
-          <section className="flex flex-grow flex-col gap-16 md:gap-24 justify-center items-center translate-y-5">
-            <div className="flex gap-3 flex-col animate-blurred-fade-in">
-              <h1 className="font-semibold text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl">
+        <article className="p-content-full mx-auto flex max-w-screen-2xl flex-grow flex-col justify-between">
+          <section className="flex flex-grow translate-y-5 flex-col items-center justify-center gap-16 md:gap-24">
+            <div className="flex animate-blurred-fade-in flex-col gap-3">
+              <h1 className="text-5xl font-semibold sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl">
                 Crédito de vivienda
               </h1>
-              <h2 className="text-2xl lg:text-3xl xl:text-4xl font-semibold">
+              <h2 className="text-2xl font-semibold lg:text-3xl xl:text-4xl">
                 Colombianos en{" "}
                 <span className="text-primary-600">EL EXTERIOR</span>
               </h2>
             </div>
           </section>
           <div className="my-10 self-center">
-            <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700 animate-fade-in-up">
+            <button className="animate-fade-in-up rounded-full bg-primary-600 px-6 py-2 text-white hover:bg-primary-700">
               Solicitar Preaprobado
             </button>
           </div>
         </article>
       </div>
-      <article className="flex flex-col lg:flex-row gap-10 px-6 md:px-14 lg:px-20 mb-14 max-w-screen-2xl mx-auto">
+      <article className="mx-auto mb-14 flex max-w-screen-2xl flex-col gap-10 px-6 md:px-14 lg:flex-row lg:px-20">
         <FinancingCard
           color="#7330f7"
           direction="horizontal"
           frontContent={
-            <p className="ml-8 lg:mx-10 xl:m-20 text-3xl lg:text-5xl xl:text-6xl text-left font-semibold text-[#7330f7]">
+            <p className="ml-8 text-left text-3xl font-semibold text-[#7330f7] lg:mx-10 lg:text-5xl xl:m-20 xl:text-6xl">
               Crédito
               <br />
               Hipotecario
             </p>
           }
           content={
-            <div className="p-4 md:p-8 text-black text-left flex flex-col gap-2 md:gap-3 xl:gap-4 text-xs md:text-sm xl:text-base ">
-              <h4 className="text-xl xl:text-2xl font-semibold">
+            <div className="flex flex-col gap-2 p-4 text-left text-xs text-black md:gap-3 md:p-8 md:text-sm xl:gap-4 xl:text-base">
+              <h4 className="text-xl font-semibold xl:text-2xl">
                 Crédito Hipotecario
               </h4>
               <p>
@@ -66,7 +66,7 @@ export default function FinancingPage() {
                 propietario del inmueble. El inmueble queda como garantía hasta
                 completar el pago total de las cuotas.
               </p>
-              <h5 className="text-base xl:text-xl font-semibold">
+              <h5 className="text-base font-semibold xl:text-xl">
                 Porcentaje de financiación
               </h5>
               <p>
@@ -76,33 +76,33 @@ export default function FinancingPage() {
               <table className="table-fixed border border-black">
                 <thead>
                   <tr>
-                    <th className="p-2 text-left border border-black">Plazo</th>
-                    <th className="p-2 text-left border border-black">
+                    <th className="border border-black p-2 text-left">Plazo</th>
+                    <th className="border border-black p-2 text-left">
                       Edad para acceder
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="p-2 border-black border">
+                    <td className="border border-black p-2">
                       Desde 5 hasta 20 años*
                     </td>
-                    <td className="p-2 border-black border">
+                    <td className="border border-black p-2">
                       Entre los 18 y 72 años*
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <h5 className="text-base xl:text-xl font-semibold">
+              <h5 className="text-base font-semibold xl:text-xl">
                 Escrituración
               </h5>
               <p>Al momento de la adquisición del inmueble.</p>
-              <h5 className="text-base xl:text-xl font-semibold">
+              <h5 className="text-base font-semibold xl:text-xl">
                 ¿Quién es el propietario?
               </h5>
               <p>El cliente.</p>
               <div className="self-center">
-                <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">
+                <button className="rounded-full bg-primary-600 px-6 py-2 text-white hover:bg-primary-700">
                   Solicitar Preaprobado
                 </button>
               </div>
@@ -112,8 +112,8 @@ export default function FinancingPage() {
         <FinancingCard
           color="black"
           content={
-            <div className="p-4 md:p-8 text-black text-left flex flex-col gap-2 md:gap-3 xl:gap-4 text-xs md:text-sm xl:text-base ">
-              <h4 className="text-xl xl:text-2xl font-semibold">
+            <div className="flex flex-col gap-2 p-4 text-left text-xs text-black md:gap-3 md:p-8 md:text-sm xl:gap-4 xl:text-base">
+              <h4 className="text-xl font-semibold xl:text-2xl">
                 Leasing Habitacional
               </h4>
               <p>
@@ -122,7 +122,7 @@ export default function FinancingPage() {
                 durante el contrato de leasing. Una vez se termine el periodo de
                 dicho contrato, el cliente podrá ejercer la opción de compra.
               </p>
-              <h5 className="text-base xl:text-xl font-semibold">
+              <h5 className="text-base font-semibold xl:text-xl">
                 Porcentaje de financiación
               </h5>
               <p>
@@ -132,31 +132,31 @@ export default function FinancingPage() {
               <table className="table-fixed border border-black">
                 <thead>
                   <tr>
-                    <th className="p-2 text-left border border-black">Plazo</th>
-                    <th className="p-2 text-left border border-black">
+                    <th className="border border-black p-2 text-left">Plazo</th>
+                    <th className="border border-black p-2 text-left">
                       Edad para acceder
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="p-2 border-black border">
+                    <td className="border border-black p-2">
                       Desde 5 hasta 20 años*
                     </td>
-                    <td className="p-2 border-black border">
+                    <td className="border border-black p-2">
                       Entre los 18 y 72 años*
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <h5 className="text-base xl:text-xl font-semibold">
+              <h5 className="text-base font-semibold xl:text-xl">
                 Escrituración
               </h5>
               <p>
                 Al momento de la adquisición del inmueble y al finalizar el
                 leasing si se toma la opción de compra.
               </p>
-              <h5 className="text-base xl:text-xl font-semibold">
+              <h5 className="text-base font-semibold xl:text-xl">
                 ¿Quién es el propietario?
               </h5>
               <p>
@@ -166,7 +166,7 @@ export default function FinancingPage() {
                 que va desde el 1% al 20% del valor de la financiación.
               </p>
               <div className="self-center">
-                <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">
+                <button className="rounded-full bg-primary-600 px-6 py-2 text-white hover:bg-primary-700">
                   Solicitar Preaprobado
                 </button>
               </div>
@@ -174,7 +174,7 @@ export default function FinancingPage() {
           }
           direction="horizontal"
           frontContent={
-            <p className="ml-8 lg:mx-10 xl:m-20 text-3xl lg:text-5xl xl:text-6xl text-left font-semibold text-black">
+            <p className="ml-8 text-left text-3xl font-semibold text-black lg:mx-10 lg:text-5xl xl:m-20 xl:text-6xl">
               Leasing
               <br />
               Habitacional
@@ -182,12 +182,12 @@ export default function FinancingPage() {
           }
         />
       </article>
-      <article className="flex flex-col md:flex-row gap-14 px-6 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
+      <article className="mx-auto mb-20 flex max-w-screen-2xl flex-col gap-14 px-6 md:flex-row md:px-14 lg:px-20">
         <FinancingCard
           color="black"
           direction="vertical"
           frontContent={
-            <div className="flex flex-col md:flex-row gap-10 px-20 justify-center items-center">
+            <div className="flex flex-col items-center justify-center gap-10 px-20 md:flex-row">
               <Image
                 src="/financing/financing-1.png"
                 alt="Requisitos para mi crédito"
@@ -196,7 +196,7 @@ export default function FinancingPage() {
                 height={200}
                 className="max-h-[500px] w-auto"
               />
-              <p className="lg:mx-10 xl:m-20 text-3xl lg:text-5xl xl:text-6xl text-center md:text-left font-semibold text-black">
+              <p className="text-center text-3xl font-semibold text-black md:text-left lg:mx-10 lg:text-5xl xl:m-20 xl:text-6xl">
                 Requisitos
                 <br />
                 para mi crédito
@@ -204,52 +204,52 @@ export default function FinancingPage() {
             </div>
           }
           content={
-            <div className="flex flex-col md:flex-row gap-10 text-black rotate-180 p-4 md:p-10 lg:p-14 xl:p-20 text-left">
+            <div className="flex rotate-180 flex-col gap-10 p-4 text-left text-black md:flex-row md:p-10 lg:p-14 xl:p-20">
               <div className="flex flex-1 flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14">
-                <h4 className="text-2xl xl:text-4xl font-semibold">
+                <h4 className="text-2xl font-semibold xl:text-4xl">
                   Requisitos
                 </h4>
                 <ul className="flex flex-col gap-2">
-                  <li className="flex gap-2 items-center">
-                    <Check className="text-green-600 min-w-5 min-h-5 max-h-5 max-w-5" />
+                  <li className="flex items-center gap-2">
+                    <Check className="max-h-5 min-h-5 min-w-5 max-w-5 text-green-600" />
                     Ser colombiano residente en el exterior o extranjero casado
                     con colombiano residente en el exterior.
                   </li>
-                  <li className="flex gap-2 items-center">
-                    <Check className="text-green-600 min-w-5 min-h-5 max-h-5 max-w-5" />
+                  <li className="flex items-center gap-2">
+                    <Check className="max-h-5 min-h-5 min-w-5 max-w-5 text-green-600" />
                     Tener entre 18 y 72 años.
                   </li>
-                  <li className="flex gap-2 items-center">
-                    <Check className="text-green-600 min-w-5 min-h-5 max-h-5 max-w-5" />
+                  <li className="flex items-center gap-2">
+                    <Check className="max-h-5 min-h-5 min-w-5 max-w-5 text-green-600" />
                     Demostrar ingresos en el país de residencia.
                   </li>
-                  <li className="flex gap-2 items-center">
-                    <Check className="text-green-600 min-w-5 min-h-5 max-h-5 max-w-5" />
+                  <li className="flex items-center gap-2">
+                    <Check className="max-h-5 min-h-5 min-w-5 max-w-5 text-green-600" />
                     No tener reportes negativos en las centrales de riesgos en
                     el país de residencia ni en Colombia.
                   </li>
-                  <li className="flex gap-2 items-center">
-                    <Check className="text-green-600 min-w-5 min-h-5 max-h-5 max-w-5" />
+                  <li className="flex items-center gap-2">
+                    <Check className="max-h-5 min-h-5 min-w-5 max-w-5 text-green-600" />
                     Declaración de renta o de impuestos del año inmediatamente
                     anterior.
                   </li>
                 </ul>
                 <div className="self-center">
-                  <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">
+                  <button className="rounded-full bg-primary-600 px-6 py-2 text-white hover:bg-primary-700">
                     Solicitar Preaprobado
                   </button>
                 </div>
               </div>
-              <div className="flex-1 flex flex-col justify-center gap-4">
-                <h4 className="text-2xl xl:text-4xl font-semibold text-primary-600">
+              <div className="flex flex-1 flex-col justify-center gap-4">
+                <h4 className="text-2xl font-semibold text-primary-600 xl:text-4xl">
                   Tenemos alternativas
                 </h4>
-                <p className="text-lg lg:text-xl font-light">
+                <p className="text-lg font-light lg:text-xl">
                   ¡Si NO cumples con los requisitos, no te preocupes! ¡Te
                   brindaremos alternativas!
                 </p>
-                <div className="self-center mt-4">
-                  <button className="px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700 text-lg">
+                <div className="mt-4 self-center">
+                  <button className="rounded-full bg-primary-600 px-6 py-2 text-lg text-white hover:bg-primary-700">
                     Solicitar contacto
                   </button>
                 </div>
@@ -258,12 +258,12 @@ export default function FinancingPage() {
           }
         />
       </article>
-      <article className="flex flex-col gap-10 px-6 md:px-14 lg:px-20 mb-20 max-w-screen-2xl mx-auto">
-        <h2 className="text-pretty md:w-1/2 text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">
+      <article className="mx-auto mb-20 flex max-w-screen-2xl flex-col gap-10 px-6 md:px-14 lg:px-20">
+        <h2 className="text-pretty text-center text-3xl font-semibold leading-snug md:w-1/2 md:text-left md:text-4xl lg:text-5xl">
           ¿Quieres saber cuál es la mejor opción para ti?
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 justify-items-center relative md:px-6 xl:px-40">
-          <div className="absolute bottom-0 left-0 right-0 h-4 bg-primary-600 -z-10" />
+        <div className="relative grid grid-cols-2 justify-items-center md:grid-cols-3 md:px-6 xl:px-40">
+          <div className="absolute bottom-0 left-0 right-0 -z-10 h-4 bg-primary-600" />
           <div className="hidden md:block" />
           <Image
             className="w-auto object-contain"
@@ -272,36 +272,36 @@ export default function FinancingPage() {
             width={300}
             height={300}
           />
-          <div className="flex flex-col gap-6 md:gap-10 items-center">
-            <h3 className="text-center  text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight">
+          <div className="flex flex-col items-center gap-6 md:gap-10">
+            <h3 className="text-center text-2xl font-semibold leading-tight md:text-4xl lg:text-5xl">
               Nosotros te ayudamos
             </h3>
-            <button className="text-sm md:text-base px-6 text-white py-2 rounded-full bg-primary-600 hover:bg-primary-700">
+            <button className="rounded-full bg-primary-600 px-6 py-2 text-sm text-white hover:bg-primary-700 md:text-base">
               Solicitar Contacto
             </button>
           </div>
         </div>
       </article>
-      <article className="w-full flex flex-col gap-10 px-6 md:px-14 lg:px-20 py-20 max-w-screen-2xl mx-auto">
+      <article className="mx-auto flex w-full max-w-screen-2xl flex-col gap-10 px-6 py-20 md:px-14 lg:px-20">
         <div className="md:w-1/2">
-          <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug">
+          <h2 className="text-pretty text-center text-3xl font-semibold leading-snug md:text-left md:text-4xl lg:text-5xl">
             Simulador de
             <br />
             CRÉDITO
           </h2>
-          <p className="text-xs mt-4">
+          <p className="mt-4 text-xs">
             *Los resultados de este simulador son aproximaciones con fines
             informativos, los valores reales se establecerán con la entidad
             financiera en momento de la negociación del crédito o del
             desembolso.
           </p>
         </div>
-        <div className="w-full mt-10 md:mt-16">
+        <div className="mt-10 w-full md:mt-16">
           <CreditSimulador price={0} />
         </div>
       </article>
-      <article className="w-full flex flex-col gap-10 px-6 md:px-14 lg:px-20 mb-16 max-w-screen-2xl mx-auto">
-        <h2 className="text-pretty text-center md:text-left text-3xl md:text-4xl lg:text-5xl font-semibold">
+      <article className="mx-auto mb-16 flex w-full max-w-screen-2xl flex-col gap-10 px-6 md:px-14 lg:px-20">
+        <h2 className="text-pretty text-center text-3xl font-semibold md:text-left md:text-4xl lg:text-5xl">
           Preguntas FRECUENTES
         </h2>
         <FrequentlyQuestions />

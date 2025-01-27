@@ -43,8 +43,8 @@ export function ForgotPasswordForm() {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <Typography variant="h3" className="text-center mb-4">
+    <div className="flex w-full flex-col items-center justify-center">
+      <Typography variant="h3" className="mb-4 text-center">
         ¿Olvidaste tu contraseña?
       </Typography>
       <Typography className="mb-8">
@@ -52,7 +52,7 @@ export function ForgotPasswordForm() {
         para restablecer tu contraseña
       </Typography>
       <FormikProvider value={form}>
-        <Form id="forgot-password-form" className="flex flex-col w-full">
+        <Form id="forgot-password-form" className="flex w-full flex-col">
           <InputFormikNT
             id="email"
             classNames={{

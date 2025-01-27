@@ -25,7 +25,7 @@ export default function Index() {
   return (
     <main>
       <Header />
-      <article className="p-content flex flex-col mb-20">
+      <article className="p-content mb-20 flex flex-col">
         <h1 className="text-3xl font-medium">
           POLÍTICA DE PRIVACIDAD Y DE TRATAMIENTO DE DATOS PERSONALES
         </h1>
@@ -46,7 +46,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               I. DEFINICIONES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Para facilitar la interpretación y proporcionar una mayor
                 comprensión de la Política de Tratamiento de Datos, se adoptan
@@ -161,12 +161,12 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               II. MARCO NORMATIVO
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Para aquellas situaciones no reguladas por la Política de
                 Tratamiento de Datos, se estará a lo dispuesto por:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>Artículo 15 de la Constitución Política de Colombia.</li>
                 <li>Ley Estatutaria 1266 de 2008.</li>
                 <li>Ley 1273 de 2009.</li>
@@ -181,7 +181,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               III. OBJETO
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 El propósito de esta Política de Tratamiento de Datos es
                 establecer normas para todas las actividades relacionadas con el
@@ -206,7 +206,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               IV. PRINCIPIOS APLICABLES AL TRATAMIENTO DE DATOS PERSONALES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Para el adecuado tratamiento de datos personales, en todas las
                 acciones realizadas por <b>Inverclick</b> sobre los datos
@@ -283,7 +283,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               V. DATOS PERSONALES SOMETIDOS A TRATAMIENTO
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Con el fin de dar cumplimiento a las finalidades descritas en la
                 presente Política, <b>Inverclick</b> tratará los siguientes
@@ -324,7 +324,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               VI. AUTORIZACIÓN DE TRATAMIENTO DE DATOS PERSONALES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Las actividades de tratamiento de datos personales reglamentadas
                 por la presente Política serán ejecutadas exclusivamente sobre
@@ -415,7 +415,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               VII. NIVEL DE INTERVENCIÓN
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Para todos los efectos legales relacionados con el tratamiento
                 de datos personales y en atención a lo establecido en la
@@ -439,7 +439,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               VIII. FINALIDAD Y ACTIVIDADES DE TRATAMIENTO
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 El tratamiento de los datos personales se realizará conforme al
                 marco legal que regula la materia, con el objetivo de cumplir
@@ -448,7 +448,7 @@ export default function Index() {
                 <b>Inverclick</b> a recolectar y tratar los datos personales
                 para las siguientes finalidades:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Brindar asesoría personalizada para la búsqueda y adquisición
                   de inmuebles.
@@ -543,7 +543,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               IX. TRATAMIENTO DE DATOS PERSONALES SENSIBLES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Inverclick</b> no tratará datos sensibles a menos que sea
                 absolutamente necesario. En tales casos, <b>Inverclick</b>{" "}
@@ -561,7 +561,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               X. TRATAMIENTO DE DATOS DE MENORES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Por norma general, en la ejecución de cualquier actividad de
                 tratamiento de datos personales, <b>Inverclick</b> se abstendrá
@@ -574,7 +574,7 @@ export default function Index() {
                 <b>Inverclick</b> se asegurará de que el tratamiento de dichos
                 datos se realice bajo las siguientes reglas:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Respeto del interés superior del menor Titular del dato.
                 </li>
@@ -606,7 +606,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XI. TRANSMISIÓN Y/O TRANSFERENCIA NACIONAL O INTERNACIONAL
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Inverclick</b> podrá transferir y transmitir datos personales
                 de los Titulares a terceros con quienes tenga una relación
@@ -617,7 +617,7 @@ export default function Index() {
                 De manera enunciativa pero no limitativa, <b>Inverclick</b>{" "}
                 podrá transmitir y/o transferir los datos personales a:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Proveedores de servicios o productos con los que{" "}
                   <b>Inverclick</b> tiene una relación contractual.
@@ -667,7 +667,7 @@ export default function Index() {
               XII.DURACIÓN DEL TRATAMIENTO Y CONSERVACIÓN DE LOS DATOS
               PERSONALES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Como regla general, <b>Inverclick</b> tratará los datos
                 personales mientras sean necesarios para mantener una adecuada
@@ -683,7 +683,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XIII. OBLIGACIONES DE TERCEROS
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Inverclick</b> cuenta con proveedores de productos y
                 servicios y aliados comerciales para el cumplimiento de su
@@ -696,7 +696,7 @@ export default function Index() {
                 personales que forman parte de las bases de datos de{" "}
                 <b>Inverclick</b> se comprometen a:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Cumplir estrictamente con los principios y obligaciones
                   contenidos en la Política de Tratamiento de Datos.
@@ -782,7 +782,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XIV. DERECHOS DE LOS TITULARES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Inverclick</b>, en su compromiso con el respeto de los
                 intereses de los Titulares de los datos personales sometidos a
@@ -846,7 +846,7 @@ export default function Index() {
               XV. PROCEDIMIENTO PARA EL EJERCICIO DE LOS DERECHOS DE LOS
               TITULARES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Para ejercer los derechos mencionados en el numeral XIII de la
                 presente Política, el Titular de los datos personales podrá
@@ -885,7 +885,7 @@ export default function Index() {
               adjuntando los documentos que soporten su solicitud y que
               acrediten su legitimidad para actuar, cuando quien presenta la
               solicitud no sea el Titular del dato.
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   <b>Petición incompleta:</b> Cuando <b>Inverclick</b> considere
                   que la petición presentada por el Titular o por quien esté
@@ -931,7 +931,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XVI. LEGITIMIDAD
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Están legitimados para ejercer los derechos establecidos en el
                 numeral XIII y los demás reconocidos por la ley, el Titular del
@@ -946,7 +946,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XVII. VIGENCIA
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 La presente Política entra en vigor a partir de la fecha de su
                 publicación y estará vigente mientras <b>Inverclick</b> lleve a
@@ -968,7 +968,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XVIII. AUTORIDAD NACIONAL DE PROTECCIÓN DE DATOS
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Inverclick</b>, comprometido con la efectiva protección de
                 los datos personales de los Titulares, pone a disposición del

@@ -40,12 +40,12 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         ref={ref}
         data-element="project-card"
         className={cn(
-          "flex flex-col w-[280px] lg:w-[220px] 2xl:w-[280px] shadow-md hover:shadow-lg transition-shadow ease-in rounded-b-lg",
+          "flex w-[280px] flex-col rounded-b-lg shadow-md transition-shadow ease-in hover:shadow-lg lg:w-[220px] 2xl:w-[280px]",
           className
         )}
       >
         <div className="relative">
-          <Carousel className="h-[170px] lg:h-[150px] 2xl:h-[170px] w-full">
+          <Carousel className="h-[170px] w-full lg:h-[150px] 2xl:h-[170px]">
             <CarouselContent className="!ml-0">
               {project.photos.map((photo) => (
                 <a
@@ -53,7 +53,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-w-[280px] lg:min-w-[220px] 2xl:min-w-[280px] max-h-[170px] animate-fade-in"
+                  className="max-h-[170px] min-w-[280px] animate-fade-in lg:min-w-[220px] 2xl:min-w-[280px]"
                 >
                   <Image
                     unoptimized
@@ -62,19 +62,19 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
                     alt={project.name}
                     width={280}
                     height={170}
-                    className="h-[170px] w-[280px] lg:h-[150px] lg:w-[220px] 2xl:h-[170px] 2xl:w-[280px] -z-10 rounded-t-lg object-cover"
+                    className="-z-10 h-[170px] w-[280px] rounded-t-lg object-cover lg:h-[150px] lg:w-[220px] 2xl:h-[170px] 2xl:w-[280px]"
                   />
                 </a>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="translate-x-14 z-10 !h-6 !w-6 bg-primary-100/70 border-primary-400 hover:bg-primary-200/90 text-primary-500 hover:text-primary-600" />
-            <CarouselNext className="-translate-x-14 z-10 !h-6 !w-6 bg-primary-100/70 border-primary-400 hover:bg-primary-200/90 text-primary-500 hover:text-primary-600" />
+            <CarouselPrevious className="z-10 !h-6 !w-6 translate-x-14 border-primary-400 bg-primary-100/70 text-primary-500 hover:bg-primary-200/90 hover:text-primary-600" />
+            <CarouselNext className="z-10 !h-6 !w-6 -translate-x-14 border-primary-400 bg-primary-100/70 text-primary-500 hover:bg-primary-200/90 hover:text-primary-600" />
           </Carousel>
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer absolute top-0 left-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tl-lg px-2 py-1 capitalize font-semibold bg-primary-500"
+            className="absolute left-0 top-0 cursor-pointer rounded-tl-lg bg-primary-500 px-2 py-1 text-[10px] font-semibold capitalize text-white lg:text-[9px] 2xl:text-[10px]"
           >
             {HOUSING_STATE_LABEL[project.housing_state]}
           </a>
@@ -82,7 +82,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer absolute top-0 right-0 text-[10px] lg:text-[9px] 2xl:text-[10px] text-white rounded-tr-lg px-2 py-1 capitalize font-semibold bg-primary-400"
+            className="absolute right-0 top-0 cursor-pointer rounded-tr-lg bg-primary-400 px-2 py-1 text-[10px] font-semibold capitalize text-white lg:text-[9px] 2xl:text-[10px]"
           >
             {HOUSING_TYPE_LABEL[project.housing_type]}
           </a>
@@ -91,38 +91,38 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="cursor-pointer pt-3 2xl:pt-4 flex flex-1 flex-col justify-between bg-white rounded-b-lg"
+          className="flex flex-1 cursor-pointer flex-col justify-between rounded-b-lg bg-white pt-3 2xl:pt-4"
         >
-          <div className="px-4 lg:px-2 2xl:px-4 flex gap-2 items-center">
+          <div className="flex items-center gap-2 px-4 lg:px-2 2xl:px-4">
             <Image
               unoptimized
               loading="lazy"
-              className="w-auto h-[45px] 2xl:h-[50px]"
+              className="h-[45px] w-auto 2xl:h-[50px]"
               src={getAssetUrl(company.logo_url)}
               alt={project.name}
               width={50}
               height={50}
             />
             <div>
-              <p className="text-base lg:text-sm 2xl:text-base font-medium">
+              <p className="text-base font-medium lg:text-sm 2xl:text-base">
                 {project.name}
               </p>
-              <p className="text-xs lg:text-[11px] 2xl:text-xs font-light mt-1">
+              <p className="mt-1 text-xs font-light lg:text-[11px] 2xl:text-xs">
                 {project.department.name}, {project.city.name}
               </p>
             </div>
           </div>
-          <p className="px-4 lg:px-2 2xl:px-4 text-xs lg:text-[11px] 2xl:text-xs mt-2">
+          <p className="mt-2 px-4 text-xs lg:px-2 lg:text-[11px] 2xl:px-4 2xl:text-xs">
             {project.address}
           </p>
-          <div className="py-2 2xl:py-3 px-4 lg:px-2 2xl:px-4 gap-2 flex items-center">
-            <p className="font-medium text-sm lg:text-xs 2xl:text-sm">Desde:</p>
+          <div className="flex items-center gap-2 px-4 py-2 lg:px-2 2xl:px-4 2xl:py-3">
+            <p className="text-sm font-medium lg:text-xs 2xl:text-sm">Desde:</p>
             <p className="text-sm lg:text-xs 2xl:text-sm">
               {formatCurrency(convert(typology.price), currency)} {currency}
             </p>
           </div>
-          <div className="flex justify-between px-4 py-3 lg:p-2 2xl:p-4 bg-primary-100 rounded-b-lg">
-            <div className="text-xs 2xl:text-xs text-center">
+          <div className="flex justify-between rounded-b-lg bg-primary-100 px-4 py-3 lg:p-2 2xl:p-4">
+            <div className="text-center text-xs 2xl:text-xs">
               <p>
                 {typology.area}{" "}
                 <span className="text-xs">
@@ -131,11 +131,11 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
               </p>
               <p className="font-semibold">Área</p>
             </div>
-            <div className="text-xs 2xl:text-xs text-center">
+            <div className="text-center text-xs 2xl:text-xs">
               <p>{typology.rooms}</p>
               <p className="font-semibold">Habitaciones</p>
             </div>
-            <div className="text-xs 2xl:text-xs text-center">
+            <div className="text-center text-xs 2xl:text-xs">
               <p>{typology.bathrooms}</p>
               <p className="font-semibold">Baños</p>
             </div>
@@ -149,5 +149,5 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 ProjectCard.displayName = "ProjectCard";
 
 export const ProjectCardSkeleton = () => (
-  <Skeleton className="w-[280px] h-[400px]" />
+  <Skeleton className="h-[400px] w-[280px]" />
 );

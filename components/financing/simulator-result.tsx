@@ -34,8 +34,8 @@ export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
           <circle className="bg"></circle>
           <circle className="fg"></circle>
         </svg>
-        <div className="flex flex-col absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 min-w-64">
-          <p className="text-2xl font-medium mb-2 text-center">
+        <div className="absolute left-1/2 top-[55%] z-10 flex min-w-64 -translate-x-1/2 -translate-y-1/2 flex-col">
+          <p className="mb-2 text-center text-2xl font-medium">
             <CountUp
               initial={0}
               final={value}
@@ -46,11 +46,11 @@ export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
             />
             *
           </p>
-          <div className="flex gap-8 justify-between mx-10">
+          <div className="mx-10 flex justify-between gap-8">
             <p className="text-sm">Tasa e.a.</p>
             <p className="text-sm">{_ea.toFixed(2)}%*</p>
           </div>
-          <div className="flex gap-8 justify-between mx-10">
+          <div className="mx-10 flex justify-between gap-8">
             <p className="text-sm">Tasa n.m.v</p>
             <p className="text-sm">{_nvm.toFixed(2)}%*</p>
           </div>
@@ -59,7 +59,7 @@ export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
           viewBox="0 0 300 300"
           width="300"
           height="300"
-          className="absolute top-[53%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 rotate-180"
+          className="absolute left-1/2 top-[53%] z-10 -translate-x-1/2 -translate-y-1/2 rotate-180"
         >
           <path
             id="curve"

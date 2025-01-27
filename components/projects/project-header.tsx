@@ -20,7 +20,7 @@ const MENU_OPTIONS = [
 
 export const ProjectHeader = () => {
   return (
-    <header className=" bg-white left-0 right-0 shadow-lg px-6 pb-4 pt-3 flex items-end xl:items-center justify-between z-10">
+    <header className="left-0 right-0 z-10 flex items-end justify-between bg-white px-6 pb-4 pt-3 shadow-lg xl:items-center">
       <DesktopMenu />
       <MobileMenu />
     </header>
@@ -28,13 +28,13 @@ export const ProjectHeader = () => {
 };
 
 const DesktopMenu = () => (
-  <div className="hidden md:flex sm:gap-6 xl:gap-8 justify-center items-center w-full max-w-screen-2xl mx-auto">
-    <div className="flex-1 flex sm:gap-6 xl:gap-8 items-end">
+  <div className="mx-auto hidden w-full max-w-screen-2xl items-center justify-center sm:gap-6 md:flex xl:gap-8">
+    <div className="flex flex-1 items-end sm:gap-6 xl:gap-8">
       {MENU_OPTIONS.map(({ name, url }) => (
         <a
           key={name}
           href={url}
-          className="text-xs sm:text-sm xl:text-base text-primary-600 hover:text-primary-800 font-medium cursor-pointer transition-colors ease-in"
+          className="cursor-pointer text-xs font-medium text-primary-600 transition-colors ease-in hover:text-primary-800 sm:text-sm xl:text-base"
         >
           {name}
         </a>
@@ -45,15 +45,15 @@ const DesktopMenu = () => (
         unoptimized
         width="170"
         height="60"
-        className="animate-slide-in-top w-[120px] md:w-[140px] xl:w-[155px] 2xl:w-[170px]"
+        className="w-[120px] animate-slide-in-top md:w-[140px] xl:w-[155px] 2xl:w-[170px]"
         src="/main-page/inverclick-logo.avif"
         alt="Inverclick logo"
       />
     </Link>
-    <div className="flex-1 flex sm:gap-4 xl:gap-6 justify-end items-center">
+    <div className="flex flex-1 items-center justify-end sm:gap-4 xl:gap-6">
       <DisplayTRM />
       <a
-        className="border-2 border-primary-600 rounded-full cursor-pointer hover:scale-105 transition-all ease-in"
+        className="cursor-pointer rounded-full border-2 border-primary-600 transition-all ease-in hover:scale-105"
         href="/"
       >
         <Image
@@ -69,28 +69,28 @@ const DesktopMenu = () => (
 );
 
 const MobileMenu = () => (
-  <div className="flex md:hidden gap-3 sm:gap-6 xl:gap-8 justify-between items-end w-full">
+  <div className="flex w-full items-end justify-between gap-3 sm:gap-6 md:hidden xl:gap-8">
     <Image
       unoptimized
       width="170"
       height="60"
-      className="animate-slide-in-top w-[120px] md:w-[140px] xl:w-[170px]"
+      className="w-[120px] animate-slide-in-top md:w-[140px] xl:w-[170px]"
       src="/main-page/inverclick-logo.avif"
       alt="Inverclick logo"
     />
-    <div className="flex justify-center items-end gap-4">
+    <div className="flex items-end justify-center gap-4">
       <DisplayTRM />
-      <Menubar className="border-0 p-0 h-min">
+      <Menubar className="h-min border-0 p-0">
         <MenubarMenu>
-          <MenubarTrigger className="p-0 border-2 rounded-md border-primary-600 ">
-            <Menu className="h-4 w-4 text-primary-600 cursor-pointer m-1 " />
+          <MenubarTrigger className="rounded-md border-2 border-primary-600 p-0">
+            <Menu className="m-1 h-4 w-4 cursor-pointer text-primary-600" />
           </MenubarTrigger>
           <MenubarContent>
             {MENU_OPTIONS.map(({ name, url }) => (
               <MenubarItem asChild key={name}>
                 <a
                   href={url}
-                  className="text-sm xl:text-base text-primary-600 !hover:text-primary-800 font-medium cursor-pointer transition-colors ease-in"
+                  className="!hover:text-primary-800 cursor-pointer text-sm font-medium text-primary-600 transition-colors ease-in xl:text-base"
                 >
                   {name}
                 </a>
@@ -100,7 +100,7 @@ const MobileMenu = () => (
         </MenubarMenu>
       </Menubar>
       <a
-        className="border-2 border-primary-600 rounded-full cursor-pointer hover:scale-105 transition-all ease-in"
+        className="cursor-pointer rounded-full border-2 border-primary-600 transition-all ease-in hover:scale-105"
         href="/"
       >
         <Image

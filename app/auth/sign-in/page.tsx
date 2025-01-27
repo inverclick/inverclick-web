@@ -8,8 +8,8 @@ export default function Page() {
     <main>
       <div className="flex flex-col lg:h-screen">
         <Header />
-        <div className="flex-grow lg:divided-background">
-          <article className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-2xl h-full mx-auto">
+        <div className="lg:divided-background flex-grow">
+          <article className="mx-auto grid h-full max-w-screen-2xl grid-cols-1 lg:grid-cols-2">
             <LeftSection />
             <RightSection />
           </article>
@@ -22,8 +22,8 @@ export default function Page() {
 
 function LeftSection() {
   return (
-    <div className="relative flex justify-center items-center p-content lg:p-content-full">
-      <h2 className="text-center lg:text-left text-3xl lg:text-5xl font-bold">
+    <div className="p-content lg:p-content-full relative flex items-center justify-center">
+      <h2 className="text-center text-3xl font-bold lg:text-left lg:text-5xl">
         <p>¡Nos alegramos</p>
         <p>
           de volver a <span className="text-primary-500">VERTE!</span>
@@ -32,7 +32,7 @@ function LeftSection() {
       <CardService
         title="Soy constructora"
         link="https://company.inverclick.com"
-        className="hidden lg:flex absolute bottom-4 left-4"
+        className="absolute bottom-4 left-4 hidden lg:flex"
         target="_blank"
       />
     </div>
@@ -41,7 +41,7 @@ function LeftSection() {
 
 function RightSection() {
   return (
-    <div className="flex flex-col justify-center items-center w-full p-content-full">
+    <div className="p-content-full flex w-full flex-col items-center justify-center">
       <SignInForm />
     </div>
   );

@@ -196,9 +196,9 @@ export const ProjectFilters = ({
       </DialogTrigger>
       <DialogContent
         hideCloseButton
-        className="flex flex-col p-0 !max-w-less-tablet"
+        className="flex !max-w-less-tablet flex-col p-0"
       >
-        <header className="grid grid-cols-3 w-full items-center border-b py-4 px-6">
+        <header className="grid w-full grid-cols-3 items-center border-b px-6 py-4">
           <DialogClose>
             <X className="cursor-pointer" />
           </DialogClose>
@@ -206,7 +206,7 @@ export const ProjectFilters = ({
             Filtros
           </Typography>
         </header>
-        <main className="p-6 flex flex-col gap-6 overflow-x-auto">
+        <main className="flex flex-col gap-6 overflow-x-auto p-6">
           <LocationFilter
             departments={departments}
             currentDepartment={currentDepartment}
@@ -231,7 +231,7 @@ export const ProjectFilters = ({
             setMaxPrice={setMaxPrice}
           />
         </main>
-        <footer className="flex flex-col sm:flex-row gap-4 justify-between p-4 border-t">
+        <footer className="flex flex-col justify-between gap-4 border-t p-4 sm:flex-row">
           <Button onClick={onClearSearchParams} variant="secondary">
             Quitar filtros
           </Button>

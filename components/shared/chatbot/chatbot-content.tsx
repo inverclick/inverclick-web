@@ -475,11 +475,11 @@ export const ChatbotContent = () => {
       <PopoverContent
         side="top"
         align="end"
-        className="w-[calc(100vw-2rem)] md:w-96 p-0"
+        className="w-[calc(100vw-2rem)] p-0 md:w-96"
       >
         <Card className="border-none">
           <CardHeader>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage src="/avatar-assistant.svg" alt="Asistente" />
                 <AvatarFallback>AS</AvatarFallback>
@@ -489,7 +489,7 @@ export const ChatbotContent = () => {
           </CardHeader>
           <CardContent>
             {loadingMessages && (
-              <div className="grid place-content-center w-full h-96">
+              <div className="grid h-96 w-full place-content-center">
                 <Loader2 className="animate-spin-clockwise repeat-infinite" />
               </div>
             )}
@@ -507,7 +507,7 @@ export const ChatbotContent = () => {
             )}
           </CardContent>
           <CardFooter>
-            <form onSubmit={sendMessage} className="flex gap-2 w-full">
+            <form onSubmit={sendMessage} className="flex w-full gap-2">
               <Input
                 placeholder="Escribe un mensaje"
                 value={message}

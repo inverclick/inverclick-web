@@ -24,7 +24,7 @@ export default function Index() {
   return (
     <main>
       <Header />
-      <article className="p-content flex flex-col mb-20">
+      <article className="p-content mb-20 flex flex-col">
         <h1 className="text-3xl font-medium">
           TÉRMINOS Y CONDICIONES DE LA PLATAFORMA Y APP DE INVERCLICK
         </h1>
@@ -41,7 +41,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               I. DEFINICIONES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Cliente:</b> Se refiere a todas las personas naturales,
                 jurídicas o entidades de cualquier naturaleza que soliciten o
@@ -70,7 +70,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               II. CONDICIONES GENERALES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 El presente documento establece las políticas de uso de la
                 Plataforma y del APP, así como las condiciones de prestación de
@@ -114,7 +114,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               III. LA APP
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 El APP es un canal mediante el cual se puede acceder a los
                 distintos servicios que <b>Inverclick</b> tenga habilitados. En
@@ -122,7 +122,7 @@ export default function Index() {
                 suprimir cualquiera de los servicios, lo cual será informado a
                 través de los canales dispuestos por <b>Inverclick</b>.
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   <b>Acceso:</b> Para poder acceder a la App, deberás disponer
                   de conexión a internet y de un dispositivo que opere con la
@@ -145,7 +145,7 @@ export default function Index() {
                 </li>
               </ul>
               <b>Obligaciones del Usuario/Cliente</b>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>Hacer un debido uso de la App.</li>
                 <li>
                   Seguir las recomendaciones formuladas por <b>Inverclick</b> en
@@ -201,7 +201,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               IV. DERECHOS DE AUTOR / PROPIEDAD INDUSTRIAL
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Los textos, gráficas, imágenes, logotipos, iconos, software,
                 direcciones de página web, o cualquier otro contenido
@@ -256,14 +256,14 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               V. USO AUTORIZADO DE LA PLATAFORMA Y DEL APP
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Reglas generales:</b> Los Usuarios/Clientes no podrán usar la
                 Plataforma o el APP con el fin de transmitir, distribuir,
                 editar, almacenar, modificar, adaptar o de cualquier forma
                 transformar el material dispuesto en la Plataforma:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   De manera que se infrinjan las normas nacionales,
                   supranacionales o internacionales sobre derechos de autor,
@@ -284,7 +284,7 @@ export default function Index() {
                 violar o intentar violar la seguridad de la Plataforma o del
                 APP. Particularmente se encuentran inhabilitados para:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Acceder a información que no esté dirigida o autorizada a
                   dicho Usuario o Cliente o acceder a los servidores o cuentas a
@@ -331,7 +331,7 @@ export default function Index() {
                 Plataforma o el APP y los servicios que se realizan a través de
                 estos canales en los siguientes eventos:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Cuando se presenten o se adviertan irregularidades en el uso
                   de cualquiera de los servicios por parte del Usuario o del
@@ -363,7 +363,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               VI. USOS PROHIBIDOS EN LA PLATAFORMA O EN EL APP
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 La Plataforma y el APP solo podrán ser utilizados para
                 propósitos que se adecuen dentro del marco de las leyes de la
@@ -372,7 +372,7 @@ export default function Index() {
                 industrial. <b>Inverclick</b> prohíbe el uso de su Plataforma o
                 del APP en cualquiera de las siguientes formas:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Incluir cualquier información falsa, errónea, inexacta o que
                   de cualquier otra manera no corresponda con la realidad,
@@ -432,7 +432,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               VII. AVISO DE PRIVACIDAD
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 A través de este enlace encontrarás la Política de Tratamiento
                 de Datos Personales que regirá el Tratamiento de tus Datos
@@ -464,7 +464,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               VIII. DE LA TRANSFERENCIA DE DATOS
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 En el evento de que <b>Inverclick</b> comparta datos personales
                 de titulares con el CLIENTE, se entenderá que se hace bajo la
@@ -491,7 +491,7 @@ export default function Index() {
                 ) y de acuerdo con la autorización otorgada por el titular.
               </p>
               <b>OBLIGACIONES DEL CLIENTE:</b>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Dar tratamiento a los datos personales de los titulares en su
                   calidad de RESPONSABLE de acuerdo con la política de
@@ -555,7 +555,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               IX. INFORMACIÓN INCLUIDA POR USUARIOS / CLIENTES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 El Usuario o Cliente será responsable de forma exclusiva y
                 principal, por los textos y/o imágenes que publique en la
@@ -563,7 +563,7 @@ export default function Index() {
                 orden legal.
               </p>
               <p>El Usuario o Cliente no podrá:</p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Incluir material que esté protegido por las leyes sobre
                   derechos de autor o cualquier otro derecho de propiedad
@@ -622,9 +622,9 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               X. OBLIGACIONES DE LOS CLIENTES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>El Cliente deberá:</p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Pagar a <b>Inverclick</b> la remuneración acordada en la forma
                   y tiempos establecidos para la prestación del servicio y, por
@@ -697,7 +697,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XI. REGISTRO Y CONTRASEÑA (PASSWORD)
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Cada persona natural o jurídica que se encuentre interesada bien
                 sea en adquirir u ofrecer para la venta, arriendo, permuta o
@@ -738,7 +738,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XII. CESIÓN DEL USUARIO
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Las cuentas de usuario registradas no podrán ser objeto de
                 venta, cesión o cualquier otro título traslaticio sin el
@@ -763,7 +763,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XIII. NATURALEZA DE LOS SERVICIOS PRESTADOS POR INVERCLICK
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 La Plataforma y el APP son un Portal de Contacto, bajo los
                 lineamientos que ello implica, salvo que se informe lo contrario
@@ -785,12 +785,12 @@ export default function Index() {
                 por <b>Inverclick</b> trata de un portal de contacto, teniendo
                 únicamente como deberes a su cargo:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Exigir a todos los oferentes información que permita su
                   identificación, para lo cual tendrá un registro en el que
                   conste, como mínimo:
-                  <ul className="list-disc ml-10">
+                  <ul className="ml-10 list-disc">
                     <li>Nombre o razón social del oferente</li>
                     <li>Documento de identificación</li>
                     <li>Dirección física de notificaciones de contacto</li>
@@ -842,7 +842,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XIV. CONDICIONES ESPECIALES PARA ALGUNOS SERVICIOS
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <b>Servicio de acompañamiento en tu búsqueda</b>
               <p>
                 <b>Inverclick</b> podrá acompañarte en la búsqueda de tu
@@ -920,7 +920,7 @@ export default function Index() {
                 Plan +3, Plan +5, etc.
               </p>
               <p>Este servicio tiene las siguientes condiciones:</p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   El número de inmuebles que podrás publicar dependerá del
                   número de cupos que incluya el Plan + que adquieras y que{" "}
@@ -1007,7 +1007,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XV. RESPONSABILIDAD
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Inverclick</b> actúa solamente como un lugar o escenario para
                 que oferentes publiquen oportunidades de negocios (compras,
@@ -1015,7 +1015,7 @@ export default function Index() {
                 general, obtengan información útil relativa a este mercado, por
                 lo anterior <b>Inverclick</b>:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   No revisa ni censura las oportunidades de negocios publicadas.
                 </li>
@@ -1136,7 +1136,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XVI. PROMOCIONES, CONCURSOS Y EVENTOS
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Las promociones, concursos, sorteos y eventos que se implementen
                 estarán sujetas a las reglas y condiciones que en cada
@@ -1172,7 +1172,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XVII. PROTECCIÓN AL CONSUMIDOR
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <b>Garantía legal</b>
               <p>
                 Cuando por causas demostradas imputables a <b>Inverclick</b>,
@@ -1184,7 +1184,7 @@ export default function Index() {
               <p>
                 En esos casos, <b>Inverclick</b> podrá:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Prestar nuevamente el mismo servicio de acuerdo con las
                   condiciones ofrecidas y sin ningún tipo de cargo adicional,
@@ -1216,7 +1216,7 @@ export default function Index() {
                 En los demás casos, podrás ejercer el derecho de retracto, para
                 lo cual deberás tener en cuenta lo siguiente:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   La reclamación debe ser realizada dentro de los 5 días hábiles
                   siguientes al recibo del producto o servicio. El Cliente
@@ -1261,7 +1261,7 @@ export default function Index() {
                 electrónico, el Usuario o Cliente podrá solicitar la reversión
                 de los pagos si se presenta alguno de los siguientes eventos:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>Por ser objeto de fraude</li>
                 <li>Que corresponda a una operación no solicitada</li>
                 <li>Que el producto adquirido no sea recibido</li>
@@ -1277,7 +1277,7 @@ export default function Index() {
                 a la fecha en la que el Usuario/Cliente advirtió la existencia
                 de la causal, deberá solicitar:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   La reversión a su entidad bancaria y notificar a{" "}
                   <b>Inverclick</b> sobre la solicitud de reversión del pago,
@@ -1295,7 +1295,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XVIII. DECLARACIÓN DE ORIGEN DE FONDOS
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 El Usuario o Cliente declara y certifica que él ni la entidad
                 que pudiera estar representando, así como ninguno de sus
@@ -1317,8 +1317,8 @@ export default function Index() {
               IXX. SUGERENCIAS PARA EL BUEN FUNCIONAMIENTO DE LA PLATAFORMA O EL
               APP
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
-              <ul className="list-disc ml-10">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
+              <ul className="ml-10 list-disc">
                 <li>No es funcional el sistema operativo Windows server.</li>
                 <li>Se recomienda no navegar en Safari.</li>
                 <li>
@@ -1338,7 +1338,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XX. CANALES DE CONTACTO
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Recuerda que en cualquier momento podrás hacer la selección,
                 actualización o modificación de tus canales de contacto para
@@ -1377,12 +1377,12 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XXI. PROCEDIMIENTO PQRS
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 Las PQRS presentadas ante <b>Inverclick</b> deberán contener
                 como mínimo los siguientes aspectos:
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Nombres y apellidos completos del solicitante, de su
                   representante y/o apoderado (de ser el caso) o razón social
@@ -1403,7 +1403,7 @@ export default function Index() {
                 </li>
               </ul>
               <b>Tiempos de Respuesta</b>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Las peticiones, quejas y reclamos se resolverán en el término
                   de quince (15) días hábiles contados a partir del día
@@ -1437,7 +1437,7 @@ export default function Index() {
             <AccordionTriggerWithArrowFirst className="text-2xl !font-light">
               XXII. DISPOSICIONES FINALES
             </AccordionTriggerWithArrowFirst>
-            <AccordionContent className="ml-14 text-lg space-y-2">
+            <AccordionContent className="ml-14 space-y-2 text-lg">
               <p>
                 <b>Inverclick</b> tendrá la facultad discrecional de eliminar,
                 borrar, corregir, adaptar cualquier texto o imagen publicados
@@ -1545,7 +1545,7 @@ export default function Index() {
               <p>
                 <b>DISCLAIMERS SOBRE LOS ANUNCIOS</b>
               </p>
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   La clasificación del estrato es potestativa del municipio, el
                   anunciante no puede comprometerse con una clasificación

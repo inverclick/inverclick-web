@@ -132,11 +132,11 @@ export function Markers({ projects = [] }: MarkerProps) {
                   : isVisited
                     ? "bg-primary-100"
                     : "bg-white"
-              } py-1 px-2 rounded-full border-[1px] border-primary-600 shadow-md whitespace-nowrap ${
+              } whitespace-nowrap rounded-full border-[1px] border-primary-600 px-2 py-1 shadow-md ${
                 isCurrentOpen ? "text-white" : "text-black"
               } `}
             >
-              <span className=" font-medium">
+              <span className="font-medium">
                 {currency === "COP"
                   ? limitPrice(project.typologies[0].price, currency)
                   : formatCurrency(

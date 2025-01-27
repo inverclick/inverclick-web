@@ -29,13 +29,13 @@ export const StateFilter = ({
           <button
             key={value}
             onClick={() => onChange(value)}
-            className={`h-14 flex-1 flex justify-center items-center border-x-[0.5px] border-y border-black first:rounded-l-lg first:border-l last:border-r last:rounded-r-lg p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${
+            className={`flex h-14 flex-1 items-center justify-center border-x-[0.5px] border-y border-black p-3 transition-colors ease-in first:rounded-l-lg first:border-l last:rounded-r-lg last:border-r hover:border-primary-800 hover:bg-primary-800 hover:text-white ${
               currentState.includes(value)
-                ? "bg-primary-600 text-white border-primary-600"
+                ? "border-primary-600 bg-primary-600 text-white"
                 : ""
             }`}
           >
-            <span className="text-xs md:text-base font-medium">{label}</span>
+            <span className="text-xs font-medium md:text-base">{label}</span>
           </button>
         ))}
       </div>

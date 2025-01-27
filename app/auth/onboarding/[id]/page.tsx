@@ -28,7 +28,7 @@ export default async function OnboardingPage({
   }
 
   return (
-    <main className="p-content-full min-h-screen w-screen flex justify-center lg:items-center">
+    <main className="p-content-full flex min-h-screen w-screen justify-center lg:items-center">
       <OnboardingForm user={user} />
     </main>
   );

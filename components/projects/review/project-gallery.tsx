@@ -20,7 +20,7 @@ export const ProjectGallery = ({ photos }: ProjectGalleryProps) => {
   const restPhotos = [...photos].slice(1, 5);
 
   return (
-    <div className="relative flex flex-col md:flex-row gap-3 md:h-[312px] lg:h-[412px] 2xl:h-[612px]">
+    <div className="relative flex flex-col gap-3 md:h-[312px] md:flex-row lg:h-[412px] 2xl:h-[612px]">
       <Image
         unoptimized
         src={getAssetUrl(mainPhoto)}
@@ -31,7 +31,7 @@ export const ProjectGallery = ({ photos }: ProjectGalleryProps) => {
           setOpen(true);
           setPhotoScrollTo(mainPhoto);
         }}
-        className="cursor-pointer w-full h-auto md:rounded-l-3xl flex-1 md:w-[312px] lg:h-[412px] 2xl:h-[612px] object-cover hover:brightness-[0.8]"
+        className="h-auto w-full flex-1 cursor-pointer object-cover hover:brightness-[0.8] md:w-[312px] md:rounded-l-3xl lg:h-[412px] 2xl:h-[612px]"
       />
       <div
         className={`pswp-gallery grid grid-cols-${
@@ -51,19 +51,19 @@ export const ProjectGallery = ({ photos }: ProjectGalleryProps) => {
               setOpen(true);
               setPhotoScrollTo(photo);
             }}
-            className={`cursor-pointer md:h-[150px] md:w-[200px] lg:h-[200px] lg:w-[300px] 2xl:h-[300px] 2xl:w-[400px] object-cover hover:brightness-[0.8] ${
+            className={`cursor-pointer object-cover hover:brightness-[0.8] md:h-[150px] md:w-[200px] lg:h-[200px] lg:w-[300px] 2xl:h-[300px] 2xl:w-[400px] ${
               index === 1 ? "md:rounded-tr-3xl" : ""
             } ${index === 3 ? "md:rounded-br-3xl" : ""}`}
           />
         ))}
       </div>
 
-      <span className="absolute flex justify-center items-center gap-2 top-1 left-1 md:top-3 md:left-4 bg-gray-300/80 px-2 py-1 md:px-3 md:py-2 text-xs rounded-xl border border-black">
-        <BadgeCheck className="text-green-600 h-5 w-5" />
+      <span className="absolute left-1 top-1 flex items-center justify-center gap-2 rounded-xl border border-black bg-gray-300/80 px-2 py-1 text-xs md:left-4 md:top-3 md:px-3 md:py-2">
+        <BadgeCheck className="h-5 w-5 text-green-600" />
         Proyecto verificado
       </span>
 
-      <span className="cursor-pointer absolute flex justify-center items-center gap-2 bottom-1 right-1 md:bottom-3 md:right-4 bg-gray-300/80 px-2 py-1 md:px-3 md:py-2 text-xs rounded-xl border border-black">
+      <span className="absolute bottom-1 right-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-black bg-gray-300/80 px-2 py-1 text-xs md:bottom-3 md:right-4 md:px-3 md:py-2">
         <MasonryView
           open={open}
           setOpen={setOpen}

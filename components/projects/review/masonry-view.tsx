@@ -42,7 +42,7 @@ export const MasonryView = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="flex items-center justify-center gap-1">
-          <Grip className="text-gray-600 h-5 w-5" />
+          <Grip className="h-5 w-5 text-gray-600" />
           Mostrar más fotos
         </div>
       </DialogTrigger>
@@ -52,7 +52,7 @@ export const MasonryView = ({
         hasPadding={false}
         className="flex flex-col"
       >
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 p-6 h-max bg-white">
+        <DialogHeader className="flex h-max flex-row items-center justify-between space-y-0 bg-white p-6">
           <ChevronLeft
             onClick={() => setOpen(false)}
             className="cursor-pointer text-black"
@@ -64,7 +64,7 @@ export const MasonryView = ({
             <SaveFavorite className="hidden lg:flex" />
           </div>
         </DialogHeader>
-        <div className="p-6 overflow-y-auto">
+        <div className="overflow-y-auto p-6">
           <PhotosGrid photoScrollTo={photoScrollTo} photos={photos} />
         </div>
       </DialogContent>
@@ -91,7 +91,7 @@ function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
 
   return (
     <>
-      <Masonry columnsCount={2} gutter="12px" className="max-w-3xl mx-auto">
+      <Masonry columnsCount={2} gutter="12px" className="mx-auto max-w-3xl">
         {photos.map((photo, index) => (
           <Image
             key={photo}
@@ -100,7 +100,7 @@ function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
             alt={photo}
             width="600"
             height="400"
-            className="cursor-pointer object-cover !h-full w-auto hover:brightness-[0.8]"
+            className="!h-full w-auto cursor-pointer object-cover hover:brightness-[0.8]"
             onClick={() => {
               setPhotosSliderOpen(true);
               setInitialPhotoIndex(index);
@@ -157,15 +157,15 @@ function PhotosSlider({
         hasPadding={false}
         className="grid grid-rows-[auto,minmax(0,1fr)] bg-black"
       >
-        <DialogHeader className="grid grid-cols-3 items-center space-y-0 p-6 bg-black">
+        <DialogHeader className="grid grid-cols-3 items-center space-y-0 bg-black p-6">
           <X
             onClick={() => setIsOpen(false)}
             className="cursor-pointer text-white"
           />
-          <p className="text-start md:text-center text-white">
+          <p className="text-start text-white md:text-center">
             {current}/{count}
           </p>
-          <div className={cn("flex gap-3 text-white justify-end")}>
+          <div className={cn("flex justify-end gap-3 text-white")}>
             <ShareProject
               isIconOnly
               properties={{ triggerButton: { variant: "black" } }}
@@ -197,7 +197,7 @@ function PhotosSlider({
                       alt={photo}
                       width="800"
                       height="600"
-                      className="object-contain w-full h-full py-8 mx-auto"
+                      className="mx-auto h-full w-full object-contain py-8"
                     />
                   </CarouselItem>
                 );
@@ -205,8 +205,8 @@ function PhotosSlider({
             </CarouselContent>
             {matchesDesktop && (
               <>
-                <CarouselPrevious className="bg-transparent text-white translate-x-24" />
-                <CarouselNext className="bg-transparent text-white -translate-x-24" />
+                <CarouselPrevious className="translate-x-24 bg-transparent text-white" />
+                <CarouselNext className="-translate-x-24 bg-transparent text-white" />
               </>
             )}
           </Carousel>

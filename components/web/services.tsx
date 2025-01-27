@@ -21,7 +21,7 @@ export function Services({ className, ...props }: ServicesProps) {
   return (
     <ul
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2 gap-8 mx-4 md:mx-auto mb-8 lg:mb-24",
+        "mx-4 mb-8 grid grid-cols-1 gap-8 md:mx-auto md:grid-cols-2 lg:mb-24",
         className
       )}
       {...props}

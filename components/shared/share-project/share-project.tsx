@@ -63,7 +63,7 @@ export const ShareProject = ({
             Comparte este proyecto para que otros puedan verlo.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 sm:grid-cols-2 mt-2 gap-3">
+        <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Button variant="outline" onClick={copyLink}>
             <Icon icon={Copy} />
             Copiar link

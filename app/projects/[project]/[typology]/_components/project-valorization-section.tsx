@@ -27,9 +27,9 @@ export const ProjectValorizationSection = ({
       <Typography variant="h3" className="mb-12 lg:mb-24">
         Este proyecto potencia tu inversión y tu patrimonio*
       </Typography>
-      <div className="lg:hidden flex flex-col gap-4 mb-12">
+      <div className="mb-12 flex flex-col gap-4 lg:hidden">
         <div className="flex items-start gap-1">
-          <div className="mt-1 size-4 aspect-square bg-slate-500 rounded-full"></div>
+          <div className="mt-1 aspect-square size-4 rounded-full bg-slate-500"></div>
           <div className="flex flex-col">
             <Typography>Valor actual:</Typography>
             <Typography className="font-semibold">
@@ -38,7 +38,7 @@ export const ProjectValorizationSection = ({
           </div>
         </div>
         <div className="flex items-start gap-1">
-          <div className="mt-1 size-4 aspect-square bg-teal-500 rounded-full"></div>
+          <div className="mt-1 aspect-square size-4 rounded-full bg-teal-500"></div>
           <div className="flex flex-col">
             <Typography>Valor proyectado en {months} meses:</Typography>
             <Typography className="font-semibold">
@@ -47,7 +47,7 @@ export const ProjectValorizationSection = ({
           </div>
         </div>
         <div className="flex items-start gap-1">
-          <div className="mt-1 size-4 aspect-square bg-green-500 rounded-full"></div>
+          <div className="mt-1 aspect-square size-4 rounded-full bg-green-500"></div>
           <div className="flex flex-col">
             <Typography>Podrías ganar en valoración:</Typography>
             <Typography className="font-semibold">
@@ -57,16 +57,16 @@ export const ProjectValorizationSection = ({
           </div>
         </div>
       </div>
-      <div className="relative flex items-end gap-4 w-full h-56 lg:h-96 mb-4 border-b">
+      <div className="relative mb-4 flex h-56 w-full items-end gap-4 border-b lg:h-96">
         <div
           data-element="current-price-bar"
-          className="absolute w-10 md:w-20 left-[30%] -translate-x-1/2"
+          className="absolute left-[30%] w-10 -translate-x-1/2 md:w-20"
           style={{
             height: `calc(100% - (${percentage} * 100%))`,
           }}
         >
-          <div className="w-full h-full bg-slate-500"></div>
-          <div className="hidden lg:block absolute bottom-full right-full">
+          <div className="h-full w-full bg-slate-500"></div>
+          <div className="absolute bottom-full right-full hidden lg:block">
             <Typography className="whitespace-nowrap text-right">
               Valor actual:
             </Typography>
@@ -76,12 +76,12 @@ export const ProjectValorizationSection = ({
           </div>
         </div>
         <div
-          className="hidden lg:block absolute lg:left-[calc(30%+2.5rem)] h-[0.5px] right-[30%] bg-black"
+          className="absolute right-[30%] hidden h-[0.5px] bg-black lg:left-[calc(30%+2.5rem)] lg:block"
           style={{
             bottom: `calc(100% - (${percentage} * 100%))`,
           }}
         >
-          <div className="hidden lg:block absolute bottom-0 left-full">
+          <div className="absolute bottom-0 left-full hidden lg:block">
             <Typography className="whitespace-nowrap text-right">
               Podrías ganar en valorización:
             </Typography>
@@ -95,10 +95,10 @@ export const ProjectValorizationSection = ({
         </div>
         <div
           data-element="valorization-price-bar"
-          className="absolute w-10 md:w-20 h-full left-[50%] -translate-x-1/2"
+          className="absolute left-[50%] h-full w-10 -translate-x-1/2 md:w-20"
         >
-          <div className="w-full h-full bg-teal-500"></div>
-          <div className="hidden lg:block absolute bottom-full right-full">
+          <div className="h-full w-full bg-teal-500"></div>
+          <div className="absolute bottom-full right-full hidden lg:block">
             <Typography className="whitespace-nowrap text-right">
               Valor proyectado en {months} meses:
             </Typography>
@@ -107,7 +107,7 @@ export const ProjectValorizationSection = ({
             </Typography>
           </div>
         </div>
-        <div className="hidden lg:block absolute bottom-full lg:left-[calc(50%+2.5rem)] h-[0.5px] right-[30%] bg-black"></div>
+        <div className="absolute bottom-full right-[30%] hidden h-[0.5px] bg-black lg:left-[calc(50%+2.5rem)] lg:block"></div>
       </div>
       <Typography>
         Estos valores son de referencia y representan cálculos estimados que

@@ -105,7 +105,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
           setSimulatorType={setSimulatorType}
           simulatorType={simulatorType}
         />
-        <div className="flex flex-col md:flex-row gap-12 justify-between lg:h-[488px] mb-4">
+        <div className="mb-4 flex flex-col justify-between gap-12 md:flex-row lg:h-[488px]">
           {simulatorType === "VALOR" ? (
             <ValueSimulator
               onReset={() => setValueCredit(0)}
@@ -157,7 +157,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
           ) : null}
           <article
             key={simulatorType}
-            className="flex-1 flex justify-center items-center animate-blurred-fade-in"
+            className="flex flex-1 animate-blurred-fade-in items-center justify-center"
           >
             <SimulatorResult
               value={simulatorType === "VALOR" ? valueCredit : quotaCredit}

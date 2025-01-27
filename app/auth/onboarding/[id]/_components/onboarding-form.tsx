@@ -93,7 +93,7 @@ export const OnboardingForm = ({ user }: OnboardingFormProps) => {
 
   return (
     <FormikProvider value={form}>
-      <Form id="onboarding-form" className="flex flex-col w-full max-w-lg">
+      <Form id="onboarding-form" className="flex w-full max-w-lg flex-col">
         <Typography variant="h4" className="mb-4">
           {ONBOARDING_FORM_TITLE}
         </Typography>

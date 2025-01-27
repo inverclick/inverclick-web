@@ -43,10 +43,10 @@ export const SignupNewsletter = () => {
     <FormikProvider value={form}>
       <Form
         id="signup-newsletter-form"
-        className="flex flex-col gap-4 md:max-w-sm xl:max-w-md text-base md:text-lg"
+        className="flex flex-col gap-4 text-base md:max-w-sm md:text-lg xl:max-w-md"
       >
         <Typography>
-          Suscríbete <span className="text-primary font-medium">GRATIS</span>{" "}
+          Suscríbete <span className="font-medium text-primary">GRATIS</span>{" "}
           para recibir consejos y noticias de inversión.
         </Typography>
         <InputFormikNT

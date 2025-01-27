@@ -40,7 +40,7 @@ export const ProjectHero = ({
 }: ProjectHeroProps) => {
   return (
     <section className={cn("flex flex-col gap-4 md:gap-6 xl:gap-8", className)}>
-      <div className="flex gap-4 justify-between">
+      <div className="flex justify-between gap-4">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -62,7 +62,7 @@ export const ProjectHero = ({
         </Breadcrumb>
         <DisplayTRM size="base" className="hidden md:block" />
       </div>
-      <div className="flex flex-col md:flex-row justify-between gap-4 md:items-center">
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <Typography variant="h1">{name}</Typography>
         <div className="flex gap-4">
           <ShareProject isIconOnly className="lg:hidden" />
@@ -73,14 +73,14 @@ export const ProjectHero = ({
         </div>
       </div>
       <ProjectGallery photos={photos} />
-      <div className="flex flex-col xl:flex-row justify-between gap-4 px-0 xl:px-6">
-        <span className="flex gap-2 justify-center">
-          <Icon icon={MapPin} className="hidden xl:flex size-6 text-primary" />
+      <div className="flex flex-col justify-between gap-4 px-0 xl:flex-row xl:px-6">
+        <span className="flex justify-center gap-2">
+          <Icon icon={MapPin} className="hidden size-6 text-primary xl:flex" />
           <Typography className="text-center xl:text-left">
             {department}, {city} / {address}
           </Typography>
         </span>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
           <Typography>Desde:</Typography>
           <DisplayFormattedCurrency number={price} showAsterix />
         </div>

@@ -22,11 +22,11 @@ export function StepButton({
   return (
     <button
       onClick={onClick}
-      className={cn("relative step  border rounded-full", className, {
+      className={cn("step relative rounded-full border", className, {
         "border-transparent": current || active,
         "border-slate-400": !(current || active),
-        "w-10 h-10": current || active,
-        "w-8 h-8": !(current || active),
+        "h-10 w-10": current || active,
+        "h-8 w-8": !(current || active),
         "bg-primary-600 text-white": current || active,
         "bg-white": !(current || active),
       })}

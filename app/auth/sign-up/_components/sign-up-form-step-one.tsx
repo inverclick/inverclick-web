@@ -53,8 +53,8 @@ export function SignUpFormStepOne({
   });
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <Typography variant="h3" className="text-center mb-4">
+    <div className="flex w-full flex-col items-center justify-center">
+      <Typography variant="h3" className="mb-4 text-center">
         ¡Empecemos!
       </Typography>
       <Typography className="mb-8">
@@ -64,7 +64,7 @@ export function SignUpFormStepOne({
         </Link>
       </Typography>
       <FormikProvider value={form}>
-        <Form id="sign-up-step-one-form" className="flex flex-col w-full">
+        <Form id="sign-up-step-one-form" className="flex w-full flex-col">
           <InputFormikNT
             id="email"
             classNames={{ container: "mb-4" }}
@@ -93,12 +93,12 @@ export function SignUpFormStepOne({
           <Button
             type="submit"
             form="sign-up-step-one-form"
-            className="w-full mb-8"
+            className="mb-8 w-full"
             isLoading={loading}
           >
             Siguiente
           </Button>
-          <Typography className="text-center mb-8">
+          <Typography className="mb-8 text-center">
             Al registrarte, aceptas nuestras{" "}
             <Link href="/policy" className="font-bold">
               Políticas de Privacidad
@@ -109,7 +109,7 @@ export function SignUpFormStepOne({
             </Link>
           </Typography>
           <DownloadAppModal />
-          <Button variant="link" className="lg:hidden mt-4">
+          <Button variant="link" className="mt-4 lg:hidden">
             <Link href="/">Soy constructora</Link>
           </Button>
         </Form>

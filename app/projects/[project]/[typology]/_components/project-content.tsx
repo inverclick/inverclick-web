@@ -37,18 +37,18 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
   return (
     <article className="flex gap-4">
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="flex items-center mb-12">
+        <TabsList className="mb-12 flex items-center">
           <TabsTrigger value="description">Descripción</TabsTrigger>
           <TabsTrigger value="types">Tipologías</TabsTrigger>
           <TabsTrigger value="urban">Urbanismo</TabsTrigger>
           <TabsTrigger
             value="credit"
-            className="mx-6 px-2 py-1 border border-primary rounded-lg text-base md:text-lg lg:text-xl hover:bg-primary-100 transition-colors ease-in !no-underline"
+            className="mx-6 rounded-lg border border-primary px-2 py-1 text-base !no-underline transition-colors ease-in hover:bg-primary-100 md:text-lg lg:text-xl"
           >
             Simulador de crédito
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="max-w-5xl mx-auto mt-0">
+        <TabsContent value="description" className="mx-auto mt-0 max-w-5xl">
           <ProjectVerifiedCard project={project} className="mb-12" />
           <ProjectInformationSection
             project={project}
@@ -66,13 +66,13 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
           />
           <ProjectCreditSimulatorSection typology={typology} />
         </TabsContent>
-        <TabsContent value="types" className="max-w-5xl mx-auto mt-0">
+        <TabsContent value="types" className="mx-auto mt-0 max-w-5xl">
           <TypologiesSection typologies={project.typologies} />
         </TabsContent>
-        <TabsContent value="urban" className="max-w-5xl mx-auto mt-0">
+        <TabsContent value="urban" className="mx-auto mt-0 max-w-5xl">
           <UrbanismSection project={project} />
         </TabsContent>
-        <TabsContent value="credit" className="max-w-5xl mx-auto mt-0">
+        <TabsContent value="credit" className="mx-auto mt-0 max-w-5xl">
           <CreditSimulatorSection typology={typology} />
         </TabsContent>
       </Tabs>
@@ -90,17 +90,17 @@ const ProjectVerifiedCard = ({
   return (
     <article
       className={cn(
-        "flex flex-col lg:flex-row lg:items-center border rounded-lg p-4 ",
+        "flex flex-col rounded-lg border p-4 lg:flex-row lg:items-center",
         props.className
       )}
     >
       {/* WARNING: project.plan can be undefined */}
       {project.plan && isProjectVerified(project.plan.name) && (
         <>
-          <div className="flex gap-2 justify-center items-center">
+          <div className="flex items-center justify-center gap-2">
             <Icon
               icon={ShieldCheck}
-              className={cn("size-6 ", {
+              className={cn("size-6", {
                 "text-green-500": isProjectVerified(project.plan.name),
                 "text-slate-500": !isProjectVerified(project.plan.name),
               })}
@@ -122,10 +122,10 @@ const ProjectVerifiedCard = ({
               </Tooltip>
             </TooltipProvider>
           </div>
-          <div className="my-4 lg:mx-4 lg:my-0 w-full h-[0.5px] lg:w-[0.5px] lg:h-6 bg-border"></div>
+          <div className="my-4 h-[0.5px] w-full bg-border lg:mx-4 lg:my-0 lg:h-6 lg:w-[0.5px]"></div>
         </>
       )}
-      <div className="flex-1 flex flex-col lg:flex-row justify-between lg:items-center gap-4">
+      <div className="flex flex-1 flex-col justify-between gap-4 lg:flex-row lg:items-center">
         <Typography className="text-center">
           Según nuestros usuarios, es uno de los proyectos más solicitados.
         </Typography>
@@ -133,7 +133,7 @@ const ProjectVerifiedCard = ({
           <Typography variant="h4" className="text-center">
             4.91
           </Typography>
-          <div className="flex gap-1 items-center">
+          <div className="flex items-center gap-1">
             <Icon icon={Star} />
             <Icon icon={Star} />
             <Icon icon={Star} />
@@ -142,7 +142,7 @@ const ProjectVerifiedCard = ({
           </div>
         </div>
       </div>
-      <div className="my-4 lg:mx-4 lg:my-0 w-full h-[0.5px] lg:w-[0.5px] lg:h-6 bg-border"></div>
+      <div className="my-4 h-[0.5px] w-full bg-border lg:mx-4 lg:my-0 lg:h-6 lg:w-[0.5px]"></div>
       <div className="flex flex-col items-center">
         <Typography variant="h4" className="text-center">
           54

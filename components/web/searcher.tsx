@@ -48,8 +48,8 @@ export function Searcher({ departments }: SearcherProps) {
 
   return (
     <div className="w-full">
-      <div className="flex gap-4 bg-white rounded-full items-center">
-        <div className="flex-grow grid grid-cols-[1fr_2px_1fr] gap-4 p-2 md:p-4">
+      <div className="flex items-center gap-4 rounded-full bg-white">
+        <div className="grid flex-grow grid-cols-[1fr_2px_1fr] gap-4 p-2 md:p-4">
           <DepartmentsSelect
             departments={departments}
             value={department}
@@ -70,7 +70,7 @@ export function Searcher({ departments }: SearcherProps) {
               trimObject({ department, city })
             ).toString(),
           }}
-          className="mx-2 p-2 md:p-4 rounded-full bg-primary-600 hover:bg-primary-700 transition-colors"
+          className="mx-2 rounded-full bg-primary-600 p-2 transition-colors hover:bg-primary-700 md:p-4"
         >
           <Search color="white" />
         </Link>
@@ -138,7 +138,7 @@ type CustomSelectTriggerProps = ComponentProps<typeof SelectTrigger>;
 function CustomSelectTrigger({ children, ...props }: CustomSelectTriggerProps) {
   return (
     <SelectTrigger
-      className="border-none justify-center text-sm md:text-xl"
+      className="justify-center border-none text-sm md:text-xl"
       showChevron={false}
       {...props}
     >

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <section className="h-screen w-screen flex flex-col justify-center items-center gap-2">
+    <section className="flex h-screen w-screen flex-col items-center justify-center gap-2">
       <Typography variant="h1">404</Typography>
       <Typography className="mb-4">Página no encontrada</Typography>
       <Button>
@@ -13,7 +13,7 @@ export default function NotFound() {
       </Button>
       <Image
         unoptimized
-        className="absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full"
+        className="absolute bottom-0 left-0 right-0 -z-10 h-full w-full object-cover"
         src="/main-page/main-background.avif"
         alt="Inverclick fondo de pantalla"
         width="1200"

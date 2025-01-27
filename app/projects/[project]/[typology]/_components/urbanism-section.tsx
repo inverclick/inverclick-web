@@ -41,23 +41,23 @@ export const UrbanismSection = ({
                   alt="Urbanismo"
                   width={600}
                   height={400}
-                  className="object-contain w-full h-full"
+                  className="h-full w-full object-contain"
                 />
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="translate-x-14 z-10" />
-          <CarouselNext className="-translate-x-14 z-10" />
+          <CarouselPrevious className="z-10 translate-x-14" />
+          <CarouselNext className="z-10 -translate-x-14" />
         </Carousel>
       )}
       {project.urbanism_files.length > 0 && (
-        <ul className="flex justify-center flex-col items-center gap-2">
+        <ul className="flex flex-col items-center justify-center gap-2">
           {project.urbanism_files.map((src, index) => (
             <li key={src}>
               <a
                 href={getAssetUrl(src)}
                 target="_blank"
-                className="w-fit bg-primary text-white px-4 py-2 rounded-3xl"
+                className="w-fit rounded-3xl bg-primary px-4 py-2 text-white"
               >
                 {"Archivo de Urbanismo #" + index + 1}
               </a>

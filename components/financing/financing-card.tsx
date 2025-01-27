@@ -47,7 +47,7 @@ export const FinancingCard = ({
         onKeyDown={handleCardClick}
         className={`${isFlipped ? "z-30" : ""} flip-card ${
           isFlipped ? "flipped" : ""
-        } flex-1 my-atropos m-2 drop-shadow-2xl cursor-pointer`}
+        } my-atropos m-2 flex-1 cursor-pointer drop-shadow-2xl`}
         style={height ? { minHeight: height } : undefined}
       >
         <div
@@ -79,7 +79,7 @@ export const FinancingCard = ({
         </div>
       </article>
       {isFlipped ? (
-        <div className="fixed bottom-0 top-0 left-0 right-0 bg-black/70 z-10 animate-fade-in" />
+        <div className="fixed bottom-0 left-0 right-0 top-0 z-10 animate-fade-in bg-black/70" />
       ) : null}
     </>
   );
