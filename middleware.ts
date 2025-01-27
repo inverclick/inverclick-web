@@ -1,10 +1,16 @@
+import { ENV_VARS } from "@/global/env";
+import { canContinueToProjectPreview } from "@/middlewares/can-continue-to-project-preview";
 import { handlePreRegistration } from "@/middlewares/handle-pre-registration";
 import { handleTRM } from "@/middlewares/handle-trm";
 import { updateSession } from "@/middlewares/update-session";
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   console.log("Running middleware");
+
+  if (!canContinueToProjectPreview(request)) {
+    return NextResponse.redirect(new URL("/", ENV_VARS.BASE_URL));
+  }
 
   await handlePreRegistration(request);
 
