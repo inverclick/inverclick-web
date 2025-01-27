@@ -113,7 +113,7 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
           <section className="mb-16 w-full px-4 md:px-16 lg:mb-0">
             <Searcher departments={departments} />
             <h3 className="mt-4 text-center text-sm text-white md:text-base">
-              Casas - Apartamentos - Lotes - Fracciones
+              Casas - Apartamentos - Lotes
             </h3>
           </section>
         </div>
@@ -238,7 +238,7 @@ function Content({ departments }: Content) {
           <section className="mb-16 w-full px-4 md:px-16 lg:mb-0">
             <Searcher departments={departments} />
             <h3 className="mt-4 text-center text-sm text-white md:text-base">
-              Casas - Apartamentos - Lotes - Fracciones
+              Casas - Apartamentos - Lotes
             </h3>
           </section>
         </div>
