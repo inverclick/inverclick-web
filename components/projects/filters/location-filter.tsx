@@ -77,7 +77,7 @@ export const LocationFilter = ({
   return (
     <section className="flex flex-col gap-3">
       <h4 className="font-medium md:text-lg">Ubicación</h4>
-      <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+      <div className="flex flex-col gap-4 md:flex-row md:gap-8">
         <CustomSelect
           label="Departamento"
           options={departmentsOptions}
@@ -109,8 +109,8 @@ const CustomSelect = ({
   value,
 }: CustomSelectProps) => (
   <Select value={value} onValueChange={onChange} disabled={!options.length}>
-    <SelectTrigger className="relative h-14 pb-0 pt-4 rounded-lg border-zinc-800 text-sm md:text-base">
-      <p className="absolute top-1 left-3 text-[10px] md:text-xs font-light">
+    <SelectTrigger className="relative h-14 rounded-lg border-zinc-800 pb-0 pt-4 text-sm md:text-base">
+      <p className="absolute left-3 top-1 text-[10px] font-light md:text-xs">
         {label}
       </p>
       <SelectValue />

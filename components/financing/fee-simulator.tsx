@@ -45,9 +45,9 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
   }
 
   return (
-    <article className="flex-1 flex flex-col gap-6 animate-blurred-fade-in">
-      <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
-        <Typography className="flex-grow flex-shrink-0">
+    <article className="flex flex-1 animate-blurred-fade-in flex-col gap-6">
+      <div className="flex flex-col items-center justify-between gap-4 lg:flex-row">
+        <Typography className="flex-shrink-0 flex-grow">
           ¿Cuál es el valor de la cuota que quiero pagar?
         </Typography>
         <SelectCurrency className="lg:max-w-20" />
@@ -57,11 +57,11 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
         intlConfig={{ locale, currency }}
         decimalsLimit={2}
         value={inputValue}
-        className="w-full text-3xl font-semibold h-20 border border-black rounded-xl px-4 focus:outline-none"
+        className="h-20 w-full rounded-xl border border-black px-4 text-3xl font-semibold focus:outline-none"
         onValueChange={(value) => setInputValue(String(value))}
       />
-      <div className="flex flex-col lg:flex-row gap-4 mb-4">
-        <div className="flex-1 flex flex-col">
+      <div className="mb-4 flex flex-col gap-4 lg:flex-row">
+        <div className="flex flex-1 flex-col">
           <Typography variant="h4" className="mb-4 text-center lg:text-left">
             ¿A cuantos años?
           </Typography>
@@ -78,7 +78,7 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
             />
           </div>
         </div>
-        <div className="flex-1 flex flex-col ">
+        <div className="flex flex-1 flex-col">
           <Typography variant="h4" className="mb-4 text-center lg:text-left">
             Fecha de nacimiento
           </Typography>

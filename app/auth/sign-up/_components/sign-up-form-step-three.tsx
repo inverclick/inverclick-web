@@ -36,12 +36,12 @@ export function SignUpFormStepThree({
   });
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <Typography variant="h3" className=" text-center  mb-8">
+    <div className="flex w-full flex-col items-center justify-center">
+      <Typography variant="h3" className="mb-8 text-center">
         Ya casi puedes iniciar sesión
       </Typography>
       <FormikProvider value={form}>
-        <Form id="sign-up-step-three-form" className="flex flex-col w-full">
+        <Form id="sign-up-step-three-form" className="flex w-full flex-col">
           <InputFormikNT
             id="password"
             classNames={{ container: "mb-4" }}
@@ -56,7 +56,7 @@ export function SignUpFormStepThree({
               input: { type: "password", placeholder: "Confirmar contraseña" },
             }}
           />
-          <div className="grid grid-cols-2 gap-4 mb-8 w-full">
+          <div className="mb-8 grid w-full grid-cols-2 gap-4">
             <Button
               type="button"
               variant="secondary"

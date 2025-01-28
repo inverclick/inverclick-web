@@ -25,20 +25,20 @@ export const TypeFilter = ({
   return (
     <section className="flex flex-col gap-3">
       <h4 className="font-medium md:text-lg">Tipo de propiedad</h4>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {housingTypes.map(({ icon, id, label }) => {
           return (
             <button
               key={id}
               onClick={() => onChange(label)}
-              className={`flex flex-col gap-1 border border-black rounded-lg p-3 hover:bg-primary-800 hover:text-white hover:border-primary-800 transition-colors ease-in ${
+              className={`flex flex-col gap-1 rounded-lg border border-black p-3 transition-colors ease-in hover:border-primary-800 hover:bg-primary-800 hover:text-white ${
                 currentTypes.includes(label)
-                  ? "bg-primary-600 text-white border-primary-600"
+                  ? "border-primary-600 bg-primary-600 text-white"
                   : ""
               }`}
             >
               <Icon iconName={icon as keyof typeof icons} />
-              <span className="text-sm md:text-base font-medium">{label}</span>
+              <span className="text-sm font-medium md:text-base">{label}</span>
             </button>
           );
         })}

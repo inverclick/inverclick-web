@@ -31,7 +31,7 @@ export const ProjectCharacteristicsSection = ({
 }: ProjectCharacteristicsProps) => {
   return (
     <section className={cn(props.className)} {...props}>
-      <section className="flex flex-col mb-12">
+      <section className="mb-12 flex flex-col">
         <Typography variant="h3" className="mb-4">
           Características del proyecto
         </Typography>
@@ -83,13 +83,13 @@ export const ProjectCharacteristicsSection = ({
         <ToggleGroup
           type="single"
           variant="outline"
-          className="grid grid-cols-2 md:grid-cols-4 w-full max-w-3xl pointer-events-none"
+          className="pointer-events-none grid w-full max-w-3xl grid-cols-2 md:grid-cols-4"
         >
           {project.characteristics.map((characteristic) => (
             <ToggleGroupItem
               key={characteristic.id.toString()}
               value={characteristic.id.toString()}
-              className="flex-grow flex flex-col items-start gap-2 p-2 h-auto text-left"
+              className="flex h-auto flex-grow flex-col items-start gap-2 p-2 text-left"
             >
               <Image
                 unoptimized

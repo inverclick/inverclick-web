@@ -40,7 +40,7 @@ export function AdvertisingCarousel({
         <CarouselContent>{children}</CarouselContent>
       </Carousel>
       {api && (
-        <ul className="flex gap-4 justify-center">
+        <ul className="flex justify-center gap-4">
           {Children.map(children, (_, index) => {
             return (
               <SlideButton
@@ -108,7 +108,7 @@ function SlideButton({ active, duration, onClick }: SlideButtonProps) {
 
   return (
     <button
-      className="w-8 h-2 mt-4 bg-slate-400 rounded-full overflow-hidden hover:bg-slate-500 transition-colors ease-out"
+      className="mt-4 h-2 w-8 overflow-hidden rounded-full bg-slate-400 transition-colors ease-out hover:bg-slate-500"
       onClick={onClick}
     >
       <div

@@ -16,7 +16,7 @@ export const LoginButton = ({
   return (
     <Link
       className={cn(
-        "relative rounded-full slide-button bg-secondary",
+        "slide-button relative rounded-full bg-secondary",
         className
       )}
       {...props}
@@ -30,7 +30,7 @@ export const LoginButton = ({
         width="36"
         alt="Inverclick - ingresar"
       /> */}
-      <Icon icon={User} className="absolute top-1/2 left-3 -translate-y-1/2" />
+      <Icon icon={User} className="absolute left-3 top-1/2 -translate-y-1/2" />
       <span>Ingresar</span>
     </Link>
   );

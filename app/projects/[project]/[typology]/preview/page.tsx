@@ -39,7 +39,7 @@ export default async function Page({
   return (
     <main>
       <Header />
-      <article className="p-content flex flex-col gap-8 max-w-screen-2xl mx-auto">
+      <article className="p-content mx-auto flex max-w-screen-2xl flex-col gap-8">
         <ProjectHero
           name={project.name}
           photos={project.photos}

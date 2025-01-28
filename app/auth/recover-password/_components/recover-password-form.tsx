@@ -62,10 +62,10 @@ export function RecoverPasswordForm() {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
+    <div className="flex w-full flex-col items-center justify-center">
       {email ? (
         <>
-          <Typography variant="h3" className="text-center mb-4">
+          <Typography variant="h3" className="mb-4 text-center">
             Restablece tu contraseña
           </Typography>
           <Typography className="mb-8">
@@ -73,9 +73,9 @@ export function RecoverPasswordForm() {
             y establece una nueva contraseña
           </Typography>
           <FormikProvider value={form}>
-            <Form id="recovery-password-form" className="flex flex-col w-full">
+            <Form id="recovery-password-form" className="flex w-full flex-col">
               <div className="mb-4">
-                <Label className="inline-flex mb-2">
+                <Label className="mb-2 inline-flex">
                   Código de verificación
                 </Label>
                 <InputOTP

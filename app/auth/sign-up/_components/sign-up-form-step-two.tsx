@@ -34,12 +34,12 @@ export function SignUpFormStepTwo({
   });
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <Typography variant="h3" className="text-center mb-8">
+    <div className="flex w-full flex-col items-center justify-center">
+      <Typography variant="h3" className="mb-8 text-center">
         Continúa creando tu cuenta
       </Typography>
       <FormikProvider value={form}>
-        <Form id="sign-up-step-two-form" className="flex flex-col w-full">
+        <Form id="sign-up-step-two-form" className="flex w-full flex-col">
           <InputFormikNT
             id="name"
             classNames={{ container: "mb-4" }}
@@ -52,7 +52,7 @@ export function SignUpFormStepTwo({
               input: { placeholder: "Cómo quieres que te llamemos" },
             }}
           />
-          <div className="grid grid-cols-2 gap-4 mb-8 w-full">
+          <div className="mb-8 grid w-full grid-cols-2 gap-4">
             <Button
               type="button"
               variant="secondary"

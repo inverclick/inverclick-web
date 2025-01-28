@@ -9,43 +9,43 @@ import Link from "next/link";
 export const Footer = () => {
   return (
     <footer className="bg-gray-50">
-      <div className="relative flex flex-col gap-6 md:gap-8 xl:gap-10 px-6 py-16 md:py-20 max-w-screen-2xl mx-auto">
-        <ContactButton className="absolute right-4 bottom-40" />
-        <AppButton className="absolute right-4 bottom-20" />
-        <section className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-4">
+      <div className="relative mx-auto flex max-w-screen-2xl flex-col gap-6 px-6 py-16 md:gap-8 md:py-20 xl:gap-10">
+        <ContactButton className="absolute bottom-40 right-4" />
+        <AppButton className="absolute bottom-20 right-4" />
+        <section className="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-3">
           <div className="w-full">
             <SignupNewsletter />
           </div>
-          <div className="w-full md:w-auto flex flex-col gap-4 md:gap-6">
+          <div className="flex w-full flex-col gap-4 md:w-auto md:gap-6">
             {FIRST_LINKS.map(({ href, label }) => (
               <Link
                 key={label}
                 href={href}
-                className="text-base md:text-lg hover:underline"
+                className="text-base hover:underline md:text-lg"
               >
                 {label}
               </Link>
             ))}
           </div>
-          <div className="w-full flex flex-col gap-4 md:gap-6">
+          <div className="flex w-full flex-col gap-4 md:gap-6">
             {SECOND_LINKS.map(({ href, label }) => (
               <Link
                 key={label}
                 href={href}
-                className="text-base md:text-lg hover:underline"
+                className="text-base hover:underline md:text-lg"
               >
                 {label}
               </Link>
             ))}
           </div>
         </section>
-        <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-5">
-          <div className="flex-1 flex gap-4">
+        <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:justify-start">
+          <div className="flex flex-1 gap-4">
             {SOCIAL_NETWORKS.map(({ link, img, name }) => (
               <a key={link} href={link} aria-label={link} target="_blank">
                 <Image
                   unoptimized
-                  className="aspect-square hover:shadow-2xl hover:scale-105 transition-all ease-in cursor-pointer w-7 h-7 md:w-9 md:h-9"
+                  className="aspect-square h-7 w-7 cursor-pointer transition-all ease-in hover:scale-105 hover:shadow-2xl md:h-9 md:w-9"
                   src={img}
                   width="36"
                   height="36"
@@ -54,16 +54,16 @@ export const Footer = () => {
               </a>
             ))}
           </div>
-          <div className="text-black flex flex-col gap-2 justify-center items-center">
+          <div className="flex flex-col items-center justify-center gap-2 text-black">
             <Image
               unoptimized
               width="200"
               height="80"
-              className="w-[130px] md:w-[160px] lg:w-[180px] mix-blend-multiply"
+              className="w-[130px] mix-blend-multiply md:w-[160px] lg:w-[180px]"
               src="/main-page/inverclick-logo.avif"
               alt="Inverclick logo"
             />
-            <div className="flex gap-4 font-light text-xs text-center">
+            <div className="flex gap-4 text-center text-xs font-light">
               <Link href="/policy" target="_blank">
                 Políticas de privacidad
               </Link>
@@ -72,7 +72,7 @@ export const Footer = () => {
                 Términos y condiciones
               </Link>
             </div>
-            <div className="flex gap-4 font-light text-xs">
+            <div className="flex gap-4 text-xs font-light">
               All rights reserved © {new Date().getFullYear()}
             </div>
           </div>
@@ -93,6 +93,6 @@ const FIRST_LINKS = [
 const SECOND_LINKS = [
   { label: "Simulador de crédito", href: "/financing" },
   { label: "Trabaja con nosotros", href: "/" },
-  { label: "Blog", href: "/" },
+  // { label: "Blog", href: "/" },
   { label: "Contacto", href: "/" },
 ];

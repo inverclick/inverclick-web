@@ -8,7 +8,7 @@ export type StepperProps = ComponentProps<"div">;
 export function Stepper({ children, className, ...props }: StepperProps) {
   return (
     <div
-      className={cn("flex gap-16 justify-center items-center", className)}
+      className={cn("flex items-center justify-center gap-16", className)}
       {...props}
     >
       {children}

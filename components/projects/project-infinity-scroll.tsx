@@ -8,7 +8,7 @@ export const ProjectInfinityScroll = () => {
 
   return (
     <div className="overflow-y-auto">
-      <div className="mt-4 w-full gap-y-10 gap-x-2 pb-4 grid justify-items-center [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
+      <div className="mt-4 grid w-full justify-items-center gap-x-2 gap-y-10 pb-4 [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
         {_projects.map((project, index) => {
           return <ProjectCard key={project.id} project={project} />;
         })}

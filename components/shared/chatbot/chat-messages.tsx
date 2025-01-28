@@ -8,7 +8,7 @@ export const ChatMessages = forwardRef<HTMLDivElement, ChatMessagesProps>(
     return (
       <ScrollArea
         viewportRef={ref}
-        className="scroll-area-flex w-[calc((100vw-2rem)-3rem)] md:w-[calc(24rem-3rem)] h-96"
+        className="scroll-area-flex h-96 w-[calc((100vw-2rem)-3rem)] md:w-[calc(24rem-3rem)]"
       >
         {children}
       </ScrollArea>

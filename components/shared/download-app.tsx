@@ -50,20 +50,20 @@ export function DownloadApp() {
   return (
     <>
       {isOpen && hidePopUp === "false" && (
-        <div className="fixed z-50 top-0 left-0 flex justify-center items-center h-dvh w-screen bg-white">
-          <div className="flex flex-col items-center gap-4 m-4 p-8 bg-gray-100 rounded-3xl">
-            <h2 className="text-2xl font-bold text-center mt-16 mb-8">
+        <div className="fixed left-0 top-0 z-50 flex h-dvh w-screen items-center justify-center bg-white">
+          <div className="m-4 flex flex-col items-center gap-4 rounded-3xl bg-gray-100 p-8">
+            <h2 className="mb-8 mt-16 text-center text-2xl font-bold">
               Descarga nuestra aplicación móvil
             </h2>
             <Image
               unoptimized
               src="/favicon.svg"
-              className="bg-white pl-6 pr-8 py-6 rounded-2xl shadow-lg mb-8"
+              className="mb-8 rounded-2xl bg-white py-6 pl-6 pr-8 shadow-lg"
               width="80"
               height="80"
               alt="Inverclick app logo"
             />
-            <ul className="flex flex-col gap-2 mb-8">
+            <ul className="mb-8 flex flex-col gap-2">
               {features.map((feature) => (
                 <li key={feature.title} className="flex gap-1">
                   <Check className="text-primary-600" />

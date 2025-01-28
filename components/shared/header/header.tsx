@@ -13,7 +13,7 @@ export const MENU_OPTIONS = [
   { name: "Proyectos", url: "/projects" },
   { name: "Financiación", url: "/financing" },
   { name: "Otros servicios", url: "/other-services" },
-  { name: "Blog", url: "/blog" },
+  // { name: "Blog", url: "/blog" },
 ];
 
 export const LEFT_MENU_OPTIONS = MENU_OPTIONS.slice(0, 3);
@@ -22,7 +22,7 @@ export const RIGHT_MENU_OPTIONS = MENU_OPTIONS.slice(3);
 
 export function Header() {
   return (
-    <header className="sticky top-0 bg-white shadow-md z-50">
+    <header className="sticky top-0 z-50 bg-white shadow-md">
       <MobileHeader />
       <DesktopHeader />
     </header>
@@ -31,13 +31,13 @@ export function Header() {
 
 function MobileHeader() {
   return (
-    <div className="flex lg:hidden justify-between items-center h-full px-6 py-4">
+    <div className="flex h-full items-center justify-between px-6 py-4 lg:hidden">
       <Link href="/">
         <Image
           unoptimized
           width="170"
           height="60"
-          className="animate-slide-in-top w-[120px] md:w-[140px] xl:w-[155px] 2xl:w-[170px]"
+          className="w-[120px] animate-slide-in-top md:w-[140px] xl:w-[155px] 2xl:w-[170px]"
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
         />
@@ -54,17 +54,17 @@ function DesktopHeader() {
   return (
     <div
       className={cn(
-        "hidden lg:grid grid-cols-3 gap-4 items-center h-full px-6 py-4 max-w-screen-2xl mx-auto"
+        "mx-auto hidden h-full max-w-screen-2xl grid-cols-3 items-center gap-4 px-6 py-4 lg:grid"
       )}
     >
       <MenuOptions options={LEFT_MENU_OPTIONS} />
-      <Link href="/" className="place-self-center cursor-pointer">
+      <Link href="/" className="cursor-pointer place-self-center">
         <Image
           unoptimized
           width="170"
           height="60"
           className={cn(
-            "animate-slide-in-top w-[120px] md:w-[90px] xl:w-[107px] 2xl:w-[120px]"
+            "w-[120px] animate-slide-in-top md:w-[90px] xl:w-[107px] 2xl:w-[120px]"
           )}
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
@@ -93,7 +93,7 @@ type MenuOptionsProps = Readonly<{
 function MenuOptions({ options, align = "left", children }: MenuOptionsProps) {
   return (
     <ul
-      className={cn("flex gap-4 xl:gap-8 items-center", {
+      className={cn("flex items-center gap-4 xl:gap-8", {
         "justify-self-start": align === "left",
         "justify-self-end": align === "right",
       })}

@@ -27,13 +27,13 @@ type ContentAsLayoutProps = Readonly<{
 
 function ContentAsLayout({ departments }: ContentAsLayoutProps) {
   return (
-    <div className="absolute inset-0 flex flex-col lg:flex-row h-screen">
+    <div className="absolute inset-0 flex h-screen flex-col lg:flex-row">
       {/* LEFT SECTION */}
-      <section className="md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:px-10 py-6">
-        <AppButton className="absolute bottom-5 right-8 invisible" />
+      <section className="relative flex flex-col items-center justify-between gap-4 py-6 md:flex-1 md:items-start md:gap-0 md:px-10">
+        <AppButton className="invisible absolute bottom-5 right-8" />
         <Image
           unoptimized
-          className="absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full"
+          className="absolute bottom-0 left-0 right-0 -z-10 h-full w-full object-cover"
           src="/main-page/main-background.avif"
           alt="Inverclick fondo de pantalla"
           width="1200"
@@ -43,24 +43,24 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
           unoptimized
           width="200"
           height="80"
-          className="w-[160px] md:w-[220px] animate-slide-in-top mb-8 mx-auto lg:mx-0 invisible"
+          className="invisible mx-auto mb-8 w-[160px] animate-slide-in-top md:w-[220px] lg:mx-0"
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
         />
-        <div className="flex-grow flex flex-col w-full md:mb-4 lg:mb-0 invisible">
+        <div className="invisible flex w-full flex-grow flex-col md:mb-4 lg:mb-0">
           {/* Component to compensate for centering space */}
-          <Services className="hidden lg:flex invisible !mb-0" />
-          <div className="flex-grow pb-4 flex flex-col justify-center gap-6 animate-blurred-fade-in w-full">
+          <Services className="invisible !mb-0 hidden lg:flex" />
+          <div className="flex w-full flex-grow animate-blurred-fade-in flex-col justify-center gap-6 pb-4">
             <DynamicPhrases />
           </div>
           <Services />
         </div>
-        <div className="flex gap-4 invisible">
+        <div className="invisible flex gap-4">
           {SOCIAL_NETWORKS.map(({ link, img, name }) => (
             <Link key={link} href={link} aria-label={link} target="_blank">
               <Image
                 unoptimized
-                className="aspect-square hover:shadow-2xl hover:scale-105 transition-all ease-in cursor-pointer w-7 h-7 md:w-9 md:h-9"
+                className="aspect-square h-7 w-7 cursor-pointer transition-all ease-in hover:scale-105 hover:shadow-2xl md:h-9 md:w-9"
                 src={img}
                 width="36"
                 height="36"
@@ -72,9 +72,9 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
       </section>
 
       {/* RIGHT SECTION */}
-      <section className="animate-slide-in-bottom md:animate-slide-in-right flex-1 rounded-t-2xl lg:rounded-l-[40px] lg:rounded-r-none shadow-xl bg-primary-600 flex flex-col justify-between items-center relative">
+      <section className="relative flex flex-1 animate-slide-in-bottom flex-col items-center justify-between rounded-t-2xl bg-primary-600 shadow-xl md:animate-slide-in-right lg:rounded-l-[40px] lg:rounded-r-none">
         {/* Element to compensate space for centering */}
-        <footer className="hidden lg:flex flex-col justify-center items-center gap-1 px-4 mt-8 invisible">
+        <footer className="invisible mt-8 hidden flex-col items-center justify-center gap-1 px-4 lg:flex">
           <Image
             unoptimized
             src="/main-page/logo_gris_inverclick.svg"
@@ -83,7 +83,7 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
             height="40"
             alt="Inverclick logo gris"
           />
-          <div className="flex gap-2 text-white/85 font-light text-xs text-center">
+          <div className="flex gap-2 text-center text-xs font-light text-white/85">
             <Link href="/policy" target="_blank">
               Políticas de privacidad
             </Link>
@@ -92,14 +92,14 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
               Términos y condiciones
             </Link>
           </div>
-          <div className="flex gap-4 text-white/85 font-light text-xs">
+          <div className="flex gap-4 text-xs font-light text-white/85">
             All rights reserved © {new Date().getFullYear()}
           </div>
         </footer>
 
-        <div className="w-full invisible">
-          <header className="px-5 md:px-16 my-16 md:mt-16 lg:mt-0 lg:mb-16">
-            <h1 className="text-center text-2xl md:text-3xl 2xl:text-5xl font-semibold text-white">
+        <div className="invisible w-full">
+          <header className="my-16 px-5 md:mt-16 md:px-16 lg:mb-16 lg:mt-0">
+            <h1 className="text-center text-2xl font-semibold text-white md:text-3xl 2xl:text-5xl">
               <p>Inverclick, el mejor sitio</p>
               <p>
                 para invertir en{" "}
@@ -110,15 +110,15 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
             </h1>
           </header>
 
-          <section className="w-full mb-16 px-4 md:px-16 lg:mb-0">
+          <section className="mb-16 w-full px-4 md:px-16 lg:mb-0">
             <Searcher departments={departments} />
-            <h3 className="text-center mt-4 text-white text-sm md:text-base">
-              Casas - Apartamentos - Lotes - Fracciones
+            <h3 className="mt-4 text-center text-sm text-white md:text-base">
+              Casas - Apartamentos - Lotes
             </h3>
           </section>
         </div>
 
-        <footer className="flex flex-col justify-center items-center gap-1 px-4 mb-8 invisible">
+        <footer className="invisible mb-8 flex flex-col items-center justify-center gap-1 px-4">
           <Image
             unoptimized
             src="/main-page/logo_gris_inverclick.svg"
@@ -127,7 +127,7 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
             height="40"
             alt="Inverclick logo gris"
           />
-          <div className="flex gap-2 text-white/85 font-light text-xs text-center">
+          <div className="flex gap-2 text-center text-xs font-light text-white/85">
             <Link href="/policy" target="_blank">
               Políticas de privacidad
             </Link>
@@ -136,12 +136,12 @@ function ContentAsLayout({ departments }: ContentAsLayoutProps) {
               Términos y condiciones
             </Link>
           </div>
-          <div className="flex gap-4 text-white/85 font-light text-xs">
+          <div className="flex gap-4 text-xs font-light text-white/85">
             All rights reserved © {new Date().getFullYear()}
           </div>
         </footer>
 
-        <LoginButton className="absolute bottom-16 right-4 invisible" />
+        <LoginButton className="invisible absolute bottom-16 right-4" />
       </section>
     </div>
   );
@@ -153,13 +153,13 @@ type Content = Readonly<{
 
 function Content({ departments }: Content) {
   return (
-    <main className="absolute inset-0 flex flex-col lg:flex-row h-screen max-w-screen-5xl mx-auto">
+    <main className="absolute inset-0 mx-auto flex h-screen max-w-screen-5xl flex-col lg:flex-row">
       {/* LEFT SECTION */}
-      <section className="md:flex-1 relative flex flex-col gap-4 md:gap-0 items-center md:items-start justify-between md:px-10 py-6">
+      <section className="relative flex flex-col items-center justify-between gap-4 py-6 md:flex-1 md:items-start md:gap-0 md:px-10">
         <AppButton className="absolute bottom-5 right-8" />
         <Image
           unoptimized
-          className="absolute bottom-0 left-0 right-0 object-cover -z-10 h-full w-full"
+          className="absolute bottom-0 left-0 right-0 -z-10 h-full w-full object-cover"
           src="/main-page/main-background.avif"
           alt="Inverclick fondo de pantalla"
           width="1200"
@@ -169,14 +169,14 @@ function Content({ departments }: Content) {
           unoptimized
           width="200"
           height="80"
-          className="w-[160px] md:w-[220px] animate-slide-in-top mb-8 mx-auto lg:mx-0"
+          className="mx-auto mb-8 w-[160px] animate-slide-in-top md:w-[220px] lg:mx-0"
           src="/main-page/inverclick-logo.avif"
           alt="Inverclick logo"
         />
-        <div className="flex-grow flex flex-col w-full md:mb-4 lg:mb-0">
+        <div className="flex w-full flex-grow flex-col md:mb-4 lg:mb-0">
           {/* Component to compensate for centering space */}
-          <Services className="hidden lg:flex invisible !mb-0" />
-          <div className="flex-grow pb-4 flex flex-col justify-center gap-6 animate-blurred-fade-in w-full">
+          <Services className="invisible !mb-0 hidden lg:flex" />
+          <div className="flex w-full flex-grow animate-blurred-fade-in flex-col justify-center gap-6 pb-4">
             <DynamicPhrases />
           </div>
           <Services />
@@ -186,7 +186,7 @@ function Content({ departments }: Content) {
             <Link key={link} href={link} aria-label={link} target="_blank">
               <Image
                 unoptimized
-                className="aspect-square hover:shadow-2xl hover:scale-105 transition-all ease-in cursor-pointer w-7 h-7 md:w-9 md:h-9"
+                className="aspect-square h-7 w-7 cursor-pointer transition-all ease-in hover:scale-105 hover:shadow-2xl md:h-9 md:w-9"
                 src={img}
                 width="36"
                 height="36"
@@ -198,9 +198,9 @@ function Content({ departments }: Content) {
       </section>
 
       {/* RIGHT SECTION */}
-      <section className="animate-slide-in-bottom md:animate-slide-in-right flex-1 rounded-t-2xl flex flex-col justify-between items-center relative">
+      <section className="relative flex flex-1 animate-slide-in-bottom flex-col items-center justify-between rounded-t-2xl md:animate-slide-in-right">
         {/* Element to compensate space for centering */}
-        <footer className="hidden lg:flex invisible flex-col justify-center items-center gap-1 px-4 mt-8">
+        <footer className="invisible mt-8 hidden flex-col items-center justify-center gap-1 px-4 lg:flex">
           <Image
             unoptimized
             src="/main-page/logo_gris_inverclick.svg"
@@ -209,7 +209,7 @@ function Content({ departments }: Content) {
             height="40"
             alt="Inverclick logo gris"
           />
-          <div className="flex gap-2 text-white/85 font-light text-xs text-center">
+          <div className="flex gap-2 text-center text-xs font-light text-white/85">
             <Link href="/policy" target="_blank">
               Políticas de privacidad
             </Link>
@@ -218,13 +218,13 @@ function Content({ departments }: Content) {
               Términos y condiciones
             </Link>
           </div>
-          <div className="flex gap-4 text-white/85 font-light text-xs">
+          <div className="flex gap-4 text-xs font-light text-white/85">
             All rights reserved © {new Date().getFullYear()}
           </div>
         </footer>
         <div className="w-full">
-          <header className="px-5 md:px-16 my-16 md:mt-16 lg:mt-0 lg:mb-16">
-            <h1 className="text-center lg:text-left text-2xl md:text-3xl 2xl:text-5xl font-semibold text-white">
+          <header className="my-16 px-5 md:mt-16 md:px-16 lg:mb-16 lg:mt-0">
+            <h1 className="text-center text-2xl font-semibold text-white md:text-3xl lg:text-left 2xl:text-5xl">
               <p>Inverclick, el mejor sitio</p>
               <p>
                 para invertir en{" "}
@@ -235,14 +235,14 @@ function Content({ departments }: Content) {
             </h1>
           </header>
 
-          <section className="w-full mb-16 px-4 md:px-16 lg:mb-0">
+          <section className="mb-16 w-full px-4 md:px-16 lg:mb-0">
             <Searcher departments={departments} />
-            <h3 className="text-center mt-4 text-white text-sm md:text-base">
-              Casas - Apartamentos - Lotes - Fracciones
+            <h3 className="mt-4 text-center text-sm text-white md:text-base">
+              Casas - Apartamentos - Lotes
             </h3>
           </section>
         </div>
-        <footer className="flex flex-col justify-center items-center gap-1 px-4 mb-8">
+        <footer className="mb-8 flex flex-col items-center justify-center gap-1 px-4">
           <Image
             unoptimized
             src="/main-page/logo_gris_inverclick.svg"
@@ -251,7 +251,7 @@ function Content({ departments }: Content) {
             height="40"
             alt="Inverclick logo gris"
           />
-          <div className="flex gap-2 text-white/85 font-light text-xs text-center">
+          <div className="flex gap-2 text-center text-xs font-light text-white/85">
             <Link href="/policy" target="_blank">
               Políticas de privacidad
             </Link>
@@ -260,7 +260,7 @@ function Content({ departments }: Content) {
               Términos y condiciones
             </Link>
           </div>
-          <div className="flex gap-4 text-white/85 font-light text-xs">
+          <div className="flex gap-4 text-xs font-light text-white/85">
             All rights reserved © {new Date().getFullYear()}
           </div>
         </footer>

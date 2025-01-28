@@ -25,7 +25,7 @@ export const SelectSimulatorType = ({
   }, [simulatorType, activeTabRef]);
 
   return (
-    <div className="relative flex border border-primary w-full md:w-fit rounded-full isolate">
+    <div className="relative isolate flex w-full rounded-full border border-primary md:w-fit">
       <button
         ref={(ref) => {
           if (simulatorType === "VALOR") {
@@ -34,7 +34,7 @@ export const SelectSimulatorType = ({
         }}
         onClick={() => setSimulatorType("VALOR")}
         className={clsx(
-          "flex-1 px-6 py-2 rounded-full text-xs md:whitespace-nowrap lg:text-base",
+          "flex-1 rounded-full px-6 py-2 text-xs md:whitespace-nowrap lg:text-base",
           simulatorType === "VALOR" && activeTabRef.current && "text-white"
         )}
       >
@@ -48,7 +48,7 @@ export const SelectSimulatorType = ({
         }}
         onClick={() => setSimulatorType("CUOTA")}
         className={clsx(
-          "flex-1 px-6 py-2 rounded-full text-xs md:whitespace-nowrap lg:text-base",
+          "flex-1 rounded-full px-6 py-2 text-xs md:whitespace-nowrap lg:text-base",
           simulatorType === "CUOTA" && activeTabRef.current && "text-white"
         )}
       >
@@ -56,7 +56,7 @@ export const SelectSimulatorType = ({
       </button>
       {activeTabRef.current && (
         <div
-          className="absolute inset-0 h-full bg-primary rounded-full transition-all -z-10 "
+          className="absolute inset-0 -z-10 h-full rounded-full bg-primary transition-all"
           style={{
             width,
             transform: `translateX(${offset}px)`,

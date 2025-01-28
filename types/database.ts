@@ -470,6 +470,24 @@ export type Database = {
           },
         ];
       };
+      newsletter_users: {
+        Row: {
+          created_at: string;
+          email: string;
+          id: string;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          id?: string;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          id?: string;
+        };
+        Relationships: [];
+      };
       project_characteristics: {
         Row: {
           characteristic_id: string;
@@ -529,6 +547,48 @@ export type Database = {
           price?: number;
         };
         Relationships: [];
+      };
+      project_reviews: {
+        Row: {
+          comment: string;
+          created_at: string;
+          id: string;
+          project_id: string;
+          rating: number;
+          user_id: string;
+        };
+        Insert: {
+          comment: string;
+          created_at?: string;
+          id?: string;
+          project_id: string;
+          rating: number;
+          user_id: string;
+        };
+        Update: {
+          comment?: string;
+          created_at?: string;
+          id?: string;
+          project_id?: string;
+          rating?: number;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "project_reviews_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "project_reviews_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       projects: {
         Row: {

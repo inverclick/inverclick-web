@@ -21,7 +21,7 @@ export function OtherProjects({ projects }: OtherProjectsProps) {
       <Typography variant="h3" className="mb-4">
         Otros proyectos que podrían interesarte
       </Typography>
-      <div className="hidden xl:flex px-8 w-full justify-center items-center">
+      <div className="hidden w-full items-center justify-center px-8 xl:flex">
         <Carousel
           opts={{
             align: "start",
@@ -32,7 +32,7 @@ export function OtherProjects({ projects }: OtherProjectsProps) {
             {projects.map((project) => (
               <CarouselItem
                 key={project.id}
-                className="md:basis-1/2 lg:basis-1/4 !flex justify-center"
+                className="!flex justify-center md:basis-1/2 lg:basis-1/4"
               >
                 <ProjectCard project={project} />
               </CarouselItem>
@@ -42,7 +42,7 @@ export function OtherProjects({ projects }: OtherProjectsProps) {
           <CarouselNext />
         </Carousel>
       </div>
-      <div className="xl:hidden flex gap-4 overflow-x-auto px-1 pb-2">
+      <div className="flex gap-4 overflow-x-auto px-1 pb-2 xl:hidden">
         {projects.map((project) => {
           return <ProjectCard key={project.id} project={project} />;
         })}

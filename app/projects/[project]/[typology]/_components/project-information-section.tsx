@@ -22,13 +22,13 @@ export const ProjectInformationSection = ({
       <Typography
         data-element="project-name"
         variant="h2"
-        className="text-center lg:text-left mb-4"
+        className="mb-4 text-center lg:text-left"
       >
         {project.name}
       </Typography>
       <div
         data-element="project-description"
-        className="flex flex-col items-start lg:flex-row gap-4 lg:gap-6"
+        className="flex flex-col items-start gap-4 lg:flex-row lg:gap-6"
       >
         <Image
           data-element="project-logo"
@@ -39,11 +39,11 @@ export const ProjectInformationSection = ({
           height={112}
           className="mx-auto"
         />
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex w-full flex-col gap-4">
           <Typography data-element="project-description">
             {project.description}
           </Typography>
-          <article className="flex flex-col gap-0 lg:gap-4 lg:flex-row lg:justify-center border rounded-lg p-4">
+          <article className="flex flex-col gap-0 rounded-lg border p-4 lg:flex-row lg:justify-center lg:gap-4">
             <Typography variant="h4" className="text-lg">
               Unidades disponibles:{" "}
               <span className="font-normal">

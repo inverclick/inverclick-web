@@ -91,11 +91,11 @@ export default async function Projects(props: ProjectsProps) {
           <ResizablePanel defaultSize={32}>
             <Map2 projects={projects} />
           </ResizablePanel>
-          <ResizableHandle className="bg-border w-5" withHandle />
+          <ResizableHandle className="w-5 bg-border" withHandle />
           <ResizablePanel
             defaultSize={68}
             minSize={25}
-            className="z-10 relative flex flex-col"
+            className="relative z-10 flex flex-col"
           >
             <NavbarProjects />
             <ProjectContent
@@ -120,7 +120,7 @@ export default async function Projects(props: ProjectsProps) {
             <ResizablePanel defaultSize={40}>
               <Map2 projects={projects} />
             </ResizablePanel>
-            <ResizableHandle className="bg-border !h-5" withHandle />
+            <ResizableHandle className="!h-5 bg-border" withHandle />
             <ResizablePanel
               defaultSize={60}
               maxSize={80}

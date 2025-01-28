@@ -31,12 +31,12 @@ export const PriceFilter = ({
 
   return (
     <section className="flex flex-col gap-3">
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <h4 className="font-medium md:text-lg">Rango de precios</h4>
         <SelectCurrency />
       </div>
-      <div className="flex flex-col gap-6 justify-center items-center">
-        <div className="self-center w-3/4">
+      <div className="flex flex-col items-center justify-center gap-6">
+        <div className="w-3/4 self-center">
           <Slider
             data={priceGraphicData}
             value={[Number(minPrice), Number(maxPrice)]}
@@ -49,7 +49,7 @@ export const PriceFilter = ({
             }}
           />
         </div>
-        <div className="flex gap-2 justify-center items-center w-3/4">
+        <div className="flex w-3/4 items-center justify-center gap-2">
           <CustomInput
             label="Mínimo"
             value={minPrice}
@@ -89,11 +89,11 @@ const CustomInput = ({
   };
 
   return (
-    <div className="flex-1 relative h-14 rounded-lg text-base border border-zinc-800">
-      <p className="absolute text-[10px] md:text-xs top-1 left-3">{label}</p>
+    <div className="relative h-14 flex-1 rounded-lg border border-zinc-800 text-base">
+      <p className="absolute left-3 top-1 text-[10px] md:text-xs">{label}</p>
       <Input
         value={formatCurrency(convert(Number(value)), currency)}
-        className="mt-3 text-sm md:text-base border-0 bg-white focus-visible:ring-0 focus-visible:ring-offset-0"
+        className="mt-3 border-0 bg-white text-sm focus-visible:ring-0 focus-visible:ring-offset-0 md:text-base"
         name={name}
         onChange={onChangeCurrency}
       />

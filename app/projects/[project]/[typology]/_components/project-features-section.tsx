@@ -19,14 +19,14 @@ export const ProjectFeaturesSection = ({
       <Typography variant="h3" className="mb-4">
         ¿Qué es lo que hace único a este proyecto?
       </Typography>
-      <div className="bg-primary-100 p-4 lg:p-8 rounded-lg">
+      <div className="rounded-lg bg-primary-100 p-4 lg:p-8">
         <ul className="flex flex-col gap-4">
           {project.features.map((feature) => {
             return (
-              <li key={feature} className="flex gap-2 items-start">
+              <li key={feature} className="flex items-start gap-2">
                 <Icon
                   icon={Check}
-                  className="flex-shrink-0 size-6 text-green-500"
+                  className="size-6 flex-shrink-0 text-green-500"
                 />
                 {feature}
               </li>

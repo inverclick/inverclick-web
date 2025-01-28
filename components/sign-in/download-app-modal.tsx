@@ -40,7 +40,7 @@ export function DownloadAppModal() {
           </p>
           <p>y haz tu mejor inversión</p>
         </Typography>
-        <Typography className="text-center mb-4">
+        <Typography className="mb-4 text-center">
           Escanea el código para descargar la aplicación móvil
         </Typography>
         <Image

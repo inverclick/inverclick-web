@@ -39,13 +39,13 @@ export function SignInForm() {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <Typography variant="h3" className="text-center mb-8">
+    <div className="flex w-full flex-col items-center justify-center">
+      <Typography variant="h3" className="mb-8 text-center">
         <span className="block">Escribe el correo electrónico</span>
         <span className="block">asociado a tu cuenta de Inverclick</span>
       </Typography>
       <FormikProvider value={form}>
-        <Form id="sign-in-form" className="flex flex-col w-full">
+        <Form id="sign-in-form" className="flex w-full flex-col">
           <InputFormikNT
             id="email"
             classNames={{
@@ -72,7 +72,7 @@ export function SignInForm() {
           />
           <Link
             href="/auth/forgot-password"
-            className="self-start text-primary mb-6"
+            className="mb-6 self-start text-primary"
           >
             He olvidado mi contraseña
           </Link>

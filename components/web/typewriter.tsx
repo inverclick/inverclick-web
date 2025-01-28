@@ -65,10 +65,10 @@ export const Typewriter = ({ texts }: TypewriterProps) => {
   return (
     <div
       key={currentIndex}
-      className="fade-in-up mx-6 md:ml-0 text-center lg:text-left min-h-60 md:min-h-40 lg:min-h-32"
+      className="fade-in-up mx-6 min-h-60 text-center md:ml-0 md:min-h-40 lg:min-h-32 lg:text-left"
     >
       {/* Static Title */}
-      <h1 className="font-semibold text-4xl mb-2">
+      <h1 className="mb-2 text-4xl font-semibold">
         {texts[currentIndex].title}
       </h1>
       <div className="typewriter-container min-w-full">
