@@ -21,7 +21,9 @@ export function canContinueToProjectPreview(request: NextRequest): boolean {
     }
 
     const refererUrl = new URL(refererHeader);
-    const isValidReferer = refererUrl.origin === ENV_VARS.COMPANY_BASE_URL;
+    const isValidReferer =
+      refererUrl.origin === ENV_VARS.COMPANY_BASE_URL ||
+      refererUrl.origin === ENV_VARS.TEAM_BASE_URL;
 
     return isValidReferer;
   }
