@@ -12,8 +12,8 @@ importers:
         specifier: ^2.5.3
         version: 2.5.3
       '@inverclick/inverclick-ui':
-        specifier: 1.8.9
-        version: 1.8.9(raatouwbiwcdvnx2dswcorbehy)
+        specifier: 1.9.9
+        version: 1.9.9(raatouwbiwcdvnx2dswcorbehy)
       '@midudev/tailwind-animations':
         specifier: ^0.1.0
         version: 0.1.0(tailwindcss@3.4.16)
@@ -286,8 +286,8 @@ packages:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
 
-  '@inverclick/inverclick-ui@1.8.9':
-    resolution: {integrity: sha512-6mZrc4J0O4VtNwJqgHDXxQ7NoCiDWUMsB4sTllURJknE4WYDgpHyA7w3mWrg6mnekcrudxhMOZvNvkOOZ1DlIg==}
+  '@inverclick/inverclick-ui@1.9.9':
+    resolution: {integrity: sha512-/tIVJQ9eauPPig+PkS8SPCFzsfiDPYNEFOSgasCgN/KleVf5yn43oufPlPcXZ+sv31mP7jm0XeYmX076srMtGA==}
     peerDependencies:
       '@midudev/tailwind-animations': ^0.1.0
       autoprefixer: ^10.4.20
@@ -4061,7 +4061,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@inverclick/inverclick-ui@1.8.9(raatouwbiwcdvnx2dswcorbehy)':
+  '@inverclick/inverclick-ui@1.9.9(raatouwbiwcdvnx2dswcorbehy)':
     dependencies:
       '@midudev/tailwind-animations': 0.1.0(tailwindcss@3.4.16)
       '@radix-ui/react-accordion': 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
