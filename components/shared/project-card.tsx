@@ -97,7 +97,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
             <Image
               unoptimized
               loading="lazy"
-              className="h-[45px] w-auto 2xl:h-[50px]"
+              className="aspect-square h-[45px] w-auto object-contain 2xl:h-[50px]"
               src={getAssetUrl(company.logo_url)}
               alt={project.name}
               width={50}

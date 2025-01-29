@@ -39,7 +39,7 @@ export function Providers({
             TRM_USD={TRM_USD}
             TRM_EUR={TRM_EUR}
             last_trm_update={last_trm_update}
-            currency="USD"
+            currency="COP"
           >
             <PreRegistrationProvider preRegistration={preRegistration}>
               <YupLocalization>
