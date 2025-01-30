@@ -4,6 +4,7 @@ import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { ComponentProps } from "react";
+import { fixDecimals } from "@/lib/round-to-decimals";
 
 export type ValorizaGraphSectionProps = {
   typology: Project["typologies"][0];
@@ -52,7 +53,7 @@ export const ProjectValorizationSection = ({
             <Typography>Podrías ganar en valoración:</Typography>
             <Typography className="font-semibold">
               {formatCurrency(convert(gain), currency)} {currency}{" "}
-              {`(${percentage * 100}%)`}
+              {`(${fixDecimals(percentage * 100)}%)`}
             </Typography>
           </div>
         </div>
@@ -89,7 +90,7 @@ export const ProjectValorizationSection = ({
               {formatCurrency(convert(gain), currency)} {currency}
             </Typography>
             <Typography variant="h4" className="whitespace-nowrap text-right">
-              {percentage * 100}%
+              {fixDecimals(percentage * 100)}%
             </Typography>
           </div>
         </div>
