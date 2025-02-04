@@ -98,11 +98,7 @@ export default async function RootLayout({
           {children}
         </Providers>
       </body>
-      <Script
-        async
-        defer
-        src="https://scripts.simpleanalyticscdn.com/latest.js"
-      />
+      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
     </html>
   );
 }

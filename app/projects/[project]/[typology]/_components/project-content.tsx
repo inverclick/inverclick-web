@@ -11,6 +11,8 @@ import { TypologiesSection } from "@/app/projects/[project]/[typology]/_componen
 import { UrbanismSection } from "@/app/projects/[project]/[typology]/_components/urbanism-section";
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { usePreRegistration } from "@/contexts/pre-registration-context";
+import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
 // import { cn } from "@/lib/utils";
 // import { isProjectVerified } from "@/services/projects/is-project-verified";
 // import { Icon } from "@inverclick/inverclick-ui/icon";
@@ -34,16 +36,58 @@ export type ProjectContentProps = {
 };
 
 export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
+  const { canInteractWithFeatures } = usePreRegistration();
+
   return (
     <article className="flex gap-4">
       <Tabs defaultValue="description" className="w-full">
         <TabsList className="mb-12 flex items-center">
-          <TabsTrigger value="description">Descripción</TabsTrigger>
-          <TabsTrigger value="types">Tipologías</TabsTrigger>
-          <TabsTrigger value="urban">Urbanismo</TabsTrigger>
+          <TabsTrigger
+            value="description"
+            onClick={() => {
+              if (canInteractWithFeatures) {
+                SimpleAnalytics.viewProjectDescription({
+                  projectId: project.id,
+                });
+              }
+            }}
+          >
+            Descripción
+          </TabsTrigger>
+          <TabsTrigger
+            value="types"
+            onClick={() => {
+              if (canInteractWithFeatures) {
+                SimpleAnalytics.viewProjectTypologies({
+                  projectId: project.id,
+                });
+              }
+            }}
+          >
+            Tipologías
+          </TabsTrigger>
+          <TabsTrigger
+            value="urban"
+            onClick={() => {
+              if (canInteractWithFeatures) {
+                SimpleAnalytics.viewProjectUrbanism({
+                  projectId: project.id,
+                });
+              }
+            }}
+          >
+            Urbanismo
+          </TabsTrigger>
           <TabsTrigger
             value="credit"
             className="mx-6 rounded-lg border border-primary px-2 py-1 text-base !no-underline transition-colors ease-in hover:bg-primary-100 md:text-lg lg:text-xl"
+            onClick={() => {
+              if (canInteractWithFeatures) {
+                SimpleAnalytics.viewProjectCreditSimulator({
+                  projectId: project.id,
+                });
+              }
+            }}
           >
             Simulador de crédito
           </TabsTrigger>

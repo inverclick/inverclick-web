@@ -10,6 +10,7 @@ import { ViewInformationButton } from "@/components/projects/review/view-informa
 import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
+import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
 import { cn } from "@inverclick/inverclick-ui/lib";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 
@@ -25,6 +26,12 @@ export const PageContent = ({
   otherProjects,
 }: PageContentProps) => {
   const { canInteractWithFeatures } = usePreRegistration();
+
+  if (canInteractWithFeatures) {
+    SimpleAnalytics.viewProjectAsRegisteredUser({
+      projectId: project.id,
+    });
+  }
 
   return (
     <main>
