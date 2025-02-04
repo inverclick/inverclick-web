@@ -6,7 +6,7 @@ ESLint is configured to run in specific folders, please, if you create a new fol
 
 ## Environment variables
 
-Environment variables are stored in a `.env`:
+Environment variables are stored in a `.env` file:
 
 ```bash
 NEXT_PUBLIC_BASE_URL=
