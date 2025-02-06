@@ -1,18 +1,26 @@
-declare function sa_event(
-  eventName: string,
-  metadata?: Record<string, string | number | boolean | Date>
-): void;
-
 export class SimpleAnalytics {
+  /**
+   * Safely triggers an analytics event.
+   * @param eventName The name of the event to trigger.
+   * @param metadata Optional metadata to include with the event.
+   * @returns {void}
+   */
   public static safelyTriggerEvent(
     eventName: string,
     metadata?: Record<string, string | number | boolean | Date>
   ): void {
-    if (sa_event) {
-      sa_event(eventName, metadata);
+    if (window && window.sa_event) {
+      window.sa_event(eventName, metadata);
     }
   }
 
+  /**
+   * Triggers an analytics event indicating that a registered user has viewed a project.
+   *
+   * @param {Object} params - The parameters for the event.
+   * @param {string} params.projectId - The unique identifier of the project being viewed.
+   * @returns {void}
+   */
   public static viewProjectAsRegisteredUser({
     projectId,
   }: {
@@ -23,6 +31,13 @@ export class SimpleAnalytics {
     });
   }
 
+  /**
+   * Triggers an analytics event indicating that a user has viewed the description of a project.
+   *
+   * @param {Object} params - The parameters for the event.
+   * @param {string} params.projectId - The unique identifier of the project being viewed.
+   * @returns {void}
+   */
   public static viewProjectDescription({
     projectId,
   }: {
@@ -33,6 +48,13 @@ export class SimpleAnalytics {
     });
   }
 
+  /**
+   * Triggers an analytics event indicating that a user has viewed the typologies of a project.
+   *
+   * @param {Object} params - The parameters for the event.
+   * @param {string} params.projectId - The unique identifier of the project being viewed.
+   * @returns {void}
+   */
   public static viewProjectTypologies({
     projectId,
   }: {
@@ -43,6 +65,13 @@ export class SimpleAnalytics {
     });
   }
 
+  /**
+   * Triggers an analytics event indicating that a user has viewed the urbanism section of a project.
+   *
+   * @param {Object} params - The parameters for the event.
+   * @param {string} params.projectId - The unique identifier of the project being viewed.
+   * @returns {void}
+   */
   public static viewProjectUrbanism({
     projectId,
   }: {
@@ -51,6 +80,13 @@ export class SimpleAnalytics {
     SimpleAnalytics.safelyTriggerEvent("view_project_urbanism", { projectId });
   }
 
+  /**
+   * Triggers an analytics event indicating that a user has viewed the credit simulator section of a project.
+   *
+   * @param {Object} params - The parameters for the event.
+   * @param {string} params.projectId - The unique identifier of the project being viewed.
+   * @returns {void}
+   */
   public static viewProjectCreditSimulator({
     projectId,
   }: {
