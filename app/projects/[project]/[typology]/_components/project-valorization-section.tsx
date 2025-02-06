@@ -1,7 +1,7 @@
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency } from "@/lib/format-currency";
-import { fixDecimals } from "@/lib/round-to-decimals";
+import { fixDecimals } from "@/lib/fix-decimals";
 import { cn } from "@/lib/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { ComponentProps } from "react";
