@@ -1,34 +1,18 @@
-import { Chatbot } from "@/components/shared/chatbot/chatbot";
-import { DownloadApp } from "@/components/shared/download-app";
-import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
-import { WelcomeDialog } from "@/components/shared/pre-registration/welcome-dialog";
-import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
-import { Toaster } from "@/components/ui/sonner";
-import { CurrencyProvider } from "@/contexts/currency-context";
-import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
-import { UserProvider } from "@/contexts/user-context";
+import { Providers } from "@/app/providers";
 import { ENV_VARS } from "@/global/env";
 import { getPreRegistration } from "@/services/get-pre-registration";
 import { getTRM } from "@/services/get-trm";
 import { createClient } from "@/services/supabase/server-client";
 import { getUser } from "@/services/user/get-user";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
-import { Poppins } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import { ReactNode } from "react";
 
 import Script from "next/script";
 
-import { Providers } from "@/app/providers";
 import "@inverclick/inverclick-ui/theme.css";
 import "atropos/css";
 import "./globals.css";
-
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -87,7 +71,7 @@ export default async function RootLayout({
         />
         <link rel="sitemap" href="/sitemap.xml" />
       </head>
-      <body className={poppins.className}>
+      <body className={GeistSans.className}>
         <Providers
           user={user}
           TRM_USD={TRM_USD}
