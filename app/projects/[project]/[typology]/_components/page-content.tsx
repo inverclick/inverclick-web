@@ -13,6 +13,7 @@ import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
 import { cn } from "@inverclick/inverclick-ui/lib";
 import { Typography } from "@inverclick/inverclick-ui/typography";
+import { useEffect, useRef } from "react";
 
 export type PageContentProps = {
   project: Project;
@@ -27,11 +28,7 @@ export const PageContent = ({
 }: PageContentProps) => {
   const { canInteractWithFeatures } = usePreRegistration();
 
-  if (canInteractWithFeatures) {
-    SimpleAnalytics.viewProjectAsRegisteredUser({
-      projectId: project.id,
-    });
-  }
+  useManageAnalytics({ project, canInteractWithFeatures });
 
   return (
     <main>
@@ -77,3 +74,32 @@ export const PageContent = ({
     </main>
   );
 };
+
+/**
+ * Custom hook to manage analytics for a project view.
+ *
+ * Triggers an analytics event when the user can interact with project features,
+ * indicating that a registered user has viewed the project.
+ *
+ * @param {Object} params - The parameters for the hook.
+ * @param {Project} params.project - The project being viewed.
+ * @param {boolean} params.canInteractWithFeatures - Flag indicating if the user can interact with project features.
+ */
+
+function useManageAnalytics({
+  project,
+  canInteractWithFeatures,
+}: {
+  project: Project;
+  canInteractWithFeatures: boolean;
+}) {
+  useEffect(() => {
+    if (!canInteractWithFeatures) return;
+
+    SimpleAnalytics.viewProjectAsRegisteredUser({
+      projectId: project.id,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canInteractWithFeatures]);
+}
