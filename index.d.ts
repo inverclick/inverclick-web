@@ -20,5 +20,9 @@ declare global {
     questionAboutInverclick: typeof questionAboutInverclick;
     scheduleAnAppointment: typeof scheduleAnAppointment;
     voidFunction: typeof voidFunction;
+    sa_event(
+      eventName: string,
+      metadata?: Record<string, string | number | boolean | Date>
+    ): void;
   }
 }
