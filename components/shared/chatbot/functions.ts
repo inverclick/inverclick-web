@@ -7,6 +7,7 @@ import {
   generateSimulateCreditByQuotaValueMessages,
   generateSimulateCreditByValueHousingMessages,
 } from "@/components/shared/chatbot/messages";
+import { ENV_VARS } from "@/global/env";
 import { formatDate } from "@/lib/format-date";
 import { getRandomElement } from "@/lib/get-random-element";
 import { supabase } from "@/services/supabase/supabase";
@@ -64,7 +65,7 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
     }
   }
 
-  const data = {
+  const output = JSON.stringify({
     action: "go_to_projects",
     response_message: getRandomElement(
       generateGoToProjectsWithFiltersMessages()
@@ -75,20 +76,16 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
         .join(",")
         .replace(/\s+/g, ""),
     },
-  };
-
-  const output = JSON.stringify(data);
+  });
 
   return output;
 }
 
 export function goToProjects(params: {}) {
-  const data = {
+  const output = JSON.stringify({
     action: "go_to_projects",
     response_message: getRandomElement(generateGoToProjectsMessages()),
-  };
-
-  const output = JSON.stringify(data);
+  });
 
   return output;
 }
@@ -115,9 +112,11 @@ export function simulateCredit(params: {
     });
   }
 
-  return JSON.stringify({
+  const output = JSON.stringify({
     response_message: "Necesito que me especifiques el tipo de simulación.",
   });
+
+  return output;
 }
 
 export function simulateCreditByQuotaValue(params: {
@@ -141,7 +140,7 @@ export function simulateCreditByQuotaValue(params: {
       (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, monthsFunding)));
 
   const output = {
-    data: data,
+    data,
     amountFunded: amountFunded.toFixed(2),
     monthlyInterestRate: monthlyInterestRate.toFixed(6),
     response_message: getRandomElement(
@@ -188,7 +187,7 @@ export function simulateCreditByValueHousing(params: {
   const totalQuota = fixedQuota + insurance;
 
   const output = {
-    data: data,
+    data,
     amountFunded: amountFunded.toFixed(2),
     monthlyInterestRate: monthlyInterestRate.toFixed(6),
     fixedQuota: fixedQuota.toFixed(2),
@@ -233,7 +232,7 @@ export async function goToProject(params: { projectName: string }) {
 }
 
 export async function questionAboutProject(params: { projectId: string }) {
-  const url = `https://lvptznfprobnfjquceok.supabase.co/functions/v1/project-by-id/${params.projectId}`;
+  const url = `${ENV_VARS.SUPABASE_URL}/functions/v1/project-by-id/${params.projectId}`;
 
   const response = await fetch(url);
   const output = await response.json();
@@ -322,7 +321,7 @@ export async function scheduleAnAppointment(params: {
     projectId = project?.id || null;
   }
 
-  const data = {
+  const output = JSON.stringify({
     action: "schedule_an_appointment",
     response_message: `Fecha actual: ${formatDate(new Date())}. ${getRandomElement(generateScheduleAnAppointmentMessages())}. Te llegará un correo de confirmación a: ${params.email}`,
     params: {
@@ -331,9 +330,7 @@ export async function scheduleAnAppointment(params: {
       date: params.date,
       time: params.time,
     },
-  };
-
-  const output = JSON.stringify(data);
+  });
 
   return output;
 }

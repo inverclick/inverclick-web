@@ -1,3 +1,6 @@
+export const NO_CONTENT_MESSAGE =
+  "Ups, algo salio mal. Parece que no tengo una respuesta";
+
 export function generateGoToProjectsMessages() {
   return [
     `{UserName} ¿Te imaginas disfrutando un café en tu nueva casa en Colombia? ¡Hablemos de cómo hacerlo realidad! Puedes preguntarme por propiedades según su ubicación, por rango de precios, por tipo de inmueble. O si prefieres puedes agendar una videollamada con uno de nuestros asesores.`,

@@ -14,14 +14,21 @@ import {
   simulateCreditByValueHousing,
   voidFunction,
 } from "@/components/shared/chatbot/functions";
+import { NO_CONTENT_MESSAGE } from "@/components/shared/chatbot/messages";
+import { tools } from "@/components/shared/chatbot/tools";
+import { Chatter, FunctionOutput } from "@/components/shared/chatbot/types";
 import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
 import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
+import { CHATBOT_SENDER } from "@/constants/enums";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { useUser } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
 import { formatTimezoneOffset } from "@/lib/format-timezone-offset";
+import { clearChatbotMessagesFromLocalStorage } from "@/services/clear-chatbot-messages-from-local-storage";
 import { getChatbotMessagesFromLocalStorage } from "@/services/get-chatbot-messages-from-local-storage";
 import { supabase } from "@/services/supabase/supabase";
+import { User } from "@/services/user/get-user";
+import { PreRegistration } from "@/types/pre-registration";
 import {
   Avatar,
   AvatarFallback,
@@ -43,28 +50,28 @@ import {
   PopoverTrigger,
 } from "@inverclick/inverclick-ui/popover";
 import { Loader2, MessageCircle, Send } from "lucide-react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import OpenAI from "openai";
-
-type MessagesSource = "db" | "local";
-
-type Chatter = {
-  id: string;
-  name: string;
-  email: string;
-  messagesSource: MessagesSource;
-};
-
-const WAIT_FOR_RESPONSE_TIME = 500;
+import {
+  CHATBOT_MESSAGES_LIMIT,
+  PROMPT_SYSTEM,
+} from "@/components/shared/chatbot/constants";
+import { formatDate } from "@/lib/format-date";
+import { LimitedQueue } from "@/lib/limited-queue";
 
 export const ChatbotContent = () => {
+  const conversationHistoryRef = useRef<
+    LimitedQueue<ChatCompletionMessageParam>
+  >(new LimitedQueue(CHATBOT_MESSAGES_LIMIT + 1, 1));
+
   /**
    * References
    */
-
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
 
   const scrollAreaRefFn = useCallback((node: HTMLDivElement) => {
@@ -80,15 +87,12 @@ export const ChatbotContent = () => {
   /**
    * States
    */
-
   const [openAI] = useState<OpenAI>(
     new OpenAI({
       apiKey: ENV_VARS.OPENAI_API_KEY,
       dangerouslyAllowBrowser: true,
     })
   );
-
-  const [thread, setThread] = useState<OpenAI.Beta.Threads.Thread>();
 
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
@@ -99,7 +103,6 @@ export const ChatbotContent = () => {
   /**
    * Hooks
    */
-
   const { user } = useUser();
   const { preRegistration } = usePreRegistration();
 
@@ -111,26 +114,11 @@ export const ChatbotContent = () => {
    * Constants
    */
 
-  /**
-   * Chatter existence (user or pre-registration) is validated in chatbot.tsx component.
-   * So user or pre-registration are guaranteed to exist at this point. It is safe to ignore '|| ""'
-   */
-  const chatter: Chatter = {
-    id: user?.id || preRegistration?.id || "",
-    name:
-      user?.lead?.[0]?.nickname ||
-      user?.name ||
-      preRegistration?.nickname ||
-      preRegistration?.name ||
-      "",
-    email: user?.email || preRegistration?.email || "",
-    messagesSource: user ? "db" : "local",
-  };
+  const chatter = getChatter({ user, preRegistration });
 
   /**
    * Effects
    */
-
   useEffect(() => {
     const init = async () => {
       setLoadingMessages(true);
@@ -143,15 +131,20 @@ export const ChatbotContent = () => {
           .select("*")
           .eq("user_id", chatter.id);
 
-        messages = (data || []).map((data) => {
-          const message: ChatMessageType = {
-            id: data.id,
-            message: data.message,
-            sender: data.from === "BOT" ? "assistant" : "user",
-          };
+        messages =
+          data && data.length > 0
+            ? data.map((data) => {
+                const message: ChatMessageType = {
+                  id: data.id,
+                  message: data.message,
+                  sender: data.from === "BOT" ? "assistant" : "user",
+                };
 
-          return message;
-        });
+                return message;
+              })
+            : [];
+
+        clearChatbotMessagesFromLocalStorage();
       } else if (chatter.messagesSource === "local") {
         messages = getChatbotMessagesFromLocalStorage();
       }
@@ -164,11 +157,27 @@ export const ChatbotContent = () => {
         });
       }
 
+      /**
+       * Keep just the last (CHATBOT_MESSAGES_LIMIT) for the conversation history.
+       * The conversation history is not showed to the user, is sent to the Open API,
+       * so the assistant can have the context of the last messages.
+       *
+       * The messages showed to the users are stored in messages React state
+       */
+      conversationHistoryRef.current.add(PROMPT_SYSTEM);
+      conversationHistoryRef.current.addMany(
+        messages.map((message) => {
+          const chatMessage: ChatCompletionMessageParam = {
+            role: message.sender === "user" ? "user" : "assistant",
+            content: message.message,
+          };
+
+          return chatMessage;
+        })
+      );
+
       setMessages(messages);
-
       setLoadingMessages(false);
-
-      setThread(await openAI.beta.threads.create());
     };
 
     window.goToProjects = goToProjects;
@@ -206,7 +215,7 @@ export const ChatbotContent = () => {
     const projectPageRegex = /^\/projects\/[a-f0-9-]{36}\/[a-f0-9-]{36}$/;
 
     const contextualizeAssistant = async () => {
-      if (thread && projectPageRegex.test(pathname)) {
+      if (projectPageRegex.test(pathname)) {
         // TODO: Avoid this request
         const { data: project } = await supabase
           .from("projects")
@@ -215,9 +224,12 @@ export const ChatbotContent = () => {
           .single();
 
         if (project) {
-          await openAI.beta.threads.messages.create(thread.id, {
-            role: "assistant",
-            content: `El nombre del usuario es ${chatter.name} y está en la página del proyecto ${project.name} con ID ${project.id}.`,
+          await handleSendMessage({
+            openAI,
+            message: `El nombre del usuario es ${chatter.name} y está en la página del proyecto ${project.name} con ID ${project.id}.`,
+            conversationHistory: conversationHistoryRef.current,
+            functionsRegistry: window,
+            chatter,
           });
         }
       }
@@ -226,237 +238,60 @@ export const ChatbotContent = () => {
     contextualizeAssistant();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [thread, pathname]);
+  }, [pathname]);
 
-  const waitForResponseCompletion = async (runId: string) => {
-    if (!thread) {
-      throw new Error("No thread found");
-    }
+  const sendMessage = async (event: FormEvent) => {
+    event.preventDefault();
 
-    let response = await openAI.beta.threads.runs.retrieve(thread.id, runId);
-
-    while (response.status === "in_progress" || response.status === "queued") {
-      await new Promise((resolve) =>
-        setTimeout(resolve, WAIT_FOR_RESPONSE_TIME)
-      );
-
-      response = await openAI.beta.threads.runs.retrieve(thread.id, runId);
-    }
-
-    return response;
-  };
-
-  const handleResponseCompletion = async (runId: string) => {
-    if (!thread) {
-      throw new Error("No thread found");
-    }
-
-    const messages = await openAI.beta.threads.messages.list(thread.id);
-
-    const lastMessage = messages.data
-      .filter(
-        (message) => message.run_id === runId && message.role === "assistant"
-      )
-      .pop();
-
-    const message =
-      lastMessage?.content[0].type === "text"
-        ? lastMessage.content[0].text.value
-        : "";
-
-    setAssistantTyping(false);
+    if (message.trim() === "") return;
 
     setMessages((messages) => [
       ...messages,
-      { id: uuidv4(), message, sender: "assistant" },
+      {
+        id: uuidv4(),
+        message,
+        sender: "user",
+      },
     ]);
 
-    /**
-     * Save assistant message on DB
-     */
-    await supabase.from("chatbot_messages").insert({
-      from: "BOT",
-      message,
-      user_id: chatter.id,
-    });
-  };
+    setMessage("");
+    setAssistantTyping(true);
 
-  const handleFailedResponse = () => {
+    const { messageContent, functionResponse } = await handleSendMessage({
+      openAI,
+      message,
+      conversationHistory: conversationHistoryRef.current,
+      functionsRegistry: window,
+      chatter,
+    });
+
     setAssistantTyping(false);
 
     setMessages((messages) => [
       ...messages,
       {
         id: uuidv4(),
-        message: "Lo siento, algo salió mal.",
+        message: messageContent,
         sender: "assistant",
       },
     ]);
-  };
 
-  const submitToolOutputs = async (
-    toolCalls: OpenAI.Beta.Threads.Runs.RequiredActionFunctionToolCall[],
-    runId: string
-  ) => {
-    if (!thread) {
-      throw new Error("No thread found");
+    if (functionResponse) {
+      handleFunctionResponse({ functionResponse, router });
     }
 
-    const toolOutputs: OpenAI.Beta.Threads.Runs.RunSubmitToolOutputsParams.ToolOutput[] =
-      [];
-
-    for (const toolCall of toolCalls) {
-      const functionName = toolCall.function.name;
-
-      const args = toolCall.function.arguments
-        ? JSON.parse(toolCall.function.arguments)
-        : null;
-
-      let output: string;
-
-      const commonArguments = {
-        name: chatter.name,
-        email: chatter.email,
-      };
-
-      output = args
-        ? ((await window[functionName]({
-            ...args,
-            ...commonArguments,
-          })) as string)
-        : ((await window[functionName]()) as string);
-
-      toolOutputs.push({
-        tool_call_id: toolCall.id,
-        output,
-      });
-    }
-
-    await openAI.beta.threads.runs.submitToolOutputs(thread.id, runId, {
-      tool_outputs: toolOutputs,
-    });
-
-    return toolOutputs.map((toolOutput) => JSON.parse(toolOutput.output!));
-  };
-
-  const sendMessage = async (event: FormEvent) => {
-    event.preventDefault();
-
-    try {
-      if (!thread) {
-        throw new Error("No thread found");
-      }
-
-      if (message.trim().length === 0) return;
-
-      const chatMessage: ChatMessageType = {
-        id: uuidv4(),
-        message,
-        sender: "user",
-      };
-
-      setAssistantTyping(true);
-      setMessages((messages) => [...messages, chatMessage]);
-      setMessage("");
-
-      /**
-       * Save user message on DB
-       */
-      await supabase.from("chatbot_messages").insert({
-        from: "USER",
+    await supabase.from("chatbot_messages").insert([
+      {
+        from: CHATBOT_SENDER.USER,
         message,
         user_id: chatter.id,
-      });
-
-      /**
-       * Create message
-       */
-      await openAI.beta.threads.messages.create(thread.id, {
-        role: "user",
-        content: `Mi nombre es ${chatter.name} y mi pregunta es: ${message}`,
-      });
-
-      /**
-       * Create run
-       */
-      const run = await openAI.beta.threads.runs.create(thread.id, {
-        assistant_id: ENV_VARS.OPENAI_ASSISTANT_ID,
-        tool_choice: "required",
-      });
-
-      /**
-       * Waits for run status to be different than "in_progress" or "queued"
-       */
-      let response = await waitForResponseCompletion(run.id);
-
-      if (response.status === "completed") {
-        return await handleResponseCompletion(run.id);
-      }
-
-      if (response.status === "requires_action" && response.required_action) {
-        const outputs = await submitToolOutputs(
-          response.required_action.submit_tool_outputs.tool_calls,
-          run.id
-        );
-
-        let requiredActionResponse = await waitForResponseCompletion(run.id);
-
-        const outputsWithActions = outputs.filter((output) => output.action);
-
-        outputsWithActions.forEach(async (output) => {
-          if (output.action === "go_to_projects" && output.params?.filter) {
-            router.push(
-              `/projects?${(output.params?.filter as string).replace(/,/g, "&")}`
-            );
-          } else if (output.action === "go_to_projects") {
-            router.push(`/projects`);
-          } else if (output.action === "go_to_project") {
-            router.push(
-              `/projects/${output.params?.project_id}/${output.params?.typology_id}`
-            );
-          } else if (output.action === "schedule_an_appointment") {
-            const { projectId, date, time } = output.params;
-
-            if (date && time) {
-              const formattedOffset = formatTimezoneOffset(
-                new Date().getTimezoneOffset()
-              );
-
-              const appointmentDate = new Date(
-                `${date}T${time}${formattedOffset}`
-              );
-
-              // TODO: schedule
-              console.log({ projectId, appointmentDate });
-            }
-          }
-        });
-
-        if (requiredActionResponse.status === "completed") {
-          return await handleResponseCompletion(run.id);
-        }
-
-        if (
-          requiredActionResponse.status === "failed" ||
-          requiredActionResponse.status === "expired" ||
-          requiredActionResponse.status === "cancelled"
-        ) {
-          handleFailedResponse();
-        }
-
-        return;
-      }
-
-      if (
-        response.status === "failed" ||
-        response.status === "expired" ||
-        response.status === "cancelled"
-      ) {
-        handleFailedResponse();
-      }
-    } catch (error) {
-      handleFailedResponse();
-    }
+      },
+      {
+        from: CHATBOT_SENDER.BOT,
+        message: messageContent,
+        user_id: chatter.id,
+      },
+    ]);
   };
 
   return (
@@ -523,3 +358,173 @@ export const ChatbotContent = () => {
     </Popover>
   );
 };
+
+/**
+ * Chatter existence (user or pre-registration) is validated in chatbot.tsx component.
+ * So user or pre-registration are guaranteed to exist at this point.
+ */
+function getChatter({
+  user,
+  preRegistration,
+}: {
+  user: User | null;
+  preRegistration: PreRegistration | null;
+}): Chatter {
+  if (user) {
+    return {
+      id: user.id,
+      name: user.lead[0].nickname || user.name,
+      email: user.email,
+      messagesSource: "db",
+    };
+  }
+
+  if (preRegistration) {
+    return {
+      id: preRegistration.id,
+      name: preRegistration.nickname || preRegistration.name,
+      email: preRegistration.email,
+      messagesSource: "local",
+    };
+  }
+
+  throw new Error("Chatter could not be returned");
+}
+
+async function handleSendMessage({
+  openAI,
+  message,
+  chatter,
+  conversationHistory,
+  functionsRegistry,
+}: {
+  openAI: OpenAI;
+  message: string;
+  chatter: Chatter;
+  conversationHistory: LimitedQueue<ChatCompletionMessageParam>;
+  functionsRegistry: Window;
+}): Promise<{ messageContent: string; functionResponse: string | null }> {
+  message = `Mi nombre es ${chatter.name}, ${formatDate(new Date())} y estamos a mi pregunta es: ${message}`;
+
+  conversationHistory.add({ role: "user", content: message });
+
+  const response = await openAI.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: conversationHistory.getQueue(),
+    functions: tools,
+    function_call: "auto",
+  });
+
+  const responseMessage = response.choices[0].message;
+
+  if (responseMessage.function_call) {
+    const functionName = responseMessage.function_call.name;
+
+    const functionArgs = JSON.parse(
+      responseMessage.function_call.arguments || "{}"
+    );
+
+    if (functionsRegistry[functionName]) {
+      const { messageContent, functionResponse } = await handleFunctionCall({
+        openAI,
+        functionName,
+        functionArgs,
+        conversationHistory,
+        functionsRegistry,
+      });
+
+      return { messageContent, functionResponse };
+    }
+  } else {
+    const messageContent = responseMessage.content || NO_CONTENT_MESSAGE;
+
+    conversationHistory.add({ role: "assistant", content: messageContent });
+
+    return { messageContent, functionResponse: null };
+  }
+
+  return {
+    messageContent: NO_CONTENT_MESSAGE,
+    functionResponse: null,
+  };
+}
+
+async function handleFunctionCall({
+  openAI,
+  functionName,
+  functionArgs,
+  conversationHistory,
+  functionsRegistry,
+}: {
+  openAI: OpenAI;
+  functionName: string;
+  functionArgs: Record<string, unknown>;
+  conversationHistory: LimitedQueue<ChatCompletionMessageParam>;
+  functionsRegistry: Window;
+}): Promise<{ messageContent: string; functionResponse: string }> {
+  /**
+   * "{
+   *   action: "go_to_projects",,
+   *   response_message: "¡Entendido, {UserName}! Estas son las opciones disponibles para apartamentos y casas. Si quieres ver más detalles de algún proyecto o aplicar otro filtro, dime y seguimos buscando juntos.",
+   *   params: {
+   *      filter: "city=32"
+   *    }
+   *  }"
+   */
+  const functionResponse = (await functionsRegistry[functionName](
+    functionArgs
+  )) as string;
+
+  conversationHistory.add({
+    role: "function",
+    name: functionName,
+    content: functionResponse,
+  });
+
+  const response = await openAI.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: conversationHistory.getQueue(),
+  });
+
+  const messageContent =
+    response.choices[0].message.content || NO_CONTENT_MESSAGE;
+
+  conversationHistory.add({ role: "assistant", content: messageContent });
+
+  return { messageContent, functionResponse };
+}
+
+function handleFunctionResponse({
+  functionResponse,
+  router,
+}: {
+  functionResponse: string;
+  router: AppRouterInstance;
+}) {
+  const output = JSON.parse(functionResponse) as FunctionOutput;
+
+  if ("action" in output) {
+    if (output.action === "go_to_projects" && "params" in output) {
+      router.push(`/projects?${output.params.filter.replace(/,/g, "&")}`);
+    } else if (output.action === "go_to_projects") {
+      router.push(`/projects`);
+    } else if (output.action === "go_to_project") {
+      router.push(
+        `/projects/${output.params.project_id}/${output.params.typology_id}`
+      );
+    } else if (output.action === "schedule_an_appointment") {
+      const { projectId, date, time } = output.params;
+
+      if (date && time) {
+        const formattedOffset = formatTimezoneOffset(
+          new Date().getTimezoneOffset()
+        );
+
+        const appointmentDate = new Date(`${date}T${time}${formattedOffset}`);
+
+        // TODO: schedule
+        console.log({ projectId, appointmentDate });
+      }
+    }
+  }
+}
