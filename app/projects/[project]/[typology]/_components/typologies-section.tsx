@@ -34,34 +34,36 @@ export const TypologiesSection = ({
       <Typography variant="h2" className="mb-4">
         Tipologías
       </Typography>
-      <ul className="mb-6 flex flex-nowrap gap-4 overflow-x-auto">
-        {typologies.map((typology) => {
-          const {
-            id,
-            name,
-            area,
-            private_area,
-            rooms,
-            bathrooms,
-            parking,
-            price,
-          } = typology;
-          return (
-            <TypologyCard
-              key={id}
-              name={name}
-              price={`${formatCurrency(convert(price), currency)} ${currency}`}
-              area={area}
-              privateArea={private_area}
-              rooms={rooms}
-              bathrooms={bathrooms}
-              parking={parking || 0}
-              selected={selectedTypology.id === id}
-              cardClickable={true}
-              onCardClick={() => setSelectedTypology(typology)}
-            />
-          );
-        })}
+      <ul className="mb-6 flex flex-nowrap gap-4 overflow-x-auto pb-2">
+        {typologies
+          .toSorted((a, b) => a.order - b.order)
+          .map((typology) => {
+            const {
+              id,
+              name,
+              area,
+              private_area,
+              rooms,
+              bathrooms,
+              parking,
+              price,
+            } = typology;
+            return (
+              <TypologyCard
+                key={id}
+                name={name}
+                price={`${formatCurrency(convert(price), currency)} ${currency}`}
+                area={area}
+                privateArea={private_area}
+                rooms={rooms}
+                bathrooms={bathrooms}
+                parking={parking || 0}
+                selected={selectedTypology.id === id}
+                cardClickable={true}
+                onCardClick={() => setSelectedTypology(typology)}
+              />
+            );
+          })}
       </ul>
       <Carousel key={selectedTypology.id} className="w-full">
         <CarouselContent>
