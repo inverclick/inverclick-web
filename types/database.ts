@@ -40,7 +40,7 @@ export type Database = {
           link: string;
         };
         Insert: {
-          advisor_id?: string;
+          advisor_id: string;
           created_at?: string;
           date: string;
           id?: string;
@@ -248,6 +248,7 @@ export type Database = {
           project_class: Database["public"]["Enums"]["PROJECT_CLASS"];
           project_id: string | null;
           rejected_message: string | null;
+          show_valuation: boolean;
           status: Database["public"]["Enums"]["PROJECT_STATUS"];
           step: number;
           stratum: number | null;
@@ -279,6 +280,7 @@ export type Database = {
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"];
           project_id?: string | null;
           rejected_message?: string | null;
+          show_valuation?: boolean;
           status: Database["public"]["Enums"]["PROJECT_STATUS"];
           step: number;
           stratum?: number | null;
@@ -310,6 +312,7 @@ export type Database = {
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"];
           project_id?: string | null;
           rejected_message?: string | null;
+          show_valuation?: boolean;
           status?: Database["public"]["Enums"]["PROJECT_STATUS"];
           step?: number;
           stratum?: number | null;
@@ -613,6 +616,7 @@ export type Database = {
           photos: string[];
           plan_id: string;
           project_class: Database["public"]["Enums"]["PROJECT_CLASS"];
+          show_valuation: boolean;
           status: Database["public"]["Enums"]["PROJECT_STATUS"];
           stratum: number;
           updated_at: string | null;
@@ -644,6 +648,7 @@ export type Database = {
           photos: string[];
           plan_id: string;
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"];
+          show_valuation?: boolean;
           status?: Database["public"]["Enums"]["PROJECT_STATUS"];
           stratum: number;
           updated_at?: string | null;
@@ -675,6 +680,7 @@ export type Database = {
           photos?: string[];
           plan_id?: string;
           project_class?: Database["public"]["Enums"]["PROJECT_CLASS"];
+          show_valuation?: boolean;
           status?: Database["public"]["Enums"]["PROJECT_STATUS"];
           stratum?: number;
           updated_at?: string | null;
@@ -866,6 +872,30 @@ export type Database = {
           name?: string;
           recovery_password_code?: string | null;
           role?: Database["public"]["Enums"]["USER_ROLE"];
+        };
+        Relationships: [];
+      };
+      whatsapp_chatbot_messages: {
+        Row: {
+          created_at: string;
+          from: Database["public"]["Enums"]["CHATBOT_SENDER"];
+          id: string;
+          message: string;
+          phone: string;
+        };
+        Insert: {
+          created_at?: string;
+          from: Database["public"]["Enums"]["CHATBOT_SENDER"];
+          id?: string;
+          message: string;
+          phone: string;
+        };
+        Update: {
+          created_at?: string;
+          from?: Database["public"]["Enums"]["CHATBOT_SENDER"];
+          id?: string;
+          message?: string;
+          phone?: string;
         };
         Relationships: [];
       };

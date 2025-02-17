@@ -1,13 +1,14 @@
-import { ProjectCard } from "@/components/shared/project-card";
+import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/labels";
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency } from "@/lib/format-currency";
-import { limitPrice } from "@/services/utils";
+import { getAssetUrl, limitPrice } from "@/services/utils";
 import { ProjectToDisplay } from "@/types/domain/projects";
 import {
   Marker,
   MarkerClusterer,
   SuperClusterAlgorithm,
 } from "@googlemaps/markerclusterer";
+import { ProjectCard } from "@inverclick/inverclick-ui/project-card";
 import { AdvancedMarker, InfoWindow, useMap } from "@vis.gl/react-google-maps";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -157,11 +158,54 @@ export function Markers({ projects = [] }: MarkerProps) {
             setSelectedProjectKey(null);
           }}
         >
-          <ProjectCard
-            project={projects.find((p) => p.id === selectedProjectKey)!}
+          <ProjectCardWrapper
+            projects={projects}
+            selectedProjectKey={selectedProjectKey}
           />
         </InfoWindow>
       )}
     </>
+  );
+}
+
+function ProjectCardWrapper({
+  projects,
+  selectedProjectKey,
+}: Readonly<{
+  projects: ProjectToDisplay[];
+  selectedProjectKey: string;
+}>) {
+  const { currency, convert } = useCurrencyContext((s) => s);
+
+  const project = projects.find((p) => p.id === selectedProjectKey)!;
+  const typology = project.typologies[0];
+
+  return (
+    <ProjectCard
+      key={project.id}
+      href={`/projects/${project.id}/${typology.id}`}
+      currency={currency}
+      project={{
+        id: project.id.toString(),
+        name: project.name,
+        department: project.department.name,
+        city: project.city.name,
+        address: project.address,
+        housingState: HOUSING_STATE_LABEL[project.housing_state],
+        housingType: HOUSING_TYPE_LABEL[project.housing_type],
+        photosUrl: project.photos.map(getAssetUrl) || [],
+      }}
+      blueprint={{
+        area: typology.area,
+        privateArea: typology.private_area,
+        price: convert(typology.price),
+        rooms: typology.rooms,
+        units: typology.units,
+      }}
+      company={{
+        name: project.company.name,
+        logoUrl: project.company ? getAssetUrl(project.company.logo_url) : "",
+      }}
+    />
   );
 }

@@ -12,8 +12,8 @@ importers:
         specifier: ^2.5.3
         version: 2.5.3
       '@inverclick/inverclick-ui':
-        specifier: 1.9.9
-        version: 1.9.9(raatouwbiwcdvnx2dswcorbehy)
+        specifier: 1.11.11
+        version: 1.11.11(raatouwbiwcdvnx2dswcorbehy)
       '@midudev/tailwind-animations':
         specifier: ^0.1.0
         version: 0.1.0(tailwindcss@3.4.16)
@@ -289,8 +289,8 @@ packages:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
 
-  '@inverclick/inverclick-ui@1.9.9':
-    resolution: {integrity: sha512-/tIVJQ9eauPPig+PkS8SPCFzsfiDPYNEFOSgasCgN/KleVf5yn43oufPlPcXZ+sv31mP7jm0XeYmX076srMtGA==}
+  '@inverclick/inverclick-ui@1.11.11':
+    resolution: {integrity: sha512-qvHYd6wO2Lhxl9wk6ciJm9Uxf5TZ8ua90kOxjQCPVvhXX1vc/Fhb1hLSc8ap6AlSwa+P1hrUOHFW58THMumzmA==}
     peerDependencies:
       '@midudev/tailwind-animations': ^0.1.0
       autoprefixer: ^10.4.20
@@ -1534,6 +1534,13 @@ packages:
   '@typescript-eslint/visitor-keys@6.21.0':
     resolution: {integrity: sha512-JJtkDduxLi9bivAB+cYOVMtbkqdPOhZ+ZI5LC47MIRrDV4Yn2o+ZnW10Nkmr28xRpSpdJ6Sm42Hjf2+REYXm0A==}
     engines: {node: ^16.0.0 || >=18.0.0}
+
+  '@uidotdev/usehooks@2.4.1':
+    resolution: {integrity: sha512-1I+RwWyS+kdv3Mv0Vmc+p0dPYH0DTRAo04HLyXReYBL9AeseDWUJyi4THuksBJcu9F0Pih69Ak150VDnqbVnXg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   '@ungap/structured-clone@1.2.1':
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
@@ -4069,7 +4076,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@inverclick/inverclick-ui@1.9.9(raatouwbiwcdvnx2dswcorbehy)':
+  '@inverclick/inverclick-ui@1.11.11(raatouwbiwcdvnx2dswcorbehy)':
     dependencies:
       '@midudev/tailwind-animations': 0.1.0(tailwindcss@3.4.16)
       '@radix-ui/react-accordion': 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4098,6 +4105,7 @@ snapshots:
       '@radix-ui/react-toggle': 1.1.1(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-toggle-group': 1.1.1(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-tooltip': 1.1.6(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@uidotdev/usehooks': 2.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       autoprefixer: 10.4.20(postcss@8.4.49)
       class-variance-authority: 0.7.1
       clsx: 2.1.1
@@ -5410,6 +5418,11 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       eslint-visitor-keys: 3.4.3
+
+  '@uidotdev/usehooks@2.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@ungap/structured-clone@1.2.1': {}
 

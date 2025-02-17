@@ -88,13 +88,13 @@ export default async function Projects(props: ProjectsProps) {
       {/* <ContactButton className="fixed right-4 bottom-4" /> */}
       <section className="hidden lg:block">
         <ResizablePanelGroup direction="horizontal" className="!h-screen">
-          <ResizablePanel defaultSize={32}>
+          <ResizablePanel defaultSize={30} minSize={30}>
             <Map2 projects={projects} />
           </ResizablePanel>
           <ResizableHandle className="w-5 bg-border" withHandle />
           <ResizablePanel
-            defaultSize={68}
-            minSize={25}
+            defaultSize={70}
+            minSize={30}
             className="relative z-10 flex flex-col"
           >
             <NavbarProjects />

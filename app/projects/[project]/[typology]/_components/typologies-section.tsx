@@ -1,7 +1,8 @@
 "use client";
 
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
-import { DisplayFormattedCurrency } from "@/components/shared/display-formatted-currency";
+import { useCurrencyContext } from "@/contexts/currency-context";
+import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import {
@@ -12,10 +13,9 @@ import {
   CarouselPrevious,
 } from "@inverclick/inverclick-ui/carousel";
 import { Typography } from "@inverclick/inverclick-ui/typography";
-import { Bath, BedDouble, CarFront } from "lucide-react";
-import { ComponentProps, useState } from "react";
-
+import { TypologyCard } from "@inverclick/inverclick-ui/typology-card";
 import Image from "next/image";
+import { ComponentProps, useState } from "react";
 
 export type TypologiesProps = {
   typologies: Project["typologies"];
@@ -27,58 +27,45 @@ export const TypologiesSection = ({
 }: TypologiesProps) => {
   const [selectedTypology, setSelectedTypology] = useState(typologies[0]);
 
+  const { convert, currency } = useCurrencyContext((s) => s);
+
   return (
     <section className={cn(props.className)} {...props}>
       <Typography variant="h2" className="mb-4">
         Tipologías
       </Typography>
-      <ul className="mb-6 flex flex-nowrap gap-4 overflow-x-auto">
-        {typologies.map((typology) => {
-          const { id, name, area, rooms, bathrooms, parking, price } = typology;
-          return (
-            <li key={id}>
-              <Typography className="mb-1 font-medium">{name}</Typography>
-              <DisplayFormattedCurrency
-                variant="p"
-                className="mb-1"
-                number={price}
+      <ul className="mb-6 flex flex-nowrap gap-4 overflow-x-auto pb-2">
+        {typologies
+          .toSorted((a, b) => a.order - b.order)
+          .map((typology) => {
+            const {
+              id,
+              name,
+              area,
+              private_area,
+              rooms,
+              bathrooms,
+              parking,
+              price,
+            } = typology;
+            return (
+              <TypologyCard
+                key={id}
+                name={name}
+                price={`${formatCurrency(convert(price), currency)} ${currency}`}
+                area={area}
+                privateArea={private_area}
+                rooms={rooms}
+                bathrooms={bathrooms}
+                parking={parking || 0}
+                selected={selectedTypology.id === id}
+                cardClickable={true}
+                onCardClick={() => setSelectedTypology(typology)}
               />
-              <button
-                onClick={() => setSelectedTypology(typology)}
-                className={cn(
-                  "border-dark-gray flex w-44 flex-col items-start rounded-lg border bg-background p-4 hover:border-primary",
-                  {
-                    "border-primary": selectedTypology.id === id,
-                  }
-                )}
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <p className="text-sm">Area*</p>
-                </div>
-                <p className="mb-2">
-                  <span className="text-xl">{area}</span> m<sup>2</sup>
-                </p>
-                <ul className="flex justify-between gap-4">
-                  <li className="flex gap-2">
-                    <BedDouble className="size-4" />
-                    <p className="text-sm">{rooms}</p>
-                  </li>
-                  <li className="flex gap-2">
-                    <Bath className="size-4" />
-                    <p className="text-sm">{bathrooms}</p>
-                  </li>
-                  <li className="flex gap-2">
-                    <CarFront className="size-4" />
-                    <p className="text-sm">{parking}</p>
-                  </li>
-                </ul>
-              </button>
-            </li>
-          );
-        })}
+            );
+          })}
       </ul>
       <Carousel key={selectedTypology.id} className="w-full">
-        {/* <CarouselContent className="h-96"> */}
         <CarouselContent>
           {selectedTypology.blueprints.map((src, index) => (
             <CarouselItem key={src} className="flex items-center">
