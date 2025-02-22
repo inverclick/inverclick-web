@@ -45,25 +45,22 @@ export const UserProvider = ({
   };
 
   const signIn = async (params: SignInParams) => {
-    try {
-      await signInAction(params);
+    const { success, message } = await signInAction(params);
 
-      Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
-      localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
+    if (!success) {
+      toast.error(message);
+      return;
     }
+
+    Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
+    localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
   };
 
   const signOut = async () => {
-    try {
-      await signOutAction();
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
+    const { success, message } = await signOutAction();
+
+    if (!success) {
+      toast.error(message);
     }
   };
 

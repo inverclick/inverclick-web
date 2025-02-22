@@ -42,11 +42,16 @@ export function RecoverPasswordForm() {
       try {
         setLoading(true);
 
-        await recoverPasswordAction({
+        const { success, message } = await recoverPasswordAction({
           email,
           code,
           password,
         });
+
+        if (!success) {
+          toast.error(message);
+          return;
+        }
 
         toast.success(PASSWORD_RECOVERED);
 
