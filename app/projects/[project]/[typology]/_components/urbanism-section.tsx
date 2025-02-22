@@ -1,6 +1,7 @@
 "use client";
 
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { DraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import {
@@ -16,7 +17,7 @@ import { ComponentProps } from "react";
 import Image from "next/image";
 
 export type UrbanismSectionProps = Readonly<{
-  project: Project;
+  project: Project | DraftProject;
 }> &
   ComponentProps<"section">;
 

@@ -19,20 +19,40 @@ export async function generateMetadata({
 
   const { data: project } = await getProjectMetadata({ projectId });
 
-  const blueprint = project?.typologies.find(
+  if (!project) {
+    // Handle missing project
+    console.warn(`Project with ID ${projectId} not found.`);
+    return {
+      title: "Project Not Found",
+      description: "The requested project could not be found.",
+    };
+  }
+
+  const blueprint = project.typologies.find(
     (typology) => typology.id === typologyId
   );
 
+  if (!blueprint) {
+    // Handle missing blueprint
+    console.warn(
+      `Blueprint with ID ${typologyId} not found in project ${projectId}.`
+    );
+    return {
+      title: project.name + " - Blueprint Not Found",
+      description: "The requested blueprint could not be found.",
+    };
+  }
+
   return {
-    title: project?.name + " - " + blueprint?.name,
-    description: project?.description,
+    title: project.name + " - " + blueprint.name,
+    description: project.description,
     alternates: {
       canonical: `${ENV_VARS.BASE_URL}/${projectId}/${typologyId}`,
     },
     openGraph: {
       url: `${ENV_VARS.BASE_URL}/${projectId}/${typologyId}`,
-      title: project?.name + " - " + blueprint?.name,
-      description: project?.description,
+      title: project.name + " - " + blueprint.name,
+      description: project.description,
     },
   };
 }

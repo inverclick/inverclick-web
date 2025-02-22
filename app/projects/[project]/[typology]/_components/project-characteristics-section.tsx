@@ -1,6 +1,7 @@
 "use client";
 
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { DraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import { cn } from "@/lib/utils";
 import { isCompanyVerified } from "@/services/companies/is-company-verified";
 import { getAssetUrl } from "@/services/utils";
@@ -22,7 +23,7 @@ import { ComponentProps } from "react";
 import Image from "next/image";
 
 export type ProjectCharacteristicsProps = {
-  project: Project;
+  project: Project | DraftProject;
 } & ComponentProps<"section">;
 
 export const ProjectCharacteristicsSection = ({
