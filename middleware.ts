@@ -6,8 +6,6 @@ import { updateSession } from "@/middlewares/update-session";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  console.log("Running middleware");
-
   if (!canContinueToProjectPreview(request)) {
     return NextResponse.redirect(new URL("/", ENV_VARS.BASE_URL));
   }

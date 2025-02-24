@@ -1,4 +1,5 @@
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { DraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import { cn } from "@/lib/utils";
 import { getAssetUrl } from "@/services/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
@@ -7,8 +8,8 @@ import { ComponentProps } from "react";
 import Image from "next/image";
 
 export type ProjectInformationSectionProps = Readonly<{
-  project: Project;
-  typology: Project["typologies"][0];
+  project: Project | DraftProject;
+  typology: Project["typologies"][0] | DraftProject["typologies"][0];
 }> &
   ComponentProps<"section">;
 
@@ -33,8 +34,12 @@ export const ProjectInformationSection = ({
         <Image
           data-element="project-logo"
           unoptimized
-          src={getAssetUrl(project.logo)}
-          alt={project.name}
+          src={
+            project.logo
+              ? getAssetUrl(project.logo)
+              : "/building-placeholder.png"
+          }
+          alt={project.name ?? "N/A"}
           width={112}
           height={112}
           className="mx-auto"

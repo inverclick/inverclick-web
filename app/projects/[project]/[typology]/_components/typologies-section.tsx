@@ -25,7 +25,12 @@ export const TypologiesSection = ({
   typologies,
   ...props
 }: TypologiesProps) => {
-  const [selectedTypology, setSelectedTypology] = useState(typologies[0]);
+  const defaultSelectedTypology =
+    typologies.find((typology) => typology.order === 0) ?? typologies[0];
+
+  const [selectedTypology, setSelectedTypology] = useState(
+    defaultSelectedTypology
+  );
 
   const { convert, currency } = useCurrencyContext((s) => s);
 
