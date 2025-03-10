@@ -10,9 +10,6 @@ import {
   questionAboutProject,
   scheduleAnAppointment,
   simulateCredit,
-  simulateCreditByQuotaValue,
-  simulateCreditByValueHousing,
-  voidFunction,
 } from "@/components/shared/chatbot/functions";
 import { NO_CONTENT_MESSAGE } from "@/components/shared/chatbot/messages";
 import { tools } from "@/components/shared/chatbot/tools";
@@ -404,7 +401,7 @@ async function handleSendMessage({
   conversationHistory: LimitedQueue<ChatCompletionMessageParam>;
   functionsRegistry: Window;
 }): Promise<{ messageContent: string; functionResponse: string | null }> {
-  message = `Mi nombre es ${chatter.name}, ${formatDate(new Date())} y estamos a mi pregunta es: ${message}`;
+  message = `Mi nombre es ${chatter.name}, y la fecha de hoy es: ${formatDate(new Date())}. mi pregunta es: ${message}`;
 
   conversationHistory.add({ role: "user", content: message });
 

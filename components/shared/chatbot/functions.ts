@@ -310,6 +310,22 @@ export async function scheduleAnAppointment(params: {
   email: string;
 }) {
   let projectId: string | null = null;
+  const appointmentDate = new Date(`${params.date}T${params.time}`);
+  const currentDate = new Date();
+
+  if (appointmentDate < currentDate) {
+    const output = JSON.stringify({
+      action: "schedule_an_appointment",
+      response_message: "Lo siento, pero esa fecha ya pasó",
+      params: {
+        projectName: params.projectName,
+        date: params.date,
+        time: params.time,
+      },
+    });
+
+    return output;
+  }
 
   if (params.projectName !== "null") {
     const { data: project } = await supabase
