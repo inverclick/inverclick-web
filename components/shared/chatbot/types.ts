@@ -4,6 +4,7 @@ export type MessagesSource = "db" | "local";
 
 export type Chatter = {
   id: string;
+  leadId: string;
   name: string;
   email: string;
   messagesSource: MessagesSource;
@@ -84,8 +85,7 @@ export type ScheduleAnAppointmentFunctionOutput = {
   response_message: string;
   params: {
     projectId: string;
-    projectName: string;
-    date: string;
-    time: string;
+    date: string; // 2025-10-03
+    time: string; // 10:35
   };
 };

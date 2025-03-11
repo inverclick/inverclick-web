@@ -42,7 +42,8 @@ export function SignUpFormStepOne({
       if (userAlreadyRegistered) {
         setLoading(false);
 
-        toast.success(USER_ALREADY_EXISTS);
+        toast.warning(USER_ALREADY_EXISTS);
+
         return;
       }
 

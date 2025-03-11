@@ -2,6 +2,10 @@ import { ChatMessage } from "@/components/shared/chatbot/chat-message";
 import { ChatMessages } from "@/components/shared/chatbot/chat-messages";
 import { ChatMessage as ChatMessageType } from "@/components/shared/chatbot/chatbot";
 import {
+  CHATBOT_MESSAGES_LIMIT,
+  PROMPT_SYSTEM,
+} from "@/components/shared/chatbot/constants";
+import {
   getWelcomeMessage,
   goToProject,
   goToProjects,
@@ -20,7 +24,9 @@ import { CHATBOT_SENDER } from "@/constants/enums";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { useUser } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
+import { formatDate } from "@/lib/format-date";
 import { formatTimezoneOffset } from "@/lib/format-timezone-offset";
+import { LimitedQueue } from "@/lib/limited-queue";
 import { clearChatbotMessagesFromLocalStorage } from "@/services/clear-chatbot-messages-from-local-storage";
 import { getChatbotMessagesFromLocalStorage } from "@/services/get-chatbot-messages-from-local-storage";
 import { supabase } from "@/services/supabase/supabase";
@@ -54,12 +60,6 @@ import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import OpenAI from "openai";
-import {
-  CHATBOT_MESSAGES_LIMIT,
-  PROMPT_SYSTEM,
-} from "@/components/shared/chatbot/constants";
-import { formatDate } from "@/lib/format-date";
-import { LimitedQueue } from "@/lib/limited-queue";
 
 export const ChatbotContent = () => {
   const conversationHistoryRef = useRef<
@@ -370,6 +370,7 @@ function getChatter({
   if (user) {
     return {
       id: user.id,
+      leadId: user.lead[0].id,
       name: user.lead[0].nickname || user.name,
       email: user.email,
       messagesSource: "db",
@@ -379,6 +380,7 @@ function getChatter({
   if (preRegistration) {
     return {
       id: preRegistration.id,
+      leadId: preRegistration.leadId,
       name: preRegistration.nickname || preRegistration.name,
       email: preRegistration.email,
       messagesSource: "local",

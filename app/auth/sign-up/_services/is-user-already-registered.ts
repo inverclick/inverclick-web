@@ -11,7 +11,6 @@ export async function isUserAlreadyRegistered({
     .from("users")
     .select("email")
     .eq("email", email)
-    .eq("is_confirmed", true)
     .maybeSingle();
 
   return Boolean(user);

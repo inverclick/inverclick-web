@@ -95,8 +95,6 @@ const PreRegistrationContent = () => {
     },
   });
 
-  console.log("countries", RPNInput.getCountries());
-
   return (
     <Dialog
       open={isPreRegistrationOpen}

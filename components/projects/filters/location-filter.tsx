@@ -65,7 +65,7 @@ export const LocationFilter = ({
       const { data } = await supabase
         .from("cities")
         .select("*")
-        .eq("department_id", currentDepartment);
+        .eq("department_id", Number(currentDepartment));
       setCities(data ?? []);
       isFetching.current = false;
     };

@@ -40,7 +40,7 @@ export function Searcher({ departments }: SearcherProps) {
       const { data: cities } = await supabase
         .from("cities")
         .select("*")
-        .eq("department_id", department);
+        .eq("department_id", Number(department));
 
       setCities(cities ?? []);
     }

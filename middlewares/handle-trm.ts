@@ -1,7 +1,7 @@
 import { TRM_COOKIE_NAME } from "@/constants/trm";
 import { supabase } from "@/services/supabase/supabase";
 import { TRMCookie } from "@/services/get-trm";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import * as yup from "yup";
 
@@ -21,14 +21,14 @@ const ONE_HOUR = 1000 * 60 * 60;
  * sets a new TRM cookie.
  */
 
-export async function handleTRM(request: NextRequest) {
+export async function handleTRM(request: NextRequest, response: NextResponse) {
   try {
     const trmCookie = request.cookies.get(TRM_COOKIE_NAME);
 
     if (!trmCookie) {
       const newTrm = await fetchTRMFromSupabase();
 
-      request.cookies.set(TRM_COOKIE_NAME, JSON.stringify(newTrm));
+      response.cookies.set(TRM_COOKIE_NAME, JSON.stringify(newTrm));
 
       return;
     }
@@ -37,18 +37,16 @@ export async function handleTRM(request: NextRequest) {
 
     const trm = await schema.validate(parsedTRM);
 
-    if (trm.last_trm_update > Date.now() - ONE_HOUR) {
-      // TRM Stale
-      return;
-    }
+    // Skip updating if the current TRM data is less than one hour old
+    if (trm.last_trm_update > Date.now() - ONE_HOUR) return;
 
     const newTrm = await fetchTRMFromSupabase();
 
-    request.cookies.set(TRM_COOKIE_NAME, JSON.stringify(newTrm));
+    response.cookies.set(TRM_COOKIE_NAME, JSON.stringify(newTrm));
   } catch (error) {
     const newTrm = await fetchTRMFromSupabase();
 
-    request.cookies.set(TRM_COOKIE_NAME, JSON.stringify(newTrm));
+    response.cookies.set(TRM_COOKIE_NAME, JSON.stringify(newTrm));
   }
 }
 

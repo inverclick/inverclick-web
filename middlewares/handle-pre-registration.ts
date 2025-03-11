@@ -1,6 +1,6 @@
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { supabase } from "@/services/supabase/supabase";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import * as yup from "yup";
 
@@ -10,7 +10,10 @@ import * as yup from "yup";
  * This middleware checks for a pre-registration cookie and logs the user in if the cookie is valid.
  * If the cookie is invalid, it is deleted.
  */
-export async function handlePreRegistration(request: NextRequest) {
+export async function handlePreRegistration(
+  request: NextRequest,
+  response: NextResponse
+) {
   try {
     const preRegistrationCookie = request.cookies.get(
       PRE_REGISTRATION_COOKIE_NAME
@@ -39,12 +42,13 @@ export async function handlePreRegistration(request: NextRequest) {
       throw new Error("User not found");
     }
   } catch (error) {
-    request.cookies.delete(PRE_REGISTRATION_COOKIE_NAME);
+    response.cookies.delete(PRE_REGISTRATION_COOKIE_NAME);
   }
 }
 
 const schema = yup.object().shape({
   id: yup.string().uuid().required(),
+  leadId: yup.string().uuid().required(),
   name: yup.string().required(),
   email: yup.string().email().required(),
   nickname: yup.string().nullable().defined(),

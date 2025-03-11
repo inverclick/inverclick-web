@@ -13,7 +13,9 @@ export async function getPreRegistration(): Promise<PreRegistration | null> {
     return null;
   }
 
-  const preRegistration = JSON.parse(preRegistrationCookie.value);
+  const preRegistration = JSON.parse(
+    preRegistrationCookie.value
+  ) as PreRegistration;
 
   return preRegistration;
 }

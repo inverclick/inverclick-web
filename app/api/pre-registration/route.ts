@@ -17,6 +17,7 @@ export async function POST(request: Request) {
 
   // Validar el token de captcha
   const captchaResponse = await verifyCaptcha(body.captchaToken);
+
   if (!captchaResponse.success) {
     const response: EmptyAPIResponse = {
       success: false,
@@ -136,6 +137,7 @@ async function handleExistingUser(
 
   const preRegistration: PreRegistration = {
     id: user.id,
+    leadId: updatedLead.id,
     name: updatedUser.name,
     email: user.email,
     nickname: updatedLead.nickname,
@@ -225,6 +227,7 @@ async function handleNewUser(
 
   setPreRegistrationCookie(cookieStore, {
     id: insertedUser.id,
+    leadId: insertedLead.id,
     name: insertedUser.name,
     email: insertedUser.email,
     nickname: insertedLead.nickname,
@@ -235,6 +238,7 @@ async function handleNewUser(
     message: "",
     data: {
       id: insertedUser.id,
+      leadId: insertedLead.id,
       name: insertedUser.name,
       email: insertedUser.email,
       nickname: insertedLead.nickname,

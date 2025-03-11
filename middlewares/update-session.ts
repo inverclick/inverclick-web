@@ -9,11 +9,10 @@ const PROTECTED_ROUTES: string[] = [];
 
 const AUTH_ROUTES: string[] = ["/auth/sign-in", "/auth/sign-up"];
 
-export async function updateSession(request: NextRequest) {
-  let response = NextResponse.next({
-    request,
-  });
-
+export async function updateSession(
+  request: NextRequest,
+  response: NextResponse
+) {
   const supabase = createServerClient(SUPABASE_URL, SUPABASE_KEY, {
     cookies: {
       getAll() {
@@ -23,10 +22,6 @@ export async function updateSession(request: NextRequest) {
         cookiesToSet.forEach(({ name, value, options }) =>
           request.cookies.set(name, value)
         );
-
-        response = NextResponse.next({
-          request,
-        });
 
         cookiesToSet.forEach(({ name, value, options }) =>
           response.cookies.set(name, value, options)

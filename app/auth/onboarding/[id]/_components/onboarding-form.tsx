@@ -80,7 +80,7 @@ export const OnboardingForm = ({ user }: OnboardingFormProps) => {
 
         toast.success(ACCOUNT_CREATED_SIGN_IN);
 
-        router.push(`/auth/sign-in?email=${user.email}`);
+        router.push(`/auth/sign-in?email=${encodeURIComponent(user.email)}`);
       } catch (error) {
         setLoading(false);
 

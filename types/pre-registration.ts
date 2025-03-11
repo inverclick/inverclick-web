@@ -12,9 +12,12 @@ export type PreRegistrationBody = {
   nickname: string | null;
 };
 
+/**
+ * If you modify this type make sure to modify the schema in /middlewares/handle-pre-registration.ts as well
+ */
 export type PreRegistration = {
-  /** User ID */
-  id: string;
+  id: string /** User ID */;
+  leadId: string;
   name: string;
   email: string;
   nickname: string | null;
