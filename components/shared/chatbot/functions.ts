@@ -11,6 +11,7 @@ import { ENV_VARS } from "@/global/env";
 import { formatDate } from "@/lib/format-date";
 import { getRandomElement } from "@/lib/get-random-element";
 import { supabase } from "@/services/supabase/supabase";
+import { usePreRegistration } from "@/contexts/pre-registration-context";
 
 export function getWelcomeMessage(name: string) {
   return `¡Hola, ${name}! Te damos la bienvenida al lugar donde tu inversión en Colombia comienza a hacerse realidad. Puedes preguntarme por métodos de financiación, simular un crédito o buscar proyectos inmobiliarios para invertir.`;
@@ -336,10 +337,11 @@ export async function scheduleAnAppointment(params: {
 
     projectId = project?.id || null;
   }
+  console.log(params.email);
 
   const output = JSON.stringify({
     action: "schedule_an_appointment",
-    response_message: `Fecha actual: ${formatDate(new Date())}. ${getRandomElement(generateScheduleAnAppointmentMessages())}. Te llegará un correo de confirmación a: ${params.email}`,
+    response_message: `Fecha actual: ${formatDate(new Date())}. ${getRandomElement(generateScheduleAnAppointmentMessages())}. Te llegará un correo de confirmación a: ${params.email || "No proporcionado"}.`,
     params: {
       projectId,
       projectName: params.projectName,

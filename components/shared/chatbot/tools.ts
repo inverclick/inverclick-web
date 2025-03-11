@@ -106,7 +106,7 @@ export const tools = [
   {
     name: "scheduleAnAppointment",
     description:
-      "Llama a esta función cuando el usuario quiera agendar una cita, reunión o contactar con un asesor. Nunca asumas la fecha ni la hora al agendar; siempre debes solicitar esta información al cliente. Si el cliente no menciona un proyecto específico, registra 'Sin proyecto' en el campo 'projectName'.",
+      "Llama a esta función cuando el usuario quiera agendar una cita, reunión o videollamada para ver un proyecto o inmueble. Nunca asumas la fecha ni la hora al agendar; siempre debes solicitar esta información al cliente. El cliente siempre debe proporcionar un proyecto para poder agendar la cita, sin el nombre del prpyecto no se puede agendar la cita",
     strict: false,
     parameters: {
       type: "object",
@@ -120,7 +120,7 @@ export const tools = [
         projectName: {
           type: "string",
           description:
-            "El nombre del proyecto o los proyectos relacionados con la cita. Si son varios proyectos, regístralos como 'Matiz, Cádiz'. Si no se menciona un proyecto específico y solo desea hablar con un asesor, utiliza 'null'.",
+            "El nombre del proyecto. Este campo debe ser solicitado al cliente si no lo proporciona.",
         },
         date: {
           type: "string",

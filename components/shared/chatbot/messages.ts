@@ -66,9 +66,8 @@ export function generateQuestionAboutProjectMessages() {
 
 export function generateScheduleAnAppointmentMessages() {
   return [
-    `¡Claro que sí, {UserName}! Con gusto agendo una videollamada con uno de nuestros asesores. Por favor, indícame la fecha y hora que te vienen bien. Si tienes algún proyecto en mente, menciónalo para personalizar la reunión. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
-    `Por supuesto, {UserName}. Vamos a agendar una videollamada con nuestros asesores. Solo necesito que me digas qué fecha y hora te vienen bien, y si hay algún proyecto que te interese, avísame para preparar la reunión a tu medida. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
-    `¡Perfecto, {UserName}! Dime la fecha y hora que te vienen bien para una videollamada con uno de nuestros asesores. Si ya tienes algún proyecto en mente, compártelo para personalizar la conversación. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
-    `Con mucho gusto, {UserName}. Agendemos una videollamada con nuestros expertos. Dime cuándo te conviene (fecha y hora) y, si tienes algún proyecto en mente, menciónalo para enfocar la reunión. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
+    `¡Claro que sí, {UserName}! Con gusto agendo una videollamada con uno de nuestros asesores. Por favor, indícame la fecha y hora que te vienen bien. Y el proyecto del que quieres hablar. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
+    `Por supuesto, {UserName}. Vamos a agendar una videollamada con nuestros asesores. Solo necesito que me digas qué fecha y hora te vienen bien y el proyecto del que quieres hablar, avísame para preparar la reunión a tu medida. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
+    `Con mucho gusto, {UserName}. Agendemos una videollamada con nuestros expertos. Dime cuándo te conviene, fecha, hora y el proyecto del que quieres hablar. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
   ];
 }

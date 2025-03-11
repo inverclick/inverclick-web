@@ -459,7 +459,7 @@ async function handleFunctionCall({
   conversationHistory: LimitedQueue<ChatCompletionMessageParam>;
   functionsRegistry: Window;
 }): Promise<{ messageContent: string; functionResponse: string }> {
-  /**
+  /*
    * "{
    *   action: "go_to_projects",,
    *   response_message: "¡Entendido, {UserName}! Estas son las opciones disponibles para apartamentos y casas. Si quieres ver más detalles de algún proyecto o aplicar otro filtro, dime y seguimos buscando juntos.",
