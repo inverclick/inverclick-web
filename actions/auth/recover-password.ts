@@ -15,26 +15,54 @@ export async function recoverPasswordAction({
   const supabase = createClient({ withServiceRole: true });
 
   // Check if code is valid
-  const { data: user } = await supabase
+  const { data: user, error: userError } = await supabase
     .from("users")
     .select("id, email, recovery_password_code")
     .eq("email", email)
     .eq("recovery_password_code", code)
-    .maybeSingle()
-    .throwOnError();
+    .maybeSingle();
+
+  if (userError) {
+    return {
+      success: false,
+      message: PASSWORD_COULD_NOT_BE_RECOVERED,
+    };
+  }
 
   if (!user) {
-    throw new Error(PASSWORD_COULD_NOT_BE_RECOVERED);
+    return {
+      success: false,
+      message: PASSWORD_COULD_NOT_BE_RECOVERED,
+    };
   }
 
   // Update user password
-  await supabase.auth.admin.updateUserById(user.id, {
-    password,
-  });
+  const { error: updateUserByIdError } =
+    await supabase.auth.admin.updateUserById(user.id, {
+      password,
+    });
 
-  await supabase
+  if (updateUserByIdError) {
+    return {
+      success: false,
+      message: PASSWORD_COULD_NOT_BE_RECOVERED,
+    };
+  }
+
+  const { error: updateUserError } = await supabase
     .from("users")
     .update({ recovery_password_code: null })
-    .eq("id", user.id)
-    .throwOnError();
+    .eq("id", user.id);
+
+  if (updateUserError) {
+    return {
+      success: false,
+      message: PASSWORD_COULD_NOT_BE_RECOVERED,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Contraseña restablecida, intenta iniciar sesión",
+  };
 }

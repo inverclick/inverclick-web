@@ -10,6 +10,7 @@ import { ProjectValorizationSection } from "@/app/projects/[project]/[typology]/
 import { TypologiesSection } from "@/app/projects/[project]/[typology]/_components/typologies-section";
 import { UrbanismSection } from "@/app/projects/[project]/[typology]/_components/urbanism-section";
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { DraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
@@ -26,13 +27,9 @@ import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
 // import { Info, ShieldCheck, Star } from "lucide-react";
 // import { ComponentProps } from "react";
 
-/**
- * TODO: Allow to receive as prop Project | DraftProject (Needs refactor)
- */
-
 export type ProjectContentProps = {
-  project: Project;
-  typology: Project["typologies"][0];
+  project: Project | DraftProject;
+  typology: Project["typologies"][0] | DraftProject["typologies"][0];
 };
 
 export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
@@ -102,12 +99,14 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
           <ProjectCharacteristicsSection project={project} className="mb-12" />
           <ProjectLocationSection project={project} className="mb-12" />
           <ProjectFeaturesSection project={project} className="mb-12" />
-          <ProjectValorizationSection
-            typology={typology}
-            months={project.valuation_months}
-            percentage={project.valuation}
-            className="mb-12"
-          />
+          {project.show_valuation && (
+            <ProjectValorizationSection
+              typology={typology}
+              months={project.valuation_months}
+              percentage={project.valuation}
+              className="mb-12"
+            />
+          )}
           <ProjectCreditSimulatorSection typology={typology} />
         </TabsContent>
         <TabsContent value="types" className="mx-auto mt-0 max-w-5xl">

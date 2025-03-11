@@ -6,12 +6,19 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function signInAction(signInParams: SignInParams) {
-  const { error } = await signIn(createClient())(signInParams);
+  try {
+    const { error } = await signIn(createClient())(signInParams);
 
-  if (error) {
-    throw new Error(error.message);
+    if (error) {
+      return { success: false, message: error.message };
+    }
+
+    revalidatePath("/", "layout");
+    redirect("/projects");
+  } catch (error) {
+    return {
+      success: false,
+      message: "Un error inesperado ha ocurrido",
+    };
   }
-
-  revalidatePath("/", "layout");
-  redirect("/projects");
 }

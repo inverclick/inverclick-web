@@ -1,6 +1,7 @@
 "use client";
 
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { DraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import { ENV_VARS } from "@/global/env";
 import { cn } from "@/lib/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
@@ -8,7 +9,7 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { ComponentProps, useEffect, useState } from "react";
 
 export type ProjectLocationProps = {
-  project: Project;
+  project: Project | DraftProject;
 } & ComponentProps<"section">;
 
 export const ProjectLocationSection = ({
@@ -35,25 +36,29 @@ export const ProjectLocationSection = ({
         Ubicación
       </Typography>
       <Typography className="mb-4">
-        Colombia, {project.department.name}, {project.city.name} /{" "}
-        {project.address}
+        Colombia, {project.department?.name ?? "N/A"},{" "}
+        {project.city?.name ?? "N/A"} / {project.address}
       </Typography>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={{ lat: project.latitude, lng: project.longitude }}
-        tilt={20}
-        zoom={12}
-        onLoad={(map) => setMap(map)}
-        options={mapOptions}
-        onClick={() => {
-          if (map) map.setOptions({ gestureHandling: "greedy" });
-        }}
-        onMouseOut={() => {
-          if (map) map.setOptions({ gestureHandling: "auto" });
-        }}
-      >
-        <Marker position={{ lat: project.latitude, lng: project.longitude }} />
-      </GoogleMap>
+      {project.latitude && project.longitude && (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={{ lat: project.latitude, lng: project.longitude }}
+          tilt={20}
+          zoom={12}
+          onLoad={(map) => setMap(map)}
+          options={mapOptions}
+          onClick={() => {
+            if (map) map.setOptions({ gestureHandling: "greedy" });
+          }}
+          onMouseOut={() => {
+            if (map) map.setOptions({ gestureHandling: "auto" });
+          }}
+        >
+          <Marker
+            position={{ lat: project.latitude, lng: project.longitude }}
+          />
+        </GoogleMap>
+      )}
     </section>
   ) : null;
 };

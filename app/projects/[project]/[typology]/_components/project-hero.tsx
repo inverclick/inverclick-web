@@ -20,12 +20,12 @@ import { MapPin } from "lucide-react";
 import Link from "next/link";
 
 export type ProjectHeroProps = {
-  name: string;
+  name: string | null;
   photos: string[];
   price: number;
-  department: string;
-  city: string;
-  address: string;
+  department?: string;
+  city?: string;
+  address: string | null;
   className?: string;
 };
 
@@ -56,7 +56,7 @@ export const ProjectHero = ({
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>{name}</BreadcrumbPage>
+              <BreadcrumbPage>{name ?? "N/A"}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -77,7 +77,7 @@ export const ProjectHero = ({
         <span className="flex justify-center gap-2">
           <Icon icon={MapPin} className="hidden size-6 text-primary xl:flex" />
           <Typography className="text-center xl:text-left">
-            {department}, {city} / {address}
+            {department ?? "N/A"}, {city ?? "N/A"} / {address ?? "N/A"}
           </Typography>
         </span>
         <div className="flex items-center justify-center gap-2">

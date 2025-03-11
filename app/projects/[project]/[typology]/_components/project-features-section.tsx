@@ -1,4 +1,5 @@
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
+import { DraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
 import { cn } from "@/lib/utils";
 import { Icon } from "@inverclick/inverclick-ui/icon";
 import { Typography } from "@inverclick/inverclick-ui/typography";
@@ -6,7 +7,7 @@ import { Check } from "lucide-react";
 import { ComponentProps } from "react";
 
 export type ProjectFeaturesSectionProps = Readonly<{
-  project: Project;
+  project: Project | DraftProject;
 }> &
   ComponentProps<"section">;
 

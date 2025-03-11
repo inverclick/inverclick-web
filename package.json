@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
-    "gen:types": "supabase gen types typescript --project-id lvptznfprobnfjquceok > ./types/database.ts ",
+    "gen:types": "supabase gen types typescript --project-id gzragzbvuoybladjjoyy > ./types/database.ts ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.5.3",
-    "@inverclick/inverclick-ui": "1.9.9",
+    "@inverclick/inverclick-ui": "1.11.11",
     "@midudev/tailwind-animations": "^0.1.0",
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-tabs": "^1.0.4",
