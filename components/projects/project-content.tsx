@@ -31,6 +31,8 @@ export default function ProjectContent({
 
   useEffect(() => {
     setProjects(projects);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects]);
 
   return (
