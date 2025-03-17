@@ -106,7 +106,7 @@ export const tools = [
   {
     name: "scheduleAnAppointment",
     description:
-      "Llama a esta función cuando el usuario quiera agendar una cita, reunión o videollamada para ver un proyecto o inmueble. Nunca asumas la fecha ni la hora al agendar; siempre debes solicitar esta información al cliente. El cliente siempre debe proporcionar un proyecto para poder agendar la cita, sin el nombre del prpyecto no se puede agendar la cita",
+      "Llama a esta función cuando el usuario quiera agendar una cita o reunión con uno de nuestros asesores para hablar sobre un proyecto o inmueble. Nunca asumas la fecha ni la hora al agendar; siempre debes solicitar esta información al cliente. El cliente siempre debe proporcionar un proyecto para poder agendar la cita, sin el nombre del prpyecto no se puede agendar la cita",
     strict: false,
     parameters: {
       type: "object",

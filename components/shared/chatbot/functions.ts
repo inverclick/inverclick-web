@@ -11,7 +11,6 @@ import { ENV_VARS } from "@/global/env";
 import { formatDate } from "@/lib/format-date";
 import { getRandomElement } from "@/lib/get-random-element";
 import { supabase } from "@/services/supabase/supabase";
-import { usePreRegistration } from "@/contexts/pre-registration-context";
 
 export function getWelcomeMessage(name: string) {
   return `¡Hola, ${name}! Te damos la bienvenida al lugar donde tu inversión en Colombia comienza a hacerse realidad. Puedes preguntarme por métodos de financiación, simular un crédito o buscar proyectos inmobiliarios para invertir.`;
@@ -202,34 +201,92 @@ export function simulateCreditByValueHousing(params: {
 export async function goToProject(params: { projectName: string }) {
   const projectName = params.projectName;
 
-  const { data: project } = await supabase
+  // First get all projects with a single query to reduce database calls
+  const { data: projects } = await supabase
     .from("projects")
     .select("*, typologies(*)")
-    .ilike("name", `%${projectName}%`)
-    .single();
+    .limit(50);  // Limit for performance
 
-  if (!project) {
-    const output = {
-      response_message: `¡Ups! El proyecto ${projectName} no está disponible, pero tranquilo, tengo un ojo experto para encontrar alternativas increíbles. ¿Exploramos juntas opciones similares?`,
-    };
-
-    return JSON.stringify(output);
+  if (!projects || projects.length === 0) {
+    return JSON.stringify({
+      response_message: "No encontré proyectos disponibles actualmente."
+    });
   }
 
-  const projectId = project.id;
-  const typologyId = project.typologies[0].id;
+  // Try exact/close match first using SQL's built-in ILIKE
+  const exactMatches = projects.filter(p => 
+    p.name.toLowerCase().includes(projectName.toLowerCase())
+  );
 
-  const output = {
-    action: "go_to_project",
-    _id: projectId,
-    response_message: getRandomElement(generateGoToProjectMessages()),
-    params: {
-      project_id: projectId,
-      typology_id: typologyId,
-    },
-  };
+  if (exactMatches.length > 0) {
+    // Found direct match
+    const project = exactMatches[0];
+    return JSON.stringify({
+      action: "go_to_project",
+      _id: project.id,
+      response_message: getRandomElement(generateGoToProjectMessages()).replace("[nombre del proyecto]", project.name),
+      params: {
+        project_id: project.id,
+        typology_id: project.typologies[0].id,
+      }
+    });
+  }
 
-  return JSON.stringify(output);
+  // No exact match, find closest using simplified similarity
+  let bestMatch = null;
+  let bestScore = 0;
+  
+  for (const project of projects) {
+    const score = simpleSimilarity(projectName.toLowerCase(), project.name.toLowerCase());
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = project;
+    }
+  }
+
+  // If we found a reasonably close match
+  if (bestMatch && bestScore > 0.4) {
+    return JSON.stringify({
+      action: "suggest_project",
+      response_message: `Quizás te refieres a "${bestMatch.name}". ¿Te gustaría ver este proyecto?`,
+      params: {
+        project_id: bestMatch.id,
+        typology_id: bestMatch.typologies[0].id,
+        suggested_name: bestMatch.name
+      }
+    });
+  }
+
+  // No good match found
+  return JSON.stringify({
+    response_message: `No encontré el proyecto "${projectName}". ¿Quieres explorar otros proyectos disponibles?`
+  });
+}
+
+// Simple, efficient similarity function that works well for project names
+function simpleSimilarity(s1: string, s2: string): number {
+  // Convert strings to arrays
+  const chars1 = s1.split('');
+  const chars2 = s2.split('');
+  
+  // Create a set from the second string for faster lookups
+  const set2: Set<string> = new Set(chars2);
+  
+  // Count common characters without iterating through the Set
+  let intersection = 0;
+  for (let i = 0; i < chars1.length; i++) {
+    if (set2.has(chars1[i])) intersection++;
+  }
+  
+  // Calculate Jaccard similarity
+  const union = chars1.length + chars2.length - intersection;
+  const jaccardSim = intersection / union;
+  
+  // Check for substring match (gives higher weight to this)
+  const substringBonus = s2.includes(s1) || s1.includes(s2) ? 0.3 : 0;
+  
+  // Combined score (0.7 * character similarity + 0.3 potential substring bonus)
+  return Math.min(jaccardSim * 0.7 + substringBonus, 1.0);
 }
 
 export async function questionAboutProject(params: { projectId: string }) {

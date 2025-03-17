@@ -87,5 +87,6 @@ export type ScheduleAnAppointmentFunctionOutput = {
     projectId: string;
     date: string; // 2025-10-03
     time: string; // 10:35
+    email: string;
   };
 };

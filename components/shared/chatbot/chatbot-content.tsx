@@ -430,6 +430,7 @@ async function handleSendMessage({
         functionArgs,
         conversationHistory,
         functionsRegistry,
+        chatter,
       });
 
       return { messageContent, functionResponse };
@@ -454,12 +455,14 @@ async function handleFunctionCall({
   functionArgs,
   conversationHistory,
   functionsRegistry,
+  chatter,
 }: {
   openAI: OpenAI;
   functionName: string;
   functionArgs: Record<string, unknown>;
   conversationHistory: LimitedQueue<ChatCompletionMessageParam>;
   functionsRegistry: Window;
+  chatter: Chatter;
 }): Promise<{ messageContent: string; functionResponse: string }> {
   /*
    * "{
@@ -470,6 +473,11 @@ async function handleFunctionCall({
    *    }
    *  }"
    */
+
+  if (functionName === "scheduleAnAppointment") {
+    functionArgs.email = chatter.email;
+  }
+
   const functionResponse = (await functionsRegistry[functionName](
     functionArgs
   )) as string;
@@ -512,7 +520,7 @@ function handleFunctionResponse({
         `/projects/${output.params.project_id}/${output.params.typology_id}`
       );
     } else if (output.action === "schedule_an_appointment") {
-      const { projectId, date, time } = output.params;
+      const { projectId, date, time, email } = output.params;
 
       if (date && time) {
         const formattedOffset = formatTimezoneOffset(
@@ -521,8 +529,6 @@ function handleFunctionResponse({
 
         const appointmentDate = new Date(`${date}T${time}${formattedOffset}`);
 
-        // TODO: schedule
-        console.log({ projectId, appointmentDate });
       }
     }
   }
