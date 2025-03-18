@@ -15,7 +15,10 @@ import {
   scheduleAnAppointment,
   simulateCredit,
 } from "@/components/shared/chatbot/functions";
-import { NO_CONTENT_MESSAGE } from "@/components/shared/chatbot/messages";
+import {
+  NO_CONTENT_MESSAGE,
+  UNKNOWN_ERROR_MESSAGE,
+} from "@/components/shared/chatbot/messages";
 import { tools } from "@/components/shared/chatbot/tools";
 import { Chatter, FunctionOutput } from "@/components/shared/chatbot/types";
 import { TypingIndicator } from "@/components/shared/chatbot/typing-indicator";
@@ -58,6 +61,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "sonner";
 
 import OpenAI from "openai";
 
@@ -274,7 +278,17 @@ export const ChatbotContent = () => {
     ]);
 
     if (functionResponse) {
-      handleFunctionResponse({ functionResponse, router });
+      try {
+        await handleFunctionResponse({
+          functionResponse,
+          router,
+          chatter,
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message || UNKNOWN_ERROR_MESSAGE);
+        }
+      }
     }
 
     await supabase.from("chatbot_messages").insert([
@@ -501,12 +515,14 @@ async function handleFunctionCall({
   return { messageContent, functionResponse };
 }
 
-function handleFunctionResponse({
+async function handleFunctionResponse({
   functionResponse,
   router,
+  chatter,
 }: {
   functionResponse: string;
   router: AppRouterInstance;
+  chatter: Chatter;
 }) {
   const output = JSON.parse(functionResponse) as FunctionOutput;
 
@@ -520,15 +536,27 @@ function handleFunctionResponse({
         `/projects/${output.params.project_id}/${output.params.typology_id}`
       );
     } else if (output.action === "schedule_an_appointment") {
-      const { projectId, date, time, email } = output.params;
+      const { projectId, date, time } = output.params;
 
-      if (date && time) {
-        const formattedOffset = formatTimezoneOffset(
-          new Date().getTimezoneOffset()
-        );
+      const formattedOffset = formatTimezoneOffset(
+        new Date().getTimezoneOffset()
+      );
 
-        const appointmentDate = new Date(`${date}T${time}${formattedOffset}`);
+      const appointmentDate = new Date(`${date}T${time}${formattedOffset}`);
 
+      const { error } = await supabase.functions.invoke(
+        "schedule-appointment",
+        {
+          body: {
+            projectId,
+            leadId: chatter.leadId,
+            appointmentDate,
+          },
+        }
+      );
+
+      if (error) {
+        throw new Error(error.message);
       }
     }
   }

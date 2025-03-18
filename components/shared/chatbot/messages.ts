@@ -1,6 +1,9 @@
 export const NO_CONTENT_MESSAGE =
   "¡Uy {UserName}! Algo se complicó y no tengo respuesta por el momento.";
 
+export const UNKNOWN_ERROR_MESSAGE =
+  "¡Uy, algo salió mal y no pude procesar tu solicitud.";
+
 export function generateGoToProjectsMessages() {
   return [
     `¡Hola, {UserName}! ¿Te imaginas disfrutando un cafecito en tu nuevo hogar acá en Colombia? ¡Vamos a hacerlo realidad! Puedes preguntarme por propiedades por ubicación, rango de precios o tipo de inmueble. O si prefieres, agendamos una cita con uno de nuestros asesores, ¿qué dices?`,
