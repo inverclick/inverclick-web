@@ -10,11 +10,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", ENV_VARS.BASE_URL));
   }
 
-  await handlePreRegistration(request);
+  const response = NextResponse.next({ request });
 
-  await handleTRM(request);
+  await handlePreRegistration(request, response);
 
-  return await updateSession(request);
+  await handleTRM(request, response);
+
+  return await updateSession(request, response);
 }
 
 export const config = {

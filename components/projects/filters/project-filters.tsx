@@ -7,6 +7,7 @@ import { TypeFilter } from "@/components/projects/filters/type-filter";
 import { useDebounce } from "@/hooks/use-debounce";
 import { supabase } from "@/services/supabase/supabase";
 import { Department } from "@/types/domain/departments";
+import { HousingStateEnum } from "@/types/domain/enums";
 import { HousingType } from "@/types/domain/housing-types";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
@@ -153,10 +154,12 @@ export const ProjectFilters = ({
       }
 
       if (currentCity !== "all") query.eq("city_id", Number(currentCity));
-      if (currentState !== "all") query.eq("housing_state", currentState);
+      if (currentState !== "all")
+        query.eq("housing_state", currentState as HousingStateEnum);
       if (debouncedMinPrice) query.gte("typologies.price", debouncedMinPrice);
       if (debouncedMaxPrice) query.lte("typologies.price", debouncedMaxPrice);
-      if (currentTypes.length > 0) query.in("housing_type", currentTypes);
+      if (currentTypes.length > 0)
+        query.in("housing_type", currentTypes as HousingType["label"][]);
 
       const { count } = await query;
       setCurrentCount(count ?? 0);

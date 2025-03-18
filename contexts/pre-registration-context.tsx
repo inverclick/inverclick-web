@@ -72,6 +72,7 @@ export const PreRegistrationProvider = ({
       canInteractWithFeatures,
     ]
   );
+
   return (
     <PreRegistrationContext.Provider value={context}>
       {children}

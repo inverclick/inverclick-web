@@ -1,52 +1,76 @@
+export const NO_CONTENT_MESSAGE =
+  "¡Uy {UserName}! Algo se complicó y no tengo respuesta por el momento.";
+
+export const UNKNOWN_ERROR_MESSAGE =
+  "¡Uy, algo salió mal y no pude procesar tu solicitud.";
+
 export function generateGoToProjectsMessages() {
   return [
-    `{UserName} ¿Te imaginas disfrutando un café en tu nueva casa en Colombia? ¡Hablemos de cómo hacerlo realidad! Puedes preguntarme por propiedades según su ubicación, por rango de precios, por tipo de inmueble. O si prefieres puedes agendar una videollamada con uno de nuestros asesores.`,
-    `¡Claro, {UserName}! Aquí puedes explorar las mejores opciones de inversión en Colombia. ¿Quieres detalles sobre uno en particular o prefieres aplicar filtros? También podemos agendar una videollamada si lo prefieres.`,
+    `¡Hola, {UserName}! ¿Te imaginas disfrutando un cafecito en tu nuevo hogar acá en Colombia? ¡Vamos a hacerlo realidad! Puedes preguntarme por propiedades por ubicación, rango de precios o tipo de inmueble. O si prefieres, agendamos una cita con uno de nuestros asesores, ¿qué dices?`,
+    `¡Hola, {UserName}! ¿Te imaginas despertar en tu nuevo hogar con esa vista de ensueño? Vamos a hacerlo realidad. Puedes preguntarme por propiedades según ubicación, precio o tipo de inmueble. O si lo prefieres, agendamos una cita con uno de nuestros asesores. ¡Tú decides!`,
+    `¡Vamos por esa inversión ideal, {UserName}! En Colombia hay oportunidades bacanas que te están esperando. Cuéntame qué te interesa: ubicación, precio o tipo de inmueble, y te enseño las mejores opciones. O si prefieres, agendamos una cita con un asesor para revisar todo a detalle, ¿va?`,
+    `¡Imagínate, {UserName}, compartiendo momentos inolvidables en tu nuevo hogar! ¿Qué te parece si exploramos algunas opciones? Dime el rango de precios, la ubicación o el tipo de propiedad que buscas y vamos encontrando la ideal. También podemos agendar una cita con un asesor experto.`,
+    `¡Ahora es el momento perfecto para invertir en Colombia, {UserName}! ¿Te animas a descubrir propiedades en una ubicación específica, en un rango de precios o según el tipo de inmueble? Dime qué buscas y te muestro las mejores opciones. También podemos agendar una cita con uno de nuestros asesores para revisar todo con detalle. ¡Estoy aquí para ayudarte!`,
+    `¡Aquí arrancamos la búsqueda de tu gran inversión, {UserName}! Cuéntame, ¿qué es lo más importante para ti: ubicación, precio o tipo de propiedad? Con gusto te muestro opciones que se ajusten a lo que buscas, o si prefieres, agendamos una cita con un asesor para explorarlo juntos`,
   ];
 }
 
 export function generateGoToProjectsWithFiltersMessages() {
   return [
-    `¡Excelente elección, {UserName}! Tenemos varias oportunidades de inversión que sé que te encantarán. Aquí están las opciones disponibles para ti. Si necesitas detalles específicos de algún proyecto o quieres aplicar más filtros, solo dime.`,
-    `¡Claro que sí, {UserName}! tenemos excelentes proyectos para explorar. Aquí tienes las opciones disponibles. ¿Te gustaría filtrar por rango de precios o tipo de propiedad? Estoy aquí para ayudarte a encontrar tu inversion ideal.`,
-    `¡Perfecto, {UserName}! Aquí tienes las opciones en el rango de precios que indicaste. Si necesitas ajustar el rango o explorar otros proyectos, avísame. ¡Estoy aquí para ayudarte a encontrar lo ideal!`,
-    `¡Entendido, {UserName}! Estas son las opciones disponibles para apartamentos y casas. Si quieres ver más detalles de algún proyecto o aplicar otro filtro, dime y seguimos buscando juntos.`,
-    `¡Buenísima elección, {UserName}! Aquí están las opciones de casas nuevas en Medellín dentro del rango de precios que indicaste. Si necesitas explorar más o cambiar algún filtro, házmelo saber. ¡Estoy para ayudarte!`,
-    `¡Aquí están tus resultados, {UserName}! Si quieres ajustar la búsqueda, como expandir el rango de precios, solo dime. También podemos agendar una videollamada para revisar opciones más a fondo.`,
+    `¡Excelente elección, {UserName}! Encontré varias opciones que te pueden encantar. Aquí tienes algunas propiedades que se ajustan a lo que buscas. Si quieres afinar la búsqueda con más filtros o conocer más detalles de algún proyecto, solo dime y lo revisamos juntos.`,
+    `¡Hola, {UserName}! Tenemos proyectos de primera para ti. Aquí están las opciones disponibles. ¿Quieres filtrar por rango de precios o tipo de propiedad? Dime y te doy una mano.`,
+    `¡De una, {UserName}! Aquí te dejo las opciones con los filtros que pediste. Si necesitas ajustar el rango o ver otros proyectos, avísame y lo revisamos.`,
+    `¡Entendido, {UserName}! Estas son las opciones disponibles. Si quieres ver más detalles de algún proyecto o agregar otro filtro, dime y seguimos buscando juntos.`,
+    `¡Buenísima elección, {UserName}! Aquí tienes las opciones de inversión que tenemos. Si necesitas explorar más o cambiar algún filtro, avísame, estoy para ayudarte.`,
+    `¡Aquí te dejo tus resultados, {UserName}! Si quieres ajustar la búsqueda, por ejemplo, expandir el rango de precios, solo dime. También podemos agendar una cita para revisar las opciones a fondo.`,
+    `¡Me encanta lo que elegiste, {UserName}! Aquí tienes algunas opciones dentro del rango que indicaste. Si crees que falta algo o quieres ver otras alternativas, dime y seguimos buscando hasta dar con la ideal para ti.`,
   ];
 }
 
 export function generateGoToProjectMessages() {
   return [
-    `¡Claro, {UserName}! Te llevo al proyecto [nombre del proyecto], una oportunidad de inversión increíble. ¡Estoy seguro de que te encantará! Si necesitas más detalles, simular un crédito por valor de inmueble o valor de cuota a pagar, o agendar una videollamada con uno de nuestros asesores, solo dime.`,
-    `¡Todo listo, {UserName}! Aquí está el proyecto [nombre del proyecto] ¡Este es uno de nuestros proyectos favoritos!. Si quieres ver opciones similares, simular un crédito por valor de inmueble o valor de cuota a pagar, o agendar una videollamada para hablar de este proyecto, no dudes en decirme.`,
+    `¡Aquí lo tienes, {UserName}! Este es el proyecto [nombre del proyecto], una gran oportunidad de inversión. Cuéntame, ¿quieres conocer más detalles, simular un crédito o prefieres que agendemos una cita para hablarlo con un asesor?`,
+    `¡Mira, {UserName}, te aseguro que te va a encantar! Este es el proyecto [nombre del proyecto], una opción con mucho potencial. Si quieres ver propiedades similares, calcular un crédito o agendar una cita con un asesor, dime y lo revisamos juntos.`,
+    `¡Excelente elección, {UserName}! Ya te presento el proyecto [nombre del proyecto]. Si quieres saber más sobre su ubicación, beneficios o formas de financiación, dime y te ayudo con lo que necesites. O si prefieres, podemos agendar una cita con un asesor, ¿qué dices?`,
+    `Aquí tienes el proyecto [nombre del proyecto], {UserName}. Si quieres saber más sobre sus características, cómo financiarlo, ver alternativas similares o agendar una cita con uno de nuestros asesores, dime y te echo una mano.`,
+    `Te presento el proyecto [nombre del proyecto], {UserName}. ¿Quieres saber más sobre su ubicación, diseño o precios? Si prefieres, también podemos hacer una simulación de crédito o agendar una cita para resolver todas tus preguntas.`,
   ];
 }
 
 export function generateSimulateCreditByValueHousingMessages() {
   return [
-    `¡Vamos a hacerlo, {UserName}! Solo dime el valor de la vivienda, el porcentaje de financiación (hasta un 70%) y el plazo del crédito (de 5 a 20 años). ¡Lo simulo para ti!`,
-    `¡Perfecto, {UserName}! Para simular tu crédito por el valor de la vivienda, solo necesito saber el valor de la propiedad, el porcentaje de financiación (máximo 70%) y el plazo (de 5 a 20 años). ¿Me compartes esos datos?`,
+    `¡Vamos a hacerlo, {UserName}! Solo dime el valor de la vivienda, el porcentaje de financiación (hasta un 70%) y el plazo del crédito (de 5 a 20 años). ¡Te hago la simulación!`,
+    `¡Perfecto, {UserName}! Para simular tu crédito por el valor de la vivienda, solo necesito que me digas el valor de la propiedad, el porcentaje de financiación (máximo 70%) y el plazo (de 5 a 20 años). ¿Me compartes esos datos?`,
+    `¡De una, {UserName}! Cuéntame el valor de la vivienda que tienes en mente, el porcentaje que te gustaría financiar y en cuántos años quieres pagarlo, y te preparo una simulación clara y completa.`,
+    `Por supuesto, {UserName}. Para armar la simulación del crédito, necesito que me indiques el valor de la propiedad, el porcentaje de financiación (hasta un 70%) y el plazo del crédito (entre 5 y 20 años). Con esos datos, te presento los detalles.`,
+    `¡Claro, {UserName}! Dame el valor de la propiedad, el porcentaje de financiación que deseas y el plazo del crédito, y con gusto te muestro cómo quedarían las cuotas mensuales.`,
   ];
 }
 
 export function generateSimulateCreditByQuotaValueMessages() {
   return [
-    `¡Entendido, {UserName}! Para simular un crédito según el valor de la cuota, necesito saber el monto de la cuota que deseas pagar y el plazo del crédito (de 5 a 20 años). ¿Me compartes esos datos para comenzar?`,
+    `¡Entendido, {UserName}! Para simular un crédito basado en el valor de la cuota, necesito saber el monto de la cuota que deseas pagar y el plazo del crédito (de 5 a 20 años). ¿Me compartes esos datos para comenzar?`,
     `¡Perfecto, {UserName}! Dime cuánto te gustaría pagar de cuota mensual y por cuántos años (entre 5 y 20 años) para hacer la simulación del crédito. ¡Estoy listo para ayudarte!`,
+    `Por supuesto, {UserName}. Dame el monto de la cuota que piensas pagar y el plazo del crédito (entre 5 y 20 años) y te mostraré una simulación con toda la información que necesitas.`,
+    `Entendido, {UserName}. Cuéntame, ¿cuánto es la cuota que tienes en mente y por cuántos años deseas financiar el crédito? Así te muestro cómo quedarían las condiciones.`,
+    `Muy bien, {UserName}. Para simular un crédito basado en el valor de la cuota, necesito que me indiques cuánto te gustaría pagar mensualmente y en cuántos años (entre 5 y 20) deseas financiarlo. Con esos datos, te preparo la simulación, amigo.`,
   ];
 }
 
 export function generateQuestionAboutProjectMessages() {
   return [
-    `¡Claro que sí, {UserName}! Este nos encanta por lo siguiente: [información del proyecto]. ¿Qué más te gustaría saber de este proyecto? ¿o prefieres agendar una videollamada con nuestros asesores?`,
-    `{UserName}, este proyecto nos encanta porque combina ubicación estratégica, diseño innovador y características que se adaptan a tus necesidades. Es una opción ideal para quienes buscan hacer una gran inversión. ¿Qué opinas, te gustaría agendar una videollamada con nuestros asesores?`,
-    `{UserName}, este es uno de nuestros proyectos favoritos. Su ubicación privilegiada y las características que ofrece lo convierten en una opción ideal. Estoy aquí para contarte todos los detalles que necesites. ¿Qué más te gustaría saber de este u otros proyectos? ¿o prefieres agendar una videollamada con nuestros asesores?`,
+    `¡Claro que sí, {UserName}! Este proyecto nos encanta porque [información del proyecto]. ¿Qué más te gustaría saber? ¿O prefieres agendar una cita con nuestros asesores?`,
+    `{UserName}, este proyecto nos encanta porque combina una ubicación estratégica, diseño innovador y características que se adaptan a lo que buscas. Es ideal para una gran inversión. ¿Qué opinas, te animas a agendar una cita con nuestros asesores?`,
+    `{UserName}, este es uno de nuestros proyectos favoritos. Su ubicación privilegiada y sus características lo hacen ideal. Estoy aquí para contarte todos los detalles que necesites. ¿Qué más quieres saber de este u otros proyectos? ¿O prefieres agendar una cita con nuestros asesores?`,
+    `{UserName}, este proyecto combina un diseño excelente con una ubicación privilegiada. Si deseas más detalles o prefieres hablar directamente con un asesor en una cita, solo dímelo.`,
+    `Por supuesto, {UserName}. Este proyecto ha llamado la atención por su propuesta integral y su potencial de inversión. ¿Te gustaría que te cuente más o prefieres agendar una cita con uno de nuestros asesores para conversar en detalle?`,
   ];
 }
 
 export function generateScheduleAnAppointmentMessages() {
   return [
-    `¡Claro que sí, {UserName}! Será un placer agendar una videollamada con uno de nuestros asesores. Por favor, indícame la fecha y hora que prefieres. Si tienes algún proyecto en mente, también puedes mencionarlo para personalizar la reunión.`,
+    `¡Claro que sí, {UserName}! Con gusto agendo una cita con uno de nuestros asesores. Por favor, indícame la fecha y hora que te vienen bien. Y el proyecto del que quieres hablar. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
+    `Por supuesto, {UserName}. Vamos a agendar una cita con nuestros asesores. Solo necesito que me digas qué fecha y hora te vienen bien y el proyecto del que quieres hablar, avísame para preparar la cita a tu medida. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
+    `Con mucho gusto, {UserName}. Agendemos una cita con nuestros expertos. Dime cuándo te conviene, fecha, hora y el proyecto del que quieres hablar. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
   ];
 }

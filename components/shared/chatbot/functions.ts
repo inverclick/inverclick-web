@@ -7,6 +7,7 @@ import {
   generateSimulateCreditByQuotaValueMessages,
   generateSimulateCreditByValueHousingMessages,
 } from "@/components/shared/chatbot/messages";
+import { ENV_VARS } from "@/global/env";
 import { formatDate } from "@/lib/format-date";
 import { getRandomElement } from "@/lib/get-random-element";
 import { supabase } from "@/services/supabase/supabase";
@@ -64,7 +65,7 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
     }
   }
 
-  const data = {
+  const output = JSON.stringify({
     action: "go_to_projects",
     response_message: getRandomElement(
       generateGoToProjectsWithFiltersMessages()
@@ -75,20 +76,16 @@ export async function goToProjectsWithFilters(params: { filter: string }) {
         .join(",")
         .replace(/\s+/g, ""),
     },
-  };
-
-  const output = JSON.stringify(data);
+  });
 
   return output;
 }
 
 export function goToProjects(params: {}) {
-  const data = {
+  const output = JSON.stringify({
     action: "go_to_projects",
     response_message: getRandomElement(generateGoToProjectsMessages()),
-  };
-
-  const output = JSON.stringify(data);
+  });
 
   return output;
 }
@@ -115,9 +112,11 @@ export function simulateCredit(params: {
     });
   }
 
-  return JSON.stringify({
+  const output = JSON.stringify({
     response_message: "Necesito que me especifiques el tipo de simulación.",
   });
+
+  return output;
 }
 
 export function simulateCreditByQuotaValue(params: {
@@ -141,7 +140,7 @@ export function simulateCreditByQuotaValue(params: {
       (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, monthsFunding)));
 
   const output = {
-    data: data,
+    data,
     amountFunded: amountFunded.toFixed(2),
     monthlyInterestRate: monthlyInterestRate.toFixed(6),
     response_message: getRandomElement(
@@ -188,7 +187,7 @@ export function simulateCreditByValueHousing(params: {
   const totalQuota = fixedQuota + insurance;
 
   const output = {
-    data: data,
+    data,
     amountFunded: amountFunded.toFixed(2),
     monthlyInterestRate: monthlyInterestRate.toFixed(6),
     fixedQuota: fixedQuota.toFixed(2),
@@ -202,38 +201,96 @@ export function simulateCreditByValueHousing(params: {
 export async function goToProject(params: { projectName: string }) {
   const projectName = params.projectName;
 
-  const { data: project } = await supabase
+  // First get all projects with a single query to reduce database calls
+  const { data: projects } = await supabase
     .from("projects")
     .select("*, typologies(*)")
-    .ilike("name", `%${projectName}%`)
-    .single();
+    .limit(50);  // Limit for performance
 
-  if (!project) {
-    const output = {
-      response_message: `¡Ups! El proyecto ${projectName} no está disponible, pero tranquilo, tengo un ojo experto para encontrar alternativas increíbles. ¿Exploramos juntas opciones similares?`,
-    };
-
-    return JSON.stringify(output);
+  if (!projects || projects.length === 0) {
+    return JSON.stringify({
+      response_message: "No encontré proyectos disponibles actualmente."
+    });
   }
 
-  const projectId = project.id;
-  const typologyId = project.typologies[0].id;
+  // Try exact/close match first using SQL's built-in ILIKE
+  const exactMatches = projects.filter(p => 
+    p.name.toLowerCase().includes(projectName.toLowerCase())
+  );
 
-  const output = {
-    action: "go_to_project",
-    _id: projectId,
-    response_message: getRandomElement(generateGoToProjectMessages()),
-    params: {
-      project_id: projectId,
-      typology_id: typologyId,
-    },
-  };
+  if (exactMatches.length > 0) {
+    // Found direct match
+    const project = exactMatches[0];
+    return JSON.stringify({
+      action: "go_to_project",
+      _id: project.id,
+      response_message: getRandomElement(generateGoToProjectMessages()).replace("[nombre del proyecto]", project.name),
+      params: {
+        project_id: project.id,
+        typology_id: project.typologies[0].id,
+      }
+    });
+  }
 
-  return JSON.stringify(output);
+  // No exact match, find closest using simplified similarity
+  let bestMatch = null;
+  let bestScore = 0;
+  
+  for (const project of projects) {
+    const score = simpleSimilarity(projectName.toLowerCase(), project.name.toLowerCase());
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = project;
+    }
+  }
+
+  // If we found a reasonably close match
+  if (bestMatch && bestScore > 0.4) {
+    return JSON.stringify({
+      action: "suggest_project",
+      response_message: `Quizás te refieres a "${bestMatch.name}". ¿Te gustaría ver este proyecto?`,
+      params: {
+        project_id: bestMatch.id,
+        typology_id: bestMatch.typologies[0].id,
+        suggested_name: bestMatch.name
+      }
+    });
+  }
+
+  // No good match found
+  return JSON.stringify({
+    response_message: `No encontré el proyecto "${projectName}". ¿Quieres explorar otros proyectos disponibles?`
+  });
+}
+
+// Simple, efficient similarity function that works well for project names
+function simpleSimilarity(s1: string, s2: string): number {
+  // Convert strings to arrays
+  const chars1 = s1.split('');
+  const chars2 = s2.split('');
+  
+  // Create a set from the second string for faster lookups
+  const set2: Set<string> = new Set(chars2);
+  
+  // Count common characters without iterating through the Set
+  let intersection = 0;
+  for (let i = 0; i < chars1.length; i++) {
+    if (set2.has(chars1[i])) intersection++;
+  }
+  
+  // Calculate Jaccard similarity
+  const union = chars1.length + chars2.length - intersection;
+  const jaccardSim = intersection / union;
+  
+  // Check for substring match (gives higher weight to this)
+  const substringBonus = s2.includes(s1) || s1.includes(s2) ? 0.3 : 0;
+  
+  // Combined score (0.7 * character similarity + 0.3 potential substring bonus)
+  return Math.min(jaccardSim * 0.7 + substringBonus, 1.0);
 }
 
 export async function questionAboutProject(params: { projectId: string }) {
-  const url = `https://lvptznfprobnfjquceok.supabase.co/functions/v1/project-by-id/${params.projectId}`;
+  const url = `${ENV_VARS.SUPABASE_URL}/functions/v1/project-by-id/${params.projectId}`;
 
   const response = await fetch(url);
   const output = await response.json();
@@ -311,6 +368,22 @@ export async function scheduleAnAppointment(params: {
   email: string;
 }) {
   let projectId: string | null = null;
+  const appointmentDate = new Date(`${params.date}T${params.time}`);
+  const currentDate = new Date();
+
+  if (appointmentDate < currentDate) {
+    const output = JSON.stringify({
+      action: "schedule_an_appointment",
+      response_message: "Lo siento, pero esa fecha ya pasó",
+      params: {
+        projectName: params.projectName,
+        date: params.date,
+        time: params.time,
+      },
+    });
+
+    return output;
+  }
 
   if (params.projectName !== "null") {
     const { data: project } = await supabase
@@ -321,19 +394,18 @@ export async function scheduleAnAppointment(params: {
 
     projectId = project?.id || null;
   }
+  console.log(params.email);
 
-  const data = {
+  const output = JSON.stringify({
     action: "schedule_an_appointment",
-    response_message: `Fecha actual: ${formatDate(new Date())}. ${getRandomElement(generateScheduleAnAppointmentMessages())}. Te llegará un correo de confirmación a: ${params.email}`,
+    response_message: `Fecha actual: ${formatDate(new Date())}. ${getRandomElement(generateScheduleAnAppointmentMessages())}. Te llegará un correo de confirmación a: ${params.email || "No proporcionado"}.`,
     params: {
       projectId,
       projectName: params.projectName,
       date: params.date,
       time: params.time,
     },
-  };
-
-  const output = JSON.stringify(data);
+  });
 
   return output;
 }

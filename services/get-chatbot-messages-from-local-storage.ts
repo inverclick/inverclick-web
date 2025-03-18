@@ -7,7 +7,11 @@ export function getChatbotMessagesFromLocalStorage(): ChatMessage[] {
       CHATBOT_MESSAGES_LOCAL_STORAGE_KEY
     );
 
-    return rawChatbotMessages ? JSON.parse(rawChatbotMessages) : [];
+    const messages = rawChatbotMessages
+      ? (JSON.parse(rawChatbotMessages) as ChatMessage[])
+      : [];
+
+    return messages;
   } catch (error) {
     return [];
   }

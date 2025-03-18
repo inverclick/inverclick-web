@@ -15,6 +15,7 @@ import { ProjectToDisplay } from "@/types/domain/projects";
 import { Metadata } from "next";
 
 import ProjectContent from "@/components/projects/project-content";
+import { HousingStateEnum } from "@/types/domain/enums";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -69,10 +70,10 @@ export default async function Projects(props: ProjectsProps) {
 
   if (department) query.eq("department_id", Number(department));
   if (city) query.eq("city_id", Number(city));
-  if (housingState) query.eq("housing_state", housingState);
+  if (housingState) query.eq("housing_state", housingState as HousingStateEnum);
   if (minPrice) query.gte("typologies.price", minPrice);
   if (maxPrice) query.lte("typologies.price", maxPrice);
-  if (type) query.in("housing_type", type.split("-"));
+  if (type) query.in("housing_type", type.split("-") as HousingType["label"][]);
 
   const { count, data } = await query
     .order("price", { referencedTable: "typologies", ascending: true })
