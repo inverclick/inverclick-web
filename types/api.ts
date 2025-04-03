@@ -5,4 +5,5 @@ export type APIResponse<T> = EmptyAPIResponse & {
 export type EmptyAPIResponse = {
   success: boolean;
   message: string;
+  code: string | null;
 };
