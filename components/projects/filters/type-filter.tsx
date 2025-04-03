@@ -31,7 +31,7 @@ export const TypeFilter = ({
             <button
               key={id}
               onClick={() => onChange(label)}
-              className={`flex flex-col gap-1 rounded-lg border border-black p-3 transition-colors ease-in hover:border-primary-800 hover:bg-primary-800 hover:text-white ${
+              className={`flex items-center gap-1 rounded-lg border border-black p-3 transition-colors ease-in hover:border-primary-800 hover:bg-primary-800 hover:text-white ${
                 currentTypes.includes(label)
                   ? "border-primary-600 bg-primary-600 text-white"
                   : ""
