@@ -15,8 +15,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@inverclick/inverclick-ui/dialog";
-import { confetti } from "@tsparticles/confetti";
 import { useEffect } from "react";
+
+import confetti from "canvas-confetti";
 
 export const WelcomeDialog = () => {
   const { welcomeDialogOpen } = usePreRegistration();

@@ -72,22 +72,22 @@ const PreRegistrationContent = () => {
         },
       });
 
-      const body = (await response.json()) as APIResponse<PreRegistrationType>;
+      const data = (await response.json()) as APIResponse<PreRegistrationType>;
 
       setIsLoading(false);
       setIsPreRegistrationOpen(false);
 
-      if (!body.success) {
-        return toast.error(body.message);
+      if (!response.ok) {
+        toast.error(data.message);
+
+        if (data.code === "already_registered") {
+          router.push(`/auth/sign-in?email=${encodeURIComponent(email)}`);
+        }
+
+        return;
       }
 
-      if (response.status === 303) {
-        toast.success(body.message);
-
-        return router.push(`/auth/sign-in?email=${email}`);
-      }
-
-      setPreRegistration(body.data);
+      setPreRegistration(data.data);
 
       setWelcomeDialogOpen(true);
 
