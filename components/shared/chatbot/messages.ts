@@ -69,8 +69,8 @@ export function generateQuestionAboutProjectMessages() {
 
 export function generateScheduleAnAppointmentMessages() {
   return [
-    `¡Claro que sí, {UserName}! Con gusto agendo una cita con uno de nuestros asesores. Por favor, indícame la fecha y hora que te vienen bien. Y el proyecto del que quieres hablar. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
-    `Por supuesto, {UserName}. Vamos a agendar una cita con nuestros asesores. Solo necesito que me digas qué fecha y hora te vienen bien y el proyecto del que quieres hablar, avísame para preparar la cita a tu medida. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
-    `Con mucho gusto, {UserName}. Agendemos una cita con nuestros expertos. Dime cuándo te conviene, fecha, hora y el proyecto del que quieres hablar. Recuerda que nuestros asesores están en Colombia, ¡dime una fecha que te acomode!`,
+    `¡Claro que sí, {UserName}! Con gusto agendo una cita con uno de nuestros asesores. Dime el proyecto del que quieres hablar.`,
+    `Por supuesto, {UserName}. Vamos a agendar una cita con nuestros asesores. Solo necesito que me digas de cuál proyecto del que quieres hablar, avísame para preparar la cita a tu medida.`,
+    `Con mucho gusto, {UserName}. Agendemos una cita con nuestros expertos. Dime el proyecto del que quieres hablar.`,
   ];
 }
