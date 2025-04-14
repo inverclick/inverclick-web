@@ -384,7 +384,7 @@ export async function scheduleAnAppointment(params: {
 
   const output = JSON.stringify({
     action: "schedule_an_appointment",
-    response_message: `${getRandomElement(generateScheduleAnAppointmentMessages())}. Te llegará un correo de confirmación a: ${params.email || "No proporcionado"}.`,
+    response_message: `${getRandomElement(generateScheduleAnAppointmentMessages())} Te llegará un correo de confirmación a: ${params.email || "No proporcionado"}. Uno de nuestros asesores se pondrá en contacto contigo lo más rapido posible`,
     params: {
       projectId,
       projectName: params.projectName,

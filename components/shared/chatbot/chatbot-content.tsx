@@ -275,7 +275,7 @@ export const ChatbotContent = () => {
       },
     ]);
 
-    if (functionResponse) {
+    if (functionResponse !== null && functionResponse !== undefined) {
       try {
         await handleFunctionResponse({
           functionResponse,
@@ -420,7 +420,7 @@ async function handleSendMessage({
   conversationHistory.add({ role: "user", content: message });
 
   const response = await openAI.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-4.1-nano",
     messages: conversationHistory.getQueue(),
     functions: tools,
     function_call: "auto",
@@ -501,7 +501,7 @@ async function handleFunctionCall({
   });
 
   const response = await openAI.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-4.1-nano",
     messages: conversationHistory.getQueue(),
   });
 

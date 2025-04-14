@@ -106,7 +106,7 @@ export const tools = [
   {
     name: "scheduleAnAppointment",
     description:
-      "Llama a esta función cuando el usuario quiera agendar una cita o reunión con uno de nuestros asesores para hablar sobre un proyecto o inmueble. El cliente siempre debe proporcionar un proyecto para poder agendar la cita, sin el nombre del prpyecto no se puede agendar la cita. No es necesario la fecha ni la hora para agendar la cita",
+      "Llama a esta función cuando el usuario quiera contactar con uno de nuestros asesores sobre un proyecto o inmueble. El cliente siempre debe proporcionar un proyecto para poder contactar con uno de nuestros asesores, sin el nombre del proyecto no se puede poner el contacto con nuestros asesores",
     strict: false,
     parameters: {
       type: "object",
@@ -115,7 +115,7 @@ export const tools = [
           type: "string",
           enum: ["schedule_an_appointment"],
           description:
-            "Acción que indica que el cliente quiere agendar una cita. Siempre debe ser 'schedule_an_appointment'.",
+            "Acción que indica que el cliente quiere contactar con un asesor. Siempre debe ser 'schedule_an_appointment'.",
         },
         projectName: {
           type: "string",
