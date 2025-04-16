@@ -27,8 +27,6 @@ import { CHATBOT_SENDER } from "@/constants/enums";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { useUser } from "@/contexts/user-context";
 import { ENV_VARS } from "@/global/env";
-import { formatDate } from "@/lib/format-date";
-import { formatTimezoneOffset } from "@/lib/format-timezone-offset";
 import { LimitedQueue } from "@/lib/limited-queue";
 import { clearChatbotMessagesFromLocalStorage } from "@/services/clear-chatbot-messages-from-local-storage";
 import { getChatbotMessagesFromLocalStorage } from "@/services/get-chatbot-messages-from-local-storage";
@@ -277,7 +275,7 @@ export const ChatbotContent = () => {
       },
     ]);
 
-    if (functionResponse) {
+    if (functionResponse !== null && functionResponse !== undefined) {
       try {
         await handleFunctionResponse({
           functionResponse,
@@ -417,12 +415,12 @@ async function handleSendMessage({
   conversationHistory: LimitedQueue<ChatCompletionMessageParam>;
   functionsRegistry: Window;
 }): Promise<{ messageContent: string; functionResponse: string | null }> {
-  message = `Mi nombre es ${chatter.name}, y la fecha de hoy es: ${formatDate(new Date())}. mi pregunta es: ${message}`;
+  message = `Mi nombre es ${chatter.name}. Mi pregunta es: ${message}`;
 
   conversationHistory.add({ role: "user", content: message });
 
   const response = await openAI.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-4.1-nano",
     messages: conversationHistory.getQueue(),
     functions: tools,
     function_call: "auto",
@@ -503,7 +501,7 @@ async function handleFunctionCall({
   });
 
   const response = await openAI.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-4.1-nano",
     messages: conversationHistory.getQueue(),
   });
 
@@ -536,13 +534,7 @@ async function handleFunctionResponse({
         `/projects/${output.params.project_id}/${output.params.typology_id}`
       );
     } else if (output.action === "schedule_an_appointment") {
-      const { projectId, date, time } = output.params;
-
-      const formattedOffset = formatTimezoneOffset(
-        new Date().getTimezoneOffset()
-      );
-
-      const appointmentDate = new Date(`${date}T${time}${formattedOffset}`);
+      const { projectId } = output.params;
 
       const { error } = await supabase.functions.invoke(
         "schedule-appointment",
@@ -550,7 +542,6 @@ async function handleFunctionResponse({
           body: {
             projectId,
             leadId: chatter.leadId,
-            appointmentDate,
           },
         }
       );

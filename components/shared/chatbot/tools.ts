@@ -106,7 +106,7 @@ export const tools = [
   {
     name: "scheduleAnAppointment",
     description:
-      "Llama a esta función cuando el usuario quiera agendar una cita o reunión con uno de nuestros asesores para hablar sobre un proyecto o inmueble. Nunca asumas la fecha ni la hora al agendar; siempre debes solicitar esta información al cliente. El cliente siempre debe proporcionar un proyecto para poder agendar la cita, sin el nombre del prpyecto no se puede agendar la cita",
+      "Llama a esta función cuando el usuario quiera contactar con uno de nuestros asesores sobre un proyecto o inmueble. El cliente siempre debe proporcionar un proyecto para poder contactar con uno de nuestros asesores, sin el nombre del proyecto no se puede poner el contacto con nuestros asesores",
     strict: false,
     parameters: {
       type: "object",
@@ -115,29 +115,19 @@ export const tools = [
           type: "string",
           enum: ["schedule_an_appointment"],
           description:
-            "Acción que indica que el cliente quiere agendar una cita. Siempre debe ser 'schedule_an_appointment'.",
+            "Acción que indica que el cliente quiere contactar con un asesor. Siempre debe ser 'schedule_an_appointment'.",
         },
         projectName: {
           type: "string",
           description:
             "El nombre del proyecto. Este campo debe ser solicitado al cliente si no lo proporciona.",
         },
-        date: {
-          type: "string",
-          description:
-            "La fecha en la que el cliente desea agendar la cita. Debe estar en el formato YYYY-MM-DD. Ejemplo: '2024-12-19'. Este campo debe ser solicitado al cliente si no lo proporciona.",
-        },
-        time: {
-          type: "string",
-          description:
-            "La hora en la que el cliente desea agendar la cita. Debe estar en el formato HH:MM (24 horas). Ejemplo: '14:30'. Este campo debe ser solicitado al cliente si no lo proporciona.",
-        },
         response_message: {
           type: "string",
           description: "Mensaje de respuesta que se mostrará al usuario",
         },
       },
-      required: ["action", "projectName", "date", "time", "response_message"],
+      required: ["action", "projectName", "response_message"],
     },
   },
   {
