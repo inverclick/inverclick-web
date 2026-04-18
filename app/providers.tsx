@@ -37,7 +37,7 @@ export function Providers({
         <ThemeProvider defaultTheme="light">
           <CurrencyProvider
             TRM_USD={TRM_USD}
-            TRM_EUR={TRM_EUR}
+            TRM_EUR={TRM_EUR} 
             last_trm_update={last_trm_update}
             currency="COP"
           >
