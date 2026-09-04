@@ -1,53 +1,23 @@
 "use client";
 
 import { useProjectsPageStore } from "@/app/projects/_store";
-import { HOUSING_STATE_LABEL, HOUSING_TYPE_LABEL } from "@/constants/labels";
-import { useCurrencyContext } from "@/contexts/currency-context";
-import { getAssetUrl } from "@/services/utils";
-import { ProjectCard } from "@inverclick/inverclick-ui/project-card";
+import { LazyMount } from "@/components/shared/lazy-mount";
+import {
+  ProjectCard,
+  ProjectCardSkeleton,
+} from "@/components/shared/project-card";
 
 export const ProjectInfinityScroll = () => {
   const _projects = useProjectsPageStore((state) => state.projects);
 
-  const { currency, convert } = useCurrencyContext((s) => s);
-
   return (
     <div className="overflow-y-auto">
       <div className="mt-4 grid w-full justify-items-center gap-x-2 gap-y-10 pb-4 [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
-        {_projects.map((project) => {
-          const typology = project.typologies[0];
-
-          return (
-            <ProjectCard
-              key={project.id}
-              href={`/projects/${project.id}/${typology.id}`}
-              currency={currency}
-              project={{
-                id: project.id.toString(),
-                name: project.name,
-                department: project.department.name,
-                city: project.city.name,
-                address: project.address,
-                housingState: HOUSING_STATE_LABEL[project.housing_state],
-                housingType: HOUSING_TYPE_LABEL[project.housing_type],
-                photosUrl: project.photos.map(getAssetUrl) || [],
-              }}
-              blueprint={{
-                area: typology.area,
-                privateArea: typology.private_area,
-                price: convert(typology.price),
-                rooms: typology.rooms,
-                units: typology.units,
-              }}
-              company={{
-                name: project.company.name,
-                logoUrl: project.company
-                  ? getAssetUrl(project.company.logo_url)
-                  : "",
-              }}
-            />
-          );
-        })}
+        {_projects.map((project) => (
+          <LazyMount key={project.id} placeholder={<ProjectCardSkeleton />}>
+            <ProjectCard project={project} />
+          </LazyMount>
+        ))}
       </div>
     </div>
   );

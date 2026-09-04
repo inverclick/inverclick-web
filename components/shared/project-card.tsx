@@ -7,6 +7,7 @@ import { getAssetUrl } from "@/services/utils";
 import { ProjectToDisplay } from "@/types/domain/projects";
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselNext,
   CarouselPrevious,
@@ -24,6 +25,8 @@ export type ProjectCardProps = {
 export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
   ({ project, className }, ref) => {
     const [isMounted, setIsMounted] = useState(false);
+    const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+    const [activePhotoIndex, setActivePhotoIndex] = useState(0);
     const { convert, currency } = useCurrencyContext((s) => s);
     const { company } = project;
     const typology = project.typologies[0];
@@ -32,6 +35,19 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
     useEffect(() => {
       setIsMounted(true);
     }, []);
+
+    useEffect(() => {
+      if (!carouselApi) return;
+
+      const onSelect = () => setActivePhotoIndex(carouselApi.selectedScrollSnap());
+
+      onSelect();
+      carouselApi.on("select", onSelect);
+
+      return () => {
+        carouselApi.off("select", onSelect);
+      };
+    }, [carouselApi]);
 
     if (!isMounted) return null;
 
@@ -45,27 +61,40 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         )}
       >
         <div className="relative">
-          <Carousel className="h-[170px] w-full lg:h-[150px] 2xl:h-[170px]">
+          <Carousel
+            setApi={setCarouselApi}
+            className="h-[170px] w-full lg:h-[150px] 2xl:h-[170px]"
+          >
             <CarouselContent className="!ml-0">
-              {project.photos.map((photo) => (
-                <a
-                  key={photo}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="max-h-[170px] min-w-[280px] animate-fade-in lg:min-w-[220px] 2xl:min-w-[280px]"
-                >
-                  <Image
-                    unoptimized
-                    loading="lazy"
-                    src={getAssetUrl(photo)}
-                    alt={project.name}
-                    width={280}
-                    height={170}
-                    className="-z-10 h-[170px] w-[280px] rounded-t-lg object-cover lg:h-[150px] lg:w-[220px] 2xl:h-[170px] 2xl:w-[280px]"
-                  />
-                </a>
-              ))}
+              {project.photos.map((photo, index) => {
+                // Solo se monta la imagen real del slide activo y sus vecinos
+                // inmediatos; el resto queda como placeholder liviano hasta que
+                // el usuario navegue el carrusel hacia ellos.
+                const isNearActive = Math.abs(index - activePhotoIndex) <= 1;
+
+                return (
+                  <a
+                    key={photo}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="max-h-[170px] min-w-[280px] animate-fade-in lg:min-w-[220px] 2xl:min-w-[280px]"
+                  >
+                    {isNearActive ? (
+                      <Image
+                        loading="lazy"
+                        src={getAssetUrl(photo)}
+                        alt={project.name}
+                        width={280}
+                        height={170}
+                        className="-z-10 h-[170px] w-[280px] rounded-t-lg object-cover lg:h-[150px] lg:w-[220px] 2xl:h-[170px] 2xl:w-[280px]"
+                      />
+                    ) : (
+                      <div className="-z-10 h-[170px] w-[280px] rounded-t-lg bg-muted lg:h-[150px] lg:w-[220px] 2xl:h-[170px] 2xl:w-[280px]" />
+                    )}
+                  </a>
+                );
+              })}
             </CarouselContent>
             <CarouselPrevious className="z-10 !h-6 !w-6 translate-x-14 border-primary-400 bg-primary-100/70 text-primary-500 hover:bg-primary-200/90 hover:text-primary-600" />
             <CarouselNext className="z-10 !h-6 !w-6 -translate-x-14 border-primary-400 bg-primary-100/70 text-primary-500 hover:bg-primary-200/90 hover:text-primary-600" />
@@ -95,7 +124,6 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         >
           <div className="flex items-center gap-2 px-4 lg:px-2 2xl:px-4">
             <Image
-              unoptimized
               loading="lazy"
               className="aspect-square h-[45px] w-auto object-contain 2xl:h-[50px]"
               src={getAssetUrl(company.logo_url)}
