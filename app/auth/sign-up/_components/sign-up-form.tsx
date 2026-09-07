@@ -14,119 +14,154 @@ import {
 } from "@/app/auth/sign-up/_components/sign-up-form-step-two";
 import { StepButton } from "@/app/auth/sign-up/_components/step-button";
 import { Stepper } from "@/app/auth/sign-up/_components/stepper";
-import { USER_CREATED } from "@/app/auth/sign-up/_constants/messages";
+import {
+  CODE_RESENT,
+  USER_CREATED,
+} from "@/app/auth/sign-up/_constants/messages";
+import {
+  AuthMode,
+  completeClientSignUp,
+  getAuthErrorMessage,
+  isMissingExistingUserError,
+  sendOtp,
+} from "@/services/auth/otp-client-auth";
 import { createClient } from "@/services/supabase/browser-client";
-import { signUp } from "@/services/user/sign-up";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export type SignUpValues = StepOneFormValues &
-  StepTwoFormValues &
-  StepThreeFormValues;
-
 export function SignUpForm() {
-  const [loading, setLoading] = useState(false);
-
-  const [formValues, setFormValues] = useState<Partial<SignUpValues>>({
-    email: "",
-    phone: "",
-    name: "",
-    nickname: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const supabase = createClient();
+  const router = useRouter();
 
   const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
+  const [authMode, setAuthMode] = useState<AuthMode>("signup");
+  const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
 
-  const router = useRouter();
+  const handleStepOneNext = async ({ email: nextEmail }: StepOneFormValues) => {
+    try {
+      setLoading(true);
+
+      const existingUserOtpResult = await sendOtp(supabase, nextEmail, false);
+      let nextAuthMode: AuthMode = "existing";
+
+      if (existingUserOtpResult.error) {
+        if (!isMissingExistingUserError(existingUserOtpResult.error)) {
+          throw existingUserOtpResult.error;
+        }
+
+        const signupOtpResult = await sendOtp(supabase, nextEmail, true);
+
+        if (signupOtpResult.error) {
+          throw signupOtpResult.error;
+        }
+
+        nextAuthMode = "signup";
+      }
+
+      setEmail(nextEmail);
+      setAuthMode(nextAuthMode);
+      setStep(2);
+    } catch (error) {
+      toast.error(getAuthErrorMessage(error, "send"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    try {
+      setResending(true);
+
+      const { error } = await sendOtp(supabase, email, authMode === "signup");
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success(CODE_RESENT);
+    } catch (error) {
+      toast.error(getAuthErrorMessage(error, "send"));
+    } finally {
+      setResending(false);
+    }
+  };
+
+  const handleStepTwoNext = async ({ code }: StepTwoFormValues) => {
+    try {
+      setLoading(true);
+
+      const { error } = await supabase.auth.verifyOtp({
+        email,
+        token: code,
+        type: "email",
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (authMode === "existing") {
+        router.refresh();
+        router.push("/projects");
+        return;
+      }
+
+      setStep(3);
+    } catch (error) {
+      toast.error(getAuthErrorMessage(error, "verify"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStepThreeNext = async ({
+    firstNames,
+    lastNames,
+  }: StepThreeFormValues) => {
+    try {
+      setLoading(true);
+
+      await completeClientSignUp(supabase, { email, firstNames, lastNames });
+
+      toast.success(USER_CREATED);
+
+      router.refresh();
+      router.push("/projects");
+    } catch (error) {
+      toast.error(getAuthErrorMessage(error, "profile"));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
       {step === 1 && (
         <SignUpFormStepOne
-          initialValues={{
-            email: formValues.email || "",
-            phone: formValues.phone || "",
-          }}
-          onNext={({ email, phone }) => {
-            setFormValues((prev) => {
-              return {
-                ...prev,
-                email,
-                phone,
-              };
-            });
-
-            setStep(2);
-          }}
+          loading={loading}
+          initialValues={{ email }}
+          onNext={handleStepOneNext}
         />
       )}
       {step === 2 && (
         <SignUpFormStepTwo
-          onBack={() => {
-            setStep(1);
-          }}
-          initialValues={{
-            name: formValues.name || "",
-            nickname: formValues.nickname || "",
-          }}
-          onNext={({ name, nickname }) => {
-            setFormValues((prev) => {
-              return {
-                ...prev,
-                name,
-                nickname,
-              };
-            });
-
-            setStep(3);
-          }}
+          email={email}
+          loading={loading}
+          resending={resending}
+          onBack={() => setStep(1)}
+          onResend={handleResend}
+          onNext={handleStepTwoNext}
         />
       )}
       {step === 3 && (
         <SignUpFormStepThree
           loading={loading}
-          initialValues={{
-            password: formValues.password || "",
-            confirmPassword: formValues.confirmPassword || "",
-          }}
-          onNext={async ({ password, confirmPassword }) => {
-            try {
-              setLoading(true);
-
-              const values: Partial<SignUpValues> = {
-                ...formValues,
-                password,
-                confirmPassword,
-              };
-
-              setFormValues(values);
-
-              await signUp(createClient())({
-                email: values.email as string,
-                phone: values.phone as string,
-                name: values.name as string,
-                nickname: values.nickname || null,
-                password: values.password as string,
-              });
-
-              setLoading(false);
-
-              toast.success(USER_CREATED);
-
-              router.push("/auth/sign-in");
-            } catch (error) {
-              setLoading(false);
-
-              if (error instanceof Error) {
-                toast.error(error.message);
-              }
-            }
-          }}
-          onBack={() => {
-            setStep(2);
-          }}
+          initialValues={{ firstNames: "", lastNames: "" }}
+          onBack={() => setStep(2)}
+          onNext={handleStepThreeNext}
         />
       )}
       <Stepper className="mt-8">

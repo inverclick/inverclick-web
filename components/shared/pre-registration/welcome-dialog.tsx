@@ -28,8 +28,56 @@ export const WelcomeDialog = () => {
   return <>{welcomeDialogOpen && <WelcomeDialogContent />}</>;
 };
 
+const COPY = {
+  new: {
+    title: "¡Bienvenido a bordo!",
+    description: "Tu cuenta se creó exitosamente. Ya puedes explorar todo Inverclick.",
+    features: [
+      {
+        icon: <ShieldCheck className="h-5 w-5" />,
+        title: "Guarda tus favoritos",
+        description: "y encuéntralos cuando quieras.",
+      },
+      {
+        icon: <FolderOpen className="h-5 w-5" />,
+        title: "Agenda visitas",
+        description: "a los proyectos que más te gusten.",
+      },
+      {
+        icon: <Sparkles className="h-5 w-5" />,
+        title: "Explora, sueña y encuentra",
+        description: "tu próximo hogar ideal.",
+      },
+    ],
+  },
+  existing: {
+    title: "¡Qué bueno verte de nuevo!",
+    description: "Iniciaste sesión exitosamente.",
+    features: [
+      {
+        icon: <ShieldCheck className="h-5 w-5" />,
+        title: "Tu cuenta sigue segura",
+        description: "y lista para seguir donde la dejaste.",
+      },
+      {
+        icon: <FolderOpen className="h-5 w-5" />,
+        title: "Revisa tus favoritos",
+        description: "y el estado de tus visitas agendadas.",
+      },
+      {
+        icon: <Sparkles className="h-5 w-5" />,
+        title: "Explora, sueña y encuentra",
+        description: "tu próximo hogar ideal.",
+      },
+    ],
+  },
+} as const;
+
 const WelcomeDialogContent = () => {
-  const { welcomeDialogOpen, setWelcomeDialogOpen } = usePreRegistration();
+  const { welcomeDialogOpen, setWelcomeDialogOpen, welcomeDialogVariant } =
+    usePreRegistration();
+
+  const copy = COPY[welcomeDialogVariant];
 
   useEffect(() => {
     if (!welcomeDialogOpen) {
@@ -94,30 +142,23 @@ const WelcomeDialogContent = () => {
                   <Mail className="h-9 w-9" />
                 </div>
 
-                  <h2 className="text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-slate-900 whitespace-nowrap">
-                    ¡Bienvenido<span className="text-[#5b3df5]"> a bordo!</span>
+                  <h2 className="text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-slate-900">
+                    {copy.title}
                   </h2>
                   <p className="max-w-[30ch] text-center text-base leading-6 text-slate-600 md:max-w-[33ch]">
-                    Hemos enviado un enlace a tu correo para continuar con tu registro.
+                    {copy.description}
                   </p>
               </div>
 
               <div className="space-y-5">
-                <FeatureItem
-                  icon={<ShieldCheck className="h-5 w-5" />}
-                  title="Revisa tu bandeja de entrada"
-                  description="y la carpeta de spam, si es necesario."
-                />
-                <FeatureItem
-                  icon={<FolderOpen className="h-5 w-5" />}
-                  title="Completa el proceso"
-                  description="y personaliza tu experiencia."
-                />
-                <FeatureItem
-                  icon={<Sparkles className="h-5 w-5" />}
-                  title="Explora, sueña y encuentra"
-                  description="tu próximo hogar ideal."
-                />
+                {copy.features.map((feature) => (
+                  <FeatureItem
+                    key={feature.title}
+                    icon={feature.icon}
+                    title={feature.title}
+                    description={feature.description}
+                  />
+                ))}
               </div>
 
               <DialogClose asChild>

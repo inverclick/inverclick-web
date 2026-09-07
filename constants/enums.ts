@@ -1,5 +1,4 @@
 import {
-  ChatbotSenderEnum,
   HousingStateEnum,
   HousingTypeEnum,
   ProjectClassEnum,
@@ -8,11 +7,6 @@ import {
   SubscriptionStatusEnum,
   UserRoleEnum,
 } from "@/types/domain/enums";
-
-export const CHATBOT_SENDER: Record<ChatbotSenderEnum, ChatbotSenderEnum> = {
-  USER: "USER",
-  BOT: "BOT",
-};
 
 export const USER_ROLE: Record<UserRoleEnum, UserRoleEnum> = {
   ADMIN: "ADMIN",

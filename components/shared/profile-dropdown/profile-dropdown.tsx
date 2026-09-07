@@ -48,7 +48,7 @@ export const ProfileDropdown = ({ size = "large" }: ProfileDropdownProps) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Perfil</DropdownMenuLabel>
+            <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={signOut}>Cerrar sesión</DropdownMenuItem>
           </DropdownMenuContent>

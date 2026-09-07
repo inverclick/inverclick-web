@@ -10,8 +10,8 @@ import Link from "next/link";
 import * as yup from "yup";
 
 export type StepThreeFormValues = {
-  password: string;
-  confirmPassword: string;
+  firstNames: string;
+  lastNames: string;
 };
 
 export type SignUpFormStepThreeProps = Readonly<{
@@ -30,31 +30,25 @@ export function SignUpFormStepThree({
   const form = useFormik<StepThreeFormValues>({
     initialValues,
     validationSchema: createFormSchema(),
-    onSubmit: ({ password, confirmPassword }) => {
-      onNext({ password, confirmPassword });
-    },
+    onSubmit: ({ firstNames, lastNames }) => onNext({ firstNames, lastNames }),
   });
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <Typography variant="h3" className="mb-8 text-center">
-        Ya casi puedes iniciar sesión
+        Cuéntanos cómo debemos llamarte
       </Typography>
       <FormikProvider value={form}>
         <Form id="sign-up-step-three-form" className="flex w-full flex-col">
           <InputFormikNT
-            id="password"
+            id="firstNames"
             classNames={{ container: "mb-4" }}
-            properties={{
-              input: { type: "password", placeholder: "Contraseña" },
-            }}
+            properties={{ input: { placeholder: "Nombres" } }}
           />
           <InputFormikNT
-            id="confirmPassword"
+            id="lastNames"
             classNames={{ container: "mb-6" }}
-            properties={{
-              input: { type: "password", placeholder: "Confirmar contraseña" },
-            }}
+            properties={{ input: { placeholder: "Apellidos" } }}
           />
           <div className="mb-8 grid w-full grid-cols-2 gap-4">
             <Button
@@ -92,11 +86,7 @@ export function SignUpFormStepThree({
 
 const createFormSchema = () => {
   return yup.object().shape({
-    password: yup.string().min(6).required(),
-    confirmPassword: yup
-      .string()
-      .min(6)
-      .required()
-      .oneOf([yup.ref("password"), ""], "Las contraseñas no coinciden"),
+    firstNames: yup.string().required(),
+    lastNames: yup.string().required(),
   });
 };

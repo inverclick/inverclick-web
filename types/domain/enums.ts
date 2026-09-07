@@ -1,7 +1,5 @@
 import { Enums } from "@/services/supabase/supabase";
 
-export type ChatbotSenderEnum = Enums<"CHATBOT_SENDER">;
-
 export type UserRoleEnum = Enums<"USER_ROLE">;
 
 export type HousingStateEnum = Enums<"HOUSING_STATE">;

@@ -2,7 +2,6 @@
 
 import { signInAction } from "@/actions/auth/sign-in";
 import { signOutAction } from "@/actions/auth/sign-out";
-import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { User } from "@/services/user/get-user";
 import { SignInParams } from "@/services/user/sign-in";
@@ -53,7 +52,6 @@ export const UserProvider = ({
     }
 
     Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
-    localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
   };
 
   const signOut = async () => {

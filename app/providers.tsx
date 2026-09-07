@@ -1,6 +1,5 @@
 "use client";
 
-import { Chatbot } from "@/components/shared/chatbot/chatbot";
 import { DownloadApp } from "@/components/shared/download-app";
 import { PreRegistration } from "@/components/shared/pre-registration/pre-registration";
 import { WelcomeDialog } from "@/components/shared/pre-registration/welcome-dialog";
@@ -44,7 +43,6 @@ export function Providers({
             <PreRegistrationProvider preRegistration={preRegistration}>
               <YupLocalization>
                 {children}
-                <Chatbot />
                 <WelcomeDialog />
                 <PreRegistration />
                 <Toaster closeButton />

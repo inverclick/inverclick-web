@@ -7,7 +7,6 @@ import {
   ONBOARDING_FORM_TITLE,
 } from "@/app/auth/onboarding/[id]/_constants/messages";
 import { User } from "@/app/auth/onboarding/[id]/_services/get-user";
-import { CHATBOT_MESSAGES_LOCAL_STORAGE_KEY } from "@/constants/chatbot-messages";
 import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { createClient } from "@/services/supabase/browser-client";
 import { Button } from "@inverclick/inverclick-ui/button";
@@ -76,7 +75,6 @@ export const OnboardingForm = ({ user }: OnboardingFormProps) => {
         setLoading(false);
 
         Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
-        localStorage.removeItem(CHATBOT_MESSAGES_LOCAL_STORAGE_KEY);
 
         toast.success(ACCOUNT_CREATED_SIGN_IN);
 
