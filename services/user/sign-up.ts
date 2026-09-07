@@ -30,7 +30,6 @@ export const signUp = (supabase: SupabaseClient<Database>) => {
         id: signUp.user.id,
         email,
         name,
-        role: "LEAD",
         is_confirmed: true,
       })
       .select("*")
