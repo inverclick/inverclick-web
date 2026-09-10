@@ -120,11 +120,17 @@ export function SignUpForm() {
   const handleStepThreeNext = async ({
     firstNames,
     lastNames,
+    phone,
   }: StepThreeFormValues) => {
     try {
       setLoading(true);
 
-      await completeClientSignUp(supabase, { email, firstNames, lastNames });
+      await completeClientSignUp(supabase, {
+        email,
+        firstNames,
+        lastNames,
+        phone,
+      });
 
       toast.success(USER_CREATED);
 
@@ -159,7 +165,7 @@ export function SignUpForm() {
       {step === 3 && (
         <SignUpFormStepThree
           loading={loading}
-          initialValues={{ firstNames: "", lastNames: "" }}
+          initialValues={{ firstNames: "", lastNames: "", phone: "" }}
           onBack={() => setStep(2)}
           onNext={handleStepThreeNext}
         />

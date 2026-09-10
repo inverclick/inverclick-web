@@ -71,6 +71,7 @@ export type CompleteClientSignUpParams = {
   email: string;
   firstNames: string;
   lastNames: string;
+  phone: string;
 };
 
 /**
@@ -80,7 +81,7 @@ export type CompleteClientSignUpParams = {
  */
 export const completeClientSignUp = async (
   supabase: SupabaseClient<Database>,
-  { email, firstNames, lastNames }: CompleteClientSignUpParams
+  { email, firstNames, lastNames, phone }: CompleteClientSignUpParams
 ) => {
   const fullName = `${firstNames} ${lastNames}`;
 
@@ -115,7 +116,7 @@ export const completeClientSignUp = async (
 
   const { error: upsertClientError } = await supabase
     .from("user_clients")
-    .upsert({ user_id: authUser.id }, { onConflict: "user_id" });
+    .upsert({ user_id: authUser.id, phone }, { onConflict: "user_id" });
 
   if (upsertClientError) {
     throw upsertClientError;

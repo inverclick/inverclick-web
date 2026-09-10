@@ -12,12 +12,14 @@ import { createClient } from "@/services/supabase/browser-client";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { Dialog, DialogContent } from "@inverclick/inverclick-ui/dialog";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
+import { PhoneInputFormikNT } from "@inverclick/inverclick-ui/phone-input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
 import { ArrowRight, LockKeyhole, Mail, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { isValidPhoneNumber } from "react-phone-number-input";
 import * as yup from "yup";
 import Image from "next/image";
 
@@ -156,9 +158,11 @@ const PreRegistrationContent = () => {
   const handleProfileSubmit = async ({
     firstNames,
     lastNames,
+    phone,
   }: {
     firstNames: string;
     lastNames: string;
+    phone: string;
   }) => {
     try {
       setLoading(true);
@@ -167,6 +171,7 @@ const PreRegistrationContent = () => {
         email,
         firstNames,
         lastNames,
+        phone,
       });
 
       await finish({ id: authUser.id, email, name: fullName });
@@ -390,13 +395,25 @@ function ProfileStep({
   onSubmit,
 }: {
   loading: boolean;
-  onSubmit: (values: { firstNames: string; lastNames: string }) => void;
+  onSubmit: (values: {
+    firstNames: string;
+    lastNames: string;
+    phone: string;
+  }) => void;
 }) {
   const form = useFormik({
-    initialValues: { firstNames: "", lastNames: "" },
+    initialValues: { firstNames: "", lastNames: "", phone: "" },
     validationSchema: yup.object().shape({
       firstNames: yup.string().required(),
       lastNames: yup.string().required(),
+      phone: yup
+        .string()
+        .required("El número de celular es obligatorio")
+        .test(
+          "is-valid-phone",
+          "El número de celular no es válido",
+          (value) => !!value && isValidPhoneNumber(value)
+        ),
     }),
     onSubmit,
   });
@@ -433,6 +450,20 @@ function ProfileStep({
             properties={{ input: { placeholder: "Apellidos" } }}
           />
         </div>
+
+        <PhoneInputFormikNT
+          id="phone"
+          classNames={{
+            container: INPUT_CLASSNAMES.container,
+            error: INPUT_CLASSNAMES.error,
+          }}
+          properties={{
+            phoneInput: {
+              defaultCountry: "CO",
+              placeholder: "Número de celular",
+            },
+          }}
+        />
 
         <Button
           form="pre-registration-profile"

@@ -2,16 +2,19 @@
 
 import { Button } from "@inverclick/inverclick-ui/button";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
+import { PhoneInputFormikNT } from "@inverclick/inverclick-ui/phone-input-formik";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { Form, FormikProvider, useFormik } from "formik";
 
 import Link from "next/link";
 
+import { isValidPhoneNumber } from "react-phone-number-input";
 import * as yup from "yup";
 
 export type StepThreeFormValues = {
   firstNames: string;
   lastNames: string;
+  phone: string;
 };
 
 export type SignUpFormStepThreeProps = Readonly<{
@@ -30,7 +33,8 @@ export function SignUpFormStepThree({
   const form = useFormik<StepThreeFormValues>({
     initialValues,
     validationSchema: createFormSchema(),
-    onSubmit: ({ firstNames, lastNames }) => onNext({ firstNames, lastNames }),
+    onSubmit: ({ firstNames, lastNames, phone }) =>
+      onNext({ firstNames, lastNames, phone }),
   });
 
   return (
@@ -47,8 +51,18 @@ export function SignUpFormStepThree({
           />
           <InputFormikNT
             id="lastNames"
-            classNames={{ container: "mb-6" }}
+            classNames={{ container: "mb-4" }}
             properties={{ input: { placeholder: "Apellidos" } }}
+          />
+          <PhoneInputFormikNT
+            id="phone"
+            classNames={{ container: "mb-6" }}
+            properties={{
+              phoneInput: {
+                defaultCountry: "CO",
+                placeholder: "Número de celular",
+              },
+            }}
           />
           <div className="mb-8 grid w-full grid-cols-2 gap-4">
             <Button
@@ -88,5 +102,13 @@ const createFormSchema = () => {
   return yup.object().shape({
     firstNames: yup.string().required(),
     lastNames: yup.string().required(),
+    phone: yup
+      .string()
+      .required("El número de celular es obligatorio")
+      .test(
+        "is-valid-phone",
+        "El número de celular no es válido",
+        (value) => !!value && isValidPhoneNumber(value)
+      ),
   });
 };
