@@ -1,6 +1,5 @@
 import { Providers } from "@/app/providers";
 import { ENV_VARS } from "@/global/env";
-import { getPreRegistration } from "@/services/get-pre-registration";
 import { getTRM } from "@/services/get-trm";
 import { createClient } from "@/services/supabase/server-client";
 import { getUser } from "@/services/user/get-user";
@@ -60,7 +59,6 @@ export default async function RootLayout({
   const { TRM_USD, TRM_EUR, last_trm_update } = await getTRM();
 
   const user = await getUser(createClient())();
-  const preRegistration = await getPreRegistration();
 
   return (
     <html lang="es" suppressHydrationWarning>
@@ -77,7 +75,6 @@ export default async function RootLayout({
           TRM_USD={TRM_USD}
           TRM_EUR={TRM_EUR}
           last_trm_update={last_trm_update}
-          preRegistration={preRegistration}
         >
           {children}
         </Providers>

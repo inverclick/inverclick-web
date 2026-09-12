@@ -123,55 +123,6 @@ export type Database = {
         }
         Relationships: []
       }
-      companies_leads: {
-        Row: {
-          company_id: string
-          created_at: string
-          email_sent_to: string
-          id: string
-          lead_id: string
-          project_id: string
-        }
-        Insert: {
-          company_id: string
-          created_at?: string
-          email_sent_to: string
-          id?: string
-          lead_id: string
-          project_id: string
-        }
-        Update: {
-          company_id?: string
-          created_at?: string
-          email_sent_to?: string
-          id?: string
-          lead_id?: string
-          project_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "companies_leads_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "companies_leads_lead_id_fkey"
-            columns: ["lead_id"]
-            isOneToOne: false
-            referencedRelation: "leads"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "companies_leads_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       departments: {
         Row: {
           id: number
@@ -507,38 +458,6 @@ export type Database = {
           },
         ]
       }
-      leads: {
-        Row: {
-          created_at: string
-          id: string
-          nickname: string | null
-          phone: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          nickname?: string | null
-          phone: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          nickname?: string | null
-          phone?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "leads_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       newsletter_users: {
         Row: {
           created_at: string
@@ -575,7 +494,7 @@ export type Database = {
             foreignKeyName: "profile_favorite_projects_profile_id_fkey"
             columns: ["profile_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
@@ -586,24 +505,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      profiles: {
-        Row: {
-          first_name: string | null
-          id: string
-          last_name: string | null
-        }
-        Insert: {
-          first_name?: string | null
-          id: string
-          last_name?: string | null
-        }
-        Update: {
-          first_name?: string | null
-          id?: string
-          last_name?: string | null
-        }
-        Relationships: []
       }
       project_characteristics: {
         Row: {
@@ -927,18 +828,21 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          is_email_confirmed: boolean
           phone: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
+          is_email_confirmed?: boolean
           phone?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
+          is_email_confirmed?: boolean
           phone?: string | null
           user_id?: string
         }

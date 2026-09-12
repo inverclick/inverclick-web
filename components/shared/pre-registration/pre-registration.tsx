@@ -1,23 +1,24 @@
 "use client";
 
-import { usePreRegistration } from "@/contexts/pre-registration-context";
 import {
-  AuthMode,
-  completeClientSignUp,
-  getAuthErrorMessage,
-  isMissingExistingUserError,
-  sendOtp,
-} from "@/services/auth/otp-client-auth";
-import { createClient } from "@/services/supabase/browser-client";
+  OTP_CODE_LENGTH,
+  OtpCodeInput,
+} from "@/components/shared/otp-code-input/otp-code-input";
+import { usePreRegistration } from "@/contexts/pre-registration-context";
+import { useClientAuthFlow } from "@/hooks/use-client-auth-flow";
 import { Button } from "@inverclick/inverclick-ui/button";
-import { Dialog, DialogContent } from "@inverclick/inverclick-ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@inverclick/inverclick-ui/dialog";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { PhoneInputFormikNT } from "@inverclick/inverclick-ui/phone-input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
-import { ArrowRight, LockKeyhole, Mail, UserRound } from "lucide-react";
+import { ArrowLeft, ArrowRight, LockKeyhole, Mail, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 
 import { isValidPhoneNumber } from "react-phone-number-input";
 import * as yup from "yup";
@@ -30,7 +31,8 @@ const INPUT_CLASSNAMES = {
   error: "mt-1 text-xs",
 };
 
-type Step = "email" | "code" | "profile";
+const PRIMARY_BUTTON_CLASSNAME =
+  "mt-1 h-14 w-full rounded-xl bg-[#5b3df5] text-base font-semibold text-white shadow-[0_18px_40px_rgba(91,61,245,0.28)] hover:bg-[#5032ef]";
 
 export const PreRegistration = () => {
   const { isPreRegistrationOpen } = usePreRegistration();
@@ -39,148 +41,35 @@ export const PreRegistration = () => {
 };
 
 const PreRegistrationContent = () => {
-  const supabase = createClient();
   const router = useRouter();
 
   const {
     isPreRegistrationOpen,
     setIsPreRegistrationOpen,
-    setPreRegistration,
     setWelcomeDialogOpen,
     setWelcomeDialogVariant,
   } = usePreRegistration();
 
-  const [step, setStep] = useState<Step>("email");
-  const [email, setEmail] = useState("");
-  const [authMode, setAuthMode] = useState<AuthMode>("signup");
-  const [loading, setLoading] = useState(false);
-  const [resending, setResending] = useState(false);
-
-  const finish = async ({
-    id,
-    email: finalEmail,
-    name,
-  }: {
-    id: string;
-    email: string;
-    name: string;
-  }) => {
-    setPreRegistration({ id, leadId: id, name, email: finalEmail, nickname: null });
+  const finish = (variant: "new" | "existing") => () => {
     setIsPreRegistrationOpen(false);
-    setWelcomeDialogVariant(authMode === "signup" ? "new" : "existing");
+    setWelcomeDialogVariant(variant);
     setWelcomeDialogOpen(true);
     router.refresh();
   };
 
-  const handleEmailSubmit = async ({ email: nextEmail }: { email: string }) => {
-    try {
-      setLoading(true);
-
-      const existingUserOtpResult = await sendOtp(supabase, nextEmail, false);
-      let nextAuthMode: AuthMode = "existing";
-
-      if (existingUserOtpResult.error) {
-        if (!isMissingExistingUserError(existingUserOtpResult.error)) {
-          throw existingUserOtpResult.error;
-        }
-
-        const signupOtpResult = await sendOtp(supabase, nextEmail, true);
-
-        if (signupOtpResult.error) {
-          throw signupOtpResult.error;
-        }
-
-        nextAuthMode = "signup";
-      }
-
-      setEmail(nextEmail);
-      setAuthMode(nextAuthMode);
-      setStep("code");
-    } catch (error) {
-      toast.error(getAuthErrorMessage(error, "send"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResend = async () => {
-    try {
-      setResending(true);
-
-      const { error } = await sendOtp(supabase, email, authMode === "signup");
-
-      if (error) {
-        throw error;
-      }
-
-      toast.success("Te enviamos un nuevo código");
-    } catch (error) {
-      toast.error(getAuthErrorMessage(error, "send"));
-    } finally {
-      setResending(false);
-    }
-  };
-
-  const handleCodeSubmit = async ({ code }: { code: string }) => {
-    try {
-      setLoading(true);
-
-      const { error } = await supabase.auth.verifyOtp({
-        email,
-        token: code,
-        type: "email",
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      if (authMode === "signup") {
-        setStep("profile");
-        return;
-      }
-
-      const {
-        data: { user: authUser },
-      } = await supabase.auth.getUser();
-
-      const existingName =
-        (authUser?.user_metadata?.full_name as string | undefined) || email;
-
-      await finish({ id: authUser?.id ?? "", email, name: existingName });
-    } catch (error) {
-      toast.error(getAuthErrorMessage(error, "verify"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleProfileSubmit = async ({
-    firstNames,
-    lastNames,
-    phone,
-  }: {
-    firstNames: string;
-    lastNames: string;
-    phone: string;
-  }) => {
-    try {
-      setLoading(true);
-
-      const { authUser, fullName } = await completeClientSignUp(supabase, {
-        email,
-        firstNames,
-        lastNames,
-        phone,
-      });
-
-      await finish({ id: authUser.id, email, name: fullName });
-    } catch (error) {
-      toast.error(getAuthErrorMessage(error, "profile"));
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    step,
+    email,
+    loading,
+    resending,
+    submitRegistration,
+    submitCode,
+    resendCode,
+    backToForm,
+  } = useClientAuthFlow({
+    onRegistered: finish("new"),
+    onSignedIn: finish("existing"),
+  });
 
   return (
     <Dialog
@@ -192,14 +81,24 @@ const PreRegistrationContent = () => {
         onOpenAutoFocus={(event: Event) => event.preventDefault()}
         className="max-w-4xl !p-0 !rounded-2xl"
       >
+        <DialogTitle className="sr-only">
+          {step === "form"
+            ? "Regístrate para ver la información del proyecto"
+            : "Confirma tu correo con el código que te enviamos"}
+        </DialogTitle>
+        <DialogDescription className="sr-only">
+          {step === "form"
+            ? "Ingresa tu nombre, celular y correo para desbloquear la información del proyecto."
+            : "Ya tienes una cuenta: escribe el código de 6 dígitos que enviamos a tu correo para iniciar sesión."}
+        </DialogDescription>
         <section className="flex">
-          <div className="flex flex-col justify-between gap-6 !rounded-l-2xl bg-purple-100 min-w-[40%] pb-10">
-            <div className="p-5 md:p-8 xl:p-10 flex flex-col md:gap-8 xl:gap-12 !pb-0">
+          <div className="hidden flex-col justify-between gap-6 !rounded-l-2xl bg-purple-100 pb-10 md:flex md:min-w-[40%]">
+            <div className="flex flex-col !pb-0 p-5 md:gap-8 md:p-8 xl:gap-12 xl:p-10">
               <Image
                 unoptimized
                 width="200"
                 height="40"
-                className="mix-blend-multiply h-auto max-w-32"
+                className="h-auto max-w-32 mix-blend-multiply"
                 src="/main-page/inverclick-logo.avif"
                 alt="Inverclick logo"
               />
@@ -239,20 +138,21 @@ const PreRegistrationContent = () => {
             />
           </div>
           <div className="flex-1 rounded-r-2xl bg-white p-6 md:p-8">
-            {step === "email" && (
-              <EmailStep loading={loading} onSubmit={handleEmailSubmit} />
+            {step === "form" && (
+              <RegistrationStep
+                loading={loading}
+                onSubmit={submitRegistration}
+              />
             )}
             {step === "code" && (
               <CodeStep
                 email={email}
                 loading={loading}
                 resending={resending}
-                onResend={handleResend}
-                onSubmit={handleCodeSubmit}
+                onBack={backToForm}
+                onResend={resendCode}
+                onSubmit={submitCode}
               />
-            )}
-            {step === "profile" && (
-              <ProfileStep loading={loading} onSubmit={handleProfileSubmit} />
             )}
           </div>
         </section>
@@ -261,32 +161,77 @@ const PreRegistrationContent = () => {
   );
 };
 
-function EmailStep({
+function RegistrationStep({
   loading,
   onSubmit,
 }: {
   loading: boolean;
-  onSubmit: (values: { email: string }) => void;
+  onSubmit: (values: {
+    fullName: string;
+    phone: string;
+    email: string;
+  }) => void;
 }) {
   const form = useFormik({
-    initialValues: { email: "" },
+    initialValues: { fullName: "", phone: "", email: "" },
     validationSchema: yup.object().shape({
-      email: yup.string().email().required(),
+      fullName: yup
+        .string()
+        .trim()
+        .min(3, "Escribe tu nombre completo")
+        .required("El nombre completo es obligatorio"),
+      phone: yup
+        .string()
+        .required("El número de celular es obligatorio")
+        .test(
+          "is-valid-phone",
+          "El número de celular no es válido",
+          (value) => !!value && isValidPhoneNumber(value)
+        ),
+      email: yup.string().email().required("El correo es obligatorio"),
     }),
     onSubmit,
   });
 
   return (
     <FormikProvider value={form}>
-      <Form id="pre-registration-email" className="flex h-full flex-col gap-4">
+      <Form id="pre-registration-form" className="flex h-full flex-col gap-4">
         <div className="space-y-1 pb-1">
           <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-900">
             Cuéntanos para <span className="text-[#5b3df5]">ayudarte mejor</span>
           </h3>
           <p className="text-base font-medium text-slate-400">
-            Ingresa tu correo para comenzar.
+            Con estos datos desbloqueas la información del proyecto.
           </p>
         </div>
+
+        <div className="relative">
+          <UserRound className="pointer-events-none absolute left-4 top-7 z-10 h-5 w-5 -translate-y-1/2 text-[#9d6bff]" />
+          <InputFormikNT
+            id="fullName"
+            classNames={INPUT_CLASSNAMES}
+            properties={{
+              input: {
+                autoComplete: "name",
+                placeholder: "Nombre completo",
+              },
+            }}
+          />
+        </div>
+
+        <PhoneInputFormikNT
+          id="phone"
+          classNames={{
+            container: INPUT_CLASSNAMES.container,
+            error: INPUT_CLASSNAMES.error,
+          }}
+          properties={{
+            phoneInput: {
+              defaultCountry: "CO",
+              placeholder: "Número de celular",
+            },
+          }}
+        />
 
         <div className="relative">
           <Mail className="pointer-events-none absolute left-4 top-7 z-10 h-5 w-5 -translate-y-1/2 text-[#9d6bff]" />
@@ -294,16 +239,20 @@ function EmailStep({
             id="email"
             classNames={INPUT_CLASSNAMES}
             properties={{
-              input: { type: "email", placeholder: "Correo electrónico" },
+              input: {
+                type: "email",
+                autoComplete: "email",
+                placeholder: "Correo electrónico",
+              },
             }}
           />
         </div>
 
         <Button
-          form="pre-registration-email"
+          form="pre-registration-form"
           type="submit"
           isLoading={loading}
-          className="mt-1 h-14 w-full rounded-xl bg-[#5b3df5] text-base font-semibold text-white shadow-[0_18px_40px_rgba(91,61,245,0.28)] hover:bg-[#5032ef]"
+          className={PRIMARY_BUTTON_CLASSNAME}
         >
           <span>Continuar</span>
           <ArrowRight className="ml-2 h-5 w-5" />
@@ -322,159 +271,70 @@ function CodeStep({
   email,
   loading,
   resending,
+  onBack,
   onResend,
   onSubmit,
 }: {
   email: string;
   loading: boolean;
   resending: boolean;
+  onBack: () => void;
   onResend: () => void;
-  onSubmit: (values: { code: string }) => void;
+  onSubmit: (code: string) => void;
 }) {
-  const form = useFormik({
-    initialValues: { code: "" },
-    validationSchema: yup.object().shape({
-      code: yup
-        .string()
-        .required()
-        .matches(/^\d{6}$/, "El código debe tener 6 dígitos"),
-    }),
-    onSubmit,
-  });
+  const [code, setCode] = useState("");
+
+  const isComplete = code.length === OTP_CODE_LENGTH;
 
   return (
-    <FormikProvider value={form}>
-      <Form id="pre-registration-code" className="flex h-full flex-col gap-4">
-        <div className="space-y-1 pb-1">
-          <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-900">
-            Confirma que <span className="text-[#5b3df5]">eres tú</span>
-          </h3>
-          <p className="text-base font-medium text-slate-400">
-            Te enviamos un código a <span className="font-semibold">{email}</span>
-          </p>
-        </div>
+    <div className="flex h-full flex-col gap-4">
+      <div className="space-y-1 pb-1">
+        <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-900">
+          Ya tienes cuenta, <span className="text-[#5b3df5]">confirma que eres tú</span>
+        </h3>
+        <p className="text-base font-medium text-slate-400">
+          Te enviamos un código a <span className="font-semibold">{email}</span>
+        </p>
+      </div>
 
-        <InputFormikNT
-          id="code"
-          classNames={INPUT_CLASSNAMES}
-          properties={{
-            input: {
-              inputMode: "numeric",
-              maxLength: 6,
-              placeholder: "Código de 6 dígitos",
-            },
-          }}
-        />
+      <OtpCodeInput
+        autoFocus
+        value={code}
+        onChange={setCode}
+        onComplete={onSubmit}
+        disabled={loading}
+      />
 
-        <Button
-          type="button"
-          variant="link"
-          className="self-start"
-          onClick={onResend}
-          isLoading={resending}
-        >
-          Enviar un nuevo código
-        </Button>
-
-        <Button
-          form="pre-registration-code"
-          type="submit"
-          isLoading={loading}
-          className="mt-1 h-14 w-full rounded-xl bg-[#5b3df5] text-base font-semibold text-white shadow-[0_18px_40px_rgba(91,61,245,0.28)] hover:bg-[#5032ef]"
-        >
-          <span>Confirmar</span>
-          <ArrowRight className="ml-2 h-5 w-5" />
-        </Button>
-      </Form>
-    </FormikProvider>
-  );
-}
-
-function ProfileStep({
-  loading,
-  onSubmit,
-}: {
-  loading: boolean;
-  onSubmit: (values: {
-    firstNames: string;
-    lastNames: string;
-    phone: string;
-  }) => void;
-}) {
-  const form = useFormik({
-    initialValues: { firstNames: "", lastNames: "", phone: "" },
-    validationSchema: yup.object().shape({
-      firstNames: yup.string().required(),
-      lastNames: yup.string().required(),
-      phone: yup
-        .string()
-        .required("El número de celular es obligatorio")
-        .test(
-          "is-valid-phone",
-          "El número de celular no es válido",
-          (value) => !!value && isValidPhoneNumber(value)
-        ),
-    }),
-    onSubmit,
-  });
-
-  return (
-    <FormikProvider value={form}>
-      <Form
-        id="pre-registration-profile"
-        className="flex h-full flex-col gap-4"
+      <Button
+        type="button"
+        variant="link"
+        className="h-auto self-start p-0 text-sm"
+        onClick={onResend}
+        isLoading={resending}
       >
-        <div className="space-y-1 pb-1">
-          <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-900">
-            Cuéntanos <span className="text-[#5b3df5]">cómo te llamas</span>
-          </h3>
-          <p className="text-base font-medium text-slate-400">
-            Así podemos ayudarte mejor.
-          </p>
-        </div>
+        Enviar un nuevo código
+      </Button>
 
-        <div className="relative">
-          <UserRound className="pointer-events-none absolute left-4 top-7 z-10 h-5 w-5 -translate-y-1/2 text-[#9d6bff]" />
-          <InputFormikNT
-            id="firstNames"
-            classNames={INPUT_CLASSNAMES}
-            properties={{ input: { placeholder: "Nombres" } }}
-          />
-        </div>
+      <Button
+        type="button"
+        isLoading={loading}
+        disabled={!isComplete}
+        onClick={() => onSubmit(code)}
+        className={PRIMARY_BUTTON_CLASSNAME}
+      >
+        <span>Confirmar</span>
+        <ArrowRight className="ml-2 h-5 w-5" />
+      </Button>
 
-        <div className="relative">
-          <UserRound className="pointer-events-none absolute left-4 top-7 z-10 h-5 w-5 -translate-y-1/2 text-[#9d6bff]" />
-          <InputFormikNT
-            id="lastNames"
-            classNames={INPUT_CLASSNAMES}
-            properties={{ input: { placeholder: "Apellidos" } }}
-          />
-        </div>
-
-        <PhoneInputFormikNT
-          id="phone"
-          classNames={{
-            container: INPUT_CLASSNAMES.container,
-            error: INPUT_CLASSNAMES.error,
-          }}
-          properties={{
-            phoneInput: {
-              defaultCountry: "CO",
-              placeholder: "Número de celular",
-            },
-          }}
-        />
-
-        <Button
-          form="pre-registration-profile"
-          type="submit"
-          isLoading={loading}
-          className="mt-1 h-14 w-full rounded-xl bg-[#5b3df5] text-base font-semibold text-white shadow-[0_18px_40px_rgba(91,61,245,0.28)] hover:bg-[#5032ef]"
-        >
-          <span>Continuar</span>
-          <ArrowRight className="ml-2 h-5 w-5" />
-        </Button>
-      </Form>
-    </FormikProvider>
+      <Button
+        type="button"
+        variant="link"
+        className="h-auto self-center p-0 text-sm text-slate-500"
+        onClick={onBack}
+      >
+        <ArrowLeft className="mr-1 h-4 w-4" />
+        Usar otro correo
+      </Button>
+    </div>
   );
 }

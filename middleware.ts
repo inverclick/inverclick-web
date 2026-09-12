@@ -1,6 +1,5 @@
 import { ENV_VARS } from "@/global/env";
 import { canContinueToProjectPreview } from "@/middlewares/can-continue-to-project-preview";
-import { handlePreRegistration } from "@/middlewares/handle-pre-registration";
 import { handleTRM } from "@/middlewares/handle-trm";
 import { updateSession } from "@/middlewares/update-session";
 import { NextResponse, type NextRequest } from "next/server";
@@ -11,8 +10,6 @@ export async function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next({ request });
-
-  await handlePreRegistration(request, response);
 
   await handleTRM(request, response);
 

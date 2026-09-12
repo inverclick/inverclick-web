@@ -7,7 +7,6 @@ import {
   ONBOARDING_FORM_TITLE,
 } from "@/app/auth/onboarding/[id]/_constants/messages";
 import { User } from "@/app/auth/onboarding/[id]/_services/get-user";
-import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { createClient } from "@/services/supabase/browser-client";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
@@ -16,8 +15,6 @@ import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-
-import Cookies from "js-cookie";
 
 import * as yup from "yup";
 
@@ -73,8 +70,6 @@ export const OnboardingForm = ({ user }: OnboardingFormProps) => {
         }
 
         setLoading(false);
-
-        Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
 
         toast.success(ACCOUNT_CREATED_SIGN_IN);
 

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3002 --turbo",
-    "gen:types": "supabase gen types typescript --project-id gzragzbvuoybladjjoyy > ./types/database.ts ",
+    "dev": "next dev -p 3000 --turbo",
+    "gen:types": "supabase gen types typescript --project-id lvptznfprobnfjquceok > ./types/database.ts ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

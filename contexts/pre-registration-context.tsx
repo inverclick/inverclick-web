@@ -1,24 +1,17 @@
 "use client";
 
-import { PRE_REGISTRATION_COOKIE_NAME } from "@/constants/pre-registration";
 import { useUser } from "@/contexts/user-context";
-import { PreRegistration } from "@/types/pre-registration";
-import Cookies from "js-cookie";
 import {
   createContext,
   PropsWithChildren,
   useContext,
-  useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 
 export type WelcomeDialogVariant = "new" | "existing";
 
 export type PreRegistrationContextType = {
-  preRegistration: PreRegistration | null;
-  setPreRegistration: (preRegistration: PreRegistration) => void;
   isPreRegistrationOpen: boolean;
   setIsPreRegistrationOpen: (isPreRegistrationOpen: boolean) => void;
   welcomeDialogOpen: boolean;
@@ -33,18 +26,13 @@ export const PreRegistrationContext = createContext(
 );
 
 export type PreRegistrationProviderProps = {
-  preRegistration: PreRegistration | null;
   isPreRegistrationOpen?: boolean;
 } & PropsWithChildren;
 
 export const PreRegistrationProvider = ({
-  preRegistration: initialPreRegistration,
   isPreRegistrationOpen: initialIsPreRegistrationOpen = false,
   children,
 }: PreRegistrationProviderProps) => {
-  const [preRegistration, setPreRegistration] =
-    useState<PreRegistration | null>(initialPreRegistration);
-
   const [isPreRegistrationOpen, setIsPreRegistrationOpen] = useState(
     initialIsPreRegistrationOpen
   );
@@ -54,32 +42,18 @@ export const PreRegistrationProvider = ({
     useState<WelcomeDialogVariant>("new");
 
   const { user } = useUser();
-  const previousUserRef = useRef(user);
-
-  useEffect(() => {
-    setPreRegistration(initialPreRegistration);
-  }, [initialPreRegistration]);
 
   /**
-   * If a real session existed and just ended (logout), drop any leftover
-   * pre-registration state so features re-lock instead of staying unlocked
-   * forever from a stale client-side pre-registration.
+   * Every entry point of the client flow — the "Ver información" dialog,
+   * /auth/sign-up and /auth/sign-in — now ends in a real Supabase session, so
+   * the session is the only thing that unlocks the project features. Signing
+   * out re-locks them on its own, with no pre-registration cookie left to
+   * clean up.
    */
-  useEffect(() => {
-    if (previousUserRef.current && !user) {
-      setPreRegistration(null);
-      Cookies.remove(PRE_REGISTRATION_COOKIE_NAME);
-    }
-
-    previousUserRef.current = user;
-  }, [user]);
-
-  const canInteractWithFeatures = Boolean(preRegistration) || Boolean(user);
+  const canInteractWithFeatures = Boolean(user);
 
   const context = useMemo(
     () => ({
-      preRegistration,
-      setPreRegistration,
       isPreRegistrationOpen,
       setIsPreRegistrationOpen,
       welcomeDialogOpen,
@@ -89,14 +63,9 @@ export const PreRegistrationProvider = ({
       canInteractWithFeatures,
     }),
     [
-      preRegistration,
-      setPreRegistration,
       isPreRegistrationOpen,
-      setIsPreRegistrationOpen,
       welcomeDialogOpen,
-      setWelcomeDialogOpen,
       welcomeDialogVariant,
-      setWelcomeDialogVariant,
       canInteractWithFeatures,
     ]
   );

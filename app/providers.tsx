@@ -8,7 +8,6 @@ import { CurrencyProvider } from "@/contexts/currency-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { UserProvider } from "@/contexts/user-context";
 import { User } from "@/services/user/get-user";
-import { PreRegistration as PreRegistrationType } from "@/types/pre-registration";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { PropsWithChildren } from "react";
@@ -19,7 +18,6 @@ export type ProvidersProps = PropsWithChildren<{
   TRM_USD: number;
   TRM_EUR: number;
   last_trm_update: number;
-  preRegistration: PreRegistrationType | null;
 }>;
 
 export function Providers({
@@ -27,7 +25,6 @@ export function Providers({
   TRM_EUR,
   TRM_USD,
   last_trm_update,
-  preRegistration,
   children,
 }: ProvidersProps) {
   return (
@@ -40,7 +37,7 @@ export function Providers({
             last_trm_update={last_trm_update}
             currency="COP"
           >
-            <PreRegistrationProvider preRegistration={preRegistration}>
+            <PreRegistrationProvider>
               <YupLocalization>
                 {children}
                 <WelcomeDialog />

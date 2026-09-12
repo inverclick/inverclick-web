@@ -1,15 +1,12 @@
 "use client";
 
+import {
+  OTP_CODE_LENGTH,
+  OtpCodeInput,
+} from "@/components/shared/otp-code-input/otp-code-input";
 import { Button } from "@inverclick/inverclick-ui/button";
-import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { Typography } from "@inverclick/inverclick-ui/typography";
-import { Form, FormikProvider, useFormik } from "formik";
-
-import * as yup from "yup";
-
-export type StepTwoFormValues = {
-  code: string;
-};
+import { useState } from "react";
 
 export type SignUpFormStepTwoProps = Readonly<{
   email: string;
@@ -17,9 +14,13 @@ export type SignUpFormStepTwoProps = Readonly<{
   resending: boolean;
   onBack: () => void;
   onResend: () => void;
-  onNext: (values: StepTwoFormValues) => void;
+  onNext: (code: string) => void;
 }>;
 
+/**
+ * Only reached when the email already belongs to a client: the account exists,
+ * so instead of registering we finish signing them in with a code.
+ */
 export function SignUpFormStepTwo({
   email,
   loading,
@@ -28,71 +29,55 @@ export function SignUpFormStepTwo({
   onResend,
   onNext,
 }: SignUpFormStepTwoProps) {
-  const form = useFormik<StepTwoFormValues>({
-    initialValues: { code: "" },
-    validationSchema: createFormSchema(),
-    onSubmit: ({ code }) => onNext({ code }),
-  });
+  const [code, setCode] = useState("");
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <Typography variant="h3" className="mb-4 text-center">
-        Confirma que eres tú
+        Ya tienes una cuenta
       </Typography>
       <Typography className="mb-8 text-center">
-        Te enviamos un código a <span className="font-bold">{email}</span>
+        Te enviamos un código a <span className="font-bold">{email}</span> para
+        terminar de iniciar sesión
       </Typography>
-      <FormikProvider value={form}>
-        <Form id="sign-up-step-two-form" className="flex w-full flex-col">
-          <InputFormikNT
-            id="code"
-            classNames={{ container: "mb-4" }}
-            properties={{
-              input: {
-                inputMode: "numeric",
-                maxLength: 6,
-                placeholder: "Código de 6 dígitos",
-              },
-            }}
-          />
+      <div className="flex w-full flex-col">
+        <OtpCodeInput
+          autoFocus
+          className="mb-4"
+          value={code}
+          onChange={setCode}
+          onComplete={onNext}
+          disabled={loading}
+        />
+        <Button
+          type="button"
+          variant="link"
+          className="mb-6 self-start"
+          onClick={onResend}
+          isLoading={resending}
+        >
+          Enviar un nuevo código
+        </Button>
+        <div className="mb-8 grid w-full grid-cols-2 gap-4">
           <Button
             type="button"
-            variant="link"
-            className="mb-6 self-start"
-            onClick={onResend}
-            isLoading={resending}
+            variant="secondary"
+            className="flex-grow"
+            onClick={onBack}
           >
-            Enviar un nuevo código
+            Volver
           </Button>
-          <div className="mb-8 grid w-full grid-cols-2 gap-4">
-            <Button
-              type="button"
-              variant="secondary"
-              className="flex-grow"
-              onClick={onBack}
-            >
-              Volver
-            </Button>
-            <Button
-              type="submit"
-              form="sign-up-step-two-form"
-              className="flex-grow"
-              isLoading={loading}
-            >
-              Confirmar
-            </Button>
-          </div>
-        </Form>
-      </FormikProvider>
+          <Button
+            type="button"
+            className="flex-grow"
+            isLoading={loading}
+            disabled={code.length !== OTP_CODE_LENGTH}
+            onClick={() => onNext(code)}
+          >
+            Confirmar
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
-
-const createFormSchema = () => {
-  return yup.object().shape({
-    code: yup
-      .string()
-      .required()
-      .matches(/^\d{6}$/, "El código debe tener 6 dígitos"),
-  });
-};

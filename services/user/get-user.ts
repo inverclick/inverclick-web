@@ -35,7 +35,7 @@ const fetchUser = ({
 }) => {
   return supabase
     .from("users")
-    .select("*, lead:leads(*)")
+    .select("*, client:user_clients(*)")
     .eq("id", id)
     .single();
 };
@@ -43,3 +43,12 @@ const fetchUser = ({
 export type GetUserServerResponse = PostgrestSingleResponse<User>;
 
 export type User = QueryData<ReturnType<typeof fetchUser>>;
+
+/**
+ * A signed-in client still has to prove they own their email: registration no
+ * longer sends an OTP, so the flag stays false until they complete a code
+ * challenge. Accounts that are not clients have nothing to verify here.
+ */
+export const needsEmailConfirmation = (user: User | null) => {
+  return Boolean(user?.client && !user.client.is_email_confirmed);
+};
