@@ -110,7 +110,10 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
           <ProjectCreditSimulatorSection typology={typology} />
         </TabsContent>
         <TabsContent value="types" className="mx-auto mt-0 max-w-5xl">
-          <TypologiesSection typologies={project.typologies} />
+          <TypologiesSection
+            typologies={project.typologies}
+            housingType={project.housing_type}
+          />
         </TabsContent>
         <TabsContent value="urban" className="mx-auto mt-0 max-w-5xl">
           <UrbanismSection project={project} />

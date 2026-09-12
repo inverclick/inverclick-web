@@ -3,6 +3,7 @@
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency } from "@/lib/format-currency";
 import { cn } from "@/lib/utils";
+import { isLotProject } from "@/services/projects/is-lot-project";
 import { getAssetUrl } from "@/services/utils";
 import { ProjectToDisplay } from "@/types/domain/projects";
 import {
@@ -31,6 +32,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
     const { company } = project;
     const typology = project.typologies[0];
     const href = `/projects/${project.id}/${typology.id}`;
+    const isLot = isLotProject(project.housing_type);
 
     useEffect(() => {
       setIsMounted(true);
@@ -39,7 +41,8 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
     useEffect(() => {
       if (!carouselApi) return;
 
-      const onSelect = () => setActivePhotoIndex(carouselApi.selectedScrollSnap());
+      const onSelect = () =>
+        setActivePhotoIndex(carouselApi.selectedScrollSnap());
 
       onSelect();
       carouselApi.on("select", onSelect);
@@ -56,7 +59,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         ref={ref}
         data-element="project-card"
         className={cn(
-          "flex w-[280px] flex-col rounded-b-lg shadow-md transition-shadow ease-in hover:shadow-lg lg:w-[220px] 2xl:w-[280px]",
+          "flex h-full w-[280px] flex-col rounded-b-lg shadow-md transition-shadow ease-in hover:shadow-lg lg:w-[220px] 2xl:w-[280px]",
           className
         )}
       >
@@ -120,7 +123,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-1 cursor-pointer flex-col justify-between rounded-b-lg bg-white pt-3 2xl:pt-4"
+          className="flex flex-1 cursor-pointer flex-col rounded-b-lg bg-white pt-3 2xl:pt-4"
         >
           <div className="flex items-center gap-2 px-4 lg:px-2 2xl:px-4">
             <Image
@@ -149,7 +152,12 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
               {formatCurrency(convert(typology.price), currency)} {currency}
             </p>
           </div>
-          <div className="flex justify-between rounded-b-lg bg-primary-100 px-4 py-3 lg:p-2 2xl:p-4">
+          <div
+            className={cn(
+              "mt-auto flex rounded-b-lg bg-primary-100 px-4 py-3 lg:p-2 2xl:p-4",
+              isLot ? "justify-center" : "justify-between"
+            )}
+          >
             <div className="text-center text-xs 2xl:text-xs">
               <p>
                 {typology.area}{" "}
@@ -159,14 +167,18 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
               </p>
               <p className="font-semibold">Área</p>
             </div>
-            <div className="text-center text-xs 2xl:text-xs">
-              <p>{typology.rooms}</p>
-              <p className="font-semibold">Habitaciones</p>
-            </div>
-            <div className="text-center text-xs 2xl:text-xs">
-              <p>{typology.bathrooms}</p>
-              <p className="font-semibold">Baños</p>
-            </div>
+            {!isLot && (
+              <>
+                <div className="text-center text-xs 2xl:text-xs">
+                  <p>{typology.rooms}</p>
+                  <p className="font-semibold">Habitaciones</p>
+                </div>
+                <div className="text-center text-xs 2xl:text-xs">
+                  <p>{typology.bathrooms}</p>
+                  <p className="font-semibold">Baños</p>
+                </div>
+              </>
+            )}
           </div>
         </a>
       </section>
@@ -176,6 +188,13 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 
 ProjectCard.displayName = "ProjectCard";
 
+/**
+ * El placeholder estira con la fila (las cards de una misma fila miden igual),
+ * pero su piso tiene que quedar POR DEBAJO de una card real: si no, en el
+ * carrusel de "Otros proyectos" —donde los slides fuera de pantalla siguen
+ * siendo placeholders— sería el placeholder, y no el contenido, el que define
+ * el alto de la fila, y las cards reales estirarían con un hueco en blanco.
+ */
 export const ProjectCardSkeleton = () => (
-  <Skeleton className="h-[400px] w-[280px]" />
+  <Skeleton className="h-full min-h-[300px] w-[280px]" />
 );
