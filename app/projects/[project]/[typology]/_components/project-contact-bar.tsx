@@ -15,6 +15,8 @@ import { useState } from "react";
 
 export type ProjectContactBarProps = Readonly<{
   price: number;
+  projectId: string;
+  isPreview?: boolean;
 }>;
 
 /**
@@ -26,7 +28,11 @@ export type ProjectContactBarProps = Readonly<{
  * que acompañe todo el scroll; el `<main>` que la incluye compensa su alto con
  * padding inferior para que no tape el footer.
  */
-export function ProjectContactBar({ price }: ProjectContactBarProps) {
+export function ProjectContactBar({
+  price,
+  projectId,
+  isPreview,
+}: ProjectContactBarProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -62,7 +68,11 @@ export function ProjectContactBar({ price }: ProjectContactBarProps) {
               Déjanos tus datos y pronto estaremos en contacto.
             </DialogDescription>
           </DialogHeader>
-          <ProjectContactForm className="mt-2" />
+          <ProjectContactForm
+            projectId={projectId}
+            isPreview={isPreview}
+            className="mt-2"
+          />
         </DialogContent>
       </Dialog>
     </>

@@ -31,9 +31,15 @@ import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
 export type ProjectContentProps = {
   project: Project | DraftProject;
   typology: Project["typologies"][0] | DraftProject["typologies"][0];
+  /** La vista previa trabaja sobre un borrador: el formulario no envía nada. */
+  isPreview?: boolean;
 };
 
-export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
+export const ProjectContent = ({
+  project,
+  typology,
+  isPreview,
+}: ProjectContentProps) => {
   const { canInteractWithFeatures } = usePreRegistration();
 
   return (
@@ -132,7 +138,11 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
               <CreditSimulatorSection typology={typology} />
             </TabsContent>
           </div>
-          <ProjectContactCard className="sticky top-24 hidden w-1/5 min-w-[260px] max-w-[340px] shrink-0 xl:block" />
+          <ProjectContactCard
+            projectId={project.id}
+            isPreview={isPreview}
+            className="sticky top-24 hidden w-1/5 min-w-[260px] max-w-[340px] shrink-0 xl:block"
+          />
         </div>
       </Tabs>
     </article>

@@ -43,10 +43,14 @@ export default async function Page({
           city={project.city?.name}
           address={project.address}
         />
-        <ProjectContent project={project} typology={typology} />
+        <ProjectContent project={project} typology={typology} isPreview />
       </article>
       <Footer />
-      <ProjectContactBar price={typology.price} />
+      <ProjectContactBar
+        price={typology.price}
+        projectId={project.id}
+        isPreview
+      />
     </main>
   );
 }

@@ -72,7 +72,9 @@ export const PageContent = ({
         {otherProjects.length > 0 && <OtherProjects projects={otherProjects} />}
       </div>
       <Footer />
-      {canInteractWithFeatures && <ProjectContactBar price={typology.price} />}
+      {canInteractWithFeatures && (
+        <ProjectContactBar price={typology.price} projectId={project.id} />
+      )}
     </main>
   );
 };

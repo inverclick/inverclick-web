@@ -5,7 +5,11 @@ import { cn } from "@/lib/utils";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import { ComponentProps } from "react";
 
-export type ProjectContactCardProps = ComponentProps<"aside">;
+export type ProjectContactCardProps = Readonly<{
+  projectId: string;
+  isPreview?: boolean;
+}> &
+  ComponentProps<"aside">;
 
 /**
  * Tarjeta "Te asesoramos" que acompaña al contenido del proyecto en desktop.
@@ -13,6 +17,8 @@ export type ProjectContactCardProps = ComponentProps<"aside">;
  * que le aplica quien la monta (ver `project-content.tsx`).
  */
 export function ProjectContactCard({
+  projectId,
+  isPreview,
   className,
   ...props
 }: ProjectContactCardProps) {
@@ -31,7 +37,11 @@ export function ProjectContactCard({
       <Typography className="mt-1 text-center text-xs text-muted-foreground">
         Déjanos tus datos y pronto estaremos en contacto.
       </Typography>
-      <ProjectContactForm className="mt-5" />
+      <ProjectContactForm
+        projectId={projectId}
+        isPreview={isPreview}
+        className="mt-5"
+      />
     </aside>
   );
 }
