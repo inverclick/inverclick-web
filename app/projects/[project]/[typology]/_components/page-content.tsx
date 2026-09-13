@@ -1,6 +1,7 @@
 "use client";
 
 import { OtherProjects } from "@/app/projects/[project]/[typology]/_components/other-projects";
+import { ProjectContactBar } from "@/app/projects/[project]/[typology]/_components/project-contact-bar";
 import { ProjectContent } from "@/app/projects/[project]/[typology]/_components/project-content";
 import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
 import { OtherProjects as OtherProjectsType } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
@@ -30,7 +31,9 @@ export const PageContent = ({
   useManageAnalytics({ project, canInteractWithFeatures });
 
   return (
-    <main>
+    // El padding inferior reserva el alto de la barra de contacto fija, que por
+    // debajo de `xl` taparía el footer.
+    <main className="pb-24 xl:pb-0">
       <Header />
       <div
         className={
@@ -69,6 +72,7 @@ export const PageContent = ({
         {otherProjects.length > 0 && <OtherProjects projects={otherProjects} />}
       </div>
       <Footer />
+      {canInteractWithFeatures && <ProjectContactBar price={typology.price} />}
     </main>
   );
 };

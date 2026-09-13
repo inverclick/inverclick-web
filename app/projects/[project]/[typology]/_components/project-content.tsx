@@ -2,6 +2,7 @@
 
 import { CreditSimulatorSection } from "@/app/projects/[project]/[typology]/_components/credit-simulator-section";
 import { ProjectCharacteristicsSection } from "@/app/projects/[project]/[typology]/_components/project-characteristics-section";
+import { ProjectContactCard } from "@/app/projects/[project]/[typology]/_components/project-contact-card";
 import { ProjectCreditSimulatorSection } from "@/app/projects/[project]/[typology]/_components/project-credit-simulator-section";
 import { ProjectFeaturesSection } from "@/app/projects/[project]/[typology]/_components/project-features-section";
 import { ProjectInformationSection } from "@/app/projects/[project]/[typology]/_components/project-information-section";
@@ -89,38 +90,50 @@ export const ProjectContent = ({ project, typology }: ProjectContentProps) => {
             Simulador de crédito
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="mx-auto mt-0 max-w-5xl">
-          {/* <ProjectVerifiedCard project={project} className="mb-12" /> */}
-          <ProjectInformationSection
-            project={project}
-            typology={typology}
-            className="mb-12"
-          />
-          <ProjectCharacteristicsSection project={project} className="mb-12" />
-          <ProjectLocationSection project={project} className="mb-12" />
-          <ProjectFeaturesSection project={project} className="mb-12" />
-          {project.show_valuation && (
-            <ProjectValorizationSection
-              typology={typology}
-              months={project.valuation_months}
-              percentage={project.valuation}
-              className="mb-12"
-            />
-          )}
-          <ProjectCreditSimulatorSection typology={typology} />
-        </TabsContent>
-        <TabsContent value="types" className="mx-auto mt-0 max-w-5xl">
-          <TypologiesSection
-            typologies={project.typologies}
-            housingType={project.housing_type}
-          />
-        </TabsContent>
-        <TabsContent value="urban" className="mx-auto mt-0 max-w-5xl">
-          <UrbanismSection project={project} />
-        </TabsContent>
-        <TabsContent value="credit" className="mx-auto mt-0 max-w-5xl">
-          <CreditSimulatorSection typology={typology} />
-        </TabsContent>
+        {/* El contenido se corre a la izquierda para dejarle ~20% a la tarjeta
+            de contacto, que queda sticky y acompaña el scroll en cualquier
+            pestaña. `items-start` es lo que permite el sticky: si la columna
+            estirara a todo el alto, no tendría recorrido. */}
+        <div className="flex items-start gap-6 2xl:gap-10">
+          <div className="min-w-0 flex-1">
+            <TabsContent value="description" className="mx-auto mt-0 max-w-5xl">
+              {/* <ProjectVerifiedCard project={project} className="mb-12" /> */}
+              <ProjectInformationSection
+                project={project}
+                typology={typology}
+                className="mb-12"
+              />
+              <ProjectCharacteristicsSection
+                project={project}
+                className="mb-12"
+              />
+              <ProjectLocationSection project={project} className="mb-12" />
+              <ProjectFeaturesSection project={project} className="mb-12" />
+              {project.show_valuation && (
+                <ProjectValorizationSection
+                  typology={typology}
+                  months={project.valuation_months}
+                  percentage={project.valuation}
+                  className="mb-12"
+                />
+              )}
+              <ProjectCreditSimulatorSection typology={typology} />
+            </TabsContent>
+            <TabsContent value="types" className="mx-auto mt-0 max-w-5xl">
+              <TypologiesSection
+                typologies={project.typologies}
+                housingType={project.housing_type}
+              />
+            </TabsContent>
+            <TabsContent value="urban" className="mx-auto mt-0 max-w-5xl">
+              <UrbanismSection project={project} />
+            </TabsContent>
+            <TabsContent value="credit" className="mx-auto mt-0 max-w-5xl">
+              <CreditSimulatorSection typology={typology} />
+            </TabsContent>
+          </div>
+          <ProjectContactCard className="sticky top-24 hidden w-1/5 min-w-[260px] max-w-[340px] shrink-0 xl:block" />
+        </div>
       </Tabs>
     </article>
   );

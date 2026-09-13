@@ -1,3 +1,4 @@
+import { ProjectContactBar } from "@/app/projects/[project]/[typology]/_components/project-contact-bar";
 import { ProjectContent } from "@/app/projects/[project]/[typology]/_components/project-content";
 import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
 import { getDraftProject } from "@/app/projects/[project]/[typology]/preview/_services/get-draft-project";
@@ -31,7 +32,7 @@ export default async function Page({
   }
 
   return (
-    <main>
+    <main className="pb-24 xl:pb-0">
       <Header />
       <article className="p-content mx-auto flex max-w-screen-2xl flex-col gap-8">
         <ProjectHero
@@ -45,6 +46,7 @@ export default async function Page({
         <ProjectContent project={project} typology={typology} />
       </article>
       <Footer />
+      <ProjectContactBar price={typology.price} />
     </main>
   );
 }
