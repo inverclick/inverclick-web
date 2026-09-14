@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  SignUpFormStepOne,
-  StepOneFormValues,
-} from "@/app/auth/sign-up/_components/sign-up-form-step-one";
+import { SignUpFormStepOne } from "@/app/auth/sign-up/_components/sign-up-form-step-one";
 import { SignUpFormStepTwo } from "@/app/auth/sign-up/_components/sign-up-form-step-two";
 import {
   USER_CREATED,
@@ -38,13 +35,10 @@ export function SignUpForm() {
     onSignedIn: goToProjects(WELCOME_BACK),
   });
 
-  const handleStepOneNext = (values: StepOneFormValues) =>
-    submitRegistration(values);
-
   return (
     <>
       {step === "form" && (
-        <SignUpFormStepOne loading={loading} onNext={handleStepOneNext} />
+        <SignUpFormStepOne loading={loading} onNext={submitRegistration} />
       )}
       {step === "code" && (
         <SignUpFormStepTwo

@@ -26,4 +26,13 @@ SUPABASE_SERVICE_ROLE_KEY=
 # Open AI
 NEXT_PUBLIC_OPENAI_API_KEY=
 NEXT_PUBLIC_OPENAI_ASSISTANT_ID=
+
+# Cloudflare Turnstile (captcha antibots del registro de usuario)
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
 ```
+
+Sin `TURNSTILE_SECRET_KEY` el registro de usuario queda bloqueado a propósito:
+la verificación falla cerrado. El dominio desde el que se sirve la web (y
+`localhost` para desarrollo) tiene que estar en los hostnames permitidos del
+widget en el panel de Cloudflare.

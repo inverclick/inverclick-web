@@ -1,6 +1,15 @@
 "use client";
 
+import {
+  RegistrationCaptcha,
+  useRegistrationCaptcha,
+} from "@/components/shared/captcha/registration-captcha";
 import { DownloadAppModal } from "@/components/sign-in/download-app-modal";
+import {
+  RegistrationValues,
+  SubmitRegistrationResult,
+} from "@/hooks/use-client-auth-flow";
+import { CAPTCHA_PENDING_MESSAGE } from "@/services/auth/captcha";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { PhoneInputFormikNT } from "@inverclick/inverclick-ui/phone-input-formik";
@@ -10,6 +19,7 @@ import { Form, FormikProvider, useFormik } from "formik";
 import Link from "next/link";
 
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { toast } from "sonner";
 import * as yup from "yup";
 
 export type StepOneFormValues = {
@@ -20,14 +30,30 @@ export type StepOneFormValues = {
 
 export type SignUpFormStepOneProps = Readonly<{
   loading: boolean;
-  onNext: (values: StepOneFormValues) => void;
+  onNext: (values: RegistrationValues) => Promise<SubmitRegistrationResult>;
 }>;
 
 export function SignUpFormStepOne({ loading, onNext }: SignUpFormStepOneProps) {
+  const captcha = useRegistrationCaptcha();
+
   const form = useFormik<StepOneFormValues>({
     initialValues: { fullName: "", phone: "", email: "" },
     validationSchema: createFormSchema(),
-    onSubmit: onNext,
+    onSubmit: async (values) => {
+      if (!captcha.token) {
+        toast.error(CAPTCHA_PENDING_MESSAGE);
+
+        return;
+      }
+
+      const result = await onNext({ ...values, captchaToken: captcha.token });
+
+      // El token ya se consumió: si el usuario se queda en el formulario, el
+      // widget tiene que entregar uno nuevo antes del siguiente intento.
+      if (result.status === "captcha-failed" || result.status === "error") {
+        captcha.reset();
+      }
+    },
   });
 
   return (
@@ -74,6 +100,7 @@ export function SignUpFormStepOne({ loading, onNext }: SignUpFormStepOneProps) {
               },
             }}
           />
+          <RegistrationCaptcha className="mb-6" {...captcha.captchaProps} />
           <Button
             type="submit"
             form="sign-up-step-one-form"

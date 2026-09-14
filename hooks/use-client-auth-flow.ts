@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  CAPTCHA_FAILED_MESSAGE,
+  verifyCaptchaToken,
+} from "@/services/auth/captcha";
+import {
   ClientRecord,
   findClientByEmail,
   getAuthErrorMessage,
@@ -26,7 +30,18 @@ export type RegistrationValues = {
   fullName: string;
   phone: string;
   email: string;
+  /**
+   * Cloudflare Turnstile token, produced by the widget both registration
+   * surfaces render. Single use: a failed attempt needs a fresh one.
+   */
+  captchaToken: string;
 };
+
+export type SubmitRegistrationResult =
+  | { status: "registered" }
+  | { status: "otp-sent" }
+  | { status: "captcha-failed" }
+  | { status: "error" };
 
 export type UseClientAuthFlowParams = {
   /** A brand-new account was created and the user is already signed in. */
@@ -74,10 +89,26 @@ export const useClientAuthFlow = ({
 
   /** Flows 1 and 2: the registration form was submitted. */
   const submitRegistration = useCallback(
-    async ({ fullName, phone, email: nextEmail }: RegistrationValues) => {
+    async ({
+      fullName,
+      phone,
+      email: nextEmail,
+      captchaToken,
+    }: RegistrationValues): Promise<SubmitRegistrationResult> => {
       setLoading(true);
 
       try {
+        // Registration is the only flow behind a captcha. Until Cloudflare
+        // confirms there is a person here, no account is created and no email
+        // is sent.
+        const isHuman = await verifyCaptchaToken(captchaToken);
+
+        if (!isHuman) {
+          toast.error(CAPTCHA_FAILED_MESSAGE);
+
+          return { status: "captcha-failed" as const };
+        }
+
         const existingClient = await findClientByEmail(supabase, nextEmail);
 
         // Flow 2 — already a client, so this is really a sign-in.

@@ -1,11 +1,20 @@
 "use client";
 
 import {
+  RegistrationCaptcha,
+  useRegistrationCaptcha,
+} from "@/components/shared/captcha/registration-captcha";
+import {
   OTP_CODE_LENGTH,
   OtpCodeInput,
 } from "@/components/shared/otp-code-input/otp-code-input";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
-import { useClientAuthFlow } from "@/hooks/use-client-auth-flow";
+import {
+  RegistrationValues,
+  SubmitRegistrationResult,
+  useClientAuthFlow,
+} from "@/hooks/use-client-auth-flow";
+import { CAPTCHA_PENDING_MESSAGE } from "@/services/auth/captcha";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
   Dialog,
@@ -16,11 +25,18 @@ import {
 import { InputFormikNT } from "@inverclick/inverclick-ui/input-formik";
 import { PhoneInputFormikNT } from "@inverclick/inverclick-ui/phone-input-formik";
 import { Form, FormikProvider, useFormik } from "formik";
-import { ArrowLeft, ArrowRight, LockKeyhole, Mail, UserRound } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  LockKeyhole,
+  Mail,
+  UserRound,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { toast } from "sonner";
 import * as yup from "yup";
 import Image from "next/image";
 
@@ -79,7 +95,7 @@ const PreRegistrationContent = () => {
       <DialogContent
         hideCloseButton
         onOpenAutoFocus={(event: Event) => event.preventDefault()}
-        className="max-w-4xl !p-0 !rounded-2xl"
+        className="max-w-4xl !rounded-2xl !p-0"
       >
         <DialogTitle className="sr-only">
           {step === "form"
@@ -93,7 +109,7 @@ const PreRegistrationContent = () => {
         </DialogDescription>
         <section className="flex">
           <div className="hidden flex-col justify-between gap-6 !rounded-l-2xl bg-purple-100 pb-10 md:flex md:min-w-[40%]">
-            <div className="flex flex-col !pb-0 p-5 md:gap-8 md:p-8 xl:gap-12 xl:p-10">
+            <div className="flex flex-col p-5 !pb-0 md:gap-8 md:p-8 xl:gap-12 xl:p-10">
               <Image
                 unoptimized
                 width="200"
@@ -166,12 +182,10 @@ function RegistrationStep({
   onSubmit,
 }: {
   loading: boolean;
-  onSubmit: (values: {
-    fullName: string;
-    phone: string;
-    email: string;
-  }) => void;
+  onSubmit: (values: RegistrationValues) => Promise<SubmitRegistrationResult>;
 }) {
+  const captcha = useRegistrationCaptcha();
+
   const form = useFormik({
     initialValues: { fullName: "", phone: "", email: "" },
     validationSchema: yup.object().shape({
@@ -190,7 +204,21 @@ function RegistrationStep({
         ),
       email: yup.string().email().required("El correo es obligatorio"),
     }),
-    onSubmit,
+    onSubmit: async (values) => {
+      if (!captcha.token) {
+        toast.error(CAPTCHA_PENDING_MESSAGE);
+
+        return;
+      }
+
+      const result = await onSubmit({ ...values, captchaToken: captcha.token });
+
+      // El token ya se consumió: si el usuario se queda en el formulario, el
+      // widget tiene que entregar uno nuevo antes del siguiente intento.
+      if (result.status === "captcha-failed" || result.status === "error") {
+        captcha.reset();
+      }
+    },
   });
 
   return (
@@ -198,7 +226,8 @@ function RegistrationStep({
       <Form id="pre-registration-form" className="flex h-full flex-col gap-4">
         <div className="space-y-1 pb-1">
           <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-900">
-            Cuéntanos para <span className="text-[#5b3df5]">ayudarte mejor</span>
+            Cuéntanos para{" "}
+            <span className="text-[#5b3df5]">ayudarte mejor</span>
           </h3>
           <p className="text-base font-medium text-slate-400">
             Con estos datos desbloqueas la información del proyecto.
@@ -248,6 +277,8 @@ function RegistrationStep({
           />
         </div>
 
+        <RegistrationCaptcha className="pt-1" {...captcha.captchaProps} />
+
         <Button
           form="pre-registration-form"
           type="submit"
@@ -290,7 +321,8 @@ function CodeStep({
     <div className="flex h-full flex-col gap-4">
       <div className="space-y-1 pb-1">
         <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-900">
-          Ya tienes cuenta, <span className="text-[#5b3df5]">confirma que eres tú</span>
+          Ya tienes cuenta,{" "}
+          <span className="text-[#5b3df5]">confirma que eres tú</span>
         </h3>
         <p className="text-base font-medium text-slate-400">
           Te enviamos un código a <span className="font-semibold">{email}</span>
