@@ -26,6 +26,7 @@ import Image from "next/image";
 import Masonry from "react-responsive-masonry";
 
 export type MasonryViewProps = {
+  projectId: string;
   photoScrollTo: string;
   photos: string[];
   open: boolean;
@@ -33,6 +34,7 @@ export type MasonryViewProps = {
 };
 
 export const MasonryView = ({
+  projectId,
   photoScrollTo,
   photos,
   open,
@@ -60,12 +62,20 @@ export const MasonryView = ({
           <div className={cn("flex gap-3")}>
             <ShareProject isIconOnly className="lg:hidden" />
             <ShareProject className="hidden lg:flex" />
-            <SaveFavorite isIconOnly className="lg:hidden" />
-            <SaveFavorite className="hidden lg:flex" />
+            <SaveFavorite
+              projectId={projectId}
+              isIconOnly
+              className="lg:hidden"
+            />
+            <SaveFavorite projectId={projectId} className="hidden lg:flex" />
           </div>
         </DialogHeader>
         <div className="overflow-y-auto p-6">
-          <PhotosGrid photoScrollTo={photoScrollTo} photos={photos} />
+          <PhotosGrid
+            projectId={projectId}
+            photoScrollTo={photoScrollTo}
+            photos={photos}
+          />
         </div>
       </DialogContent>
     </Dialog>
@@ -73,11 +83,12 @@ export const MasonryView = ({
 };
 
 type PhotosGridProps = Readonly<{
+  projectId: string;
   photoScrollTo: string;
   photos: string[];
 }>;
 
-function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
+function PhotosGrid({ projectId, photoScrollTo, photos }: PhotosGridProps) {
   const [photosSliderOpen, setPhotosSliderOpen] = useState(false);
   const [initialPhotoIndex, setInitialPhotoIndex] = useState(0);
 
@@ -110,6 +121,7 @@ function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
         ))}
       </Masonry>
       <PhotosSlider
+        projectId={projectId}
         initialPhotoIndex={initialPhotoIndex}
         photos={photos}
         isOpen={photosSliderOpen}
@@ -120,6 +132,7 @@ function PhotosGrid({ photoScrollTo, photos }: PhotosGridProps) {
 }
 
 type PhotosSliderProps = Readonly<{
+  projectId: string;
   initialPhotoIndex: number;
   photos: string[];
   isOpen: boolean;
@@ -127,6 +140,7 @@ type PhotosSliderProps = Readonly<{
 }>;
 
 function PhotosSlider({
+  projectId,
   initialPhotoIndex,
   photos,
   isOpen,
@@ -175,8 +189,17 @@ function PhotosSlider({
               properties={{ triggerButton: { variant: "black" } }}
               className="hidden lg:flex"
             />
-            <SaveFavorite isIconOnly variant="black" className="lg:hidden" />
-            <SaveFavorite variant="black" className="hidden lg:flex" />
+            <SaveFavorite
+              projectId={projectId}
+              isIconOnly
+              variant="black"
+              className="lg:hidden"
+            />
+            <SaveFavorite
+              projectId={projectId}
+              variant="black"
+              className="hidden lg:flex"
+            />
           </div>
         </DialogHeader>
         <div>

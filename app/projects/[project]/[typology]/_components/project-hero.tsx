@@ -20,6 +20,7 @@ import { MapPin } from "lucide-react";
 import Link from "next/link";
 
 export type ProjectHeroProps = {
+  projectId: string;
   name: string | null;
   photos: string[];
   price: number;
@@ -30,6 +31,7 @@ export type ProjectHeroProps = {
 };
 
 export const ProjectHero = ({
+  projectId,
   name,
   department,
   city,
@@ -67,12 +69,16 @@ export const ProjectHero = ({
         <div className="flex gap-4">
           <ShareProject isIconOnly className="lg:hidden" />
           <ShareProject className="hidden lg:flex" />
-          <SaveFavorite isIconOnly className="lg:hidden" />
-          <SaveFavorite className="hidden lg:flex" />
+          <SaveFavorite
+            projectId={projectId}
+            isIconOnly
+            className="lg:hidden"
+          />
+          <SaveFavorite projectId={projectId} className="hidden lg:flex" />
           <SelectCurrency className="min-w-20" />
         </div>
       </div>
-      <ProjectGallery photos={photos} />
+      <ProjectGallery projectId={projectId} photos={photos} />
       <div className="flex flex-col justify-between gap-4 px-0 xl:flex-row xl:px-6">
         <span className="flex justify-center gap-2">
           <Icon icon={MapPin} className="hidden size-6 text-primary xl:flex" />

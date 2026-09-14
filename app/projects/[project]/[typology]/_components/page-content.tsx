@@ -43,6 +43,7 @@ export const PageContent = ({
         <div className="relative">
           <div className="relative">
             <ProjectHero
+              projectId={project.id}
               name={project.name}
               photos={project.photos}
               price={typology.price}

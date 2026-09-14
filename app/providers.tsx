@@ -5,6 +5,7 @@ import { PreRegistration } from "@/components/shared/pre-registration/pre-regist
 import { WelcomeDialog } from "@/components/shared/pre-registration/welcome-dialog";
 import { YupLocalization } from "@/components/shared/yup-localization/yup-localization";
 import { CurrencyProvider } from "@/contexts/currency-context";
+import { FavoritesProvider } from "@/contexts/favorites-context";
 import { PreRegistrationProvider } from "@/contexts/pre-registration-context";
 import { UserProvider } from "@/contexts/user-context";
 import { User } from "@/services/user/get-user";
@@ -33,18 +34,20 @@ export function Providers({
         <ThemeProvider defaultTheme="light">
           <CurrencyProvider
             TRM_USD={TRM_USD}
-            TRM_EUR={TRM_EUR} 
+            TRM_EUR={TRM_EUR}
             last_trm_update={last_trm_update}
             currency="COP"
           >
             <PreRegistrationProvider>
-              <YupLocalization>
-                {children}
-                <WelcomeDialog />
-                <PreRegistration />
-                <Toaster closeButton />
-                <DownloadApp />
-              </YupLocalization>
+              <FavoritesProvider>
+                <YupLocalization>
+                  {children}
+                  <WelcomeDialog />
+                  <PreRegistration />
+                  <Toaster closeButton />
+                  <DownloadApp />
+                </YupLocalization>
+              </FavoritesProvider>
             </PreRegistrationProvider>
           </CurrencyProvider>
         </ThemeProvider>

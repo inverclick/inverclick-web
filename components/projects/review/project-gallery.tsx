@@ -8,10 +8,11 @@ import { useState } from "react";
 import Image from "next/image";
 
 export type ProjectGalleryProps = {
+  projectId: string;
   photos: string[];
 };
 
-export const ProjectGallery = ({ photos }: ProjectGalleryProps) => {
+export const ProjectGallery = ({ projectId, photos }: ProjectGalleryProps) => {
   const [open, setOpen] = useState(false);
 
   const [photoScrollTo, setPhotoScrollTo] = useState<string>("");
@@ -65,6 +66,7 @@ export const ProjectGallery = ({ photos }: ProjectGalleryProps) => {
 
       <span className="absolute bottom-1 right-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-black bg-gray-300/80 px-2 py-1 text-xs md:bottom-3 md:right-4 md:px-3 md:py-2">
         <MasonryView
+          projectId={projectId}
           open={open}
           setOpen={setOpen}
           photoScrollTo={photoScrollTo}

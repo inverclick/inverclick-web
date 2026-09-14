@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@inverclick/inverclick-ui/dropdown-menu";
 import { Icon } from "@inverclick/inverclick-ui/icon";
-import { MailWarning, User } from "lucide-react";
+import { Heart, MailWarning, User } from "lucide-react";
 import { useState } from "react";
 
 import Link from "next/link";
@@ -32,7 +32,12 @@ export const ProfileDropdown = ({ size = "large" }: ProfileDropdownProps) => {
 
   if (!user) {
     return (
-      <Button variant="outline-primary" rounded="full" size={buttonSize} asChild>
+      <Button
+        variant="outline-primary"
+        rounded="full"
+        size={buttonSize}
+        asChild
+      >
         <Link href="/auth/sign-in" aria-label="Iniciar sesión">
           <Icon icon={User} />
         </Link>
@@ -84,6 +89,13 @@ export const ProfileDropdown = ({ size = "large" }: ProfileDropdownProps) => {
               <DropdownMenuSeparator />
             </>
           )}
+          <DropdownMenuItem asChild className="cursor-pointer gap-2">
+            <Link href="/favorites">
+              <Heart className="h-4 w-4 shrink-0" />
+              <span>Mis favoritos</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer" onSelect={signOut}>
             Cerrar sesión
           </DropdownMenuItem>
