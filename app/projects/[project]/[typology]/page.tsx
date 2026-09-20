@@ -65,8 +65,10 @@ export default async function Page({
   const projectId = params.project;
   const typologyId = params.typology;
 
-  const { data: project } = await getProject({ projectId });
-  const { data: otherProjects } = await getOtherProjects({ projectId });
+  const [{ data: project }, { data: otherProjects }] = await Promise.all([
+    getProject({ projectId }),
+    getOtherProjects({ projectId }),
+  ]);
 
   if (!project) {
     return notFound();

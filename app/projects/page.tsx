@@ -1,20 +1,13 @@
-import { Map2 } from "@/components/projects/map-2";
-import { MobileProjectHeader } from "@/components/projects/mobile/mobile-project-header";
-import { NavbarProjects } from "@/components/projects/navbar-projects";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { ProjectsLayout } from "@/components/projects/projects-layout";
 import { ENV_VARS } from "@/global/env";
 import { getProjectsPriceRange } from "@/services/get-projects-price-range";
+import { PROJECT_CARD_SELECT } from "@/services/projects/project-card-select";
 import { supabase } from "@/services/supabase/supabase";
 import { Department } from "@/types/domain/departments";
 import { HousingType } from "@/types/domain/housing-types";
 import { ProjectToDisplay } from "@/types/domain/projects";
 import { Metadata } from "next";
 
-import ProjectContent from "@/components/projects/project-content";
 import { HousingStateEnum } from "@/types/domain/enums";
 
 export const dynamic = "force-dynamic";
@@ -52,20 +45,9 @@ export default async function Projects(props: ProjectsProps) {
   const city = searchParams.city;
   const housingState = searchParams.housing_state;
 
-  const [departmentsResponse, prices, housingTypesResponse] = await Promise.all(
-    [
-      supabase.from("departments").select("*"),
-      getProjectsPriceRange(),
-      supabase.from("housing_types").select("*"),
-    ]
-  );
-
   const query = supabase
     .from("projects")
-    .select(
-      "*, typologies!inner(*), department:departments(*), city:cities(*), company:companies(*)",
-      { count: "exact" }
-    )
+    .select(PROJECT_CARD_SELECT, { count: "exact" })
     .eq("status", "PUBLISHED");
 
   if (department) query.eq("department_id", Number(department));
@@ -75,9 +57,18 @@ export default async function Projects(props: ProjectsProps) {
   if (maxPrice) query.lte("typologies.price", maxPrice);
   if (type) query.in("housing_type", type.split("-") as HousingType["label"][]);
 
-  const { count, data } = await query
-    .order("price", { referencedTable: "typologies", ascending: true })
-    .returns<ProjectToDisplay[]>();
+  // El mapa necesita todos los proyectos; cada tarjeta solo usa la tipología
+  // más económica que cumple los filtros. Las cuatro consultas son independientes.
+  const [departmentsResponse, prices, housingTypesResponse, { count, data }] =
+    await Promise.all([
+      supabase.from("departments").select("*"),
+      getProjectsPriceRange(),
+      supabase.from("housing_types").select("*"),
+      query
+        .order("price", { referencedTable: "typologies", ascending: true })
+        .limit(1, { referencedTable: "typologies" })
+        .returns<ProjectToDisplay[]>(),
+    ]);
 
   const departments = departmentsResponse.data ?? [];
   const housingTypes = housingTypesResponse.data ?? [];
@@ -85,59 +76,12 @@ export default async function Projects(props: ProjectsProps) {
   const projects = data ?? [];
 
   return (
-    <main>
-      {/* <ContactButton className="fixed right-4 bottom-4" /> */}
-      <section className="hidden lg:block">
-        <ResizablePanelGroup direction="horizontal" className="!h-screen">
-          <ResizablePanel defaultSize={30} minSize={30}>
-            <Map2 projects={projects} />
-          </ResizablePanel>
-          <ResizableHandle className="w-5 bg-border" withHandle />
-          <ResizablePanel
-            defaultSize={70}
-            minSize={30}
-            className="relative z-10 flex flex-col"
-          >
-            <NavbarProjects />
-            <ProjectContent
-              total={total}
-              projects={projects}
-              departments={departments as Department[]}
-              housingTypes={housingTypes as HousingType[]}
-              prices={prices}
-            />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </section>
-      <section className="lg:hidden">
-        <MobileProjectHeader
-          total={total}
-          departments={departments as Department[]}
-          housingTypes={housingTypes as HousingType[]}
-          prices={prices}
-        />
-        <div className="h-screen">
-          <ResizablePanelGroup direction="vertical" className="!h-screen">
-            <ResizablePanel defaultSize={40}>
-              <Map2 projects={projects} />
-            </ResizablePanel>
-            <ResizableHandle className="!h-5 bg-border" withHandle />
-            <ResizablePanel
-              defaultSize={60}
-              maxSize={80}
-              className="flex flex-col"
-            >
-              <ProjectContent
-                total={total}
-                projects={projects}
-                departments={departments as Department[]}
-                housingTypes={housingTypes as HousingType[]}
-                prices={prices}
-              />
-            </ResizablePanel>
-          </ResizablePanelGroup>
-        </div>
-      </section>
-    </main>
+    <ProjectsLayout
+      total={total}
+      projects={projects}
+      departments={departments as Department[]}
+      housingTypes={housingTypes as HousingType[]}
+      prices={prices}
+    />
   );
 }

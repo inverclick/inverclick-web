@@ -146,6 +146,7 @@ export const ProjectFilters = ({
         .from("projects")
         .select("id, department_id, city_id, typologies!inner(price)", {
           count: "exact",
+          head: true,
         })
         .eq("status", "PUBLISHED");
 

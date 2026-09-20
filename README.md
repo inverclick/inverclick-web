@@ -36,3 +36,25 @@ Sin `TURNSTILE_SECRET_KEY` el registro de usuario queda bloqueado a propósito:
 la verificación falla cerrado. El dominio desde el que se sirve la web (y
 `localhost` para desarrollo) tiene que estar en los hostnames permitidos del
 widget en el panel de Cloudflare.
+
+## Blog
+
+El blog (`/blog`) no usa base de datos: cada artículo es un archivo MDX en
+`content/blog/{slug}.mdx`, con el frontmatter de la "Plantilla Artículo" del
+Vault de Inverclick. Publicar un artículo = agregar el archivo y sus imágenes,
+y hacer deploy.
+
+- **Imágenes**: en `public/blog/{slug}/`, en `.webp` ya comprimido, y en el
+  MDX con su ruta pública (`/blog/{slug}/portada.webp`). La portada se muestra
+  en 16:9 y siempre es una ilustración de 1600×900 con el estilo de
+  Inverclick (SVG convertido a WebP), según la sección "Portadas" de la Guía
+  de Escritura del Vault; nunca una foto.
+- **Borradores**: `estado: borrador` solo se ve con `pnpm dev`; en producción
+  únicamente aparecen los artículos `publicado`.
+- **Validación**: `next build` revisa el frontmatter (categoría del enum,
+  fechas `AAAA-MM-DD`, portada y su `alt`) y que las imágenes existan. Si algo
+  está mal, el build falla con la lista de errores.
+- **Categorías**: enum en `app/blog/_constants/blog.ts`, espejo de
+  "Categorías del Blog" en el Vault.
+- **SEO**: metadata y JSON-LD por artículo, sitemap en `/blog/sitemap.xml`
+  (enlazado desde `robots.txt`) y feed RSS en `/blog/rss.xml`.

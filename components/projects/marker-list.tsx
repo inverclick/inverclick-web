@@ -44,7 +44,6 @@ export function Markers({ projects = [] }: MarkerProps) {
     if (!map) return null;
 
     return new MarkerClusterer({
-      map,
       algorithm: new SuperClusterAlgorithm({
         radius: 120,
       }),
@@ -69,6 +68,13 @@ export function Markers({ projects = [] }: MarkerProps) {
   }, [map]);
 
   useEffect(() => {
+    if (!clusterer || !map) return;
+
+    clusterer.setMap(map);
+    return () => clusterer.setMap(null);
+  }, [clusterer, map]);
+
+  useEffect(() => {
     if (!clusterer) return;
 
     clusterer.clearMarkers();
@@ -76,12 +82,8 @@ export function Markers({ projects = [] }: MarkerProps) {
   }, [clusterer, markers]);
 
   const setMarkerRef = useCallback((marker: Marker | null, key: string) => {
-    if (marker && markers[key]) return;
-    if (!marker && !markers[key]) return;
-
     setMarkers((markers) => {
-      if ((marker && markers[key]) || (!marker && !markers[key]))
-        return markers;
+      if (markers[key] === marker || (!marker && !markers[key])) return markers;
 
       if (marker) {
         return { ...markers, [key]: marker };
@@ -91,16 +93,29 @@ export function Markers({ projects = [] }: MarkerProps) {
         return newMarkers;
       }
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Las referencias deben permanecer estables al actualizar el estado de los
+  // marcadores; al quitar un proyecto, React entrega null y se retira del cluster.
+  const markerRefs = useMemo(
+    () =>
+      new Map(
+        projects.map((project) => [
+          project.id,
+          (marker: Marker | null) => setMarkerRef(marker, project.id),
+        ])
+      ),
+    [projects, setMarkerRef]
+  );
 
   useEffect(() => {
     if (!map) return;
 
-    map.addListener("click", () => {
+    const listener = map.addListener("click", () => {
       setSelectedProjectKey(null);
     });
+
+    return () => listener.remove();
   }, [map]);
 
   return (
@@ -115,7 +130,7 @@ export function Markers({ projects = [] }: MarkerProps) {
               lat: project.latitude,
               lng: project.longitude,
             }}
-            ref={(marker) => setMarkerRef(marker, project.id)}
+            ref={markerRefs.get(project.id)}
             onClick={() => {
               setSelectedProjectKey(project.id);
 

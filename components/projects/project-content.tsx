@@ -26,7 +26,8 @@ export default function ProjectContent({
   departments,
   housingTypes,
   prices,
-}: ProjectContentProps) {
+  showFilters = true,
+}: ProjectContentProps & { showFilters?: boolean }) {
   const setProjects = useProjectsPageStore((state) => state.setProjects);
 
   useEffect(() => {
@@ -37,24 +38,26 @@ export default function ProjectContent({
 
   return (
     <section className="m-4 mb-0 flex flex-grow flex-col overflow-y-hidden">
-      <div className="mb-3 flex justify-between px-1 pt-1 text-sm text-primary-600">
-        <div className="hidden items-center gap-3 lg:flex">
-          <ProjectFilters
-            departments={departments ?? []}
-            priceGraphicData={prices}
-            housingTypes={housingTypes ?? []}
-            count={total}
-          />
-          <SelectCurrency />
+      {showFilters && (
+        <div className="mb-3 flex justify-between px-1 pt-1 text-sm text-primary-600">
+          <div className="hidden items-center gap-3 lg:flex">
+            <ProjectFilters
+              departments={departments ?? []}
+              priceGraphicData={prices}
+              housingTypes={housingTypes ?? []}
+              count={total}
+            />
+            <SelectCurrency />
+          </div>
+          <div className="flex items-center gap-4">
+            <DisplayTRM className="hidden lg:block" />
+            <p className="hidden items-center justify-center gap-1 lg:flex">
+              <span className="font-medium">Total:</span>
+              {total}
+            </p>
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-          <DisplayTRM className="hidden lg:block" />
-          <p className="hidden items-center justify-center gap-1 lg:flex">
-            <span className="font-medium">Total:</span>
-            {total}
-          </p>
-        </div>
-      </div>
+      )}
       <ProjectInfinityScroll />
     </section>
   );

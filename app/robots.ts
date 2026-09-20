@@ -12,6 +12,9 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
         allow: "/",
       },
     ],
-    sitemap: `${ENV_VARS.BASE_URL}/sitemap.xml`,
+    sitemap: [
+      `${ENV_VARS.BASE_URL}/sitemap.xml`,
+      `${ENV_VARS.BASE_URL}/blog/sitemap.xml`,
+    ],
   };
 }

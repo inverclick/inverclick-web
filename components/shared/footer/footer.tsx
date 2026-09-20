@@ -87,12 +87,11 @@ const FIRST_LINKS = [
   { label: "Nosotros", href: "/" },
   { label: "Proyectos", href: "/projects" },
   { label: "Financiación", href: "/financing" },
-  { label: "Otros servicios", href: "/" },
+  { label: "Blog", href: "/blog" },
 ];
 
 const SECOND_LINKS = [
   { label: "Simulador de crédito", href: "/financing" },
   { label: "Trabaja con nosotros", href: "/" },
-  // { label: "Blog", href: "/" },
   { label: "Contacto", href: "/" },
 ];

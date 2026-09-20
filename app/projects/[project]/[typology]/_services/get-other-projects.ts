@@ -1,4 +1,6 @@
 import { supabase } from "@/services/supabase/supabase";
+import { PROJECT_CARD_SELECT } from "@/services/projects/project-card-select";
+import { ProjectToDisplay } from "@/types/domain/projects";
 import { ElementType } from "@/types/typescript";
 import { PostgrestSingleResponse, QueryData } from "@supabase/supabase-js";
 
@@ -9,18 +11,11 @@ export type GetOtherProjectParams = {
 export const getOtherProjects = ({ projectId }: GetOtherProjectParams) => {
   return supabase
     .from("projects")
-    .select(
-      `*,
-      typologies(*),
-      department:departments(*),
-      city:cities(*),
-      company:companies(*),
-      characteristics:project_characteristics(*, characteristic:characteristics(*))
-      `
-    )
+    .select(PROJECT_CARD_SELECT)
     .eq("status", "PUBLISHED")
     .neq("id", projectId)
     .limit(10)
+    .returns<ProjectToDisplay[]>()
     .throwOnError();
 };
 
