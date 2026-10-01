@@ -98,11 +98,11 @@ export const TypologiesSection = ({
           {selectedTypology.blueprints.map((src, index) => (
             <CarouselItem key={src} className="flex items-center">
               <Image
-                unoptimized
                 src={getAssetUrl(src)}
                 alt="Tipología"
                 width={600}
                 height={400}
+                sizes="(min-width: 1024px) 1024px, 100vw"
                 className="h-full w-full object-contain"
               />
             </CarouselItem>

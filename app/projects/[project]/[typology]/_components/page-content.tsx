@@ -1,10 +1,6 @@
 "use client";
 
-import { OtherProjects } from "@/app/projects/[project]/[typology]/_components/other-projects";
-import { ProjectContactBar } from "@/app/projects/[project]/[typology]/_components/project-contact-bar";
-import { ProjectContent } from "@/app/projects/[project]/[typology]/_components/project-content";
 import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
-import { OtherProjects as OtherProjectsType } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { ViewInformationButton } from "@/components/projects/review/view-information-button";
 import { Footer } from "@/components/shared/footer/footer";
@@ -13,12 +9,29 @@ import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
 import { cn } from "@inverclick/inverclick-ui/lib";
 import { Typography } from "@inverclick/inverclick-ui/typography";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
+
+import dynamic from "next/dynamic";
+
+// Sólo se muestran con sesión iniciada: cargarlos aparte evita que un
+// visitante anónimo descargue el formulario de contacto, el mapa y el
+// simulador, que no va a ver.
+const ProjectContent = dynamic(() =>
+  import(
+    "@/app/projects/[project]/[typology]/_components/project-content"
+  ).then((mod) => mod.ProjectContent)
+);
+const ProjectContactBar = dynamic(() =>
+  import(
+    "@/app/projects/[project]/[typology]/_components/project-contact-bar"
+  ).then((mod) => mod.ProjectContactBar)
+);
 
 export type PageContentProps = {
   project: Project;
   typology: Project["typologies"][0];
-  otherProjects: OtherProjectsType;
+  /** Sección que el servidor envía por streaming (ver `OtherProjectsSection`). */
+  otherProjects: ReactNode;
 };
 
 export const PageContent = ({
@@ -70,7 +83,7 @@ export const PageContent = ({
         {canInteractWithFeatures && (
           <ProjectContent project={project} typology={typology} />
         )}
-        {otherProjects.length > 0 && <OtherProjects projects={otherProjects} />}
+        {otherProjects}
       </div>
       <Footer />
       {canInteractWithFeatures && (

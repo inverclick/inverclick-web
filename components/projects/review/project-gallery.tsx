@@ -22,12 +22,14 @@ export const ProjectGallery = ({ projectId, photos }: ProjectGalleryProps) => {
 
   return (
     <div className="relative flex flex-col gap-3 md:h-[312px] md:flex-row lg:h-[412px] 2xl:h-[612px]">
+      {/* Es el elemento LCP de la página: se pide de inmediato y no en lazy. */}
       <Image
-        unoptimized
+        priority
         src={getAssetUrl(mainPhoto)}
         alt=""
         width="600"
         height="400"
+        sizes="(min-width: 768px) 50vw, 100vw"
         onClick={() => {
           setOpen(true);
           setPhotoScrollTo(mainPhoto);
@@ -43,11 +45,11 @@ export const ProjectGallery = ({ projectId, photos }: ProjectGalleryProps) => {
         {restPhotos.map((photo, index) => (
           <Image
             key={index}
-            unoptimized
             src={getAssetUrl(photo)}
             alt={photo}
             width="600"
             height="200"
+            sizes="(min-width: 1536px) 400px, (min-width: 1024px) 300px, (min-width: 768px) 200px, 50vw"
             onClick={() => {
               setOpen(true);
               setPhotoScrollTo(photo);

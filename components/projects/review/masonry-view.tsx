@@ -111,12 +111,12 @@ function PhotosGrid({ projectId, photoScrollTo, photos }: PhotosGridProps) {
             alt={photo}
             width="600"
             height="400"
+            sizes="(min-width: 768px) 384px, 50vw"
             className="!h-full w-auto cursor-pointer object-cover hover:brightness-[0.8]"
             onClick={() => {
               setPhotosSliderOpen(true);
               setInitialPhotoIndex(index);
             }}
-            unoptimized
           />
         ))}
       </Masonry>
@@ -215,11 +215,11 @@ function PhotosSlider({
                 return (
                   <CarouselItem key={photo} className="h-full">
                     <Image
-                      unoptimized
                       src={getAssetUrl(photo)}
                       alt={photo}
                       width="800"
                       height="600"
+                      sizes="100vw"
                       className="mx-auto h-full w-full object-contain py-8"
                     />
                   </CarouselItem>

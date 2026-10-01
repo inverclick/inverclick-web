@@ -1,10 +1,13 @@
+import {
+  OtherProjectsSection,
+  OtherProjectsSectionSkeleton,
+} from "@/app/projects/[project]/[typology]/_components/other-projects-section";
 import { PageContent } from "@/app/projects/[project]/[typology]/_components/page-content";
-import { getOtherProjects } from "@/app/projects/[project]/[typology]/_services/get-other-projects";
-import { getProject } from "@/app/projects/[project]/[typology]/_services/get-project";
-import { getProjectMetadata } from "@/app/projects/[project]/[typology]/_services/get-project-metadata";
+import { getProjectOnce } from "@/app/projects/[project]/[typology]/_services/get-project";
 import { ENV_VARS } from "@/global/env";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -17,7 +20,7 @@ export async function generateMetadata({
   const projectId = params.project;
   const typologyId = params.typology;
 
-  const { data: project } = await getProjectMetadata({ projectId });
+  const { data: project } = await getProjectOnce(projectId);
 
   if (!project) {
     // Handle missing project
@@ -65,10 +68,7 @@ export default async function Page({
   const projectId = params.project;
   const typologyId = params.typology;
 
-  const [{ data: project }, { data: otherProjects }] = await Promise.all([
-    getProject({ projectId }),
-    getOtherProjects({ projectId }),
-  ]);
+  const { data: project } = await getProjectOnce(projectId);
 
   if (!project) {
     return notFound();
@@ -86,7 +86,11 @@ export default async function Page({
     <PageContent
       project={project}
       typology={typology}
-      otherProjects={otherProjects || []}
+      otherProjects={
+        <Suspense fallback={<OtherProjectsSectionSkeleton />}>
+          <OtherProjectsSection projectId={projectId} />
+        </Suspense>
+      }
     />
   );
 }

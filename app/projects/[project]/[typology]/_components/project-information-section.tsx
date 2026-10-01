@@ -39,7 +39,6 @@ export const ProjectInformationSection = ({
       >
         <Image
           data-element="project-logo"
-          unoptimized
           src={
             project.logo
               ? getAssetUrl(project.logo)
@@ -71,7 +70,9 @@ export const ProjectInformationSection = ({
               {showDeliveryDate && (
                 <Typography variant="h4" className="text-lg">
                   Fecha de entrega:{" "}
-                  <span className="font-normal">01/06/2026*</span>
+                  <span className="font-normal">
+                    {formatDeliveryDate(typology.delivery_date!)}*
+                  </span>
                 </Typography>
               )}
             </article>
@@ -81,3 +82,14 @@ export const ProjectInformationSection = ({
     </section>
   );
 };
+
+/**
+ * `delivery_date` llega como fecha ISO ("YYYY-MM-DD", a veces con hora). Se
+ * arma "DD/MM/YYYY" a mano para no pasar por `Date`, que la interpretaría en
+ * UTC y podría correrla un día según la zona horaria del visitante.
+ */
+function formatDeliveryDate(value: string) {
+  const [year, month, day] = value.slice(0, 10).split("-");
+
+  return `${day}/${month}/${year}`;
+}

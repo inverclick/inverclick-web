@@ -38,11 +38,11 @@ export const ProjectCharacteristicsSection = ({
         </Typography>
         <div className="flex gap-4">
           <Image
-            unoptimized
             src={getAssetUrl(project.company.logo_url)}
             alt={project.company.name}
             width={60}
             height={60}
+            sizes="(min-width: 768px) 112px, 60px"
             className="md:w-28"
           />
           <div>
@@ -93,7 +93,6 @@ export const ProjectCharacteristicsSection = ({
               className="flex h-auto flex-grow flex-col items-start gap-2 p-2 text-left"
             >
               <Image
-                unoptimized
                 src={getAssetUrl(characteristic.characteristic.icon)}
                 alt={characteristic.characteristic.label}
                 width={24}

@@ -37,11 +37,11 @@ export const UrbanismSection = ({
             {project.urbanism_photos.map((src) => (
               <CarouselItem key={src} className="flex items-center">
                 <Image
-                  unoptimized
                   src={getAssetUrl(src)}
                   alt="Urbanismo"
                   width={600}
                   height={400}
+                  sizes="(min-width: 1024px) 1024px, 100vw"
                   className="h-full w-full object-contain"
                 />
               </CarouselItem>
@@ -60,7 +60,7 @@ export const UrbanismSection = ({
                 target="_blank"
                 className="w-fit rounded-3xl bg-primary px-4 py-2 text-white"
               >
-                {"Archivo de Urbanismo #" + index + 1}
+                {"Archivo de Urbanismo #" + (index + 1)}
               </a>
             </li>
           ))}
