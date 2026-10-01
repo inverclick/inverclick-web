@@ -15,7 +15,7 @@ export type SimulatorResultProps = {
 };
 
 export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
-  const { currency, convert } = useCurrencyContext((s) => s);
+  const currency = useCurrencyContext((s) => s.currency);
 
   const _ea = ea * 100;
   const _nvm = (Math.pow(1 + ea, 1 / 12) - 1) * 100;
@@ -41,7 +41,7 @@ export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
               final={value}
               decimals={2}
               formatter={(newValue) =>
-                formatCurrency(convert(Number(newValue)), currency)
+                formatCurrency(Number(newValue), currency)
               }
             />
             *
