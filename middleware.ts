@@ -1,6 +1,5 @@
 import { ENV_VARS } from "@/global/env";
 import { canContinueToProjectPreview } from "@/middlewares/can-continue-to-project-preview";
-import { handleTRM } from "@/middlewares/handle-trm";
 import { updateSession } from "@/middlewares/update-session";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -11,8 +10,8 @@ export async function middleware(request: NextRequest) {
 
   const response = NextResponse.next({ request });
 
-  await handleTRM(request, response);
-
+  // The exchange rate (TRM) is read from a shared cache in the root layout; it
+  // no longer blocks requests here.
   return await updateSession(request, response);
 }
 

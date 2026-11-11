@@ -10,9 +10,15 @@ import Image from "next/image";
 export type ProjectGalleryProps = {
   projectId: string;
   photos: string[];
+  /** Project name, for the photos' alt text. */
+  name?: string;
 };
 
-export const ProjectGallery = ({ projectId, photos }: ProjectGalleryProps) => {
+export const ProjectGallery = ({
+  projectId,
+  photos,
+  name = "Proyecto",
+}: ProjectGalleryProps) => {
   const [open, setOpen] = useState(false);
 
   const [photoScrollTo, setPhotoScrollTo] = useState<string>("");
@@ -26,7 +32,7 @@ export const ProjectGallery = ({ projectId, photos }: ProjectGalleryProps) => {
       <Image
         priority
         src={getAssetUrl(mainPhoto)}
-        alt=""
+        alt={`${name} – foto 1`}
         width="600"
         height="400"
         sizes="(min-width: 768px) 50vw, 100vw"
@@ -46,7 +52,7 @@ export const ProjectGallery = ({ projectId, photos }: ProjectGalleryProps) => {
           <Image
             key={index}
             src={getAssetUrl(photo)}
-            alt={photo}
+            alt={`${name} – foto ${index + 2}`}
             width="600"
             height="200"
             sizes="(min-width: 1536px) 400px, (min-width: 1024px) 300px, (min-width: 768px) 200px, 50vw"

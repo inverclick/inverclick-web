@@ -6,16 +6,18 @@ export const dynamic = "force-dynamic";
 export const runtime = "edge";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Only published projects: the others answer 404.
   const { data: projects } = await supabase
     .from("projects")
-    .select("id, created_at, typologies(*)");
+    .select("id, created_at, updated_at, typologies(id)")
+    .eq("status", "PUBLISHED");
 
   const projectsEntries = [];
 
   for (const project of projects!) {
     for (const typology of project.typologies) {
       const url = `${ENV_VARS.BASE_URL}/projects/${project.id}/${typology.id}`;
-      const lastModified = new Date(project.created_at);
+      const lastModified = new Date(project.updated_at ?? project.created_at);
       projectsEntries.push({ url, lastModified });
     }
   }
@@ -23,6 +25,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     {
       url: ENV_VARS.BASE_URL,
+      lastModified: new Date(),
+    },
+    {
+      url: `${ENV_VARS.BASE_URL}/home`,
       lastModified: new Date(),
     },
     {

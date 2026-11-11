@@ -1,6 +1,6 @@
-import { supabase } from "@/services/supabase/supabase";
+import { supabase as defaultClient } from "@/services/supabase/supabase";
 
-export const getProjectsPriceRange = async () => {
+export const getProjectsPriceRange = async (supabase = defaultClient) => {
   const draftData = Array.from({ length: 50 }, () => ({ goal: 0 }));
 
   const { data: typologies, error } = await supabase

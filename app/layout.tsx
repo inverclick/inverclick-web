@@ -1,5 +1,6 @@
 import { Providers } from "@/app/providers";
 import { ENV_VARS } from "@/global/env";
+import { getCreditRates } from "@/services/get-credit-rates";
 import { getTRM } from "@/services/get-trm";
 import { createClient } from "@/services/supabase/server-client";
 import { getUser } from "@/services/user/get-user";
@@ -56,9 +57,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const { TRM_USD, TRM_EUR, last_trm_update } = await getTRM();
-
-  const user = await getUser(createClient())();
+  // Independent: load the exchange rate, the simulator rates and the user at
+  // the same time.
+  const [{ TRM_USD, TRM_EUR, last_trm_update }, creditRates, user] =
+    await Promise.all([
+      getTRM(),
+      getCreditRates(),
+      getUser(createClient())(),
+    ]);
 
   return (
     <html lang="es" suppressHydrationWarning>
@@ -75,6 +81,7 @@ export default async function RootLayout({
           TRM_USD={TRM_USD}
           TRM_EUR={TRM_EUR}
           last_trm_update={last_trm_update}
+          creditRates={creditRates}
         >
           {children}
         </Providers>

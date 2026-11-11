@@ -1,31 +1,14 @@
 "use client";
 
+import { ProjectContactBar } from "@/app/projects/[project]/[typology]/_components/project-contact-bar";
+import { ProjectContent } from "@/app/projects/[project]/[typology]/_components/project-content";
 import { ProjectHero } from "@/app/projects/[project]/[typology]/_components/project-hero";
 import { Project } from "@/app/projects/[project]/[typology]/_services/get-project";
-import { ViewInformationButton } from "@/components/projects/review/view-information-button";
 import { Footer } from "@/components/shared/footer/footer";
 import { Header } from "@/components/shared/header/header";
 import { usePreRegistration } from "@/contexts/pre-registration-context";
 import { SimpleAnalytics } from "@/services/simple-analytics/simple-analytics";
-import { cn } from "@inverclick/inverclick-ui/lib";
-import { Typography } from "@inverclick/inverclick-ui/typography";
 import { ReactNode, useEffect } from "react";
-
-import dynamic from "next/dynamic";
-
-// Sólo se muestran con sesión iniciada: cargarlos aparte evita que un
-// visitante anónimo descargue el formulario de contacto, el mapa y el
-// simulador, que no va a ver.
-const ProjectContent = dynamic(() =>
-  import(
-    "@/app/projects/[project]/[typology]/_components/project-content"
-  ).then((mod) => mod.ProjectContent)
-);
-const ProjectContactBar = dynamic(() =>
-  import(
-    "@/app/projects/[project]/[typology]/_components/project-contact-bar"
-  ).then((mod) => mod.ProjectContactBar)
-);
 
 export type PageContentProps = {
   project: Project;
@@ -53,42 +36,23 @@ export const PageContent = ({
           "p-content-full mx-auto flex max-w-screen-2xl flex-col gap-12"
         }
       >
-        <div className="relative">
-          <div className="relative">
-            <ProjectHero
-              projectId={project.id}
-              name={project.name}
-              photos={project.photos}
-              price={typology.price}
-              department={project.department.name}
-              city={project.city.name}
-              address={project.address}
-              className={cn({
-                "pointer-events-none blur-sm": !canInteractWithFeatures,
-              })}
-            />
-            {!canInteractWithFeatures && (
-              <div className="absolute -left-1 top-0 h-full w-[calc(100%+0.5rem)] bg-gradient-to-b from-transparent to-white"></div>
-            )}
-          </div>
-          {!canInteractWithFeatures && (
-            <div className="absolute left-1/2 top-96 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-8">
-              <Typography variant="h1" className="text-center">
-                Accede a este proyecto y a toda nuestra oferta
-              </Typography>
-              <ViewInformationButton />
-            </div>
-          )}
-        </div>
-        {canInteractWithFeatures && (
-          <ProjectContent project={project} typology={typology} />
-        )}
+        {/* Everyone sees the project (and search engines index it). Without
+            a session only the description is open; the rest asks to sign in
+            (see `useGatedAction`). */}
+        <ProjectHero
+          projectId={project.id}
+          name={project.name}
+          photos={project.photos}
+          price={typology.price}
+          department={project.department.name}
+          city={project.city.name}
+          address={project.address}
+        />
+        <ProjectContent project={project} typology={typology} />
         {otherProjects}
       </div>
       <Footer />
-      {canInteractWithFeatures && (
-        <ProjectContactBar price={typology.price} projectId={project.id} />
-      )}
+      <ProjectContactBar price={typology.price} projectId={project.id} />
     </main>
   );
 };

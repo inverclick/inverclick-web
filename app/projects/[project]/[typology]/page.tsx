@@ -4,7 +4,15 @@ import {
 } from "@/app/projects/[project]/[typology]/_components/other-projects-section";
 import { PageContent } from "@/app/projects/[project]/[typology]/_components/page-content";
 import { getProjectOnce } from "@/app/projects/[project]/[typology]/_services/get-project";
+import {
+  projectDescription,
+  projectJsonLd,
+  projectPath,
+  projectTitle,
+  serializeJsonLd,
+} from "@/app/projects/[project]/[typology]/_services/project-seo";
 import { ENV_VARS } from "@/global/env";
+import { getAssetUrl } from "@/services/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -46,16 +54,33 @@ export async function generateMetadata({
     };
   }
 
+  const url = ENV_VARS.BASE_URL + projectPath(projectId, typologyId);
+  const title = projectTitle(project, blueprint);
+  const description = projectDescription(project, blueprint);
+  const images = project.photos.slice(0, 4).map((photo) => ({
+    url: getAssetUrl(photo),
+    alt: project.name,
+  }));
+
   return {
-    title: project.name + " - " + blueprint.name,
-    description: project.description,
-    alternates: {
-      canonical: `${ENV_VARS.BASE_URL}/${projectId}/${typologyId}`,
-    },
+    title,
+    description,
+    alternates: { canonical: url },
+    // Pages replace the layout's openGraph object, so repeat the site fields.
     openGraph: {
-      url: `${ENV_VARS.BASE_URL}/${projectId}/${typologyId}`,
-      title: project.name + " - " + blueprint.name,
-      description: project.description,
+      type: "website",
+      locale: "es_CO",
+      siteName: "Inverclick",
+      url,
+      title,
+      description,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: images.map((image) => image.url),
     },
   };
 }
@@ -82,15 +107,29 @@ export default async function Page({
     return notFound();
   }
 
+  const jsonLd = projectJsonLd({
+    project,
+    typology,
+    baseUrl: ENV_VARS.BASE_URL,
+    assetUrl: getAssetUrl,
+  });
+
   return (
-    <PageContent
-      project={project}
-      typology={typology}
-      otherProjects={
-        <Suspense fallback={<OtherProjectsSectionSkeleton />}>
-          <OtherProjectsSection projectId={projectId} />
-        </Suspense>
-      }
-    />
+    <>
+      {/* Structured data so search engines read the listing: price, place, photos. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
+      />
+      <PageContent
+        project={project}
+        typology={typology}
+        otherProjects={
+          <Suspense fallback={<OtherProjectsSectionSkeleton />}>
+            <OtherProjectsSection projectId={projectId} />
+          </Suspense>
+        }
+      />
+    </>
   );
 }

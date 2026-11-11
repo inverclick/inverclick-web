@@ -2,7 +2,11 @@ import { ProjectsLayout } from "@/components/projects/projects-layout";
 import { ENV_VARS } from "@/global/env";
 import { getProjectsPriceRange } from "@/services/get-projects-price-range";
 import { PROJECT_CARD_SELECT } from "@/services/projects/project-card-select";
-import { supabase } from "@/services/supabase/supabase";
+import { getProjectSearchIndex } from "@/services/projects/project-search-index";
+// Every query here skips Next's data cache: client-side navigations within
+// /projects (filters, map search) used to get an old list missing projects
+// published since.
+import { supabaseNoStore as supabase } from "@/services/supabase/supabase-no-store";
 import { Department } from "@/types/domain/departments";
 import { HousingType } from "@/types/domain/housing-types";
 import { ProjectToDisplay } from "@/types/domain/projects";
@@ -58,17 +62,25 @@ export default async function Projects(props: ProjectsProps) {
   if (type) query.in("housing_type", type.split("-") as HousingType["label"][]);
 
   // El mapa necesita todos los proyectos; cada tarjeta solo usa la tipología
-  // más económica que cumple los filtros. Las cuatro consultas son independientes.
-  const [departmentsResponse, prices, housingTypesResponse, { count, data }] =
-    await Promise.all([
-      supabase.from("departments").select("*"),
-      getProjectsPriceRange(),
-      supabase.from("housing_types").select("*"),
-      query
-        .order("price", { referencedTable: "typologies", ascending: true })
-        .limit(1, { referencedTable: "typologies" })
-        .returns<ProjectToDisplay[]>(),
-    ]);
+  // más económica que cumple los filtros. El índice del buscador trae todos los
+  // publicados (sin filtros) para sugerir proyectos y ciudades. Las consultas
+  // son independientes.
+  const [
+    departmentsResponse,
+    prices,
+    housingTypesResponse,
+    { count, data },
+    searchIndex,
+  ] = await Promise.all([
+    supabase.from("departments").select("*"),
+    getProjectsPriceRange(supabase),
+    supabase.from("housing_types").select("*"),
+    query
+      .order("price", { referencedTable: "typologies", ascending: true })
+      .limit(1, { referencedTable: "typologies" })
+      .returns<ProjectToDisplay[]>(),
+    getProjectSearchIndex(supabase),
+  ]);
 
   const departments = departmentsResponse.data ?? [];
   const housingTypes = housingTypesResponse.data ?? [];
@@ -82,6 +94,7 @@ export default async function Projects(props: ProjectsProps) {
       departments={departments as Department[]}
       housingTypes={housingTypes as HousingType[]}
       prices={prices}
+      searchIndex={searchIndex}
     />
   );
 }

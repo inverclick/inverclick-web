@@ -17,7 +17,8 @@ export const ContactButton = ({ className, ...props }: ContactButtonProps) => {
       className={cn(
         "slide-button relative z-30 rounded-full bg-secondary",
         {
-          "bg-primary text-primary-foreground": pathname !== "/",
+          // The landing (now /home) uses the secondary color.
+          "bg-primary text-primary-foreground": pathname !== "/home",
         },
         className
       )}

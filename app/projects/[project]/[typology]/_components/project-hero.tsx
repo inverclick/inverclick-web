@@ -78,7 +78,11 @@ export const ProjectHero = ({
           <SelectCurrency className="min-w-20" />
         </div>
       </div>
-      <ProjectGallery projectId={projectId} photos={photos} />
+      <ProjectGallery
+        projectId={projectId}
+        photos={photos}
+        name={name ?? undefined}
+      />
       <div className="flex flex-col justify-between gap-4 px-0 xl:flex-row xl:px-6">
         <span className="flex justify-center gap-2">
           <Icon icon={MapPin} className="hidden size-6 text-primary xl:flex" />

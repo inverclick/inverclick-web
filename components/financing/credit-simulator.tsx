@@ -4,6 +4,7 @@ import { FeeSimulator } from "@/components/financing/fee-simulator";
 import { SelectSimulatorType } from "@/components/financing/select-simulator-type";
 import { SimulatorResult } from "@/components/financing/simulator-result";
 import { ValueSimulator } from "@/components/financing/value-simulator";
+import { useCreditRates } from "@/contexts/credit-rates-context";
 import { Typography } from "@inverclick/inverclick-ui/typography";
 import {
   createContext,
@@ -52,11 +53,12 @@ export type CreditSimuladorProps = Readonly<{
   price: number;
 }>;
 
-export const VALUE_EFFECTIVE_ANNUAL_INTEREST = 0.1645;
-export const QUOTA_EFFECTIVE_ANNUAL_INTEREST = 0.11;
 export const INSURANCE = 0.06;
 
 export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
+  // E.A. and N.M.V. of each simulator, read from `app_config` in the layout.
+  const rates = useCreditRates();
+
   const [simulatorType, setSimulatorType] = useState<SimulatorType>("VALOR");
 
   const [valueCredit, setValueCredit] = useState(0);
@@ -113,8 +115,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
                 setValueCredit(0);
 
                 setTimeout(() => {
-                  const monthlyInterestRate =
-                    Math.pow(1 + VALUE_EFFECTIVE_ANNUAL_INTEREST, 1 / 12) - 1;
+                  const monthlyInterestRate = rates.value.nmv;
                   const amountFunded =
                     parseInt(inputValue) * (percentage / 100);
                   const monthsFunding = years * 12;
@@ -140,8 +141,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
                 setQuotaCredit(0);
 
                 setTimeout(() => {
-                  const monthlyInterestRate =
-                    Math.pow(1 + QUOTA_EFFECTIVE_ANNUAL_INTEREST, 1 / 12) - 1;
+                  const monthlyInterestRate = rates.quota.nmv;
                   const monthsFunding = quotaYears * 12;
 
                   const amountFunded =
@@ -161,11 +161,7 @@ export const CreditSimulador = ({ price }: CreditSimuladorProps) => {
           >
             <SimulatorResult
               value={simulatorType === "VALOR" ? valueCredit : quotaCredit}
-              ea={
-                simulatorType === "VALOR"
-                  ? VALUE_EFFECTIVE_ANNUAL_INTEREST
-                  : QUOTA_EFFECTIVE_ANNUAL_INTEREST
-              }
+              rates={simulatorType === "VALOR" ? rates.value : rates.quota}
               type={simulatorType}
             />
           </article>

@@ -6,12 +6,27 @@ import {
   ProjectCard,
   ProjectCardSkeleton,
 } from "@/components/shared/project-card";
+import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
-export const ProjectInfinityScroll = () => {
+export const ProjectInfinityScroll = ({
+  empty = false,
+}: Readonly<{ empty?: boolean }>) => {
   const _projects = useProjectsPageStore((state) => state.projects);
+  const loadingResults = useProjectsPageStore((state) => state.loadingResults);
+
+  if (empty && !loadingResults) return <EmptyResults />;
 
   return (
-    <div className="overflow-y-auto">
+    <div
+      aria-busy={loadingResults}
+      className={cn(
+        "overflow-y-auto transition-opacity duration-200",
+        // Dimmed while new results load after a city or filter change.
+        loadingResults && "pointer-events-none opacity-50"
+      )}
+    >
       <div className="mt-4 grid w-full justify-items-center gap-x-2 gap-y-10 pb-4 [grid-template-columns:repeat(auto-fill,minmax(290px,1fr))] lg:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] 2xl:[grid-template-columns:repeat(auto-fill,minmax(290px,1fr))]">
         {_projects.map((project) => (
           <LazyMount key={project.id} placeholder={<ProjectCardSkeleton />}>
@@ -22,6 +37,38 @@ export const ProjectInfinityScroll = () => {
     </div>
   );
 };
+
+function EmptyResults() {
+  const setSearchText = useProjectsPageStore((state) => state.setSearchText);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const clear = () => {
+    setSearchText("");
+    router.replace(pathname, { scroll: false });
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-2 px-6 pt-12 text-center">
+      <span className="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F2F2F2] text-[#222222]">
+        <Search className="h-6 w-6" aria-hidden />
+      </span>
+      <p className="text-[17px] font-semibold text-[#222222]">
+        No hay proyectos para tu búsqueda
+      </p>
+      <p className="text-sm text-[#717171]">
+        Prueba con otro nombre o ciudad, o quita los filtros.
+      </p>
+      <button
+        type="button"
+        onClick={clear}
+        className="mt-3 min-h-11 rounded-full border border-[#222222] px-5 text-sm font-semibold text-[#222222] transition-colors hover:bg-[#F7F7F7]"
+      >
+        Limpiar búsqueda y filtros
+      </button>
+    </div>
+  );
+}
 
 // "use client";
 

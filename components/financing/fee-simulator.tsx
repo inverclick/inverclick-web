@@ -3,6 +3,7 @@
 import { useCreditSimulador } from "@/components/financing/credit-simulator";
 import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
 import { useCurrencyContext } from "@/contexts/currency-context";
+import { isAdult, MINIMUM_AGE } from "@/lib/is-adult";
 import { Button } from "@inverclick/inverclick-ui/button";
 import { Calendar } from "@inverclick/inverclick-ui/calendar";
 import {
@@ -33,6 +34,8 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
       setQuotaYears: setYears,
     },
   } = useCreditSimulador();
+
+  const isUnderage = !!date && !isAdult(date);
 
   let locale: string;
 
@@ -98,15 +101,23 @@ export const FeeSimulator = ({ onSimulate, onReset }: FeeSimulatorProps) => {
                 selected={date}
                 onSelect={setDate}
                 fromYear={1960}
-                toYear={2030}
+                toYear={new Date().getFullYear()}
               />
             </PopoverContent>
           </Popover>
+          {isUnderage ? (
+            <p
+              role="alert"
+              className="mt-2 text-center text-xs text-destructive lg:text-left"
+            >
+              Debes ser mayor de edad ({MINIMUM_AGE} años) para simular.
+            </p>
+          ) : null}
         </div>
       </div>
       <Button
         onClick={onSimulate}
-        disabled={isNaN(Number(inputValue)) || !date}
+        disabled={isNaN(Number(inputValue)) || !date || isUnderage}
         className="mt-auto"
       >
         Simular

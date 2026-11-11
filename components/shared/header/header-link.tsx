@@ -14,13 +14,15 @@ export type HeaderLinkProps = Readonly<{
 export function HeaderLink({ name, url, size = "large" }: HeaderLinkProps) {
   const pathname = usePathname();
 
-  const isActive = pathname.startsWith(url);
+  // "/" shows the projects map too.
+  const isActive =
+    pathname.startsWith(url) || (url === "/projects" && pathname === "/");
 
   return (
     <Link
       href={url}
       className={cn("whitespace-nowrap font-medium hover:text-primary", {
-        "text-xs 2xl:text-sm": size === "small",
+        "text-sm": size === "small",
         "text-primary": isActive,
       })}
     >

@@ -1,6 +1,7 @@
 "use client";
 
 import { ProjectContactForm } from "@/app/projects/[project]/[typology]/_components/project-contact-form";
+import { useGatedAction } from "@/app/projects/[project]/[typology]/_components/use-gated-action";
 import { DisplayFormattedCurrency } from "@/components/shared/display-formatted-currency";
 import { Button } from "@inverclick/inverclick-ui/button";
 import {
@@ -34,6 +35,8 @@ export function ProjectContactBar({
   isPreview,
 }: ProjectContactBarProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  // Without a session, "Contactar" asks to sign in first, then opens the form.
+  const { runGated } = useGatedAction({ bypass: isPreview });
 
   return (
     <>
@@ -52,7 +55,10 @@ export function ProjectContactBar({
               className="truncate text-base sm:text-lg"
             />
           </div>
-          <Button className="shrink-0" onClick={() => setIsDialogOpen(true)}>
+          <Button
+            className="shrink-0"
+            onClick={() => runGated(() => setIsDialogOpen(true))}
+          >
             Contactar
           </Button>
         </div>

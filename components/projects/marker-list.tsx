@@ -1,3 +1,4 @@
+import { useProjectsPageStore } from "@/app/projects/_store";
 import { ProjectCard } from "@/components/shared/project-card";
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency } from "@/lib/format-currency";
@@ -20,9 +21,11 @@ export type MarkerProps = Readonly<{
 export function Markers({ projects = [] }: MarkerProps) {
   const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
 
-  const [selectedProjectKey, setSelectedProjectKey] = useState<string | null>(
-    null
+  // In the page store so the map search can open a project's card too.
+  const selectedProjectKey = useProjectsPageStore(
+    (state) => state.selectedProjectId
   );
+  const setSelectedProjectKey = useProjectsPageStore((state) => state.select);
 
   const [visitedMarkers, setVisitedMarkers] = useState<{
     [key: string]: boolean;
@@ -33,10 +36,17 @@ export function Markers({ projects = [] }: MarkerProps) {
   const selectedBlueprint = useMemo(
     () =>
       projects && selectedProjectKey
-        ? projects.find((blueprint) => blueprint.id === selectedProjectKey)!
+        ? (projects.find((blueprint) => blueprint.id === selectedProjectKey) ??
+          null)
         : null,
     [selectedProjectKey, projects]
   );
+
+  // A search or filter that hides the open project closes its card, so
+  // clearing it later doesn't reopen an old one.
+  useEffect(() => {
+    if (selectedProjectKey && !selectedBlueprint) setSelectedProjectKey(null);
+  }, [selectedProjectKey, selectedBlueprint, setSelectedProjectKey]);
 
   const map = useMap();
 
@@ -116,7 +126,7 @@ export function Markers({ projects = [] }: MarkerProps) {
     });
 
     return () => listener.remove();
-  }, [map]);
+  }, [map, setSelectedProjectKey]);
 
   return (
     <>

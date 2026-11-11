@@ -12,7 +12,7 @@ import Image from "next/image";
 const stores: { [key in OS]: string } = {
   Android: "https://play.google.com/store/games?hl=en&pli=1",
   iOS: "https://www.apple.com/app-store/",
-  unknown: "https://www.inverclick.com/",
+  unknown: "https://inverclick.com/",
 };
 
 const features: { title: string; description: string }[] = [

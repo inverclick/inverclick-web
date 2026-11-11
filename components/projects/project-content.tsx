@@ -58,7 +58,7 @@ export default function ProjectContent({
           </div>
         </div>
       )}
-      <ProjectInfinityScroll />
+      <ProjectInfinityScroll empty={projects.length === 0} />
     </section>
   );
 }

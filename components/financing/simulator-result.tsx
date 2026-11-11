@@ -3,6 +3,7 @@
 import { SimulatorType } from "@/components/financing/credit-simulator";
 import { CountUp } from "@/components/shared/count-up";
 import { useCurrencyContext } from "@/contexts/currency-context";
+import { ModeRates } from "@/lib/credit-rates";
 import { formatCurrency } from "@/lib/format-currency";
 import { Button } from "@inverclick/inverclick-ui/button";
 
@@ -10,15 +11,20 @@ import "./financing.css";
 
 export type SimulatorResultProps = {
   value: number;
-  ea: number;
+  /** The rates of the selected simulator, as read from `app_config`. */
+  rates: ModeRates;
   type: SimulatorType;
 };
 
-export const SimulatorResult = ({ value, ea, type }: SimulatorResultProps) => {
+export const SimulatorResult = ({
+  value,
+  rates,
+  type,
+}: SimulatorResultProps) => {
   const currency = useCurrencyContext((s) => s.currency);
 
-  const _ea = ea * 100;
-  const _nvm = (Math.pow(1 + ea, 1 / 12) - 1) * 100;
+  const _ea = rates.ea * 100;
+  const _nvm = rates.nmv * 100;
 
   return (
     <section>

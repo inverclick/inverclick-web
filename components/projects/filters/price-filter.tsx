@@ -1,8 +1,20 @@
 import { SelectCurrency } from "@/components/shared/select-currency/select-currency";
-import { Slider } from "@/components/ui/price-slider";
+import dynamic from "next/dynamic";
 import { useCurrencyContext } from "@/contexts/currency-context";
 import { formatCurrency, parseCurrency } from "@/lib/format-currency";
 import { Input } from "@inverclick/inverclick-ui/input";
+
+// The price histogram uses recharts (+ d3), which only matter once the filters
+// dialog is open: load them then instead of with the page.
+const Slider = dynamic(
+  () => import("@/components/ui/price-slider").then((m) => m.Slider),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[72px] w-full animate-pulse rounded bg-primary-50" />
+    ),
+  }
+);
 
 export type PriceFilterProps = {
   priceGraphicData: { goal: number }[];
