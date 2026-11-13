@@ -1,0 +1,413 @@
+.page {
+  --about-purple: #6200ee;
+  color: #111111;
+  background: #ffffff;
+  padding-bottom: 40px;
+}
+
+.page h1,
+.page h2,
+.page h3 {
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.page h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.1;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+}
+
+.heroImage img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroImage::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    #fff 30%,
+    #ffffffed 39%,
+    #ffffff00 61%
+  );
+}
+
+.heroInner {
+  position: relative;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: 48px 40px;
+  min-height: 430px;
+  display: flex;
+  align-items: center;
+}
+
+.heroContent {
+  width: 48%;
+  max-width: 520px;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: var(--about-purple);
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 4.2vw, 3.5rem);
+  line-height: 1.02;
+}
+
+.hero h1 span {
+  color: var(--about-purple);
+}
+
+.introduction {
+  margin-top: 20px;
+  margin-bottom: 26px;
+  max-width: 490px;
+  color: #3f414c;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 12px;
+  padding: 10px 28px;
+  background: var(--about-purple);
+  color: white;
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 1.4;
+  text-align: center;
+  transition: background-color 160ms ease;
+}
+
+.button:hover {
+  background: #4d00bc;
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--about-purple);
+  outline-offset: 4px;
+}
+
+.container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 32px;
+}
+
+.purpose {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 48px;
+  padding: 38px 20px 54px;
+}
+
+.purposeDescription {
+  border-left: 1px solid #d5b9ff;
+  padding: 6px 0 6px 54px;
+  margin-top: 24px;
+  color: #3f414c;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.services,
+.values {
+  scroll-margin-top: 100px;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.serviceCard,
+.valueCard {
+  border: 1px solid #ecebf0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff, #faf9fc);
+  box-shadow:
+    0 6px 16px #25203f06,
+    0 1px 3px #25203f04;
+}
+
+.serviceCard {
+  padding: 24px;
+}
+
+.serviceCard > svg {
+  margin-bottom: 16px;
+  color: var(--about-purple);
+}
+
+.serviceCard h3 {
+  margin-bottom: 8px;
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  line-height: 1.15;
+  text-wrap: initial;
+}
+
+.serviceCard p {
+  color: #3f414c;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.values {
+  margin-top: 48px;
+}
+
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.valueCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 16px;
+}
+
+.valueIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #f6f0ff;
+  color: var(--about-purple);
+}
+
+.valueCard h3 {
+  margin: 5px 0 6px;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.valueCard p {
+  color: #4b4d59;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.contact {
+  position: relative;
+  overflow: hidden;
+  max-width: 1280px;
+  min-height: 228px;
+  margin: 40px auto 0;
+  border-radius: 30px;
+  background: #eee2fc;
+}
+
+.contactImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.contactContent {
+  position: relative;
+  width: 62%;
+  padding: 36px 48px;
+}
+
+.contactContent h2 {
+  text-wrap: initial;
+}
+
+.contactContent p {
+  max-width: 480px;
+  margin-top: 8px;
+  margin-bottom: 18px;
+  color: #3f414c;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+@media (max-width: 1350px) {
+  .heroInner {
+    padding-inline: 6.7%;
+  }
+
+  .container {
+    padding-inline: 4.8%;
+  }
+
+  .contact {
+    margin-inline: 3.5%;
+  }
+
+  .valueCard {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .heroInner {
+    padding: 40px 5%;
+  }
+
+  .heroContent {
+    width: 53%;
+  }
+
+  .purpose {
+    gap: 28px;
+    padding-inline: 0;
+  }
+
+  .purposeDescription {
+    padding-left: 28px;
+  }
+
+  .serviceGrid {
+    gap: 16px;
+  }
+
+  .serviceCard {
+    padding: 20px;
+  }
+
+  .valueGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contactContent {
+    width: 65%;
+    padding: 32px;
+  }
+}
+
+@media (max-width: 639px) {
+  .page {
+    padding-bottom: 24px;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .heroInner {
+    order: -1;
+    min-height: auto;
+    padding: 36px 24px 12px;
+  }
+
+  .heroContent {
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero h1 {
+    max-width: 470px;
+    font-size: clamp(2.25rem, 8.6vw, 3rem);
+  }
+
+  .heroImage {
+    position: relative;
+    height: 270px;
+  }
+
+  .heroImage img {
+    object-position: 80% center;
+  }
+
+  .heroImage::after {
+    background: linear-gradient(#fff, #ffffff00 25%);
+  }
+
+  .container {
+    padding-inline: 24px;
+  }
+
+  .purpose {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-block: 32px 40px;
+  }
+
+  .purposeDescription {
+    padding-left: 20px;
+    margin-top: 0;
+  }
+
+  .serviceGrid,
+  .valueGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .serviceCard {
+    padding: 24px;
+  }
+
+  .serviceCard h3 {
+    font-size: 23px;
+  }
+
+  .values {
+    margin-top: 36px;
+  }
+
+  .valueCard {
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .contact {
+    margin: 32px 16px 0;
+    border-radius: 24px;
+  }
+
+  .contactImage {
+    object-fit: cover;
+    object-position: right bottom;
+    height: 210px !important;
+    top: auto !important;
+  }
+
+  .contactContent {
+    width: 100%;
+    padding: 28px 24px 230px;
+    background: linear-gradient(#eee2fc 50%, #eee2fc00 70%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

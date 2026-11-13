@@ -84,7 +84,7 @@ export const Footer = () => {
 };
 
 const FIRST_LINKS = [
-  { label: "Nosotros", href: "/" },
+  { label: "Nosotros", href: "/about-us" },
   { label: "Proyectos", href: "/projects" },
   { label: "Financiación", href: "/financing" },
   { label: "Blog", href: "/blog" },
